@@ -5,6 +5,8 @@
 namespace SK
 {
 
+class PathAssociation;
+
 //////////////////////////////////////////////////////////////////////////
 /// \class This class is a singleton, it keeps all the data handled by the application.
 class DataModel
@@ -28,10 +30,12 @@ public:
 	//@}
 
 protected:
-	DataModel() {setDefaultValues();}
-	~DataModel() {}
+	DataModel();
+	virtual ~DataModel() {}
 
 	static DataModel* sm_instance;
+
+	PathAssociation* m_pathsTreeRoot;
 
 	void setDefaultValues();
 

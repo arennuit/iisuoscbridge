@@ -1,9 +1,21 @@
 #include "DataModel.h"
+#include "PathAssociation.h"
 
 namespace SK
 {
 
 DataModel* DataModel::sm_instance = 0;
+
+//////////////////////////////////////////////////////////////////////////
+DataModel::DataModel() :
+	m_pathsTreeRoot(0)
+{
+	setDefaultValues();
+
+	m_pathsTreeRoot = new PathAssociation("iisu");
+	PathAssociation* path_joints = new PathAssociation("joints", m_pathsTreeRoot);
+	new Vector3ArrayPathAssociation("positions", path_joints, "USER#.SKELETON.KeyPoints");
+}
 
 //////////////////////////////////////////////////////////////////////////
 void DataModel::CreateInstance()

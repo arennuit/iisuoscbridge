@@ -532,6 +532,14 @@
 			RelativePath=".\main.cpp"
 			>
 		</File>
+		<File
+			RelativePath=".\PathAssociation.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\PathAssociation.h"
+			>
+		</File>
 	</Files>
 	<Globals>
 		<Global
