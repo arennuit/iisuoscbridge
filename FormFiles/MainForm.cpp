@@ -1,15 +1,15 @@
-#include "IisuOscBridge.h"
+#include "MainForm.h"
 // DEBUG.
 #include "osc/OscOutboundPacketStream.h"
 #include "ip/UdpSocket.h"
 
 #define OUTPUT_BUFFER_SIZE 1024
 
-QString IisuOscBridge::sm_defaultIpAddress = "127.0.0.1";
-int IisuOscBridge::sm_defaultPort = 8000;
+QString MainForm::sm_defaultIpAddress = "127.0.0.1";
+int MainForm::sm_defaultPort = 8000;
 
 //////////////////////////////////////////////////////////////////////////
-IisuOscBridge::IisuOscBridge(QWidget *parent, Qt::WFlags flags)
+MainForm::MainForm(QWidget *parent, Qt::WFlags flags)
 	: QMainWindow(parent, flags)
 {
 	ui.setupUi(this);
@@ -31,7 +31,7 @@ IisuOscBridge::IisuOscBridge(QWidget *parent, Qt::WFlags flags)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void IisuOscBridge::onStartButtonClicked()
+void MainForm::onStartButtonClicked()
 {
 	UdpTransmitSocket transmitSocket(IpEndpointName(m_ipAddress.toStdString().c_str(), m_port));
 
@@ -54,19 +54,19 @@ void IisuOscBridge::onStartButtonClicked()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void IisuOscBridge::onStopButtonClicked()
+void MainForm::onStopButtonClicked()
 {
 	QMessageBox::information(NULL, "Stop", "Stop button clicked.");
 }
 
 //////////////////////////////////////////////////////////////////////////
-void IisuOscBridge::onSettingsButtonClicked()
+void MainForm::onSettingsButtonClicked()
 {
 	QMessageBox::information(NULL, "Settings", "Settings button clicked.");
 }
 
 //////////////////////////////////////////////////////////////////////////
-IisuOscBridge::~IisuOscBridge()
+MainForm::~MainForm()
 {
 	if(NULL != m_device)
 	{
@@ -75,7 +75,7 @@ IisuOscBridge::~IisuOscBridge()
 }
 
 //////////////////////////////////////////////////////////////////////////
-bool IisuOscBridge::initIisu()
+bool MainForm::initIisu()
 {
 	SK::Context& context = SK::Context::Instance();
 
@@ -103,7 +103,7 @@ bool IisuOscBridge::initIisu()
 
 	m_skeleton = m_device->registerDataHandle< SK::Array<SK::Vector3> >("...");
 
-	m_device->getEventManager().registerEventListener("DEVICE.DataFrame",*this,&IisuOscBridge::newFrameListener);
+	m_device->getEventManager().registerEventListener("DEVICE.DataFrame",*this,&MainForm::newFrameListener);
 
 	SK::GetVersionCommand cmd(m_device->getCommandManager());
 
@@ -122,7 +122,7 @@ bool IisuOscBridge::initIisu()
 }
 
 //////////////////////////////////////////////////////////////////////////
-bool IisuOscBridge::update()
+bool MainForm::update()
 {
 	m_device->lockFrame();
 
@@ -134,7 +134,7 @@ bool IisuOscBridge::update()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void IisuOscBridge::newFrameListener( const SK::DataFrameEvent& event )
+void MainForm::newFrameListener( const SK::DataFrameEvent& event )
 {
 	m_device->updateFrame(true);
 	std::cout << event.getFrameID() << std::endl;

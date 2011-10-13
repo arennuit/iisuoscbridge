@@ -1,10 +1,10 @@
-#include "IisuOscBridge.h"
+#include "MainForm.h"
 #include <QtGui/QApplication>
 
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
-	IisuOscBridge w;
+	MainForm w;
 	w.show();
 	return a.exec();
 }

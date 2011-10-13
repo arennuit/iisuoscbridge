@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>IisuOscBridgeClass</class>
- <widget class="QMainWindow" name="IisuOscBridgeClass">
+ <class>MainFormClass</class>
+ <widget class="QMainWindow" name="MainFormClass">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>IisuOscBridge</string>
+   <string>MainForm</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">

@@ -1,18 +1,17 @@
-#ifndef IISUOSCBRIDGE_H
-#define IISUOSCBRIDGE_H
+#pragma once
 
 #include <QtGui/QMainWindow>
 #include <QMessageBox>
-#include "ui_IisuOscBridge.h"
+#include "ui_MainForm.h"
 #include "SDK/iisuSDK.h"
 
-class IisuOscBridge : public QMainWindow
+class MainForm : public QMainWindow
 {
 	Q_OBJECT
 
 public:
-	IisuOscBridge(QWidget *parent = 0, Qt::WFlags flags = 0);
-	~IisuOscBridge();
+	MainForm(QWidget *parent = 0, Qt::WFlags flags = 0);
+	~MainForm();
 
 	// Iisu.
 	bool initIisu();
@@ -29,7 +28,7 @@ protected slots:
 	void onSettingsButtonClicked();
 
 private:
-	Ui::IisuOscBridgeClass ui;
+	Ui::MainFormClass ui;
 
 	// Iisu.
 	SK::Device* m_device;
@@ -42,5 +41,3 @@ private:
 	static QString sm_defaultIpAddress;
 	static int sm_defaultPort;
 };
-
-#endif // IISUOSCBRIDGE_H
