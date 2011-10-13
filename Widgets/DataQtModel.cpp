@@ -17,44 +17,44 @@ DataQtModel::DataQtModel(QObject *parent) :
 //////////////////////////////////////////////////////////////////////////
 bool DataQtModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
-	if (!index.isValid() || role != Qt::EditRole)
-	{
-		return false;
-	}
+	//if (!index.isValid() || role != Qt::EditRole)
+	//{
+	//	return false;
+	//}
 
-	// Call default behavior.
-	QStandardItemModel::setData(index, value, role);
+	//// Call default behavior.
+	//QStandardItemModel::setData(index, value, role);
 
-	// Get the custom role and switch to the relevant edition bit of code depending on it.
-	int customRole = index.data(RoleIndexRole).toInt();
-	switch (customRole)
-	{
-	case ObjectNameRole:
-		{
-			DataObject* object = index.data(ObjectNameRole).value<DataObject*>();
-			assert(object);
+	//// Get the custom role and switch to the relevant edition bit of code depending on it.
+	//int customRole = index.data(RoleIndexRole).toInt();
+	//switch (customRole)
+	//{
+	//case ObjectNameRole:
+	//	{
+	//		DataObject* object = index.data(ObjectNameRole).value<DataObject*>();
+	//		assert(object);
 
-			std::string newName = value.toString().toStdString();
-			object->setName(StringUtils::toWideString(newName));
+	//		std::string newName = value.toString().toStdString();
+	//		object->setName(StringUtils::toWideString(newName));
 
-			break;
-		}
-	case FrameQwValueRole:
-		{
-			Property<Frame>* prop = static_cast<Property<Frame>*>(index.data(FrameQwValueRole).value<PropertyBase*>());
-			assert(prop);
+	//		break;
+	//	}
+	//case FrameQwValueRole:
+	//	{
+	//		Property<Frame>* prop = static_cast<Property<Frame>*>(index.data(FrameQwValueRole).value<PropertyBase*>());
+	//		assert(prop);
 
-			float newQw = value.toFloat();
-			// TODO: set the new value to the property's data.
-			//prop->set();
+	//		float newQw = value.toFloat();
+	//		// TODO: set the new value to the property's data.
+	//		//prop->set();
 
-			break;
-		}
-	default:
-		{
-			// TODO: log error unhandled case.
-		}
-	}
+	//		break;
+	//	}
+	//default:
+	//	{
+	//		// TODO: log error unhandled case.
+	//	}
+	//}
 
 	return true;
 }
@@ -62,7 +62,7 @@ bool DataQtModel::setData(const QModelIndex& index, const QVariant& value, int r
 //////////////////////////////////////////////////////////////////////////
 void DataQtModel::update()
 {
-	clear();
+	//clear();
 
 	//// Get the model manager.
 	//CoreManager* modelManager = CoreManager::GetInstance();
