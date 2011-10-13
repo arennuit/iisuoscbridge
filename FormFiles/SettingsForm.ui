@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>577</width>
-    <height>424</height>
+    <width>471</width>
+    <height>613</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -31,11 +31,22 @@
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="m_closeButton">
-     <property name="text">
-      <string>Close</string>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="m_clearButton">
+       <property name="text">
+        <string>Clear</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="m_defaultButton">
+       <property name="text">
+        <string>Default</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

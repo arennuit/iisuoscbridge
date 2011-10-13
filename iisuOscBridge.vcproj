@@ -4,6 +4,7 @@
 	Version="9,00"
 	Name="iisuOscBridge"
 	ProjectGUID="{D2DC906C-F738-47AB-8BD3-E977A5E6CEEE}"
+	RootNamespace="iisuOscBridge"
 	Keyword="Qt4VSv1.0"
 	TargetFrameworkVersion="0"
 	>
@@ -293,6 +294,14 @@
 			SourceControlFiles="false"
 			>
 			<File
+				RelativePath=".\resource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\resource1.h"
+				>
+			</File>
+			<File
 				RelativePath=".\GeneratedFiles\ui_MainForm.h"
 				>
 			</File>
@@ -512,7 +521,7 @@
 			>
 		</File>
 		<File
-			RelativePath=".\icon_optmized.ico"
+			RelativePath=".\iisuOscBridge.ico"
 			>
 		</File>
 		<File

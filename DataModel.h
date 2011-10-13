@@ -18,10 +18,13 @@ public:
 	static DataModel* GetInstance() {return sm_instance;}
 	//@}
 
-	/// \name Application data.
+	/// \name Accessors.
 	//@{
-	std::string m_ipAddress;
-	int m_port;
+	virtual const std::string& getIpAddress() {return m_ipAddress;}
+	virtual void setIpAddress(const std::string& ipAddress) {m_ipAddress = ipAddress;}
+	
+	virtual int getPort() {return m_port;}
+	virtual void setPort(int port) {m_port = port;}
 	//@}
 
 protected:
@@ -31,6 +34,12 @@ protected:
 	static DataModel* sm_instance;
 
 	void setDefaultValues();
+
+	/// \name Application data.
+	//@{
+	std::string m_ipAddress;
+	int m_port;
+	//@}
 };
 
 } // namespace SK.

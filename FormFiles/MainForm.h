@@ -5,11 +5,10 @@
 #include "ui_MainForm.h"
 #include "SDK/iisuSDK.h"
 #include "DataModel.h"
+#include "FormFiles/SettingsForm.h"
 
 namespace SK
 {
-
-class SettingsForm;
 
 //////////////////////////////////////////////////////////////////////////
 /// \name This class is the main window of the application.
@@ -28,8 +27,8 @@ public:
 	void newFrameListener(const SK::DataFrameEvent& event);
 
 protected slots:
-	void onIpAddressLineEditTextChanged(const QString& text) {m_dataModel->m_ipAddress = text.toStdString();}
-	void onPortLineEditTextChanged(const QString& text) {m_dataModel->m_port = text.toInt();}
+	void onIpAddressLineEditTextChanged(const QString& text) {m_dataModel->setIpAddress(text.toStdString());}
+	void onPortLineEditTextChanged(const QString& text) {m_dataModel->setPort(text.toInt());}
 
 	void onStartButtonClicked();
 	void onStopButtonClicked();
@@ -37,7 +36,7 @@ protected slots:
 
 private:
 	Ui::MainFormClass ui;
-	SettingsForm* m_settingsForm;
+	SettingsForm m_settingsForm;
 
 	DataModel* m_dataModel;
 

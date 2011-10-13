@@ -3,8 +3,6 @@
 #include "osc/OscOutboundPacketStream.h"
 #include "ip/UdpSocket.h"
 
-#include "FormFiles/SettingsForm.h"
-
 #define OUTPUT_BUFFER_SIZE 1024
 
 namespace SK
@@ -13,7 +11,7 @@ namespace SK
 //////////////////////////////////////////////////////////////////////////
 MainForm::MainForm(QWidget *parent, Qt::WFlags flags)
 	: QMainWindow(parent, flags),
-	m_settingsForm(0)
+	m_settingsForm(this)
 {
 	ui.setupUi(this);
 
@@ -22,8 +20,8 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags)
 	assert(m_dataModel);
 
 	// Default texts.
-	ui.m_ipAddressLineEdit->setText(QString(m_dataModel->m_ipAddress.c_str()));
-	ui.m_portLineEdit->setText(QString::number(m_dataModel->m_port));
+	ui.m_ipAddressLineEdit->setText(QString(m_dataModel->getIpAddress().c_str()));
+	ui.m_portLineEdit->setText(QString::number(m_dataModel->getPort()));
 
 	// Establish all connections.
 	connect(ui.m_ipAddressLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onIpAddressLineEditTextChanged(const QString&)));
@@ -36,7 +34,7 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags)
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onStartButtonClicked()
 {
-	UdpTransmitSocket transmitSocket(IpEndpointName(m_dataModel->m_ipAddress.c_str(), m_dataModel->m_port));
+	UdpTransmitSocket transmitSocket(IpEndpointName(m_dataModel->getIpAddress().c_str(), m_dataModel->getPort()));
 
 	char buffer[OUTPUT_BUFFER_SIZE];
 	osc::OutboundPacketStream p(buffer, OUTPUT_BUFFER_SIZE);
@@ -62,8 +60,7 @@ void MainForm::onStopButtonClicked()
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onSettingsButtonClicked()
 {
-	m_settingsForm = new SettingsForm(this);
-	m_settingsForm->show();
+	m_settingsForm.show();
 }
 
 //////////////////////////////////////////////////////////////////////////
