@@ -1,10 +1,14 @@
-#ifndef SETTINGSFORM_H
-#define SETTINGSFORM_H
+#pragma once
 
-#include <QWidget>
+#include <QDialog>
 #include "ui_SettingsForm.h"
 
-class SettingsForm : public QWidget
+namespace SK
+{
+
+//////////////////////////////////////////////////////////////////////////
+/// \name This class is the paths settings or configuration window for the application.
+class SettingsForm : public QDialog
 {
 	Q_OBJECT
 
@@ -16,4 +20,4 @@ private:
 	Ui::SettingsForm ui;
 };
 
-#endif // SETTINGSFORM_H
+} // namespace SK.

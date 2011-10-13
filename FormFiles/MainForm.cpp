@@ -1,25 +1,29 @@
 #include "MainForm.h"
-// DEBUG.
+
 #include "osc/OscOutboundPacketStream.h"
 #include "ip/UdpSocket.h"
 
+#include "FormFiles/SettingsForm.h"
+
 #define OUTPUT_BUFFER_SIZE 1024
 
-QString MainForm::sm_defaultIpAddress = "127.0.0.1";
-int MainForm::sm_defaultPort = 8000;
+namespace SK
+{
 
 //////////////////////////////////////////////////////////////////////////
 MainForm::MainForm(QWidget *parent, Qt::WFlags flags)
-	: QMainWindow(parent, flags)
+	: QMainWindow(parent, flags),
+	m_settingsForm(0)
 {
 	ui.setupUi(this);
 
-	// Default values;
-	m_ipAddress = sm_defaultIpAddress;
-	m_port = sm_defaultPort;
+	// Get access to the data model.
+	m_dataModel = DataModel::GetInstance();
+	assert(m_dataModel);
 
-	ui.m_ipAddressLineEdit->setText(m_ipAddress);
-	ui.m_portLineEdit->setText(QString::number(m_port));
+	// Default texts.
+	ui.m_ipAddressLineEdit->setText(QString(m_dataModel->m_ipAddress.c_str()));
+	ui.m_portLineEdit->setText(QString::number(m_dataModel->m_port));
 
 	// Establish all connections.
 	connect(ui.m_ipAddressLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onIpAddressLineEditTextChanged(const QString&)));
@@ -29,25 +33,21 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags)
 	connect(ui.m_stopButton, SIGNAL(clicked()), this, SLOT(onStopButtonClicked()));
 	connect(ui.m_settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsButtonClicked()));
 }
-
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onStartButtonClicked()
 {
-	UdpTransmitSocket transmitSocket(IpEndpointName(m_ipAddress.toStdString().c_str(), m_port));
+	UdpTransmitSocket transmitSocket(IpEndpointName(m_dataModel->m_ipAddress.c_str(), m_dataModel->m_port));
 
 	char buffer[OUTPUT_BUFFER_SIZE];
 	osc::OutboundPacketStream p(buffer, OUTPUT_BUFFER_SIZE);
 
-	//p << osc::BeginBundleImmediate
-	//	<< osc::BeginMessage( "/test1" ) 
-	//	<< true << 23 << (float)3.1415 << "hello" << osc::EndMessage
-	//	<< osc::BeginMessage( "/test2" ) 
-	//	<< true << 24 << (float)10.8 << "world" << osc::EndMessage
-	//	<< osc::EndBundle;
 	p	<< osc::BeginBundleImmediate
-		<< osc::BeginMessage("/1/fader1") 
-		<< 0.56f
-		<< osc::EndMessage
+			<< osc::BeginMessage("/1/fader1") 
+				<< 0.56f
+			<< osc::EndMessage
+			<< osc::BeginMessage("/1/fader2") 
+				<< 0.78f
+			<< osc::EndMessage
 		<< osc::EndBundle;
 
 	transmitSocket.Send(p.Data(), p.Size());
@@ -62,7 +62,8 @@ void MainForm::onStopButtonClicked()
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onSettingsButtonClicked()
 {
-	QMessageBox::information(NULL, "Settings", "Settings button clicked.");
+	m_settingsForm = new SettingsForm(this);
+	m_settingsForm->show();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -139,3 +140,5 @@ void MainForm::newFrameListener( const SK::DataFrameEvent& event )
 	m_device->updateFrame(true);
 	std::cout << event.getFrameID() << std::endl;
 }
+
+} // namespace SK.
