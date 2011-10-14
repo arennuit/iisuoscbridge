@@ -512,14 +512,34 @@
 				</File>
 			</Filter>
 		</Filter>
-		<File
-			RelativePath=".\DataBase.cpp"
+		<Filter
+			Name="DataBase"
 			>
-		</File>
-		<File
-			RelativePath=".\DataBase.h"
-			>
-		</File>
+			<File
+				RelativePath=".\DataBase\DataBase.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DataBase\DataBase.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DataBase\PathAssociation.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DataBase\PathAssociation.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DataBase\PathAssociationVisitor.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DataBase\PathAssociationVisitor.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\iisuOscBridge.ico"
 			>
@@ -530,14 +550,6 @@
 		</File>
 		<File
 			RelativePath=".\main.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\PathAssociation.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\PathAssociation.h"
 			>
 		</File>
 	</Files>

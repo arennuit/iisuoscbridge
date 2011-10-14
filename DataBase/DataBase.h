@@ -27,6 +27,9 @@ public:
 	
 	virtual int getPort() {return m_port;}
 	virtual void setPort(int port) {m_port = port;}
+
+	virtual PathAssociation* getPathsTreeRoot() {return m_pathsTreeRoot;}
+	virtual void setPathsTreeRoot(PathAssociation* pathsTreeRoot) {m_pathsTreeRoot = pathsTreeRoot;}
 	//@}
 
 protected:
@@ -35,14 +38,14 @@ protected:
 
 	static DataBase* sm_instance;
 
-	PathAssociation* m_pathsTreeRoot;
-
 	void setDefaultValues();
 
 	/// \name Application data.
 	//@{
 	std::string m_ipAddress;
 	int m_port;
+
+	PathAssociation* m_pathsTreeRoot;
 	//@}
 };
 

@@ -2,6 +2,7 @@
 
 #include <QtGui>
 #include <QStandardItemModel>
+#include "DataBase/PathAssociationVisitor.h"
 
 class QStandardItem;
 
@@ -9,27 +10,22 @@ namespace SK
 {
 
 //////////////////////////////////////////////////////////////////////////
-class MvdDataModel : public QStandardItemModel
+class MvdDataModel : public QStandardItemModel, public PathAssociationVisitor
 {
 	Q_OBJECT
 
 public:
 	MvdDataModel(QObject *parent = 0);
 
-	bool setData(const QModelIndex& index, const QVariant& value, int role);
-
 	void update();
 
 protected:
+	void visit(PathAssociation* pathAssociation) override;
+	void visit(BooleanPathAssociation* pathAssociation) override {visit((PathAssociation*)pathAssociation);}
+	void visit(Vector3ArrayPathAssociation* pathAssociation) override {visit((PathAssociation*)pathAssociation);}
+	void visit(FloatArrayPathAssociation* pathAssociation) override {visit((PathAssociation*)pathAssociation);}
 
-	enum CustomRolesEnum
-	{
-		RoleIndexRole = Qt::UserRole,
-		ObjectNameRole,
-		FrameQwValueRole,
-
-		CustomRolesNum
-	};
+	QStandardItem* m_parentItem;
 };
 
 } // namespace SK.

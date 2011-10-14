@@ -1,6 +1,6 @@
 #include "MainForm.h"
 #include <QtGui/QApplication>
-#include "DataBase.h"
+#include "DataBase/DataBase.h"
 
 int main(int argc, char *argv[])
 {
