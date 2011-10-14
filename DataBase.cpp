@@ -1,13 +1,13 @@
-#include "DataModel.h"
+#include "DataBase.h"
 #include "PathAssociation.h"
 
 namespace SK
 {
 
-DataModel* DataModel::sm_instance = 0;
+DataBase* DataBase::sm_instance = 0;
 
 //////////////////////////////////////////////////////////////////////////
-DataModel::DataModel() :
+DataBase::DataBase() :
 	m_pathsTreeRoot(0)
 {
 	setDefaultValues();
@@ -18,21 +18,21 @@ DataModel::DataModel() :
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataModel::CreateInstance()
+void DataBase::CreateInstance()
 {
 	if (!sm_instance)
-		sm_instance = new DataModel();
+		sm_instance = new DataBase();
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataModel::DestroyInstance()
+void DataBase::DestroyInstance()
 {
 	if (sm_instance)
 		delete sm_instance;
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataModel::setDefaultValues()
+void DataBase::setDefaultValues()
 {
 	m_ipAddress = std::string("127.0.0.1");
 	m_port = 8000;

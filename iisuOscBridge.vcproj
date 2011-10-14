@@ -161,11 +161,11 @@
 			Name="Widgets"
 			>
 			<File
-				RelativePath=".\Widgets\DataQtModel.cpp"
+				RelativePath=".\Widgets\MvdDataModel.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Widgets\DataQtModel.h"
+				RelativePath=".\Widgets\MvdDataModel.h"
 				>
 				<FileConfiguration
 					Name="Release|Win32"
@@ -173,7 +173,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  &quot;$(InputPath)&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB &quot;-I.&quot; &quot;-I.\GeneratedFiles&quot; &quot;-I$(QTDIR)\include&quot; &quot;-I.\GeneratedFiles\$(ConfigurationName)\.&quot; &quot;-I$(QTDIR)\include\qtmain&quot; &quot;-I$(QTDIR)\include\QtCore&quot; &quot;-I$(QTDIR)\include\QtGui&quot; &quot;-I.&quot; &quot;-I.\..\iisu\iisuSDK\sources\Public&quot; &quot;-I.\OSCPack&quot; &quot;-I.\FormFiles&quot;&#x0D;&#x0A;"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  &quot;$(InputPath)&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB &quot;-I.\GeneratedFiles&quot; &quot;-I$(QTDIR)\include&quot; &quot;-I.\GeneratedFiles\$(ConfigurationName)\.&quot; &quot;-I$(QTDIR)\include\qtmain&quot; &quot;-I$(QTDIR)\include\QtCore&quot; &quot;-I$(QTDIR)\include\QtGui&quot; &quot;-I.&quot; &quot;-I.\..\iisu\iisuSDK\sources\Public&quot; &quot;-I.\OSCPack&quot; &quot;-I.\FormFiles&quot;&#x0D;&#x0A;"
 						AdditionalDependencies="&quot;$(QTDIR)\bin\moc.exe&quot;;$(InputPath)"
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
 					/>
@@ -184,7 +184,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  &quot;$(InputPath)&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_CORE_LIB -DQT_GUI_LIB &quot;-I.&quot; &quot;-I.\GeneratedFiles&quot; &quot;-I$(QTDIR)\include&quot; &quot;-I.\GeneratedFiles\$(ConfigurationName)\.&quot; &quot;-I$(QTDIR)\include\qtmain&quot; &quot;-I$(QTDIR)\include\QtCore&quot; &quot;-I$(QTDIR)\include\QtGui&quot; &quot;-I.&quot; &quot;-I.\..\iisu\iisuSDK\sources\Public&quot; &quot;-I.\OSCPack&quot; &quot;-I.\FormFiles&quot;&#x0D;&#x0A;"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;  &quot;$(InputPath)&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_CORE_LIB -DQT_GUI_LIB &quot;-I.\GeneratedFiles&quot; &quot;-I$(QTDIR)\include&quot; &quot;-I.\GeneratedFiles\$(ConfigurationName)\.&quot; &quot;-I$(QTDIR)\include\qtmain&quot; &quot;-I$(QTDIR)\include\QtCore&quot; &quot;-I$(QTDIR)\include\QtGui&quot; &quot;-I.&quot; &quot;-I.\..\iisu\iisuSDK\sources\Public&quot; &quot;-I.\OSCPack&quot; &quot;-I.\FormFiles&quot;&#x0D;&#x0A;"
 						AdditionalDependencies="&quot;$(QTDIR)\bin\moc.exe&quot;;$(InputPath)"
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
 					/>
@@ -337,7 +337,7 @@
 				SourceControlFiles="false"
 				>
 				<File
-					RelativePath=".\GeneratedFiles\Release\moc_DataQtModel.cpp"
+					RelativePath=".\GeneratedFiles\Release\moc_MainForm.cpp"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
@@ -349,7 +349,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\GeneratedFiles\Release\moc_MainForm.cpp"
+					RelativePath=".\GeneratedFiles\Release\moc_MvdDataModel.cpp"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
@@ -379,7 +379,7 @@
 				SourceControlFiles="false"
 				>
 				<File
-					RelativePath=".\GeneratedFiles\Debug\moc_DataQtModel.cpp"
+					RelativePath=".\GeneratedFiles\Debug\moc_MainForm.cpp"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -391,7 +391,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\GeneratedFiles\Debug\moc_MainForm.cpp"
+					RelativePath=".\GeneratedFiles\Debug\moc_MvdDataModel.cpp"
 					>
 					<FileConfiguration
 						Name="Release|Win32"
@@ -513,11 +513,11 @@
 			</Filter>
 		</Filter>
 		<File
-			RelativePath=".\DataModel.cpp"
+			RelativePath=".\DataBase.cpp"
 			>
 		</File>
 		<File
-			RelativePath=".\DataModel.h"
+			RelativePath=".\DataBase.h"
 			>
 		</File>
 		<File

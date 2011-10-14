@@ -1,4 +1,4 @@
-#include "DataQtModel.h"
+#include "MvdDataModel.h"
 
 #include <QStandardItem>
 #include <QVariant>
@@ -8,14 +8,14 @@ namespace SK
 {
 
 //////////////////////////////////////////////////////////////////////////
-DataQtModel::DataQtModel(QObject *parent) :
+MvdDataModel::MvdDataModel(QObject *parent) :
 	QStandardItemModel(parent)
 {
 
 }
 
 //////////////////////////////////////////////////////////////////////////
-bool DataQtModel::setData(const QModelIndex& index, const QVariant& value, int role)
+bool MvdDataModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
 	//if (!index.isValid() || role != Qt::EditRole)
 	//{
@@ -60,22 +60,31 @@ bool DataQtModel::setData(const QModelIndex& index, const QVariant& value, int r
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataQtModel::update()
+void MvdDataModel::update()
 {
-	//clear();
+	clear();
 
-	//// Get the model manager.
-	//CoreManager* modelManager = CoreManager::GetInstance();
-	//if (!modelManager)
-	//{
-	//	setHorizontalHeaderLabels(QStringList() << "!!! ALERT !!!");
-	//	setItem(0, 0, new QStandardItem("No CoreManager Was Found."));
+	// Describe all data objects and their properties.
+	setHorizontalHeaderLabels(QStringList() << "OSC hierarchy" << "iisu path");
 
-	//	return;
-	//}
+	QStandardItem* item00 = new QStandardItem("00");
+	setItem(0, 0, item00);
 
-	//// Describe all data objects and their properties.
-	//setHorizontalHeaderLabels(QStringList() << "Name" << "Value" << "Type");
+	QStandardItem* item01 = new QStandardItem("01");
+	setItem(0, 1, item01);
+
+	QStandardItem* item10 = new QStandardItem("10");
+	setItem(1, 0, item10);
+
+	QStandardItem* item11 = new QStandardItem("11");
+	setItem(1, 1, item11);
+
+	QStandardItem* sub_0_00 = new QStandardItem("sub0_00");
+	QStandardItem* sub_0_01 = new QStandardItem("sub0_01");
+	QStandardItem* sub_0_10 = new QStandardItem("sub0_10");
+	QStandardItem* sub_0_11 = new QStandardItem("sub0_11");
+	item00->appendRow(QList<QStandardItem*>() << sub_0_00 << sub_0_01);
+	item00->appendRow(QList<QStandardItem*>() << sub_0_10 << sub_0_11);
 
 	//unsigned int object_idx = 0;
 	//for (CoreManager::DataObjectsList::const_iterator object_it = modelManager->getDataObjects().begin(); object_it != modelManager->getDataObjects().end(); ++object_it)

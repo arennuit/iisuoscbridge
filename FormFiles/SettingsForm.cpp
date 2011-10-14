@@ -10,13 +10,14 @@ SettingsForm::SettingsForm(QWidget *parent)
 	ui.setupUi(this);
 
 	// Setup model.
-	ui.m_pathsView->setModel(&m_model);
+	ui.m_pathsView->setModel(&m_mvdModel);
+	m_mvdModel.update();
 }
 
 //////////////////////////////////////////////////////////////////////////
 SettingsForm::~SettingsForm()
 {
-	m_model.clear();
+	m_mvdModel.clear();
 }
 
 } // namespace SK.

@@ -9,12 +9,12 @@ namespace SK
 {
 
 //////////////////////////////////////////////////////////////////////////
-class DataQtModel : public QStandardItemModel
+class MvdDataModel : public QStandardItemModel
 {
 	Q_OBJECT
 
 public:
-	DataQtModel(QObject *parent = 0);
+	MvdDataModel(QObject *parent = 0);
 
 	bool setData(const QModelIndex& index, const QVariant& value, int role);
 
@@ -30,8 +30,6 @@ protected:
 
 		CustomRolesNum
 	};
-
-	QStandardItem* m_objectNameItem;
 };
 
 } // namespace SK.

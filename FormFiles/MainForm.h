@@ -4,7 +4,7 @@
 #include <QMessageBox>
 #include "ui_MainForm.h"
 #include "SDK/iisuSDK.h"
-#include "DataModel.h"
+#include "DataBase.h"
 #include "FormFiles/SettingsForm.h"
 
 namespace SK
@@ -38,7 +38,7 @@ private:
 	Ui::MainFormClass ui;
 	SettingsForm m_settingsForm;
 
-	DataModel* m_dataModel;
+	DataBase* m_dataModel;
 
 	// Iisu.
 	SK::Device* m_device;

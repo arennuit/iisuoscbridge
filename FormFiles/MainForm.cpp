@@ -16,7 +16,7 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags)
 	ui.setupUi(this);
 
 	// Get access to the data model.
-	m_dataModel = DataModel::GetInstance();
+	m_dataModel = DataBase::GetInstance();
 	assert(m_dataModel);
 
 	// Default texts.

@@ -2,7 +2,7 @@
 
 #include <QDialog>
 #include "ui_SettingsForm.h"
-#include "Widgets/DataQtModel.h"
+#include "Widgets/MvdDataModel.h"
 
 namespace SK
 {
@@ -20,7 +20,7 @@ public:
 private:
 	Ui::SettingsForm ui;
 
-	DataQtModel m_model;
+	MvdDataModel m_mvdModel;
 };
 
 } // namespace SK.

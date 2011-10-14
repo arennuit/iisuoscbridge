@@ -9,7 +9,7 @@ class PathAssociation;
 
 //////////////////////////////////////////////////////////////////////////
 /// \class This class is a singleton, it keeps all the data handled by the application.
-class DataModel
+class DataBase
 {
 public:
 
@@ -17,7 +17,7 @@ public:
 	//@{
 	static void CreateInstance();
 	static void DestroyInstance();
-	static DataModel* GetInstance() {return sm_instance;}
+	static DataBase* GetInstance() {return sm_instance;}
 	//@}
 
 	/// \name Accessors.
@@ -30,10 +30,10 @@ public:
 	//@}
 
 protected:
-	DataModel();
-	virtual ~DataModel() {}
+	DataBase();
+	virtual ~DataBase() {}
 
-	static DataModel* sm_instance;
+	static DataBase* sm_instance;
 
 	PathAssociation* m_pathsTreeRoot;
 
