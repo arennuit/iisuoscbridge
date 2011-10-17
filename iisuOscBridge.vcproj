@@ -158,14 +158,22 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Widgets"
+			Name="Mvd"
 			>
 			<File
-				RelativePath=".\Widgets\MvdDataModel.cpp"
+				RelativePath=".\Mvd\MvdController.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Widgets\MvdDataModel.h"
+				RelativePath=".\Mvd\MvdController.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Mvd\MvdDataModel.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Mvd\MvdDataModel.h"
 				>
 				<FileConfiguration
 					Name="Release|Win32"

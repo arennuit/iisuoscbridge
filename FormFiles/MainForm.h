@@ -3,9 +3,8 @@
 #include <QtGui/QMainWindow>
 #include <QMessageBox>
 #include "ui_MainForm.h"
-#include "SDK/iisuSDK.h"
-#include "DataBase/DataBase.h"
 #include "FormFiles/SettingsForm.h"
+#include "Mvd/MvdController.h"
 
 namespace SK
 {
@@ -18,20 +17,13 @@ class MainForm : public QMainWindow
 
 public:
 	MainForm(QWidget *parent = 0, Qt::WFlags flags = 0);
-	~MainForm();
-
-	/// \name Iisu.
-	//@{
-	bool initIisu();
-	bool update();
-	void newFrameListener(const SK::DataFrameEvent& event);
-	//@}
+	~MainForm() {}
 
 protected slots:
-	void onIpAddressLineEditTextChanged(const QString& text) {m_dataModel->setIpAddress(text.toStdString());}
-	void onPortLineEditTextChanged(const QString& text) {m_dataModel->setPort(text.toInt());}
+	void onIpAddressLineEditTextChanged(const QString& text) {m_mvdController->onIpAddressLineEditTextChanged(text.toStdString());}
+	void onPortLineEditTextChanged(const QString& text) {m_mvdController->onPortLineEditTextChanged(text.toInt());}
 
-	void onStartButtonClicked();
+	void onStartButtonClicked() {m_mvdController->onStartButtonClicked();}
 	void onStopButtonClicked();
 	void onSettingsButtonClicked();
 
@@ -42,13 +34,7 @@ protected:
 	SettingsForm m_settingsForm;
 	//@}
 
-	DataBase* m_dataModel;
-
-	/// \name Iisu.
-	//@{
-	SK::Device* m_device;
-	SK::DataHandle<SK::Array<SK::Vector3> > m_skeleton;
-	//@}
+	MvdController* m_mvdController;
 };
 
 } // namespace SK.

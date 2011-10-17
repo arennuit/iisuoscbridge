@@ -2,7 +2,7 @@
 
 #include <QDialog>
 #include "ui_SettingsForm.h"
-#include "Widgets/MvdDataModel.h"
+#include "Mvd/MvdDataModel.h"
 
 namespace SK
 {
