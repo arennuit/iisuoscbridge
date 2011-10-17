@@ -9,14 +9,14 @@ namespace SK
 
 //////////////////////////////////////////////////////////////////////////
 /// \name This class is the controller in the MVD / MVC pattern.
-class MvdController
+class DataController
 {
 public:
 	/// \name Singleton management.
 	//@{
 	static void CreateInstance();
 	static void DestroyInstance();
-	static MvdController* GetInstance() {return sm_instance;}
+	static DataController* GetInstance() {return sm_instance;}
 	//@}
 
 	/// \name Data control.
@@ -29,10 +29,10 @@ public:
 	//@}
 
 protected:
-	MvdController();
-	virtual ~MvdController();
+	DataController();
+	virtual ~DataController();
 
-	static MvdController* sm_instance;
+	static DataController* sm_instance;
 
 	DataBase* m_dataModel;
 

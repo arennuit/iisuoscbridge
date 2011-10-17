@@ -4,7 +4,7 @@
 #include <QMessageBox>
 #include "ui_MainForm.h"
 #include "FormFiles/SettingsForm.h"
-#include "Mvd/MvdController.h"
+#include "DataBase/DataController.h"
 
 namespace SK
 {
@@ -34,7 +34,7 @@ protected:
 	SettingsForm m_settingsForm;
 	//@}
 
-	MvdController* m_mvdController;
+	DataController* m_mvdController;
 };
 
 } // namespace SK.

@@ -1,14 +1,14 @@
-#include "MvdController.h"
+#include "DataController.h"
 
 namespace SK
 {
 
 #define OUTPUT_BUFFER_SIZE 1024
 
-MvdController* MvdController::sm_instance = 0;
+DataController* DataController::sm_instance = 0;
 
 //////////////////////////////////////////////////////////////////////////
-MvdController::MvdController()
+DataController::DataController()
 {
 	// Get access to the data model.
 	m_dataModel = DataBase::GetInstance();
@@ -16,34 +16,34 @@ MvdController::MvdController()
 }
 
 //////////////////////////////////////////////////////////////////////////
-MvdController::~MvdController()
+DataController::~DataController()
 {
 	if(NULL != m_device)
 		SK::Context::Instance().finalize();
 }
 
 //////////////////////////////////////////////////////////////////////////
-void MvdController::CreateInstance()
+void DataController::CreateInstance()
 {
 	if (!sm_instance)
-		sm_instance = new MvdController();
+		sm_instance = new DataController();
 }
 
 //////////////////////////////////////////////////////////////////////////
-void MvdController::DestroyInstance()
+void DataController::DestroyInstance()
 {
 	if (sm_instance)
 		delete sm_instance;
 }
 
 //////////////////////////////////////////////////////////////////////////
-void MvdController::onStopButtonClicked()
+void DataController::onStopButtonClicked()
 {
 
 }
 
 //////////////////////////////////////////////////////////////////////////
-bool MvdController::initIisu()
+bool DataController::initIisu()
 {
 	// Context.
 	SK::Context& context = SK::Context::Instance();
@@ -69,7 +69,7 @@ bool MvdController::initIisu()
 
 	// Data & events registration.
 	m_skeleton = m_device->registerDataHandle< SK::Array<SK::Vector3> >("...");
-	m_device->getEventManager().registerEventListener("DEVICE.DataFrame", *this, &MvdController::newFrameListener);
+	m_device->getEventManager().registerEventListener("DEVICE.DataFrame", *this, &DataController::newFrameListener);
 
 	SK::GetVersionCommand cmd(m_device->getCommandManager());
 
@@ -88,14 +88,14 @@ bool MvdController::initIisu()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void MvdController::newFrameListener( const SK::DataFrameEvent& event )
+void DataController::newFrameListener( const SK::DataFrameEvent& event )
 {
 	m_device->updateFrame(true);
 	std::cout << event.getFrameID() << std::endl;
 }
 
 //////////////////////////////////////////////////////////////////////////
-bool MvdController::update()
+bool DataController::update()
 {
 	m_device->lockFrame();
 

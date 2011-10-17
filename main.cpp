@@ -1,17 +1,18 @@
 #include "MainForm.h"
 #include <QtGui/QApplication>
 #include "DataBase/DataBase.h"
+#include "DataBase/DataController.h"
 
 int main(int argc, char *argv[])
 {
 	SK::DataBase::CreateInstance();
-	SK::MvdController::CreateInstance();
+	SK::DataController::CreateInstance();
 
 	QApplication a(argc, argv);
 	SK::MainForm mainForm;
 	mainForm.show();
 	a.exec();
 
-	SK::MvdController::DestroyInstance();
+	SK::DataController::DestroyInstance();
 	SK::DataBase::DestroyInstance();
 }

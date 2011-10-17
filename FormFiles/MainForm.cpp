@@ -16,7 +16,7 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags)
 	ui.setupUi(this);
 
 	// Get access to the MvdController.
-	m_mvdController = MvdController::GetInstance();
+	m_mvdController = DataController::GetInstance();
 	assert(m_mvdController);
 
 	// Default texts.

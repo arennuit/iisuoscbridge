@@ -161,14 +161,6 @@
 			Name="Mvd"
 			>
 			<File
-				RelativePath=".\Mvd\MvdController.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Mvd\MvdController.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Mvd\MvdDataModel.cpp"
 				>
 			</File>
@@ -529,6 +521,14 @@
 			</File>
 			<File
 				RelativePath=".\DataBase\DataBase.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DataBase\DataController.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DataBase\DataController.h"
 				>
 			</File>
 			<File
