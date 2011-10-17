@@ -34,11 +34,21 @@ void DataBase::setDefaultValues()
 	m_port = 8000;
 
 	m_pathsTreeRoot = new PathAssociation("iisu");
-	new Vector3ArrayPathAssociation("centroids", m_pathsTreeRoot, "USER#.SHAPE.CENTROIDS.Positions");
-	PathAssociation* path_joints = new PathAssociation("joints", m_pathsTreeRoot);
-	new BooleanPathAssociation("status", path_joints, "USER#.SKELETON.Status");
-	new Vector3ArrayPathAssociation("positions", path_joints, "USER#.SKELETON.KeyPoints");
-	new FloatArrayPathAssociation("confidences", path_joints, "USER#.SKELETON.KeyPointsConfidence");
+	// Users #.
+
+	PathAssociation* path_user1 = new PathAssociation("user1", m_pathsTreeRoot);
+	new Vector3ArrayPathAssociation("centroids", path_user1, "USER1.SHAPE.CENTROIDS.Positions");
+	new BooleanPathAssociation("status", path_user1, "USER1.SKELETON.Status");
+	PathAssociation* path_joints1 = new PathAssociation("joints", path_user1);
+	new Vector3ArrayPathAssociation("positions", path_joints1, "USER1.SKELETON.KeyPoints");
+	new FloatArrayPathAssociation("confidences", path_joints1, "USER1.SKELETON.KeyPointsConfidence");
+
+	PathAssociation* path_user2 = new PathAssociation("user2", m_pathsTreeRoot);
+	new Vector3ArrayPathAssociation("centroids", path_user2, "USER2.SHAPE.CENTROIDS.Positions");
+	new BooleanPathAssociation("status", path_user2, "USER2.SKELETON.Status");
+	PathAssociation* path_joints2 = new PathAssociation("joints", path_user2);
+	new Vector3ArrayPathAssociation("positions", path_joints2, "USER2.SKELETON.KeyPoints");
+	new FloatArrayPathAssociation("confidences", path_joints2, "USER2.SKELETON.KeyPointsConfidence");
 }
 
 } // namespace SK.
