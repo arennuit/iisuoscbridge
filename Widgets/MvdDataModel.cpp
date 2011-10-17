@@ -28,25 +28,6 @@ void MvdDataModel::update()
 	// Describe all data objects and their properties.
 	setHorizontalHeaderLabels(QStringList() << "OSC hierarchy" << "iisu path");
 
-	//QStandardItem* item00 = new QStandardItem("00");
-	//setItem(0, 0, item00);
-
-	//QStandardItem* item01 = new QStandardItem("01");
-	//setItem(0, 1, item01);
-
-	//QStandardItem* item10 = new QStandardItem("10");
-	//setItem(1,0, item10);
-
-	//QStandardItem* item11 = new QStandardItem("11");
-	//setItem(1, 1, item11);
-
-	//QStandardItem* sub_0_00 = new QStandardItem("sub0_00");
-	//QStandardItem* sub_0_01 = new QStandardItem("sub0_01");
-	//QStandardItem* sub_0_10 = new QStandardItem("sub0_10");
-	//QStandardItem* sub_0_11 = new QStandardItem("sub0_11");
-	//item00->appendRow(QList<QStandardItem*>() << sub_0_00 << sub_0_01);
-	//item00->appendRow(QList<QStandardItem*>() << sub_0_10 << sub_0_11);
-
 	// Parse the path associations.
 	DataBase::GetInstance()->getPathsTreeRoot()->accept(this);
 }

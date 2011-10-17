@@ -34,7 +34,7 @@ public:
 
 protected:
 	DataBase();
-	virtual ~DataBase() {}
+	virtual ~DataBase();
 
 	static DataBase* sm_instance;
 

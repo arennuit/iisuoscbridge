@@ -7,9 +7,9 @@ int main(int argc, char *argv[])
 	SK::DataBase::CreateInstance();
 
 	QApplication a(argc, argv);
-	SK::MainForm w;
-	w.show();
-	return a.exec();
+	SK::MainForm mainForm;
+	mainForm.show();
+	a.exec();
 
 	SK::DataBase::DestroyInstance();
 }

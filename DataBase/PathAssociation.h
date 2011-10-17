@@ -12,6 +12,7 @@ class PathAssociation
 {
 public:
 	PathAssociation(const std::string& oscPathItem, PathAssociation* parent = 0, const std::string& iisuPath = std::string());
+	virtual ~PathAssociation();
 
 	std::string m_oscPathItem;
 	std::string m_iisuPath;

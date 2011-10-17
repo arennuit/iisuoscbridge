@@ -20,11 +20,12 @@ public:
 	MainForm(QWidget *parent = 0, Qt::WFlags flags = 0);
 	~MainForm();
 
-	// Iisu.
+	/// \name Iisu.
+	//@{
 	bool initIisu();
 	bool update();
-
 	void newFrameListener(const SK::DataFrameEvent& event);
+	//@}
 
 protected slots:
 	void onIpAddressLineEditTextChanged(const QString& text) {m_dataModel->setIpAddress(text.toStdString());}
@@ -34,15 +35,20 @@ protected slots:
 	void onStopButtonClicked();
 	void onSettingsButtonClicked();
 
-private:
+protected:
+	/// \name UI.
+	//@{
 	Ui::MainFormClass ui;
 	SettingsForm m_settingsForm;
+	//@}
 
 	DataBase* m_dataModel;
 
-	// Iisu.
+	/// \name Iisu.
+	//@{
 	SK::Device* m_device;
-	SK::DataHandle< SK::Array<SK::Vector3> > m_skeleton;
+	SK::DataHandle<SK::Array<SK::Vector3> > m_skeleton;
+	//@}
 };
 
 } // namespace SK.
