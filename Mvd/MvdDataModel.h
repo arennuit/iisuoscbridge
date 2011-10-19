@@ -2,6 +2,7 @@
 
 #include <QtGui>
 #include <QStandardItemModel>
+#include <Platform/SkPlatform.h>
 #include "DataBase/PathAssociationVisitor.h"
 
 class QStandardItem;
@@ -21,10 +22,10 @@ public:
 	void update();
 
 protected:
-	void visit(PathAssociation* pathAssociation) override;
-	void visit(BooleanPathAssociation* pathAssociation) override {visit((PathAssociation*)pathAssociation);}
-	void visit(Vector3ArrayPathAssociation* pathAssociation) override {visit((PathAssociation*)pathAssociation);}
-	void visit(FloatArrayPathAssociation* pathAssociation) override {visit((PathAssociation*)pathAssociation);}
+	void visit(PathAssociation* pathAssociation) SK_OVERRIDE;
+	void visit(BooleanPathAssociation* pathAssociation) SK_OVERRIDE;
+	void visit(Vector3ArrayPathAssociation* pathAssociation) SK_OVERRIDE;
+	void visit(FloatArrayPathAssociation* pathAssociation) SK_OVERRIDE;
 
 	QStandardItem* m_parentItem;
 };
