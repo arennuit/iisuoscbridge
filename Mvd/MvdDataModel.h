@@ -3,7 +3,7 @@
 #include <QtGui>
 #include <QStandardItemModel>
 #include <Platform/SkPlatform.h>
-#include "DataBase/PathAssociationVisitor.h"
+#include "DataBase/PathMapItemVisitor.h"
 
 class QStandardItem;
 
@@ -12,7 +12,7 @@ namespace SK
 
 //////////////////////////////////////////////////////////////////////////
 /// \name This class is the model in the MVD / MVC pattern.
-class MvdDataModel : public QStandardItemModel, public PathAssociationVisitor
+class MvdDataModel : public QStandardItemModel, public PathMapItemVisitor
 {
 	Q_OBJECT
 
@@ -22,11 +22,11 @@ public:
 	void update();
 
 protected:
-	void visit(PathAssociation* pathAssociation) SK_OVERRIDE;
-	void visit(DataPathAssociation* pathAssociation) SK_OVERRIDE;
-	void visit(BooleanPathAssociation* pathAssociation) SK_OVERRIDE {visit((DataPathAssociation*)pathAssociation);}
-	void visit(Vector3ArrayPathAssociation* pathAssociation) SK_OVERRIDE {visit((DataPathAssociation*)pathAssociation);}
-	void visit(FloatArrayPathAssociation* pathAssociation) SK_OVERRIDE {visit((DataPathAssociation*)pathAssociation);}
+	void visit(PathMapItem* pathItem) SK_OVERRIDE;
+	void visit(DataPathMapItem* pathItem) SK_OVERRIDE;
+	void visit(BooleanPathMapItem* pathItem) SK_OVERRIDE {visit((DataPathMapItem*)pathItem);}
+	void visit(Vector3ArrayPathMapItem* pathItem) SK_OVERRIDE {visit((DataPathMapItem*)pathItem);}
+	void visit(FloatArrayPathMapItem* pathItem) SK_OVERRIDE {visit((DataPathMapItem*)pathItem);}
 
 	QStandardItem* m_parentItem;
 };

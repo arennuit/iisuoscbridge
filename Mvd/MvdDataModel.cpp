@@ -5,7 +5,7 @@
 #include <QStandardItem>
 #include <QVariant>
 #include <QString>
-#include "DataBase//PathAssociation.h"
+#include "DataBase//PathMapItem.h"
 #include "DataBase/DataBase.h"
 
 namespace SK
@@ -14,7 +14,7 @@ namespace SK
 //////////////////////////////////////////////////////////////////////////
 MvdDataModel::MvdDataModel(QObject *parent) :
 	QStandardItemModel(parent),
-	PathAssociationVisitor(),
+	PathMapItemVisitor(),
 	m_parentItem(0)
 {
 
@@ -33,12 +33,12 @@ void MvdDataModel::update()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void MvdDataModel::visit(PathAssociation* pathAssociation)
+void MvdDataModel::visit(PathMapItem* pathItem)
 {
-	assert(pathAssociation);
+	assert(pathItem);
 
 	// Row.
-	QStandardItem* oscItem = new QStandardItem(pathAssociation->m_oscPathItem.c_str());
+	QStandardItem* oscItem = new QStandardItem(pathItem->m_oscPathItem.c_str());
 	if (!m_parentItem)
 	{
 		setItem(0, 0, oscItem);
@@ -47,25 +47,25 @@ void MvdDataModel::visit(PathAssociation* pathAssociation)
 		m_parentItem->appendRow(QList<QStandardItem*>() << oscItem);
 
 	// Recursive call to children.
-	for (uint i = 0; i < pathAssociation->m_children.size(); ++i)
+	for (uint i = 0; i < pathItem->m_children.size(); ++i)
 	{
 		m_parentItem = oscItem;
-		pathAssociation->m_children[i]->accept(this);
+		pathItem->m_children[i]->accept(this);
 	}
 }
 
 //////////////////////////////////////////////////////////////////////////
-void MvdDataModel::visit(DataPathAssociation* pathAssociation)
+void MvdDataModel::visit(DataPathMapItem* pathItem)
 {
-	assert(pathAssociation);
+	assert(pathItem);
 
 	// TODO: quand je saurai ajouter un item à droite d'un item existant je pourrais appeler l'overload
-	//       de visit() sur PathAssociation et compléter par un itel à droite de oscItem pour iisuItem,
+	//       de visit() sur PathMapItem et compléter par un itel à droite de oscItem pour iisuItem,
 	//       à la place de réécrire tout le code.
 
 	// Row.
-	QStandardItem* oscItem = new QStandardItem(pathAssociation->m_oscPathItem.c_str());
-	QStandardItem* iisuItem = new QStandardItem(pathAssociation->m_iisuPath.c_str());
+	QStandardItem* oscItem = new QStandardItem(pathItem->m_oscPathItem.c_str());
+	QStandardItem* iisuItem = new QStandardItem(pathItem->m_iisuPath.c_str());
 	if (!m_parentItem)
 	{
 		setItem(0, 0, oscItem);
@@ -75,10 +75,10 @@ void MvdDataModel::visit(DataPathAssociation* pathAssociation)
 		m_parentItem->appendRow(QList<QStandardItem*>() << oscItem << iisuItem);
 
 	// Recursive call to children.
-	for (uint i = 0; i < pathAssociation->m_children.size(); ++i)
+	for (uint i = 0; i < pathItem->m_children.size(); ++i)
 	{
 		m_parentItem = oscItem;
-		pathAssociation->m_children[i]->accept(this);
+		pathItem->m_children[i]->accept(this);
 	}
 }
 

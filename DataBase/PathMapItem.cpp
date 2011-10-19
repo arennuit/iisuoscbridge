@@ -1,10 +1,10 @@
-#include "PathAssociation.h"
+#include "PathMapItem.h"
 
 namespace SK
 {
 
 //////////////////////////////////////////////////////////////////////////
-PathAssociation::PathAssociation(const std::string& oscPathItem, PathAssociation* parent/* = 0*/) :
+PathMapItem::PathMapItem(const std::string& oscPathItem, PathMapItem* parent/* = 0*/) :
 	m_oscPathItem(oscPathItem),
 	m_parent(parent)
 {
@@ -13,7 +13,7 @@ PathAssociation::PathAssociation(const std::string& oscPathItem, PathAssociation
 }
 
 //////////////////////////////////////////////////////////////////////////
-PathAssociation::~PathAssociation()
+PathMapItem::~PathMapItem()
 {
 	// Recursive deletion of the children.
 	for (unsigned int i = 0; i < m_children.size(); ++i)

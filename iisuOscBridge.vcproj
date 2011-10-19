@@ -524,19 +524,19 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DataBase\PathAssociation.cpp"
+				RelativePath=".\DataBase\PathMapItem.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\DataBase\PathAssociation.h"
+				RelativePath=".\DataBase\PathMapItem.h"
 				>
 			</File>
 			<File
-				RelativePath=".\DataBase\PathAssociationVisitor.cpp"
+				RelativePath=".\DataBase\PathMapItemVisitor.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\DataBase\PathAssociationVisitor.h"
+				RelativePath=".\DataBase\PathMapItemVisitor.h"
 				>
 			</File>
 		</Filter>

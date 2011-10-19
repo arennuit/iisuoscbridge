@@ -1,5 +1,5 @@
 #include "DataController.h"
-#include "DataBase/PathAssociation.h"
+#include "DataBase/PathMapItem.h"
 #include "IisuPathRegistrator.h"
 
 namespace SK
@@ -21,7 +21,7 @@ DataController::DataController()
 DataController::~DataController()
 {
 	m_dataHandles.clear();
-	m_pathAssociationsLinearized.clear();
+	m_pathMapLinearized.clear();
 
 	if(m_device)
 		SK::Context::Instance().finalize();
@@ -80,13 +80,13 @@ bool DataController::initIisu()
 
 	if (m_dataModel->getPathsTreeRoot())
 	{
-		m_pathAssociationsLinearized.clear();
-		linearizePathAssociations(m_dataModel->getPathsTreeRoot());
+		m_pathMapLinearized.clear();
+		linearizePathMap(m_dataModel->getPathsTreeRoot());
 
 		m_dataHandles.clear();
-		IisuPathRegistrator iisuPathRegistrator(m_device, m_dataHandles, m_pathAssociationsLinearized);
-		for (uint i = 0; i < m_pathAssociationsLinearized.size(); ++i)
-			m_pathAssociationsLinearized[i]->accept(&iisuPathRegistrator);
+		IisuPathRegistrator iisuPathRegistrator(m_device, m_dataHandles, m_pathMapLinearized);
+		for (uint i = 0; i < m_pathMapLinearized.size(); ++i)
+			m_pathMapLinearized[i]->accept(&iisuPathRegistrator);
 	}
 
 	//SK::GetVersionCommand cmd(m_device->getCommandManager());
@@ -120,12 +120,12 @@ bool DataController::update()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::linearizePathAssociations(PathAssociation* pathAssociation)
+void DataController::linearizePathMap(PathMapItem* pathItem)
 {
-	m_pathAssociationsLinearized.push_back(pathAssociation);
+	m_pathMapLinearized.push_back(pathItem);
 
-	for (uint i = 0; i < pathAssociation->m_children.size(); ++i)
-		linearizePathAssociations(pathAssociation->m_children[i]);
+	for (uint i = 0; i < pathItem->m_children.size(); ++i)
+		linearizePathMap(pathItem->m_children[i]);
 }
 
 } // namespace SK.

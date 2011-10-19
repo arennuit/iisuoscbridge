@@ -47,8 +47,8 @@ protected:
 	//SK::DataHandle<SK::Array<SK::Vector3> > m_skeleton;
 	//@}
 
-	void linearizePathAssociations(PathAssociation* pathAssociation);
-	std::vector<PathAssociation*> m_pathAssociationsLinearized;
+	void linearizePathMap(PathMapItem* pathItem);
+	std::vector<PathMapItem*> m_pathMapLinearized;
 };
 
 } // namespace SK.

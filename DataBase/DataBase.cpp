@@ -1,5 +1,5 @@
 #include "DataBase.h"
-#include "PathAssociation.h"
+#include "PathMapItem.h"
 
 namespace SK
 {
@@ -39,22 +39,22 @@ void DataBase::setDefaultValues()
 	m_ipAddress = std::string("127.0.0.1");
 	m_port = 8000;
 
-	m_pathsTreeRoot = new PathAssociation("iisu");
+	m_pathsTreeRoot = new PathMapItem("iisu");
 	// Users #.
 
-	PathAssociation* path_user1 = new PathAssociation("user1", m_pathsTreeRoot);
-	new Vector3ArrayPathAssociation("centroids", "USER1.SHAPE.CENTROIDS.Positions", path_user1);
-	new BooleanPathAssociation("status", "USER1.SKELETON.Status", path_user1);
-	PathAssociation* path_joints1 = new PathAssociation("joints", path_user1);
-	new Vector3ArrayPathAssociation("positions", "USER1.SKELETON.KeyPoints", path_joints1);
-	new FloatArrayPathAssociation("confidences", "USER1.SKELETON.KeyPointsConfidence", path_joints1);
+	PathMapItem* path_user1 = new PathMapItem("user1", m_pathsTreeRoot);
+	new Vector3ArrayPathMapItem("centroids", "USER1.SHAPE.CENTROIDS.Positions", path_user1);
+	new BooleanPathMapItem("status", "USER1.SKELETON.Status", path_user1);
+	PathMapItem* path_joints1 = new PathMapItem("joints", path_user1);
+	new Vector3ArrayPathMapItem("positions", "USER1.SKELETON.KeyPoints", path_joints1);
+	new FloatArrayPathMapItem("confidences", "USER1.SKELETON.KeyPointsConfidence", path_joints1);
 
-	PathAssociation* path_user2 = new PathAssociation("user2", m_pathsTreeRoot);
-	new Vector3ArrayPathAssociation("centroids", "USER2.SHAPE.CENTROIDS.Positions", path_user2);
-	new BooleanPathAssociation("status", "USER2.SKELETON.Status", path_user2);
-	PathAssociation* path_joints2 = new PathAssociation("joints", path_user2);
-	new Vector3ArrayPathAssociation("positions", "USER2.SKELETON.KeyPoints", path_joints2);
-	new FloatArrayPathAssociation("confidences", "USER2.SKELETON.KeyPointsConfidence", path_joints2);
+	PathMapItem* path_user2 = new PathMapItem("user2", m_pathsTreeRoot);
+	new Vector3ArrayPathMapItem("centroids", "USER2.SHAPE.CENTROIDS.Positions", path_user2);
+	new BooleanPathMapItem("status", "USER2.SKELETON.Status", path_user2);
+	PathMapItem* path_joints2 = new PathMapItem("joints", path_user2);
+	new Vector3ArrayPathMapItem("positions", "USER2.SKELETON.KeyPoints", path_joints2);
+	new FloatArrayPathMapItem("confidences", "USER2.SKELETON.KeyPointsConfidence", path_joints2);
 }
 
 } // namespace SK.

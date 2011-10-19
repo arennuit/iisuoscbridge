@@ -5,7 +5,7 @@
 namespace SK
 {
 
-class PathAssociation;
+class PathMapItem;
 
 //////////////////////////////////////////////////////////////////////////
 /// \class This class is a singleton, it keeps all the data handled by the application.
@@ -28,8 +28,8 @@ public:
 	virtual int getPort() {return m_port;}
 	virtual void setPort(int port) {m_port = port;}
 
-	virtual PathAssociation* getPathsTreeRoot() {return m_pathsTreeRoot;}
-	virtual void setPathsTreeRoot(PathAssociation* pathsTreeRoot) {m_pathsTreeRoot = pathsTreeRoot;}
+	virtual PathMapItem* getPathsTreeRoot() {return m_pathsTreeRoot;}
+	virtual void setPathsTreeRoot(PathMapItem* pathsTreeRoot) {m_pathsTreeRoot = pathsTreeRoot;}
 	//@}
 
 protected:
@@ -45,7 +45,7 @@ protected:
 	std::string m_ipAddress;
 	int m_port;
 
-	PathAssociation* m_pathsTreeRoot;
+	PathMapItem* m_pathsTreeRoot;
 	//@}
 };
 
