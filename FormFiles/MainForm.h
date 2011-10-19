@@ -24,7 +24,7 @@ protected slots:
 	void onPortLineEditTextChanged(const QString& text) {m_mvdController->onPortLineEditTextChanged(text.toInt());}
 
 	void onStartButtonClicked() {m_mvdController->onStartButtonClicked();}
-	void onStopButtonClicked();
+	void onStopButtonClicked() {m_mvdController->onStopButtonClicked();}
 	void onSettingsButtonClicked();
 
 protected:

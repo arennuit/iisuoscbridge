@@ -56,12 +56,6 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags)
 //}
 
 //////////////////////////////////////////////////////////////////////////
-void MainForm::onStopButtonClicked()
-{
-	QMessageBox::information(NULL, "Stop", "Stop button clicked.");
-}
-
-//////////////////////////////////////////////////////////////////////////
 void MainForm::onSettingsButtonClicked()
 {
 	m_settingsForm.show();

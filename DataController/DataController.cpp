@@ -10,7 +10,8 @@ namespace SK
 DataController* DataController::sm_instance = 0;
 
 //////////////////////////////////////////////////////////////////////////
-DataController::DataController()
+DataController::DataController() :
+	m_device(0)
 {
 	// Get access to the data model.
 	m_dataModel = DataBase::GetInstance();
@@ -44,7 +45,11 @@ void DataController::DestroyInstance()
 //////////////////////////////////////////////////////////////////////////
 void DataController::onStopButtonClicked()
 {
-
+	if(m_device)
+	{
+		SK::Context::Instance().finalize();
+		m_device = 0;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
