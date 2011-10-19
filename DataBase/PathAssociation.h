@@ -24,40 +24,44 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////////
-class BooleanPathAssociation : public PathAssociation
+class DataPathAssociation : public PathAssociation
 {
 public:
-	BooleanPathAssociation(const std::string& oscPathItem, PathAssociation* parent = 0, const std::string& iisuPath = std::string()) :
+	DataPathAssociation(const std::string& oscPathItem, const std::string& iisuPath, PathAssociation* parent = 0) :
 		PathAssociation(oscPathItem, parent),
 		m_iisuPath(iisuPath) {}
 
 	std::string m_iisuPath;
+
+	void accept(PathAssociationVisitor* visitor) SK_OVERRIDE = 0;
+};
+
+//////////////////////////////////////////////////////////////////////////
+class BooleanPathAssociation : public DataPathAssociation
+{
+public:
+	BooleanPathAssociation(const std::string& oscPathItem, const std::string& iisuPath, PathAssociation* parent = 0) :
+		DataPathAssociation(oscPathItem, iisuPath, parent) {}
 
 	void accept(PathAssociationVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}
 };
 
 //////////////////////////////////////////////////////////////////////////
-class Vector3ArrayPathAssociation : public PathAssociation
+class Vector3ArrayPathAssociation : public DataPathAssociation
 {
 public:
-	Vector3ArrayPathAssociation(const std::string& oscPathItem, PathAssociation* parent = 0, const std::string& iisuPath = std::string()) :
-		PathAssociation(oscPathItem, parent),
-		m_iisuPath(iisuPath) {}
-
-	std::string m_iisuPath;
+	Vector3ArrayPathAssociation(const std::string& oscPathItem, const std::string& iisuPath, PathAssociation* parent = 0) :
+		DataPathAssociation(oscPathItem, iisuPath, parent) {}
 
 	void accept(PathAssociationVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}
 };
 
 //////////////////////////////////////////////////////////////////////////
-class FloatArrayPathAssociation : public PathAssociation
+class FloatArrayPathAssociation : public DataPathAssociation
 {
 public:
-	FloatArrayPathAssociation(const std::string& oscPathItem, PathAssociation* parent = 0, const std::string& iisuPath = std::string()) :
-		PathAssociation(oscPathItem, parent),
-		m_iisuPath(iisuPath) {}
-
-	std::string m_iisuPath;
+	FloatArrayPathAssociation(const std::string& oscPathItem, const std::string& iisuPath, PathAssociation* parent = 0) :
+		DataPathAssociation(oscPathItem, iisuPath, parent) {}
 
 	void accept(PathAssociationVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}
 };

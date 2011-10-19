@@ -23,9 +23,10 @@ public:
 
 protected:
 	void visit(PathAssociation* pathAssociation) SK_OVERRIDE;
-	void visit(BooleanPathAssociation* pathAssociation) SK_OVERRIDE;
-	void visit(Vector3ArrayPathAssociation* pathAssociation) SK_OVERRIDE;
-	void visit(FloatArrayPathAssociation* pathAssociation) SK_OVERRIDE;
+	void visit(DataPathAssociation* pathAssociation) SK_OVERRIDE;
+	void visit(BooleanPathAssociation* pathAssociation) SK_OVERRIDE {visit((DataPathAssociation*)pathAssociation);}
+	void visit(Vector3ArrayPathAssociation* pathAssociation) SK_OVERRIDE {visit((DataPathAssociation*)pathAssociation);}
+	void visit(FloatArrayPathAssociation* pathAssociation) SK_OVERRIDE {visit((DataPathAssociation*)pathAssociation);}
 
 	QStandardItem* m_parentItem;
 };
