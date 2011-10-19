@@ -43,8 +43,12 @@ protected:
 	void newFrameListener(const SK::DataFrameEvent& event);
 
 	SK::Device* m_device;
-	SK::DataHandle<SK::Array<SK::Vector3> > m_skeleton;
+	std::vector<IIisuDataExtractor*> m_dataHandles;
+	//SK::DataHandle<SK::Array<SK::Vector3> > m_skeleton;
 	//@}
+
+	void linearizePathAssociations(PathAssociation* pathAssociation);
+	std::vector<PathAssociation*> m_pathAssociationsLinearized;
 };
 
 } // namespace SK.

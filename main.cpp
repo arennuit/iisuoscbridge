@@ -1,8 +1,9 @@
 #include "MainForm.h"
 #include <QtGui/QApplication>
 #include "DataBase/DataBase.h"
-#include "DataBase/DataController.h"
+#include "DataController/DataController.h"
 
+//////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])
 {
 	SK::DataBase::CreateInstance();

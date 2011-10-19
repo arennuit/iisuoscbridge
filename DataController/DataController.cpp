@@ -1,4 +1,6 @@
 #include "DataController.h"
+#include "DataBase/PathAssociation.h"
+#include "IisuPathRegistrator.h"
 
 namespace SK
 {
@@ -18,7 +20,10 @@ DataController::DataController()
 //////////////////////////////////////////////////////////////////////////
 DataController::~DataController()
 {
-	if(NULL != m_device)
+	m_dataHandles.clear();
+	m_pathAssociationsLinearized.clear();
+
+	if(m_device)
 		SK::Context::Instance().finalize();
 }
 
@@ -51,7 +56,10 @@ bool DataController::initIisu()
 	// Handle.
 	SK::Return<SK::IisuHandle*> retHandle = context.createHandle(SK::IisuHandle::Configuration());
 	if(retHandle.failed())
+	{
+		std::cout << retHandle.getDescription() << std::endl;
 		return false;
+	}
 	SK::IisuHandle* handle = retHandle.get();
 
 	// Device.
@@ -68,19 +76,24 @@ bool DataController::initIisu()
 	m_device = retDevice.get();
 
 	// Data & events registration.
-	m_skeleton = m_device->registerDataHandle< SK::Array<SK::Vector3> >("...");
 	m_device->getEventManager().registerEventListener("DEVICE.DataFrame", *this, &DataController::newFrameListener);
 
-	SK::GetVersionCommand cmd(m_device->getCommandManager());
-
-	//	SK::CommandHandle<SK::Return<SK::String>()> cmd2(m_device->getCommandManager(), "SYSTEM.GetVersion");
-
-	SK::Return<SK::String> retCmd = cmd();
-
-	if(retCmd.succeeded())
+	if (m_dataModel->getPathsTreeRoot())
 	{
-		std::cout << retCmd.get() << std::endl;
+		m_pathAssociationsLinearized.clear();
+		linearizePathAssociations(m_dataModel->getPathsTreeRoot());
+
+		m_dataHandles.clear();
+		IisuPathRegistrator iisuPathRegistrator(m_device, m_dataHandles, m_pathAssociationsLinearized);
+		for (uint i = 0; i < m_pathAssociationsLinearized.size(); ++i)
+			m_pathAssociationsLinearized[i]->accept(&iisuPathRegistrator);
 	}
+
+	//SK::GetVersionCommand cmd(m_device->getCommandManager());
+	////	SK::CommandHandle<SK::Return<SK::String>()> cmd2(m_device->getCommandManager(), "SYSTEM.GetVersion");
+	//SK::Return<SK::String> retCmd = cmd();
+	//if(retCmd.succeeded())
+	//	std::cout << retCmd.get() << std::endl;
 
 	m_device->start();
 
@@ -99,11 +112,20 @@ bool DataController::update()
 {
 	m_device->lockFrame();
 
-	const SK::Array<SK::Vector3>& keyPoints = m_skeleton.get();
+	//const SK::Array<SK::Vector3>& keyPoints = m_skeleton.get();
 
 	m_device->releaseFrame();
 
 	return true;
+}
+
+//////////////////////////////////////////////////////////////////////////
+void DataController::linearizePathAssociations(PathAssociation* pathAssociation)
+{
+	m_pathAssociationsLinearized.push_back(pathAssociation);
+
+	for (uint i = 0; i < pathAssociation->m_children.size(); ++i)
+		linearizePathAssociations(pathAssociation->m_children[i]);
 }
 
 } // namespace SK.

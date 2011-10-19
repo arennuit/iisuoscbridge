@@ -125,9 +125,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="qtmaind.lib QtCored4.lib QtGuid4.lib iisuSDK.lib Ws2_32.lib winmm.lib"
+				AdditionalDependencies="qtmaind.lib QtCored4.lib QtGuid4.lib iisuSDK-r.lib Ws2_32.lib winmm.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
-				AdditionalLibraryDirectories="$(QTDIR)\lib;..\bin"
+				AdditionalLibraryDirectories="&quot;$(QTDIR)\lib&quot;;..\bin"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 			/>
@@ -524,14 +524,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DataBase\DataController.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\DataBase\DataController.h"
-				>
-			</File>
-			<File
 				RelativePath=".\DataBase\PathAssociation.cpp"
 				>
 			</File>
@@ -545,6 +537,26 @@
 			</File>
 			<File
 				RelativePath=".\DataBase\PathAssociationVisitor.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="DataController"
+			>
+			<File
+				RelativePath=".\DataController\DataController.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DataController\DataController.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DataController\IisuPathRegistrator.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DataController\IisuPathRegistrator.h"
 				>
 			</File>
 		</Filter>

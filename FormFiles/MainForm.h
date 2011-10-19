@@ -4,7 +4,7 @@
 #include <QMessageBox>
 #include "ui_MainForm.h"
 #include "FormFiles/SettingsForm.h"
-#include "DataBase/DataController.h"
+#include "DataController/DataController.h"
 
 namespace SK
 {

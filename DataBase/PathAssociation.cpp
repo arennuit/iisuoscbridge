@@ -4,10 +4,9 @@ namespace SK
 {
 
 //////////////////////////////////////////////////////////////////////////
-PathAssociation::PathAssociation(const std::string& oscPathItem, PathAssociation* parent/* = 0*/, const std::string& iisuPath/* = std::string()*/) :
+PathAssociation::PathAssociation(const std::string& oscPathItem, PathAssociation* parent/* = 0*/) :
 	m_oscPathItem(oscPathItem),
-	m_parent(parent),
-	m_iisuPath(iisuPath)
+	m_parent(parent)
 {
 	if (m_parent)
 		m_parent->m_children.push_back(this);
