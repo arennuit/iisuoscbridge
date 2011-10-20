@@ -20,12 +20,15 @@ public:
 	~MainForm() {}
 
 protected slots:
+	/// \name UI logic.
+	//@{
 	void onIpAddressLineEditTextChanged(const QString& text) {m_mvdController->onIpAddressLineEditTextChanged(text.toStdString());}
 	void onPortLineEditTextChanged(const QString& text) {m_mvdController->onPortLineEditTextChanged(text.toInt());}
 
 	void onStartButtonClicked() {m_mvdController->onStartButtonClicked();}
 	void onStopButtonClicked() {m_mvdController->onStopButtonClicked();}
-	void onSettingsButtonClicked();
+	void onSettingsButtonClicked() {m_settingsForm.show();}
+	//@}
 
 protected:
 	/// \name UI.

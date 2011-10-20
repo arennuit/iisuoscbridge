@@ -1,8 +1,5 @@
 #include "MainForm.h"
 
-#include "osc/OscOutboundPacketStream.h"
-#include "ip/UdpSocket.h"
-
 #include "DataBase/DataBase.h"
 
 namespace SK
@@ -33,32 +30,6 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags)
 	connect(ui.m_startButton, SIGNAL(clicked()), this, SLOT(onStartButtonClicked()));
 	connect(ui.m_stopButton, SIGNAL(clicked()), this, SLOT(onStopButtonClicked()));
 	connect(ui.m_settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsButtonClicked()));
-}
-
-////////////////////////////////////////////////////////////////////////////
-//void MainForm::onStartButtonClicked()
-//{
-//	UdpTransmitSocket transmitSocket(IpEndpointName(m_dataModel->getIpAddress().c_str(), m_dataModel->getPort()));
-//
-//	char buffer[OUTPUT_BUFFER_SIZE];
-//	osc::OutboundPacketStream p(buffer, OUTPUT_BUFFER_SIZE);
-//
-//	p	<< osc::BeginBundleImmediate
-//		<< osc::BeginMessage("/1/fader1") 
-//		<< 0.56f
-//		<< osc::EndMessage
-//		<< osc::BeginMessage("/1/fader2") 
-//		<< 0.78f
-//		<< osc::EndMessage
-//		<< osc::EndBundle;
-//
-//	transmitSocket.Send(p.Data(), p.Size());
-//}
-
-//////////////////////////////////////////////////////////////////////////
-void MainForm::onSettingsButtonClicked()
-{
-	m_settingsForm.show();
 }
 
 } // namespace SK.

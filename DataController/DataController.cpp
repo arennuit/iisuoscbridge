@@ -1,12 +1,13 @@
 #include "DataController.h"
 #include "DataBase/PathMapItem.h"
-#include "Visitors/IisuPathRegistrator.h"
+#include "Visitors/IisuDataRegistrator.h"
 #include "Visitors/IisuReaderOscSender.h"
+
+#include "osc/OscOutboundPacketStream.h"
+#include "ip/UdpSocket.h"
 
 namespace SK
 {
-
-#define OUTPUT_BUFFER_SIZE 1024
 
 DataController* DataController::sm_instance = 0;
 
@@ -15,8 +16,8 @@ DataController::DataController() :
 	m_device(0)
 {
 	// Get access to the data model.
-	m_dataModel = DataBase::GetInstance();
-	assert(m_dataModel);
+	m_dataBase = DataBase::GetInstance();
+	assert(m_dataBase);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -45,11 +46,11 @@ void DataController::DestroyInstance()
 bool DataController::initIisu()
 {
 	// Linearize path items.
-	if (!m_dataModel->getPathsTreeRoot())
+	if (!m_dataBase->getPathsTreeRoot())
 		return false;
 
 	m_pathMapLinearized.clear();
-	linearizePathMap(m_dataModel->getPathsTreeRoot());
+	linearizePathMap(m_dataBase->getPathsTreeRoot());
 
 	// Find the full path of each DataPathMapItem.
 	m_fullOscPaths.clear();
@@ -91,8 +92,8 @@ bool DataController::initIisu()
 	m_device->getEventManager().registerEventListener("DEVICE.DataFrame", *this, &DataController::newDataFrameListenerIisu);
 
 	// Iisu data handles registration.
-	m_dataHandles.clear();
-	IisuPathRegistrator iisuPathRegistrator(m_device, m_dataHandles, m_pathMapLinearized);
+	m_iisuDataHandles.clear();
+	IisuDataRegistrator iisuPathRegistrator(m_device, m_iisuDataHandles, m_pathMapLinearized);
 	for (uint i = 0; i < m_pathMapLinearized.size(); ++i)
 		m_pathMapLinearized[i]->accept(&iisuPathRegistrator);
 
@@ -119,7 +120,7 @@ void DataController::newDataFrameListenerIisu( const SK::DataFrameEvent& event )
 //////////////////////////////////////////////////////////////////////////
 void DataController::termIisu()
 {
-	m_dataHandles.clear();
+	m_iisuDataHandles.clear();
 
 	if (m_device)
 	{
@@ -161,7 +162,21 @@ void DataController::oscSend()
 {
 	m_device->lockFrame();
 
-	//const SK::Array<SK::Vector3>& keyPoints = m_skeleton.get();
+	UdpTransmitSocket transmitSocket(IpEndpointName(m_dataBase->getIpAddress().c_str(), m_dataBase->getPort()));
+	osc::OutboundPacketStream outPacketStream(m_oscBuffer, OUTPUT_BUFFER_SIZE);
+
+	outPacketStream	<< osc::BeginBundleImmediate;;
+
+	IisuReaderOscSender iisuReaderOscSender(&outPacketStream);
+	for (uint i = 0; i < m_pathMapLinearized.size(); ++i)
+	{
+		iisuReaderOscSender.setPathItemData(m_fullOscPaths[i], m_iisuDataHandles[i]);
+		m_pathMapLinearized[i]->accept(&iisuReaderOscSender);
+	}
+
+	outPacketStream	<< osc::EndBundle;
+
+	transmitSocket.Send(outPacketStream.Data(), outPacketStream.Size());
 
 	m_device->releaseFrame();
 }

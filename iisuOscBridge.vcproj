@@ -555,11 +555,11 @@
 				Name="Visitors"
 				>
 				<File
-					RelativePath=".\DataController\Visitors\IisuPathRegistrator.cpp"
+					RelativePath=".\DataController\Visitors\IisuDataRegistrator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\DataController\Visitors\IisuPathRegistrator.h"
+					RelativePath=".\DataController\Visitors\IisuDataRegistrator.h"
 					>
 				</File>
 				<File

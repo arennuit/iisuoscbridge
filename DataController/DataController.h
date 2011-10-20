@@ -4,6 +4,8 @@
 #include "SDK/iisuSDK.h"
 #include <string>
 
+#define OUTPUT_BUFFER_SIZE 32768
+
 namespace SK
 {
 
@@ -21,8 +23,8 @@ public:
 
 	/// \name Data control.
 	//@{
-	void onIpAddressLineEditTextChanged(const std::string& newIpAddress) {m_dataModel->setIpAddress(newIpAddress);}
-	void onPortLineEditTextChanged(int newPort) {m_dataModel->setPort(newPort);}
+	void onIpAddressLineEditTextChanged(const std::string& newIpAddress) {m_dataBase->setIpAddress(newIpAddress);}
+	void onPortLineEditTextChanged(int newPort) {m_dataBase->setPort(newPort);}
 
 	void onStartButtonClicked() {initIisu();}
 	void onStopButtonClicked() {termIisu();}
@@ -34,7 +36,13 @@ protected:
 
 	static DataController* sm_instance;
 
-	DataBase* m_dataModel;
+	/// \name Temporaries.
+	//@{
+	DataBase* m_dataBase;
+
+	void linearizePathMap(PathMapItem* pathItem);
+	std::vector<PathMapItem*> m_pathMapLinearized;
+	//@}
 
 	/// \name Iisu.
 	//@{
@@ -43,16 +51,17 @@ protected:
 	void termIisu();
 
 	SK::Device* m_device;
-	std::vector<IIisuDataExtractor*> m_dataHandles;
-	//SK::DataHandle<SK::Array<SK::Vector3> > m_skeleton;
+	std::vector<SK::IIisuDataExtractor*> m_iisuDataHandles;
 	//@}
 
-	void linearizePathMap(PathMapItem* pathItem);
-	std::vector<PathMapItem*> m_pathMapLinearized;
-
+	/// \name Osc.
+	//@{
 	std::vector<std::string> m_fullOscPaths;
 	std::string findFullOscPath(PathMapItem* pathItem);
 	void oscSend();
+
+	char m_oscBuffer[OUTPUT_BUFFER_SIZE];
+	//@}
 };
 
 } // namespace SK.
