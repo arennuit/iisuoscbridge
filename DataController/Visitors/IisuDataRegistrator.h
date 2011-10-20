@@ -13,11 +13,11 @@ class PathMapItem;
 
 //////////////////////////////////////////////////////////////////////////
 /// \name This class is a visitor that makes the path registration in iisu for the PathMapItem objects.
-class IisuPathRegistrator : public PathMapItemVisitor
+class IisuDataRegistrator : public PathMapItemVisitor
 {
 public:
-	IisuPathRegistrator(SK::Device* device, std::vector<IIisuDataExtractor*>& dataHandles, std::vector<PathMapItem*>& pathAssociators);
-	~IisuPathRegistrator() {}
+	IisuDataRegistrator(SK::Device* device, std::vector<SK::IIisuDataExtractor*>& dataHandles, std::vector<PathMapItem*>& pathAssociators);
+	~IisuDataRegistrator() {}
 
 protected:
 	/// \name Visitor's methods.

@@ -1,4 +1,4 @@
-#include "IisuPathRegistrator.h"
+#include "IisuDataRegistrator.h"
 #include "SDK/iisuSDK.h"
 #include "DataBase/PathMapItem.h"
 
@@ -6,7 +6,7 @@ namespace SK
 {
 
 //////////////////////////////////////////////////////////////////////////
-IisuPathRegistrator::IisuPathRegistrator(SK::Device* device, std::vector<IIisuDataExtractor*>& dataHandles, std::vector<PathMapItem*>& pathAssociators) :
+	IisuDataRegistrator::IisuDataRegistrator(SK::Device* device, std::vector<SK::IIisuDataExtractor*>& dataHandles, std::vector<PathMapItem*>& pathAssociators) :
 	PathMapItemVisitor(),
 	m_device(device),
 	m_dataHandles(dataHandles),
@@ -16,7 +16,7 @@ IisuPathRegistrator::IisuPathRegistrator(SK::Device* device, std::vector<IIisuDa
 }
 
 //////////////////////////////////////////////////////////////////////////
-void IisuPathRegistrator::visit(PathMapItem* pathItem)
+void IisuDataRegistrator::visit(PathMapItem* pathItem)
 {
 	assert(pathItem);
 
@@ -25,7 +25,7 @@ void IisuPathRegistrator::visit(PathMapItem* pathItem)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void IisuPathRegistrator::visit(BooleanPathMapItem* pathItem)
+void IisuDataRegistrator::visit(BooleanPathMapItem* pathItem)
 {
 	assert(pathItem);
 
@@ -36,7 +36,7 @@ void IisuPathRegistrator::visit(BooleanPathMapItem* pathItem)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void IisuPathRegistrator::visit(Vector3ArrayPathMapItem* pathItem)
+void IisuDataRegistrator::visit(Vector3ArrayPathMapItem* pathItem)
 {
 	assert(pathItem);
 
@@ -50,7 +50,7 @@ void IisuPathRegistrator::visit(Vector3ArrayPathMapItem* pathItem)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void IisuPathRegistrator::visit(FloatArrayPathMapItem* pathItem)
+void IisuDataRegistrator::visit(FloatArrayPathMapItem* pathItem)
 {
 	assert(pathItem);
 
