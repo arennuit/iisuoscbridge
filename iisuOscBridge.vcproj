@@ -551,14 +551,26 @@
 				RelativePath=".\DataController\DataController.h"
 				>
 			</File>
-			<File
-				RelativePath=".\DataController\IisuPathRegistrator.cpp"
+			<Filter
+				Name="Visitors"
 				>
-			</File>
-			<File
-				RelativePath=".\DataController\IisuPathRegistrator.h"
-				>
-			</File>
+				<File
+					RelativePath=".\DataController\Visitors\IisuPathRegistrator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DataController\Visitors\IisuPathRegistrator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DataController\Visitors\IisuReaderOscSender.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DataController\Visitors\IisuReaderOscSender.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\iisuOscBridge.ico"

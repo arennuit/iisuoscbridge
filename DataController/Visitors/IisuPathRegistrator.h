@@ -20,11 +20,14 @@ public:
 	~IisuPathRegistrator() {}
 
 protected:
+	/// \name Visitor's methods.
+	//@{
 	void visit(PathMapItem* pathItem) SK_OVERRIDE;
 	void visit(DataPathMapItem* pathItem) SK_OVERRIDE {}
 	void visit(BooleanPathMapItem* pathItem) SK_OVERRIDE;
 	void visit(Vector3ArrayPathMapItem* pathItem) SK_OVERRIDE;
 	void visit(FloatArrayPathMapItem* pathItem) SK_OVERRIDE;
+	//@}
 
 	SK::Device* m_device;
 	std::vector<IIisuDataExtractor*>& m_dataHandles;

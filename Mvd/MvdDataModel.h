@@ -22,11 +22,14 @@ public:
 	void update();
 
 protected:
+	/// \name Visitor's methods.
+	//@{
 	void visit(PathMapItem* pathItem) SK_OVERRIDE;
 	void visit(DataPathMapItem* pathItem) SK_OVERRIDE;
 	void visit(BooleanPathMapItem* pathItem) SK_OVERRIDE {visit((DataPathMapItem*)pathItem);}
 	void visit(Vector3ArrayPathMapItem* pathItem) SK_OVERRIDE {visit((DataPathMapItem*)pathItem);}
 	void visit(FloatArrayPathMapItem* pathItem) SK_OVERRIDE {visit((DataPathMapItem*)pathItem);}
+	//@}
 
 	QStandardItem* m_parentItem;
 };

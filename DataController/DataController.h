@@ -25,7 +25,7 @@ public:
 	void onPortLineEditTextChanged(int newPort) {m_dataModel->setPort(newPort);}
 
 	void onStartButtonClicked() {initIisu();}
-	void onStopButtonClicked();
+	void onStopButtonClicked() {termIisu();}
 	//@}
 
 protected:
@@ -39,8 +39,8 @@ protected:
 	/// \name Iisu.
 	//@{
 	bool initIisu();
-	bool update();
-	void newFrameListener(const SK::DataFrameEvent& event);
+	void newDataFrameListenerIisu(const SK::DataFrameEvent& event);
+	void termIisu();
 
 	SK::Device* m_device;
 	std::vector<IIisuDataExtractor*> m_dataHandles;
@@ -49,6 +49,10 @@ protected:
 
 	void linearizePathMap(PathMapItem* pathItem);
 	std::vector<PathMapItem*> m_pathMapLinearized;
+
+	std::vector<std::string> m_fullOscPaths;
+	std::string findFullOscPath(PathMapItem* pathItem);
+	void oscSend();
 };
 
 } // namespace SK.
