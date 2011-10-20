@@ -40,8 +40,13 @@ void IisuPathRegistrator::visit(Vector3ArrayPathMapItem* pathItem)
 {
 	assert(pathItem);
 
-	// TODO: register a data handle.
-	m_dataHandles.push_back(0);
+	//SK::DataHandle< SK::Array<SK::Vector3> > m_skeleton;
+	//m_skeleton = m_device->registerDataHandle< SK::Array<SK::Vector3> >("...");
+
+	// Register iisu path.
+	SK::DataHandle<SK::Array<SK::Vector3> >* handle = new SK::DataHandle<SK::Array<SK::Vector3> >();
+	*handle = m_device->registerDataHandle<SK::Array<SK::Vector3> >(pathItem->m_iisuPath.c_str());
+	m_dataHandles.push_back(handle);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -49,8 +54,10 @@ void IisuPathRegistrator::visit(FloatArrayPathMapItem* pathItem)
 {
 	assert(pathItem);
 
-	// TODO: register a data handle.
-	m_dataHandles.push_back(0);
+	// Register iisu path.
+	SK::DataHandle<SK::Array<float> >* handle = new SK::DataHandle<SK::Array<float> >();
+	*handle = m_device->registerDataHandle<SK::Array<float> >(pathItem->m_iisuPath.c_str());
+	m_dataHandles.push_back(handle);
 }
 
 } // namespace SK.
