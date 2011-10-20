@@ -62,9 +62,9 @@ bool DataController::initIisu()
 
 	// Iisu handle.
 	SK::IisuHandle::Configuration conf;
-	conf.iisuBinDir="d:/DevRoot/bin";
-	conf.configFileName="iisu_config.xml";
-	conf.isLocal=true;
+	conf.iisuBinDir = "d:/DevRoot/bin";
+	conf.configFileName = "iisu_config.xml";
+	conf.isLocal = true;
 
 	SK::Return<SK::IisuHandle*> retHandle = context.createHandle(conf);
 	if(retHandle.failed())
