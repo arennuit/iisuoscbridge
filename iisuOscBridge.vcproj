@@ -129,7 +129,7 @@
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				AdditionalLibraryDirectories="&quot;$(QTDIR)\lib&quot;;..\bin"
 				GenerateDebugInformation="true"
-				SubSystem="2"
+				SubSystem="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
