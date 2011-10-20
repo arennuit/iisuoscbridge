@@ -11,7 +11,11 @@ SettingsForm::SettingsForm(QWidget *parent)
 
 	// Setup model.
 	ui.m_pathsView->setModel(&m_mvdModel);
+
 	m_mvdModel.update();
+
+	ui.m_pathsView->expandAll();
+	ui.m_pathsView->resizeColumnToContents(0);
 }
 
 //////////////////////////////////////////////////////////////////////////
