@@ -61,7 +61,12 @@ bool DataController::initIisu()
 	SK::Context& context = SK::Context::Instance();
 
 	// Iisu handle.
-	SK::Return<SK::IisuHandle*> retHandle = context.createHandle(SK::IisuHandle::Configuration());
+	SK::IisuHandle::Configuration conf;
+	conf.iisuBinDir="d:/DevRoot/bin";
+	conf.configFileName="iisu_config.xml";
+	conf.isLocal=true;
+
+	SK::Return<SK::IisuHandle*> retHandle = context.createHandle(conf);
 	if(retHandle.failed())
 	{
 		std::cout << retHandle.getDescription() << std::endl;
