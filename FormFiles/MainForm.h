@@ -27,7 +27,7 @@ protected slots:
 
 	void onStartButtonClicked() {m_dataController->onStartButtonClicked();}
 	void onStopButtonClicked() {m_dataController->onStopButtonClicked();}
-	void onSettingsButtonClicked() {ui.m_pathsView->setVisible(false);}
+	void onSettingsButtonClicked() {m_areSettingsVisible = !m_areSettingsVisible; ui.m_pathsView->setVisible(m_areSettingsVisible);}
 	//@}
 
 protected:
@@ -39,6 +39,11 @@ protected:
 	//@}
 
 	DataController* m_dataController;
+
+	/// \name UI logic.
+	//@{
+	bool m_areSettingsVisible;
+	//@}
 };
 
 } // namespace SK.

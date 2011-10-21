@@ -6,10 +6,15 @@ namespace SK
 {
 
 //////////////////////////////////////////////////////////////////////////
-MainForm::MainForm(QWidget *parent, Qt::WFlags flags)
-	: QMainWindow(parent, flags)
+MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
+	QMainWindow(parent, flags),
+	m_areSettingsVisible(false)
 {
 	ui.setupUi(this);
+
+	// Get access to the DataController.
+	m_dataController = DataController::GetInstance();
+	assert(m_dataController);
 
 	// Setup model.
 	ui.m_pathsView->setModel(&m_mvdModel);
@@ -19,9 +24,8 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags)
 	ui.m_pathsView->expandAll();
 	ui.m_pathsView->resizeColumnToContents(0);
 
-	// Get access to the MvdController.
-	m_dataController = DataController::GetInstance();
-	assert(m_dataController);
+	// Taylor UI.
+	ui.m_pathsView->setVisible(m_areSettingsVisible);
 
 	// Default texts.
 	DataBase* dataBase = DataBase::GetInstance();
