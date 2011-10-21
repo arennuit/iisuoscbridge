@@ -1,0 +1,8 @@
+NOTE: This software is provided as is without any warranty.
+NOTE: This software only runs on Windows.
+
+1. Install iisu SDK 3.0 or a newer version.
+2. Copy the value of the environment variable called 'IISU_BIN_DIR' (it was set automatically when installing the iisu SDK) into the environment variable called 'path'.
+3. Install IisuOscBridge 0.x or a newer version.
+4. Configure and calibrate iisu as normally (as explained in the iisu SDK documentation).
+5. Run IisuOscBridge.
