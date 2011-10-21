@@ -3,8 +3,8 @@
 #include <QtGui/QMainWindow>
 #include <QMessageBox>
 #include "ui_MainForm.h"
-#include "FormFiles/SettingsForm.h"
 #include "DataController/DataController.h"
+#include "Mvd/MvdDataModel.h"
 
 namespace SK
 {
@@ -17,27 +17,28 @@ class MainForm : public QMainWindow
 
 public:
 	MainForm(QWidget *parent = 0, Qt::WFlags flags = 0);
-	~MainForm() {}
+	~MainForm();
 
 protected slots:
 	/// \name UI logic.
 	//@{
-	void onIpAddressLineEditTextChanged(const QString& text) {m_mvdController->onIpAddressLineEditTextChanged(text.toStdString());}
-	void onPortLineEditTextChanged(const QString& text) {m_mvdController->onPortLineEditTextChanged(text.toInt());}
+	void onIpAddressLineEditTextChanged(const QString& text) {m_dataController->onIpAddressLineEditTextChanged(text.toStdString());}
+	void onPortLineEditTextChanged(const QString& text) {m_dataController->onPortLineEditTextChanged(text.toInt());}
 
-	void onStartButtonClicked() {m_mvdController->onStartButtonClicked();}
-	void onStopButtonClicked() {m_mvdController->onStopButtonClicked();}
-	void onSettingsButtonClicked() {m_settingsForm.show();}
+	void onStartButtonClicked() {m_dataController->onStartButtonClicked();}
+	void onStopButtonClicked() {m_dataController->onStopButtonClicked();}
+	void onSettingsButtonClicked() {ui.m_pathsView->setVisible(false);}
 	//@}
 
 protected:
 	/// \name UI.
 	//@{
 	Ui::MainFormClass ui;
-	SettingsForm m_settingsForm;
+
+	MvdDataModel m_mvdModel;
 	//@}
 
-	DataController* m_mvdController;
+	DataController* m_dataController;
 };
 
 } // namespace SK.

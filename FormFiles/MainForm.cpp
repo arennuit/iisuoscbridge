@@ -7,14 +7,21 @@ namespace SK
 
 //////////////////////////////////////////////////////////////////////////
 MainForm::MainForm(QWidget *parent, Qt::WFlags flags)
-	: QMainWindow(parent, flags),
-	m_settingsForm(this)
+	: QMainWindow(parent, flags)
 {
 	ui.setupUi(this);
 
+	// Setup model.
+	ui.m_pathsView->setModel(&m_mvdModel);
+
+	m_mvdModel.update();
+
+	ui.m_pathsView->expandAll();
+	ui.m_pathsView->resizeColumnToContents(0);
+
 	// Get access to the MvdController.
-	m_mvdController = DataController::GetInstance();
-	assert(m_mvdController);
+	m_dataController = DataController::GetInstance();
+	assert(m_dataController);
 
 	// Default texts.
 	DataBase* dataBase = DataBase::GetInstance();
@@ -30,6 +37,12 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags)
 	connect(ui.m_startButton, SIGNAL(clicked()), this, SLOT(onStartButtonClicked()));
 	connect(ui.m_stopButton, SIGNAL(clicked()), this, SLOT(onStopButtonClicked()));
 	connect(ui.m_settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsButtonClicked()));
+}
+
+//////////////////////////////////////////////////////////////////////////
+MainForm::~MainForm()
+{
+	m_mvdModel.clear();
 }
 
 } // namespace SK.
