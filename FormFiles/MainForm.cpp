@@ -12,6 +12,16 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
 {
 	ui.setupUi(this);
 
+	// Set input masks and validators.
+	//QRegExp regEx("^([0-9]{1,3}(\.[0-9]{1,3}){3,3})$");
+	QRegExpValidator *validator = new QRegExpValidator(this);
+	QRegExp regExp("((1{0,1}[0-9]{0,2}|2[0-4]{1,1}[0-9]{1,1}|25[0-5]{1,1})\\.){3,3}(1{0,1}[0-9]{0,2}|2[0-4]{1,1}[0-9]{1,1}|25[0-5]{1,1})");
+	validator->setRegExp(regExp);
+	ui.m_ipAddressLineEdit->setValidator(validator);
+
+	//int pos;
+	//QValidator::State state = validator->validate(QString("255.1.23.134"), pos);
+
 	// Get access to the DataController.
 	m_dataController = DataController::GetInstance();
 	assert(m_dataController);
