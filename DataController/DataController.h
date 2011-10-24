@@ -26,8 +26,7 @@ public:
 	void onIpAddressLineEditTextChanged(const std::string& newIpAddress) {m_dataBase->setIpAddress(newIpAddress);}
 	void onPortLineEditTextChanged(int newPort) {m_dataBase->setPort(newPort);}
 
-	void onStartButtonClicked() {initIisu();}
-	void onStopButtonClicked() {termIisu();}
+	void onStartStopToggleButtonClicked();
 	//@}
 
 protected:
@@ -47,7 +46,7 @@ protected:
 	/// \name Iisu.
 	//@{
 	bool initIisu();
-	void newDataFrameListenerIisu(const SK::DataFrameEvent& event);
+	void newIisuDataFrameListener(const SK::DataFrameEvent& event);
 	void termIisu();
 
 	SK::Device* m_device;

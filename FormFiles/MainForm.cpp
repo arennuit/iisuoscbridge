@@ -34,22 +34,25 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
 	ui.m_pathsView->expandAll();
 	ui.m_pathsView->resizeColumnToContents(0);
 
-	// Taylor UI.
-	ui.m_pathsView->setVisible(m_areSettingsVisible);
-
-	// Default texts.
-	DataBase* dataBase = DataBase::GetInstance();
+	// UI setup.
+	DataBase* dataBase = DataBase::GetInstance(); // We do not make this pointer a member of the class because the MainForm is not due to modify data, it only uses the data model to perform the initial ui setup.
 	assert(dataBase);
+
+	ui.m_pathsView->setVisible(m_areSettingsVisible);
 
 	ui.m_ipAddressLineEdit->setText(QString(dataBase->getIpAddress().c_str()));
 	ui.m_portLineEdit->setText(QString::number(dataBase->getPort()));
+
+	if (dataBase->getIsObservationOn())
+		ui.m_startStopToggleButton->setChecked(true);
+	else
+		ui.m_startStopToggleButton->setChecked(false);
 
 	// Establish all connections.
 	connect(ui.m_ipAddressLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onIpAddressLineEditTextChanged(const QString&)));
 	connect(ui.m_portLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onPortLineEditTextChanged(const QString&)));
 
-	connect(ui.m_startButton, SIGNAL(clicked()), this, SLOT(onStartButtonClicked()));
-	connect(ui.m_stopButton, SIGNAL(clicked()), this, SLOT(onStopButtonClicked()));
+	connect(ui.m_startStopToggleButton, SIGNAL(clicked()), this, SLOT(onStartStopToggleButtonClicked()));
 	connect(ui.m_settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsButtonClicked()));
 }
 

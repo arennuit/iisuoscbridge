@@ -30,6 +30,9 @@ public:
 
 	virtual PathMapItem* getPathsTreeRoot() {return m_pathsTreeRoot;}
 	virtual void setPathsTreeRoot(PathMapItem* pathsTreeRoot) {m_pathsTreeRoot = pathsTreeRoot;}
+
+	virtual bool getIsObservationOn() {return m_isObservationOn;}
+	virtual void setIsObservationOn(bool isObservationOn) {m_isObservationOn = isObservationOn;} 
 	//@}
 
 protected:
@@ -46,6 +49,8 @@ protected:
 	int m_port;
 
 	PathMapItem* m_pathsTreeRoot;
+
+	bool m_isObservationOn;
 	//@}
 };
 

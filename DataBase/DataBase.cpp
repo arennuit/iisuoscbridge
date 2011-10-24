@@ -7,8 +7,7 @@ namespace SK
 DataBase* DataBase::sm_instance = 0;
 
 //////////////////////////////////////////////////////////////////////////
-DataBase::DataBase() :
-	m_pathsTreeRoot(0)
+DataBase::DataBase()
 {
 	setDefaultValues();
 }
@@ -55,6 +54,8 @@ void DataBase::setDefaultValues()
 	PathMapItem* path_joints2 = new PathMapItem("joints", path_user2);
 	new Vector3ArrayPathMapItem("positions", "USER2.SKELETON.KeyPoints", path_joints2);
 	new FloatArrayPathMapItem("confidences", "USER2.SKELETON.KeyPointsConfidence", path_joints2);
+
+	m_isObservationOn = false;
 }
 
 } // namespace SK.

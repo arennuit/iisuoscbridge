@@ -43,6 +43,23 @@ void DataController::DestroyInstance()
 }
 
 //////////////////////////////////////////////////////////////////////////
+void DataController::onStartStopToggleButtonClicked()
+{
+	if (m_dataBase->getIsObservationOn() == false)
+	{
+		m_dataBase->setIsObservationOn(true);
+
+		initIisu();
+	}
+	else
+	{
+		m_dataBase->setIsObservationOn(false);
+
+		termIisu();
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////
 bool DataController::initIisu()
 {
 	// Linearize path items.
@@ -89,7 +106,7 @@ bool DataController::initIisu()
 	m_device = retDevice.get();
 
 	// Iisu events registration.
-	m_device->getEventManager().registerEventListener("DEVICE.DataFrame", *this, &DataController::newDataFrameListenerIisu);
+	m_device->getEventManager().registerEventListener("DEVICE.DataFrame", *this, &DataController::newIisuDataFrameListener);
 
 	// Iisu data handles registration.
 	m_iisuDataHandles.clear();
@@ -109,7 +126,7 @@ bool DataController::initIisu()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::newDataFrameListenerIisu( const SK::DataFrameEvent& event )
+void DataController::newIisuDataFrameListener( const SK::DataFrameEvent& event )
 {
 	m_device->updateFrame(true);
 	std::cout << event.getFrameID() << std::endl;
@@ -120,13 +137,13 @@ void DataController::newDataFrameListenerIisu( const SK::DataFrameEvent& event )
 //////////////////////////////////////////////////////////////////////////
 void DataController::termIisu()
 {
-	m_iisuDataHandles.clear();
-
 	if (m_device)
 	{
 		SK::Context::Instance().finalize();
 		m_device = 0;
 	}
+
+	m_iisuDataHandles.clear();
 }
 
 //////////////////////////////////////////////////////////////////////////

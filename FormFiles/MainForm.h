@@ -25,8 +25,7 @@ protected slots:
 	void onIpAddressLineEditTextChanged(const QString& text) {m_dataController->onIpAddressLineEditTextChanged(text.toStdString());}
 	void onPortLineEditTextChanged(const QString& text) {m_dataController->onPortLineEditTextChanged(text.toInt());}
 
-	void onStartButtonClicked() {m_dataController->onStartButtonClicked();}
-	void onStopButtonClicked() {m_dataController->onStopButtonClicked();}
+	void onStartStopToggleButtonClicked() {m_dataController->onStartStopToggleButtonClicked();}
 	void onSettingsButtonClicked() {m_areSettingsVisible = !m_areSettingsVisible; ui.m_pathsView->setVisible(m_areSettingsVisible);}
 	//@}
 
