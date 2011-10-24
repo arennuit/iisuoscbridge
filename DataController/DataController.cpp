@@ -79,13 +79,16 @@ bool DataController::initIisu()
 	SK::Context& context = SK::Context::Instance();
 
 	// Iisu handle.
-	SK::IisuHandle::Configuration conf;
-	conf.iisuBinDir = "d:/DevRoot/bin";
-	conf.configFileName = "iisu_config.xml";
-	conf.isLocal = true;
+	SK::Return<SK::ApplicationConfigurator> retAppConf = SK::ApplicationConfigurator::create("");
+	if (retAppConf.failed())
+	{
+		std::cout << retAppConf.getDescription() << std::endl;
+		return false;
+	}
+	ApplicationConfigurator appConf = retAppConf.get();
 
-	SK::Return<SK::IisuHandle*> retHandle = context.createHandle(conf);
-	if(retHandle.failed())
+	SK::Return<SK::IisuHandle*> retHandle = context.createHandle(appConf);
+	if (retHandle.failed())
 	{
 		std::cout << retHandle.getDescription() << std::endl;
 		return false;
@@ -93,12 +96,12 @@ bool DataController::initIisu()
 	SK::IisuHandle* handle = retHandle.get();
 
 	// Iisu device.
-	SK::Return<SK::Device*> retDevice = handle->initializeDevice(SK::Device::Configuration());
-	if(retHandle.failed())
+	SK::Return<SK::Device*> retDevice = handle->initializeDevice(appConf);
+	if (retDevice.failed())
 	{
-		std::cout << retHandle.getDescription() << std::endl;
+		std::cout << retDevice.getDescription() << std::endl;
 		SK::Result result = context.destroyHandle(*handle);
-		if(result.failed())
+		if (result.failed())
 			std::cout << result.getDescription() << std::endl;
 
 		return false;
