@@ -7,6 +7,7 @@
 ; Includes
 
   !include "MUI2.nsh"
+  !include "EnvVarUpdate.nsh"
 
 ;--------------------------------
 ; General
@@ -103,8 +104,12 @@ Section "Core" Section_Core
 
   !insertmacro MUI_STARTMENU_WRITE_END
   
-  ; Store installation folder in a regitry key.
-  WriteRegStr HKCU "Software\Softkinetic\iisuOscBridge" "" $INSTDIR
+  ; Update registry.
+  WriteRegStr HKCU "Software\Softkinetic\iisuOscBridge" "" $INSTDIR ; Installation directory.
+  
+  ; TODO: make page to ask where file iisuSDK.dll is with default value provided.
+  ReadRegStr $1 HKLM "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "IISU_BIN_DIR"
+  ${EnvVarUpdate} $0 "PATH" "A" "HKLM" $1 ; Append IISU_BIN_DIR to the environment variable 'path'.
   
   ; Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
@@ -135,7 +140,10 @@ Section "Uninstall"
   !insertmacro MUI_STARTMENU_GETFOLDER Application $MUI_TEMP
   RMDIR /r "$SMPROGRAMS\$MUI_TEMP"
 
-  ; Delete registry keys.
+  ; Restore registry.
+  ReadRegStr $1 HKLM "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "IISU_BIN_DIR"
+  ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" $1 ; Remove IISU_BIN_DIR from the environment variable 'path'.
+  
   DeleteRegKey /ifempty HKCU "Software\Softkinetic\iisuOscBridge"
 
 SectionEnd
