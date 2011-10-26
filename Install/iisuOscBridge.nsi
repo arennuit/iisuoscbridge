@@ -10,10 +10,15 @@
   !include "EnvVarUpdate.nsh"
 
 ;--------------------------------
+; Defines 
+
+!define REG_KEY_NAME "Software\Softkinetic\iisuOscBridge"
+
+;--------------------------------
 ; General
 
   ; The name of the program to install
-  Name "iisuOscBridge"
+  Name "iisuOscBridge™"
 
   ; The file to write
   OutFile "iisuOscBridge_setup.exe"
@@ -22,7 +27,7 @@
   InstallDir "$PROGRAMFILES\iisuOscBridge"
   
   ; Overwrite installation folder from registry if available.
-  InstallDirRegKey HKCU "Software\Softkinetic\iisuOscBridge" ""
+  InstallDirRegKey HKLM "Software\Softkinetic\iisuOscBridge" "Install_Dir"
 
   ; Request application privileges for Windows Vista
   RequestExecutionLevel admin
@@ -32,11 +37,6 @@
 
   Var STARTMENU_FOLDER
   Var MUI_TEMP
-
-;--------------------------------
-; Defines 
-
-!define REG_KEY_NAME "Software\Softkinetic\iisuOscBridge"
 
 ;--------------------------------
 ; Interface settings
@@ -75,6 +75,31 @@
   !insertmacro MUI_LANGUAGE "English"
 
 ;--------------------------------
+; Functions.
+
+Function .onInit
+
+  ; Check for existing installation.
+  ReadRegStr $0 HKLM "${REG_KEY_NAME}" "Install_Dir"
+  
+  ${If} ${FileExists} "$0"
+    MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION "iisuOscBridge™ is already installed at $0. $\n$\nClick `OK` to Uninstall and Continue or `Cancel` to Quit setup." /SD IDOK IDOK uninst
+    Abort
+	
+    ; Run the un-installer if there was a previouly existing installation.
+    uninst:
+        IfSilent 0 +2
+            Goto silent
+        ExecWait '"$0\Uninstall.exe" _?=$0'
+        Goto next
+    silent:
+        ExecWait '"$0\Uninstall.exe" /S _?=$0'
+    next:
+  ${EndIf}
+
+FunctionEnd
+
+;--------------------------------
 ; Installer Sections
 
 Section "Core" Section_Core
@@ -105,9 +130,10 @@ Section "Core" Section_Core
   !insertmacro MUI_STARTMENU_WRITE_END
   
   ; Update registry.
-  WriteRegStr HKCU "Software\Softkinetic\iisuOscBridge" "" $INSTDIR ; Installation directory.
+  WriteRegStr HKLM "Software\Softkinetic\iisuOscBridge" "Install_Dir" $INSTDIR ; Installation directory.
   
   ; TODO: make page to ask where file iisuSDK.dll is with default value provided.
+  ; TODO: function 'EnvVarUpdate' corrupts environment variables longer than 1024 characters (as mentioned in its doc). Find a workaround.
   ReadRegStr $1 HKLM "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "IISU_BIN_DIR"
   ${EnvVarUpdate} $0 "PATH" "A" "HKLM" $1 ; Append IISU_BIN_DIR to the environment variable 'path'.
   
@@ -144,6 +170,6 @@ Section "Uninstall"
   ReadRegStr $1 HKLM "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "IISU_BIN_DIR"
   ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" $1 ; Remove IISU_BIN_DIR from the environment variable 'path'.
   
-  DeleteRegKey /ifempty HKCU "Software\Softkinetic\iisuOscBridge"
+  DeleteRegKey /ifempty HKLM "Software\Softkinetic\iisuOscBridge"
 
 SectionEnd
