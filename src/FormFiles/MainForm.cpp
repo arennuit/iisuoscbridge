@@ -33,6 +33,7 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
 
 	ui.m_pathsView->expandAll();
 	ui.m_pathsView->resizeColumnToContents(0);
+	ui.m_pathsView->resizeColumnToContents(1);
 
 	// UI setup.
 	DataBase* dataBase = DataBase::GetInstance(); // We do not make this pointer a member of the class because the MainForm is not due to modify data, it only uses the data model to perform the initial ui setup.

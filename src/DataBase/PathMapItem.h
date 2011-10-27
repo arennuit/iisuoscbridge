@@ -8,24 +8,6 @@
 namespace SK
 {
 
-enum ArrayStreamingModeEnum
-{
-	INDEX_AND_FOLD,
-	INDEX_AND_UNFOLD,
-	NAME_AND_FOLD,
-	NAME_AND_UNFOLD,
-
-	ARRAY_STREAMING_MODES_NUM
-};
-
-static const std::string ArrayStreamingModeLabels[ARRAY_STREAMING_MODES_NUM] = 
-{
-	"Index and Fold",
-	"Index and UnFold",
-	"Name and Fold",
-	"Name and UnFold"
-};
-
 //////////////////////////////////////////////////////////////////////////
 /// \note The concrete PathMapItem class is used to format OSC paths. But the class is also inherited
 ///       by items actually pointing to proper iisu data.
@@ -37,6 +19,7 @@ public:
 
 	std::string m_oscPathItem;
 
+	// Handle hierarchy tree of PathMapItems.
 	PathMapItem* m_parent;
 	std::vector<PathMapItem*> m_children;
 
@@ -70,11 +53,12 @@ public:
 class ArrayPathMapItem : public DataPathMapItem
 {
 public:
-	ArrayPathMapItem(const std::string& oscPathItem, const std::string& iisuPath, PathMapItem* parent = 0, ArrayStreamingModeEnum streamingMode = NAME_AND_FOLD) :
+	ArrayPathMapItem(const std::string& oscPathItem, const std::string& iisuPath, PathMapItem* parent = 0, bool areJointsNamed = true) :
 		DataPathMapItem(oscPathItem, iisuPath, parent),
-		m_streamingMode(streamingMode) {}
+		m_areJointsNamed(areJointsNamed) {}
 
-	ArrayStreamingModeEnum m_streamingMode;
+	// Streaming mode.
+	bool m_areJointsNamed;
 
 	void accept(PathMapItemVisitor* visitor) = 0;
 };
@@ -83,8 +67,8 @@ public:
 class Vector3ArrayPathMapItem : public ArrayPathMapItem
 {
 public:
-	Vector3ArrayPathMapItem(const std::string& oscPathItem, const std::string& iisuPath, PathMapItem* parent = 0, ArrayStreamingModeEnum streamingMode = NAME_AND_FOLD) :
-		ArrayPathMapItem(oscPathItem, iisuPath, parent, streamingMode) {}
+	Vector3ArrayPathMapItem(const std::string& oscPathItem, const std::string& iisuPath, PathMapItem* parent = 0, bool areJointsNamed = true) :
+		ArrayPathMapItem(oscPathItem, iisuPath, parent, areJointsNamed) {}
 
 	void accept(PathMapItemVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}
 };
@@ -93,8 +77,8 @@ public:
 class FloatArrayPathMapItem : public ArrayPathMapItem
 {
 public:
-	FloatArrayPathMapItem(const std::string& oscPathItem, const std::string& iisuPath, PathMapItem* parent = 0, ArrayStreamingModeEnum streamingMode = NAME_AND_FOLD) :
-		ArrayPathMapItem(oscPathItem, iisuPath, parent, streamingMode) {}
+	FloatArrayPathMapItem(const std::string& oscPathItem, const std::string& iisuPath, PathMapItem* parent = 0, bool areJointsNamed = true) :
+		ArrayPathMapItem(oscPathItem, iisuPath, parent, areJointsNamed) {}
 
 	void accept(PathMapItemVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}
 };
