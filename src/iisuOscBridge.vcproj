@@ -515,7 +515,7 @@
 			ParseFiles="false"
 			>
 			<File
-				RelativePath=".\Resource Files\MainFormResources.qrc"
+				RelativePath="..\Resource Files\MainFormResources.qrc"
 				>
 				<FileConfiguration
 					Name="Release|Win32"
@@ -524,7 +524,7 @@
 						Name="VCCustomBuildTool"
 						Description="Rcc&apos;ing $(InputFileName)..."
 						CommandLine="&quot;$(QTDIR)\bin\rcc.exe&quot; -name &quot;$(InputName)&quot; -no-compress &quot;$(InputPath)&quot; -o .\GeneratedFiles\qrc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(InputPath);.\Resource Files\Play_icon_32x32.png;.\Resource Files\Settings_icon_32x32.png;.\Resource Files\Stop_icon_32x32.png"
+						AdditionalDependencies="$(InputPath);..\Resource Files\Play_icon_32x32.png;..\Resource Files\SK_logo_256x256.ico;..\Resource Files\Settings_icon_32x32.png;..\Resource Files\Stop_icon_32x32.png"
 						Outputs=".\GeneratedFiles\qrc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
@@ -535,13 +535,13 @@
 						Name="VCCustomBuildTool"
 						Description="Rcc&apos;ing $(InputFileName)..."
 						CommandLine="&quot;$(QTDIR)\bin\rcc.exe&quot; -name &quot;$(InputName)&quot; -no-compress &quot;$(InputPath)&quot; -o .\GeneratedFiles\qrc_$(InputName).cpp&#x0D;&#x0A;"
-						AdditionalDependencies="$(InputPath);.\Resource Files\Play_icon_32x32.png;.\Resource Files\Settings_icon_32x32.png;.\Resource Files\Stop_icon_32x32.png"
+						AdditionalDependencies="$(InputPath);..\Resource Files\Play_icon_32x32.png;..\Resource Files\SK_logo_256x256.ico;..\Resource Files\Settings_icon_32x32.png;..\Resource Files\Stop_icon_32x32.png"
 						Outputs=".\GeneratedFiles\qrc_$(InputName).cpp"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Resource Files\Play_icon_32x32.png"
+				RelativePath="..\Resource Files\Play_icon_32x32.png"
 				>
 				<FileConfiguration
 					Name="Release|Win32"
@@ -561,7 +561,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Resource Files\Settings_icon_32x32.png"
+				RelativePath="..\Resource Files\Settings_icon_32x32.png"
 				>
 				<FileConfiguration
 					Name="Release|Win32"
@@ -581,11 +581,27 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Resource Files\SK_logo_256x256.ico"
+				RelativePath="..\Resource Files\SK_logo_256x256.ico"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Resource Files\Stop_icon_32x32.png"
+				RelativePath="..\Resource Files\Stop_icon_32x32.png"
 				>
 				<FileConfiguration
 					Name="Release|Win32"

@@ -20,7 +20,7 @@
    <string>IisuOscBridge</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Resource Files/MainFormResources.qrc">
+   <iconset resource="../../Resource Files/MainFormResources.qrc">
     <normaloff>:/SK_logo_256x256.ico</normaloff>:/SK_logo_256x256.ico</iconset>
   </property>
   <property name="styleSheet">
@@ -637,7 +637,7 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resource Files/MainFormResources.qrc">
+             <iconset resource="../../Resource Files/MainFormResources.qrc">
               <normaloff>:/Play_icon_32x32.png</normaloff>
               <normalon>:/Stop_icon_32x32.png</normalon>:/Play_icon_32x32.png</iconset>
             </property>
@@ -680,7 +680,7 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resource Files/MainFormResources.qrc">
+             <iconset resource="../../Resource Files/MainFormResources.qrc">
               <normaloff>:/Settings_icon_32x32.png</normaloff>:/Settings_icon_32x32.png</iconset>
             </property>
             <property name="iconSize">
@@ -721,7 +721,7 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../Resource Files/MainFormResources.qrc"/>
+  <include location="../../Resource Files/MainFormResources.qrc"/>
  </resources>
  <connections/>
 </ui>

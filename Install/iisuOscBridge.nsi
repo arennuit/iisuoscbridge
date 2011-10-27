@@ -17,6 +17,8 @@
 
 !define LIC_FILE_PATH "License.txt"
 
+!define RESOURCES_FOLDER "..\Resource Files"
+
 ;--------------------------------
 ; General
 
@@ -44,7 +46,7 @@
 ;--------------------------------
 ; Interface settings
 
-!define MUI_ICON "..\Resource Files\SK_logo_256x256.ico"
+!define MUI_ICON "${RESOURCES_FOLDER}\SK_logo_256x256.ico"
 
 !define MUI_ABORTWARNING
 
