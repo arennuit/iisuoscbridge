@@ -25,9 +25,10 @@ public:
 protected:
 	/// \name Visitor's methods.
 	//@{
-	void visit(PathMapItem* pathItem) SK_OVERRIDE {}
-	void visit(DataPathMapItem* pathItem) SK_OVERRIDE {}
+	void visit(PathMapItem* pathItem) SK_OVERRIDE {} // It makes no sense to read or stream a concrete PathMapItem.
+	void visit(DataPathMapItem* pathItem) SK_OVERRIDE {} // It makes no sense to read or stream a generic data.
 	void visit(BooleanPathMapItem* pathItem) SK_OVERRIDE;
+	void visit(ArrayPathMapItem* pathItem) SK_OVERRIDE {} // It makes no sense to read or stream a generic array.
 	void visit(Vector3ArrayPathMapItem* pathItem) SK_OVERRIDE;
 	void visit(FloatArrayPathMapItem* pathItem) SK_OVERRIDE;
 	//@}

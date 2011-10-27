@@ -23,8 +23,9 @@ protected:
 	/// \name Visitor's methods.
 	//@{
 	void visit(PathMapItem* pathItem) SK_OVERRIDE;
-	void visit(DataPathMapItem* pathItem) SK_OVERRIDE {}
+	void visit(DataPathMapItem* pathItem) SK_OVERRIDE {} // Cannot register a generic data.
 	void visit(BooleanPathMapItem* pathItem) SK_OVERRIDE;
+	void visit(ArrayPathMapItem* pathItem) SK_OVERRIDE {} // Cannot register a generic array.
 	void visit(Vector3ArrayPathMapItem* pathItem) SK_OVERRIDE;
 	void visit(FloatArrayPathMapItem* pathItem) SK_OVERRIDE;
 	//@}

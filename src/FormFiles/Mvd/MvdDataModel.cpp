@@ -82,4 +82,11 @@ void MvdDataModel::visit(DataPathMapItem* pathItem)
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////
+void MvdDataModel::visit(ArrayPathMapItem* pathItem)
+{
+	// TODO: à compléter pour le array streaming mode.
+	visit((DataPathMapItem*)pathItem);
+}
+
 } // namespace SK.

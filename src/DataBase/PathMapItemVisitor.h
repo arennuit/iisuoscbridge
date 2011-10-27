@@ -6,6 +6,7 @@ namespace SK
 class PathMapItem;
 class DataPathMapItem;
 class BooleanPathMapItem;
+class ArrayPathMapItem;
 class Vector3ArrayPathMapItem;
 class FloatArrayPathMapItem;
 
@@ -18,6 +19,7 @@ public:
 	virtual void visit(PathMapItem* pathItem) = 0;
 	virtual void visit(DataPathMapItem* pathItem) = 0;
 	virtual void visit(BooleanPathMapItem* pathItem) = 0;
+	virtual void visit(ArrayPathMapItem* pathItem) = 0;
 	virtual void visit(Vector3ArrayPathMapItem* pathItem) = 0;
 	virtual void visit(FloatArrayPathMapItem* pathItem) = 0;
 	//@}
