@@ -49,7 +49,8 @@ void DataController::onStartStopToggleButtonClicked()
 	{
 		m_dataBase->setIsObservationOn(true);
 
-		initIisu();
+		if (!initIisu())
+			m_dataBase->setIsObservationOn(false);
 	}
 	else
 	{
