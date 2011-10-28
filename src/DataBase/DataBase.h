@@ -1,5 +1,6 @@
 #pragma once
 
+#include "AbstractDataBase.h"
 #include <string>
 
 namespace SK
@@ -9,16 +10,11 @@ class PathMapItem;
 
 //////////////////////////////////////////////////////////////////////////
 /// \brief This class is a singleton, it keeps all the data handled by the application.
-class DataBase
+class DataBase : public AbstractDataBase
 {
-public:
+	DECLARE_DATA_BASE(DataBase)
 
-	/// \name Singleton management.
-	//@{
-	static void CreateInstance();
-	static void DestroyInstance();
-	static DataBase* GetInstance() {return sm_instance;}
-	//@}
+public:
 
 	/// \name Accessors.
 	//@{
@@ -32,14 +28,15 @@ public:
 	virtual void setPathsTreeRoot(PathMapItem* pathsTreeRoot) {m_pathsTreeRoot = pathsTreeRoot;}
 
 	virtual bool getIsObservationOn() {return m_isObservationOn;}
-	virtual void setIsObservationOn(bool isObservationOn) {m_isObservationOn = isObservationOn;} 
+	virtual void setIsObservationOn(bool isObservationOn) {m_isObservationOn = isObservationOn;}
+
+	virtual uint getOscPacketSize() {return m_oscPacketSize;}
+	virtual void setOscPacketSize(uint oscPacketSize) {m_oscPacketSize = oscPacketSize;}
 	//@}
 
 protected:
 	DataBase();
 	virtual ~DataBase();
-
-	static DataBase* sm_instance;
 
 	void setDefaultValues();
 
@@ -51,6 +48,8 @@ protected:
 	PathMapItem* m_pathsTreeRoot;
 
 	bool m_isObservationOn;
+
+	uint m_oscPacketSize;
 	//@}
 };
 

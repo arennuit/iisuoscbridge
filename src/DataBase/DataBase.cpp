@@ -4,7 +4,7 @@
 namespace SK
 {
 
-DataBase* DataBase::sm_instance = 0;
+DEFINE_DATA_BASE(DataBase, AbstractDataBase)
 
 //////////////////////////////////////////////////////////////////////////
 DataBase::DataBase()
@@ -16,20 +16,6 @@ DataBase::DataBase()
 DataBase::~DataBase()
 {
 	delete m_pathsTreeRoot;
-}
-
-//////////////////////////////////////////////////////////////////////////
-void DataBase::CreateInstance()
-{
-	if (!sm_instance)
-		sm_instance = new DataBase();
-}
-
-//////////////////////////////////////////////////////////////////////////
-void DataBase::DestroyInstance()
-{
-	if (sm_instance)
-		delete sm_instance;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -56,6 +42,8 @@ void DataBase::setDefaultValues()
 	new FloatArrayPathMapItem("confidences", "USER2.SKELETON.KeyPointsConfidence", path_joints2);
 
 	m_isObservationOn = false;
+
+	m_oscPacketSize = 0;
 }
 
 } // namespace SK.

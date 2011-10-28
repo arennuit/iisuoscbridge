@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <string>
-#include <Platform/SkPlatform.h>
+#include "Platform/SkPlatform.h"
 #include "PathMapItemVisitor.h"
 
 namespace SK

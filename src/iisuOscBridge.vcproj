@@ -452,6 +452,14 @@
 			Name="DataBase"
 			>
 			<File
+				RelativePath=".\DataBase\AbstractDataBase.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DataBase\AbstractDataBase.h"
+				>
+			</File>
+			<File
 				RelativePath=".\DataBase\DataBase.cpp"
 				>
 			</File>
@@ -621,6 +629,14 @@
 				</FileConfiguration>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\AppDataBase.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\AppDataBase.h"
+			>
+		</File>
 		<File
 			RelativePath=".\main.cpp"
 			>
