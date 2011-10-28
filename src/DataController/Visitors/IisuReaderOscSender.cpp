@@ -1,9 +1,44 @@
 #include "IisuReaderOscSender.h"
 #include "SDK/iisuSDK.h"
 #include "osc/OscOutboundPacketStream.h"
+#include "Database/PathMapItem.h"
 
 namespace SK
 {
+
+// TODO: share and use joints names in ProtoPose.h.
+static const std::string JointsName[SK::SkeletonEnum::_COUNT] =
+{
+	"Pelvis",
+	"Waist",
+	"Collar",
+	"Neck",
+	"Head",
+
+	"RightShoulder",
+	"RightElbow",
+	"RightWrist",
+	"RightHand",
+
+	"RightHip",
+	"RightKnee",
+	"RightAnkle",
+	"RightFoot",
+
+	"LeftShoulder",
+	"LeftElbow",
+	"LeftWrist",
+	"LeftHand",
+
+	"LeftHip",
+	"LeftKnee",
+	"LeftAnkle",
+	"LeftFoot"
+};
+
+// Make osc::BeginMessage() easier to use with std::string.
+osc::BeginMessage OscBeginMessage(const std::string& oscPath) {return osc::BeginMessage(oscPath.c_str());}
+osc::MessageTerminator OscEndMessage() {return osc::MessageTerminator();}
 
 //////////////////////////////////////////////////////////////////////////
 IisuReaderOscSender::IisuReaderOscSender(osc::OutboundPacketStream* outPacketStream) :
@@ -24,11 +59,9 @@ void IisuReaderOscSender::visit(BooleanPathMapItem* pathItem)
 	const bool& iisuData = iisuDataHandle->get();
 
 	// Send via OSC.
-	*m_outPacketStream << osc::BeginMessage(m_fullOscPath.c_str());
-
+	*m_outPacketStream << OscBeginMessage(m_fullOscPath);
 	*m_outPacketStream << iisuData;
-
-	*m_outPacketStream << osc::EndMessage;
+	*m_outPacketStream << OscEndMessage();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -39,13 +72,32 @@ void IisuReaderOscSender::visit(Vector3ArrayPathMapItem* pathItem)
 	const SK::Array<SK::Vector3>& iisuData = iisuDataHandle->get();
 
 	// Send via OSC.
-	*m_outPacketStream << osc::BeginMessage(m_fullOscPath.c_str());
-
+	*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
 	*m_outPacketStream << (int)iisuData.size();
-	for (uint i = 0; i < iisuData.size(); ++i)
-		*m_outPacketStream << iisuData[i].x << iisuData[i].y << iisuData[i].z;
+	*m_outPacketStream << OscEndMessage();
 
-	*m_outPacketStream << osc::EndMessage;
+	for (uint i = 0; i < iisuData.size(); ++i)
+	{
+		// Concatenate the OSC path.
+		std::string messagePath = m_fullOscPath + "/";
+		if (pathItem->m_areJointsNamed && iisuData.size() == SK::SkeletonEnum::_COUNT)
+			messagePath += JointsName[i];
+		else
+			messagePath += i;
+
+		// Actually OSC stream.
+		*m_outPacketStream << OscBeginMessage(messagePath + "/x");
+		*m_outPacketStream << iisuData[i].x;
+		*m_outPacketStream << OscEndMessage();
+
+		*m_outPacketStream << OscBeginMessage(messagePath + "/y");
+		*m_outPacketStream << iisuData[i].y;
+		*m_outPacketStream << OscEndMessage();
+
+		*m_outPacketStream << OscBeginMessage(messagePath + "/z");
+		*m_outPacketStream << iisuData[i].z;
+		*m_outPacketStream << OscEndMessage();
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -56,13 +108,24 @@ void IisuReaderOscSender::visit(FloatArrayPathMapItem* pathItem)
 	const SK::Array<float>& iisuData = iisuDataHandle->get();
 
 	// Send via OSC.
-	*m_outPacketStream << osc::BeginMessage(m_fullOscPath.c_str());
-
+	*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
 	*m_outPacketStream << (int)iisuData.size();
-	for (uint i = 0; i < iisuData.size(); ++i)
-		*m_outPacketStream << iisuData[i];
+	*m_outPacketStream << OscEndMessage();
 
-	*m_outPacketStream << osc::EndMessage;
+	for (uint i = 0; i < iisuData.size(); ++i)
+	{
+		// Concatenate the OSC path.
+		std::string messagePath = m_fullOscPath + "/";
+		if (pathItem->m_areJointsNamed && iisuData.size() == SK::SkeletonEnum::_COUNT)
+			messagePath += JointsName[i];
+		else
+			messagePath += i;
+
+		// Actually OSC stream.
+		*m_outPacketStream << OscBeginMessage(messagePath);
+		*m_outPacketStream << iisuData[i];
+		*m_outPacketStream << OscEndMessage();
+	}
 }
 
 } // namespace SK.
