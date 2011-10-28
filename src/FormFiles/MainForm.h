@@ -10,7 +10,7 @@ namespace SK
 {
 
 //////////////////////////////////////////////////////////////////////////
-/// \name This class is the main window of the application.
+/// \brief This class is the main window of the application.
 class MainForm : public QMainWindow
 {
 	Q_OBJECT

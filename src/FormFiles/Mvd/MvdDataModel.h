@@ -11,7 +11,7 @@ namespace SK
 {
 
 //////////////////////////////////////////////////////////////////////////
-/// \name This class is the model in the MVD / MVC pattern.
+/// \brief This class is the model in the MVD / MVC pattern.
 class MvdDataModel : public QStandardItemModel, public PathMapItemVisitor
 {
 	Q_OBJECT

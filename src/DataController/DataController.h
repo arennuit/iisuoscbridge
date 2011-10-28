@@ -10,7 +10,7 @@ namespace SK
 {
 
 //////////////////////////////////////////////////////////////////////////
-/// \name This class is the controller in the MVD / MVC pattern.
+/// \brief This class is the controller in the MVD / MVC pattern.
 class DataController
 {
 public:

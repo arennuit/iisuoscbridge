@@ -8,7 +8,7 @@ namespace SK
 class PathMapItem;
 
 //////////////////////////////////////////////////////////////////////////
-/// \class This class is a singleton, it keeps all the data handled by the application.
+/// \brief This class is a singleton, it keeps all the data handled by the application.
 class DataBase
 {
 public:

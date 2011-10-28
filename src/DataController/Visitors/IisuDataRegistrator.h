@@ -12,7 +12,7 @@ class IIisuDataExtractor;
 class PathMapItem;
 
 //////////////////////////////////////////////////////////////////////////
-/// \name This class is a visitor that makes the path registration in iisu for the PathMapItem objects.
+/// \brief This class is a visitor that makes the path registration in iisu for the PathMapItem objects.
 class IisuDataRegistrator : public PathMapItemVisitor
 {
 public:

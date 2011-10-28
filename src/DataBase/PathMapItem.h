@@ -9,7 +9,7 @@ namespace SK
 {
 
 //////////////////////////////////////////////////////////////////////////
-/// \note The concrete PathMapItem class is used to format OSC paths. But the class is also inherited
+/// \brief The concrete PathMapItem class is used to format OSC paths. But the class is also inherited
 ///       by items actually pointing to proper iisu data.
 class PathMapItem
 {

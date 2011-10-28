@@ -13,7 +13,7 @@ namespace SK
 class IIisuDataExtractor;
 
 //////////////////////////////////////////////////////////////////////////
-/// \name This class reads the data from the iisu pulse and streams it via OSC.
+/// \brief This class reads the data from the iisu pulse and streams it via OSC.
 class IisuReaderOscSender : public PathMapItemVisitor
 {
 public:
