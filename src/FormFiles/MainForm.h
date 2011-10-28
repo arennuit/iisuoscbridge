@@ -32,7 +32,7 @@ protected slots:
 	void onPortLineEditTextChanged(const QString& text) {m_dataController->onPortLineEditTextChanged(text.toInt());}
 
 	void onStartStopToggleButtonClicked() {m_dataController->onStartStopToggleButtonClicked();}
-	void onSettingsButtonClicked() {m_areSettingsVisible = !m_areSettingsVisible; ui.m_pathsView->setVisible(m_areSettingsVisible);}
+	void onSettingsButtonClicked() {m_areSettingsVisible = !m_areSettingsVisible; ui.m_tabs->setVisible(m_areSettingsVisible);}
 	//@}
 
 protected:

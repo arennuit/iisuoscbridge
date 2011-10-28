@@ -39,7 +39,7 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
 	DataBase* dataBase = DataBase::GetInstance(); // We do not make this pointer a member of the class because the MainForm is not due to modify data, it only uses the data model to perform the initial ui setup.
 	assert(dataBase);
 
-	ui.m_pathsView->setVisible(m_areSettingsVisible);
+	ui.m_tabs->setVisible(m_areSettingsVisible);
 
 	ui.m_ipAddressLineEdit->setText(QString(dataBase->getIpAddress().c_str()));
 	ui.m_portLineEdit->setText(QString::number(dataBase->getPort()));
