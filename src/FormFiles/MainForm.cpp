@@ -17,7 +17,7 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
 	QRegExpValidator *validator = new QRegExpValidator(this);
 	QRegExp regExp("((1{0,1}[0-9]{0,2}|2[0-4]{1,1}[0-9]{1,1}|25[0-5]{1,1})\\.){3,3}(1{0,1}[0-9]{0,2}|2[0-4]{1,1}[0-9]{1,1}|25[0-5]{1,1})");
 	validator->setRegExp(regExp);
-	ui.m_ipAddressLineEdit->setValidator(validator);
+	ui.m_ipAddressEdit->setValidator(validator);
 
 	//int pos;
 	//QValidator::State state = validator->validate(QString("255.1.23.134"), pos);
@@ -41,8 +41,8 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
 
 	ui.m_tabs->setVisible(m_areSettingsVisible);
 
-	ui.m_ipAddressLineEdit->setText(QString(dataBase->getIpAddress().c_str()));
-	ui.m_portLineEdit->setText(QString::number(dataBase->getPort()));
+	ui.m_ipAddressEdit->setText(QString(dataBase->getIpAddress().c_str()));
+	ui.m_portEdit->setText(QString::number(dataBase->getPort()));
 
 	if (dataBase->getIsObservationOn())
 		ui.m_startStopToggleButton->setChecked(true);
@@ -50,8 +50,8 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
 		ui.m_startStopToggleButton->setChecked(false);
 
 	// Establish all connections.
-	connect(ui.m_ipAddressLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onIpAddressLineEditTextChanged(const QString&)));
-	connect(ui.m_portLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onPortLineEditTextChanged(const QString&)));
+	connect(ui.m_ipAddressEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onIpAddressLineEditTextChanged(const QString&)));
+	connect(ui.m_portEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onPortLineEditTextChanged(const QString&)));
 
 	connect(ui.m_startStopToggleButton, SIGNAL(clicked()), this, SLOT(onStartStopToggleButtonClicked()));
 	connect(ui.m_settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsButtonClicked()));

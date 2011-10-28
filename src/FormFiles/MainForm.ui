@@ -581,7 +581,7 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="m_ipAddressLineEdit">
+       <widget class="QLineEdit" name="m_ipAddressEdit">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -611,7 +611,7 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="m_portLineEdit">
+       <widget class="QLineEdit" name="m_portEdit">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -707,7 +707,7 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="m_mapsTab">
        <attribute name="title">
@@ -778,7 +778,7 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
        </attribute>
        <layout class="QGridLayout" name="gridLayout">
         <item row="0" column="0">
-         <widget class="QPlainTextEdit" name="m_logTextEdit">
+         <widget class="QPlainTextEdit" name="m_logEdit">
           <property name="readOnly">
            <bool>true</bool>
           </property>
