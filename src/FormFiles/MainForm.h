@@ -19,8 +19,14 @@ public:
 	MainForm(QWidget *parent = 0, Qt::WFlags flags = 0);
 	~MainForm();
 
+	/// \name App -> UI logic.
+	//@{
+	void onOscPacketSizeChanged(uint oscPacketSize) {ui.m_oscPacketSizeLineEdit->setText(QString::number(oscPacketSize));}
+	//@}
+
 protected slots:
-	/// \name UI logic.
+
+	/// \name UI -> app logic.
 	//@{
 	void onIpAddressLineEditTextChanged(const QString& text) {m_dataController->onIpAddressLineEditTextChanged(text.toStdString());}
 	void onPortLineEditTextChanged(const QString& text) {m_dataController->onPortLineEditTextChanged(text.toInt());}

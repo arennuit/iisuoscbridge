@@ -16,7 +16,7 @@ class DataBase : public AbstractDataBase
 
 public:
 
-	/// \name Accessors.
+	/// \name Application data accessors.
 	//@{
 	virtual const std::string& getIpAddress() {return m_ipAddress;}
 	virtual void setIpAddress(const std::string& ipAddress) {m_ipAddress = ipAddress;}

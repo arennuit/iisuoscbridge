@@ -12,6 +12,8 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 	SK::MainForm mainForm;
 
+	SK::AppDataBase::GetInstance()->setMainForm(&mainForm);
+
 	mainForm.show();
 	app.exec();
 
