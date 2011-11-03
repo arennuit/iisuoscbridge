@@ -33,7 +33,6 @@ protected slots:
 	void onPortLineEditTextChanged(const QString& text) {m_dataController->onPortLineEditTextChanged(text.toInt());}
 
 	void onStartStopToggleButtonClicked() {m_dataController->onStartStopToggleButtonClicked();}
-	void onSettingsButtonClicked() {m_areSettingsVisible = !m_areSettingsVisible; ui.m_tabs->setVisible(m_areSettingsVisible);}
 
 	void onFoldAndNameJointsCheckBoxClicked() {m_dataController->onFoldAndNameJointsCheckBoxClicked(ui.m_foldAndNameJointsCheckBox->isChecked());}
 	//@}
@@ -47,11 +46,6 @@ protected:
 	//@}
 
 	DataController* m_dataController;
-
-	/// \name UI logic.
-	//@{
-	bool m_areSettingsVisible;
-	//@}
 };
 
 } // namespace SK.
