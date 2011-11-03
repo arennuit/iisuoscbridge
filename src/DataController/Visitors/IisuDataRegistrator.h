@@ -24,7 +24,6 @@ protected:
 	//@{
 	void visit(PathMapItem* pathItem) SK_OVERRIDE;
 	void visit(DataPathMapItem* pathItem) SK_OVERRIDE {} // Cannot register a generic data.
-	void visit(FoldableDataPathMapItem* pathItem) SK_OVERRIDE {} // Cannot register a generic data.
 	void visit(BooleanPathMapItem* pathItem) SK_OVERRIDE;
 	void visit(Vector3PathMapItem* pathItem) SK_OVERRIDE;
 	void visit(ArrayPathMapItem* pathItem) SK_OVERRIDE {} // Cannot register a generic array.

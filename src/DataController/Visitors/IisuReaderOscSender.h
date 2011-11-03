@@ -10,6 +10,7 @@ namespace osc
 namespace SK
 {
 
+class DataBase;
 class IIisuDataExtractor;
 
 //////////////////////////////////////////////////////////////////////////
@@ -17,7 +18,7 @@ class IIisuDataExtractor;
 class IisuReaderOscSender : public PathMapItemVisitor
 {
 public:
-	IisuReaderOscSender(osc::OutboundPacketStream* outPacketStream);
+	IisuReaderOscSender(DataBase* dataBase, osc::OutboundPacketStream* outPacketStream);
 	~IisuReaderOscSender() {}
 
 	void setPathItemData(const std::string& fullOscPath, SK::IIisuDataExtractor* iisuDataHandle) {m_fullOscPath = fullOscPath; m_iisuDataHandle = iisuDataHandle;}
@@ -27,13 +28,14 @@ protected:
 	//@{
 	void visit(PathMapItem* pathItem) SK_OVERRIDE {} // It makes no sense to read or stream a concrete PathMapItem.
 	void visit(DataPathMapItem* pathItem) SK_OVERRIDE {} // It makes no sense to read or stream a generic data.
-	void visit(FoldableDataPathMapItem* pathItem) SK_OVERRIDE {} // It makes no sense to read or stream a generic data.
 	void visit(BooleanPathMapItem* pathItem) SK_OVERRIDE;
 	void visit(Vector3PathMapItem* pathItem) SK_OVERRIDE;
 	void visit(ArrayPathMapItem* pathItem) SK_OVERRIDE {} // It makes no sense to read or stream a generic array.
 	void visit(FloatArrayPathMapItem* pathItem) SK_OVERRIDE;
 	void visit(Vector3ArrayPathMapItem* pathItem) SK_OVERRIDE;
 	//@}
+
+	DataBase* m_dataBase;
 
 	SK::IIisuDataExtractor* m_iisuDataHandle;
 	osc::OutboundPacketStream* m_outPacketStream;

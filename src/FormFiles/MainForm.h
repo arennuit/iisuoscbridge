@@ -34,6 +34,8 @@ protected slots:
 
 	void onStartStopToggleButtonClicked() {m_dataController->onStartStopToggleButtonClicked();}
 	void onSettingsButtonClicked() {m_areSettingsVisible = !m_areSettingsVisible; ui.m_tabs->setVisible(m_areSettingsVisible);}
+
+	void onFoldAndNameJointsCheckBoxClicked() {m_dataController->onFoldAndNameJointsCheckBoxClicked(ui.m_foldAndNameJointsCheckBox->isChecked());}
 	//@}
 
 protected:

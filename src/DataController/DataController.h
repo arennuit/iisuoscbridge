@@ -27,6 +27,8 @@ public:
 	void onPortLineEditTextChanged(int newPort) {m_dataBase->setPort(newPort);}
 
 	void onStartStopToggleButtonClicked();
+
+	void onFoldAndNameJointsCheckBoxClicked(bool isFoldAndNameJoints);
 	//@}
 
 protected:

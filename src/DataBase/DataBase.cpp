@@ -43,6 +43,8 @@ void DataBase::setDefaultValues()
 
 	m_isObservationOn = false;
 
+	m_isFoldAndNameJoints = true;
+
 	m_oscPacketSize = 0;
 }
 

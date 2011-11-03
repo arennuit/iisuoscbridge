@@ -707,7 +707,7 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="m_mapsTab">
        <attribute name="title">
@@ -719,6 +719,13 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QCheckBox" name="m_foldAndNameJointsCheckBox">
+            <property name="text">
+             <string>Fold and Name Joints</string>
+            </property>
+           </widget>
+          </item>
           <item>
            <spacer name="horizontalSpacer">
             <property name="orientation">
@@ -735,7 +742,7 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
           <item>
            <widget class="QLabel" name="label_3">
             <property name="text">
-             <string>OSC Packet Size:</string>
+             <string>OSC Packet Size :</string>
             </property>
            </widget>
           </item>

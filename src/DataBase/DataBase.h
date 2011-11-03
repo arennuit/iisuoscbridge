@@ -30,6 +30,9 @@ public:
 	virtual bool getIsObservationOn() {return m_isObservationOn;}
 	virtual void setIsObservationOn(bool isObservationOn) {m_isObservationOn = isObservationOn;}
 
+	virtual bool getIsFoldAndNameJoints() {return m_isFoldAndNameJoints;}
+	virtual void setIsFoldAndNameJoints(bool isFoldAndNameJoints) {m_isFoldAndNameJoints = isFoldAndNameJoints;}
+
 	virtual uint getOscPacketSize() {return m_oscPacketSize;}
 	virtual void setOscPacketSize(uint oscPacketSize) {m_oscPacketSize = oscPacketSize;}
 	//@}
@@ -41,13 +44,15 @@ protected:
 	void setDefaultValues();
 
 	/// \name Application data.
-	//@{
+	//@
 	std::string m_ipAddress;
 	int m_port;
 
 	PathMapItem* m_pathsTreeRoot;
 
 	bool m_isObservationOn;
+
+	bool m_isFoldAndNameJoints;
 
 	uint m_oscPacketSize;
 	//@}

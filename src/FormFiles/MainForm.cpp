@@ -49,12 +49,19 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
 	else
 		ui.m_startStopToggleButton->setChecked(false);
 
+	if (dataBase->getIsFoldAndNameJoints())
+		ui.m_foldAndNameJointsCheckBox->setChecked(true);
+	else
+		ui.m_foldAndNameJointsCheckBox->setChecked(false);
+
 	// Establish all connections.
 	connect(ui.m_ipAddressEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onIpAddressLineEditTextChanged(const QString&)));
 	connect(ui.m_portEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onPortLineEditTextChanged(const QString&)));
 
 	connect(ui.m_startStopToggleButton, SIGNAL(clicked()), this, SLOT(onStartStopToggleButtonClicked()));
 	connect(ui.m_settingsButton, SIGNAL(clicked()), this, SLOT(onSettingsButtonClicked()));
+
+	connect(ui.m_foldAndNameJointsCheckBox, SIGNAL(clicked()), this, SLOT(onFoldAndNameJointsCheckBoxClicked()));
 }
 
 //////////////////////////////////////////////////////////////////////////

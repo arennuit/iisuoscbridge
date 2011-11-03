@@ -9,16 +9,6 @@ namespace SK
 {
 
 //////////////////////////////////////////////////////////////////////////
-class FoldableAndNamablePolicy
-{
-public:
-	FoldableAndNamablePolicy(bool isFoldAndNameMode) : m_isFoldAndNameMode(isFoldAndNameMode) {}
-
-	// Streaming mode.
-	bool m_isFoldAndNameMode;
-};
-
-//////////////////////////////////////////////////////////////////////////
 /// \brief The concrete PathMapItem class is used to format OSC paths. But the class is also inherited
 ///       by items actually pointing to proper iisu data.
 class PathMapItem
@@ -54,18 +44,6 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////////
-class FoldableDataPathMapItem : public DataPathMapItem, public FoldableAndNamablePolicy
-{
-public:
-	FoldableDataPathMapItem(const std::string& oscPathItem, const std::string& iisuPath, PathMapItem* parent = 0, bool isFoldAndNameMode = true) :
-		DataPathMapItem(oscPathItem, iisuPath, parent),
-		FoldableAndNamablePolicy(isFoldAndNameMode) {}
-
-	// Visitor.
-	void accept(PathMapItemVisitor* visitor) SK_OVERRIDE = 0;
-};
-
-//////////////////////////////////////////////////////////////////////////
 class BooleanPathMapItem : public DataPathMapItem
 {
 public:
@@ -77,23 +55,22 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////////
-class Vector3PathMapItem : public FoldableDataPathMapItem
+class Vector3PathMapItem : public DataPathMapItem
 {
 public:
-	Vector3PathMapItem(const std::string& oscPathItem, const std::string& iisuPath, PathMapItem* parent = 0, bool isFoldAndNameMode = true) :
-		FoldableDataPathMapItem(oscPathItem, iisuPath, parent, isFoldAndNameMode) {}
+	Vector3PathMapItem(const std::string& oscPathItem, const std::string& iisuPath, PathMapItem* parent = 0) :
+		DataPathMapItem(oscPathItem, iisuPath, parent) {}
 
 	// Visitor.
 	void accept(PathMapItemVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}
 };
 
 //////////////////////////////////////////////////////////////////////////
-class ArrayPathMapItem : public DataPathMapItem, public FoldableAndNamablePolicy
+class ArrayPathMapItem : public DataPathMapItem
 {
 public:
-	ArrayPathMapItem(const std::string& oscPathItem, const std::string& iisuPath, PathMapItem* parent = 0, bool isFoldAndNameMode = true) :
-		DataPathMapItem(oscPathItem, iisuPath, parent),
-		FoldableAndNamablePolicy(isFoldAndNameMode) {}
+	ArrayPathMapItem(const std::string& oscPathItem, const std::string& iisuPath, PathMapItem* parent = 0) :
+		DataPathMapItem(oscPathItem, iisuPath, parent) {}
 
 	// Visitor.
 	void accept(PathMapItemVisitor* visitor) = 0;
@@ -114,8 +91,8 @@ public:
 class Vector3ArrayPathMapItem : public ArrayPathMapItem
 {
 public:
-	Vector3ArrayPathMapItem(const std::string& oscPathItem, const std::string& iisuPath, PathMapItem* parent = 0, bool isFoldAndNameMode = true) :
-		ArrayPathMapItem(oscPathItem, iisuPath, parent, isFoldAndNameMode) {}
+	Vector3ArrayPathMapItem(const std::string& oscPathItem, const std::string& iisuPath, PathMapItem* parent = 0) :
+		ArrayPathMapItem(oscPathItem, iisuPath, parent) {}
 
 	// Visitor.
 	void accept(PathMapItemVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}

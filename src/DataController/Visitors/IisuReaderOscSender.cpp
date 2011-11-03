@@ -1,7 +1,8 @@
 #include "IisuReaderOscSender.h"
 #include "SDK/iisuSDK.h"
 #include "osc/OscOutboundPacketStream.h"
-#include "Database/PathMapItem.h"
+#include "DataBase/PathMapItem.h"
+#include "DataBase/DataBase.h"
 
 namespace SK
 {
@@ -41,19 +42,19 @@ osc::BeginMessage OscBeginMessage(const std::string& oscPath) {return osc::Begin
 osc::MessageTerminator OscEndMessage() {return osc::MessageTerminator();}
 
 //////////////////////////////////////////////////////////////////////////
-IisuReaderOscSender::IisuReaderOscSender(osc::OutboundPacketStream* outPacketStream) :
+IisuReaderOscSender::IisuReaderOscSender(DataBase* dataBase, osc::OutboundPacketStream* outPacketStream) :
 	PathMapItemVisitor(),
+	m_dataBase(dataBase),
 	m_outPacketStream(outPacketStream),
 	m_iisuDataHandle(0)
 {
-
+	assert(m_dataBase);
+	assert(m_outPacketStream);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void IisuReaderOscSender::visit(BooleanPathMapItem* pathItem)
 {
-	assert(m_outPacketStream);
-
 	// Get the data from iisu.
 	SK::DataHandle<bool>* iisuDataHandle = static_cast<SK::DataHandle<bool>*>(m_iisuDataHandle);
 	const bool& iisuData = iisuDataHandle->get();
@@ -72,7 +73,7 @@ void IisuReaderOscSender::visit(Vector3PathMapItem* pathItem)
 	const SK::Vector3& iisuData = iisuDataHandle->get();
 
 	// Send via OSC.
-	if (pathItem->m_isFoldAndNameMode)
+	if (m_dataBase->getIsFoldAndNameJoints())
 	{
 		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/x");
 		*m_outPacketStream << iisuData.x;
@@ -102,7 +103,7 @@ void IisuReaderOscSender::visit(FloatArrayPathMapItem* pathItem)
 	const SK::Array<float>& iisuData = iisuDataHandle->get();
 
 	// Send via OSC.
-	if (pathItem->m_isFoldAndNameMode)
+	if (m_dataBase->getIsFoldAndNameJoints())
 	{
 		// Size.
 		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
@@ -138,7 +139,7 @@ void IisuReaderOscSender::visit(Vector3ArrayPathMapItem* pathItem)
 	const SK::Array<SK::Vector3>& iisuData = iisuDataHandle->get();
 
 	// Send via OSC.
-	if (pathItem->m_isFoldAndNameMode)
+	if (m_dataBase->getIsFoldAndNameJoints())
 	{
 		// Size.
 		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");

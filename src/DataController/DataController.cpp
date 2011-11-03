@@ -61,6 +61,12 @@ void DataController::onStartStopToggleButtonClicked()
 }
 
 //////////////////////////////////////////////////////////////////////////
+void DataController::onFoldAndNameJointsCheckBoxClicked( bool isFoldAndNameJoints )
+{
+	m_dataBase->setIsFoldAndNameJoints(isFoldAndNameJoints);
+}
+
+//////////////////////////////////////////////////////////////////////////
 bool DataController::initIisu()
 {
 	// Linearize path items.
@@ -190,7 +196,7 @@ void DataController::oscSend()
 	// Build the OSC packet up.
 	outPacketStream	<< osc::BeginBundleImmediate;;
 
-	IisuReaderOscSender iisuReaderOscSender(&outPacketStream);
+	IisuReaderOscSender iisuReaderOscSender(m_dataBase, &outPacketStream);
 	for (uint i = 0; i < m_pathMapLinearized.size(); ++i)
 	{
 		iisuReaderOscSender.setPathItemData(m_fullOscPaths[i], m_iisuDataHandles[i]);
