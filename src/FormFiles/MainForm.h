@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QtGui/QMainWindow>
-#include <QMessageBox>
+#include <QMainWindow>
 #include "ui_MainForm.h"
 #include "DataController/DataController.h"
 #include "Mvd/MvdDataModel.h"
