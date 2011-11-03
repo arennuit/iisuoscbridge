@@ -5,10 +5,12 @@ namespace SK
 
 class PathMapItem;
 class DataPathMapItem;
+class FoldableDataPathMapItem;
 class BooleanPathMapItem;
+class Vector3PathMapItem;
 class ArrayPathMapItem;
-class Vector3ArrayPathMapItem;
 class FloatArrayPathMapItem;
+class Vector3ArrayPathMapItem;
 
 //////////////////////////////////////////////////////////////////////////
 class PathMapItemVisitor
@@ -18,10 +20,12 @@ public:
 	//@{
 	virtual void visit(PathMapItem* pathItem) = 0;
 	virtual void visit(DataPathMapItem* pathItem) = 0;
+	virtual void visit(FoldableDataPathMapItem* pathItem) = 0;
 	virtual void visit(BooleanPathMapItem* pathItem) = 0;
+	virtual void visit(Vector3PathMapItem* pathItem) = 0;
 	virtual void visit(ArrayPathMapItem* pathItem) = 0;
-	virtual void visit(Vector3ArrayPathMapItem* pathItem) = 0;
 	virtual void visit(FloatArrayPathMapItem* pathItem) = 0;
+	virtual void visit(Vector3ArrayPathMapItem* pathItem) = 0;
 	//@}
 };
 

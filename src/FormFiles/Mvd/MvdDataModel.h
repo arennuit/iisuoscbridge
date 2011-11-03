@@ -26,10 +26,12 @@ protected:
 	//@{
 	void visit(PathMapItem* pathItem) SK_OVERRIDE;
 	void visit(DataPathMapItem* pathItem) SK_OVERRIDE;
+	void visit(FoldableDataPathMapItem* pathItem) SK_OVERRIDE;
 	void visit(BooleanPathMapItem* pathItem) SK_OVERRIDE {visit((DataPathMapItem*)pathItem);}
+	void visit(Vector3PathMapItem* pathItem) SK_OVERRIDE {visit((FoldableDataPathMapItem*)pathItem);}
 	void visit(ArrayPathMapItem* pathItem) SK_OVERRIDE;
-	void visit(Vector3ArrayPathMapItem* pathItem) SK_OVERRIDE {visit((ArrayPathMapItem*)pathItem);}
 	void visit(FloatArrayPathMapItem* pathItem) SK_OVERRIDE {visit((ArrayPathMapItem*)pathItem);}
+	void visit(Vector3ArrayPathMapItem* pathItem) SK_OVERRIDE {visit((ArrayPathMapItem*)pathItem);}
 	//@}
 
 	QStandardItem* m_parentItem;
