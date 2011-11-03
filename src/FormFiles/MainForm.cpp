@@ -70,4 +70,12 @@ MainForm::~MainForm()
 	m_mvdModel.clear();
 }
 
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onIsObservationOnChanged(bool isObservationOn)
+{
+	ui.m_startStopToggleButton->setChecked(isObservationOn);
+	ui.m_foldAndNameJointsCheckBox->setEnabled(!isObservationOn);
+	ui.m_pathsView->setEnabled(!isObservationOn);
+}
+
 } // namespace SK.

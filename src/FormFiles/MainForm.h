@@ -21,7 +21,7 @@ public:
 
 	/// \name App -> UI logic.
 	//@{
-	void onIsObservationOnChanged(bool isObservationOn) {ui.m_startStopToggleButton->setChecked(isObservationOn);}
+	void onIsObservationOnChanged(bool isObservationOn);
 	void onOscPacketSizeChanged(uint oscPacketSize) {ui.m_oscPacketSizeLineEdit->setText(QString::number(oscPacketSize));}
 	//@}
 
