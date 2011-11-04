@@ -1,36 +1,9 @@
 #include "MainForm.h"
 
 #include "DataBase/DataBase.h"
-#include <iostream>
-#include <ostream>
-#include <sstream>
-#include <streambuf>
 
 namespace SK
 {
-
-// This class allows to send its content towards the log window.
-class streamBufToLogEdit : public std::basic_streambuf<char, std::char_traits<char> >
-{
-typedef	std::basic_streambuf<char, std::char_traits<char> >::int_type int_type;
-
-public:
-	streamBufToLogEdit(QPlainTextEdit* targetEdit) :
-		std::basic_streambuf<char, std::char_traits<char> >(),
-		m_targetEdit(targetEdit) {}
-
-protected:
-	int_type overflow(int_type c)
-	{
-		assert(m_targetEdit);
-
-		m_targetEdit->insertPlainText(QString(c));
-
-		return c;
-	}
-
-	QPlainTextEdit* m_targetEdit;
-};
 
 //////////////////////////////////////////////////////////////////////////
 MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
@@ -81,16 +54,6 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
 	connect(ui.m_startStopToggleButton, SIGNAL(clicked()), this, SLOT(onStartStopToggleButtonClicked()));
 
 	connect(ui.m_foldAndNameJointsCheckBox, SIGNAL(clicked()), this, SLOT(onFoldAndNameJointsCheckBoxClicked()));
-
-	// Redirect cerr, clog and cout to the log window.
-	static streamBufToLogEdit coutStreamBuf(ui.m_logEdit);
-	std::cout.rdbuf(&coutStreamBuf);
-
-	//static streamBufToLogEdit clogStreamBuf(ui.m_logEdit);
-	//std::clog.rdbuf(&clogStreamBuf);
-
-	//static streamBufToLogEdit cerrStreamBuf(ui.m_logEdit);
-	//std::cerr.rdbuf(&cerrStreamBuf);
 }
 
 //////////////////////////////////////////////////////////////////////////
