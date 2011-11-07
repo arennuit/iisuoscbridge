@@ -753,20 +753,6 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="m_logTab">
-       <attribute name="title">
-        <string>Log</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <widget class="QPlainTextEdit" name="m_logEdit">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
      </widget>
     </item>
    </layout>
