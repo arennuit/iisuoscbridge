@@ -10,31 +10,31 @@ namespace SK
 // TODO: share and use joints names in ProtoPose.h.
 static const std::string JointsName[SK::SkeletonEnum::_COUNT] =
 {
-	"Pelvis",
-	"Waist",
-	"Collar",
-	"Neck",
-	"Head",
+	"pelvis",
+	"waist",
+	"collar",
+	"neck",
+	"head",
 
-	"RightShoulder",
-	"RightElbow",
-	"RightWrist",
-	"RightHand",
+	"rightShoulder",
+	"rightElbow",
+	"rightWrist",
+	"rightHand",
 
-	"RightHip",
-	"RightKnee",
-	"RightAnkle",
-	"RightFoot",
+	"rightHip",
+	"rightKnee",
+	"rightAnkle",
+	"rightFoot",
 
-	"LeftShoulder",
-	"LeftElbow",
-	"LeftWrist",
-	"LeftHand",
+	"leftShoulder",
+	"leftElbow",
+	"leftWrist",
+	"leftHand",
 
-	"LeftHip",
-	"LeftKnee",
-	"LeftAnkle",
-	"LeftFoot"
+	"leftHip",
+	"leftKnee",
+	"leftAnkle",
+	"leftFoot"
 };
 
 // Make osc::BeginMessage() easier to use with std::string.
