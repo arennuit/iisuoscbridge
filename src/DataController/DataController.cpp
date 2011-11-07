@@ -119,7 +119,7 @@ bool DataController::initIisu()
 	m_device->getEventManager().registerEventListener("DEVICE.DataFrame", *this, &DataController::newIisuDataFrameListener);
 
 	// Iisu data handles registration.
-	m_iisuDataHandles.clear();
+	clearIisuDataHandles();
 	IisuDataRegistrator iisuPathRegistrator(m_device, m_iisuDataHandles, m_pathMapLinearized);
 	for (uint i = 0; i < m_pathMapLinearized.size(); ++i)
 		m_pathMapLinearized[i]->accept(&iisuPathRegistrator);
@@ -153,7 +153,7 @@ void DataController::termIisu()
 		m_device = 0;
 	}
 
-	m_iisuDataHandles.clear();
+	clearIisuDataHandles();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -163,6 +163,18 @@ void DataController::linearizePathMap(PathMapItem* pathItem)
 
 	for (uint i = 0; i < pathItem->m_children.size(); ++i)
 		linearizePathMap(pathItem->m_children[i]);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void DataController::clearIisuDataHandles()
+{
+	for (uint i = 0; i < m_iisuDataHandles.size(); ++i)
+	{
+		if (m_iisuDataHandles[i])
+			delete m_iisuDataHandles[i];
+	}
+
+	m_iisuDataHandles.clear();
 }
 
 //////////////////////////////////////////////////////////////////////////

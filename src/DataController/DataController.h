@@ -43,6 +43,8 @@ protected:
 
 	void linearizePathMap(PathMapItem* pathItem);
 	std::vector<PathMapItem*> m_pathMapLinearized;
+
+	void clearIisuDataHandles();
 	//@}
 
 	/// \name Iisu.

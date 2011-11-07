@@ -6,7 +6,7 @@ namespace SK
 {
 
 //////////////////////////////////////////////////////////////////////////
-	IisuDataRegistrator::IisuDataRegistrator(SK::Device* device, std::vector<SK::IIisuDataExtractor*>& dataHandles, std::vector<PathMapItem*>& pathAssociators) :
+IisuDataRegistrator::IisuDataRegistrator(SK::Device* device, std::vector<SK::IIisuDataExtractor*>& dataHandles, std::vector<PathMapItem*>& pathAssociators) :
 	PathMapItemVisitor(),
 	m_device(device),
 	m_dataHandles(dataHandles),
@@ -61,9 +61,6 @@ void IisuDataRegistrator::visit(FloatArrayPathMapItem* pathItem)
 void IisuDataRegistrator::visit(Vector3ArrayPathMapItem* pathItem)
 {
 	assert(pathItem);
-
-	//SK::DataHandle< SK::Array<SK::Vector3> > m_skeleton;
-	//m_skeleton = m_device->registerDataHandle< SK::Array<SK::Vector3> >("...");
 
 	// Register iisu path.
 	SK::DataHandle<SK::Array<SK::Vector3> >* handle = new SK::DataHandle<SK::Array<SK::Vector3> >();
