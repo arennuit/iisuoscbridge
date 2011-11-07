@@ -118,17 +118,33 @@ Section "Core" Section_Core
 
     File "..\Release\iisuOscBridge.exe"
     File "${LIC_FILE_PATH}"
+	
+    SetOutPath "$INSTDIR\Doc"
+	
+    File "..\Doc\StartUp.txt"
+	
+    SetOutPath "$INSTDIR\Samples"
+	
+    File "..\Samples\PureData_readMe.txt"
+    File "..\Samples\PureData_simple_rightHand.pd"
   
-  ; Install the menu items.
-  !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
+    ; Install the menu items.
+    !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
   
     CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
 
-    SetOutPath "$INSTDIR" ; SetOutPath sets the working directory of the shortcut
-
-    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\iisuOscBridge.lnk"         "$INSTDIR\iisuOscBridge.exe"
-    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\License.lnk"               "$INSTDIR\License.txt"
-    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk"             "$INSTDIR\Uninstall.exe"
+    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\iisuOscBridge.lnk"		"$INSTDIR\iisuOscBridge.exe"
+    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\License.lnk"				"$INSTDIR\License.txt"
+    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk"			"$INSTDIR\Uninstall.exe"
+  
+    CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\Doc"
+	
+    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Doc\StartUp.lnk"					"$INSTDIR\Doc\StartUp.txt"
+  
+    CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\Samples"
+	
+    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData_readMe.lnk"					"$INSTDIR\Samples\PureData_readMe.pd"
+    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData_simple_rightHand.lnk"		"$INSTDIR\Samples\PureData_simple_rightHand.pd"
 
     SetOutPath "$INSTDIR"
 
