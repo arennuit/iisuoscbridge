@@ -26,7 +26,7 @@ public:
 	void onIpAddressLineEditTextChanged(const std::string& newIpAddress) {m_dataBase->setIpAddress(newIpAddress);}
 	void onPortLineEditTextChanged(int newPort) {m_dataBase->setPort(newPort);}
 
-	void onStartStopToggleButtonClicked();
+	void onStartStopToggleButtonClicked(std::string& errorMsg);
 
 	void onFoldAndNameJointsCheckBoxClicked(bool isFoldAndNameJoints);
 	//@}
@@ -49,7 +49,7 @@ protected:
 
 	/// \name Iisu.
 	//@{
-	bool initIisu();
+	bool initIisu(std::string& errorMsg); ///< The errorMsg string is only used because we have no log system, this should disappear eventually.
 	void newIisuDataFrameListener(const SK::DataFrameEvent& event);
 	void termIisu();
 

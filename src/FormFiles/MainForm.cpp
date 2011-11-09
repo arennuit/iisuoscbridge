@@ -31,21 +31,26 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
 	ui.m_pathsView->resizeColumnToContents(1);
 
 	// UI setup.
-	DataBase* dataBase = DataBase::GetInstance(); // We do not make this pointer a member of the class because the MainForm is not due to modify data, it only uses the data model to perform the initial ui setup.
-	assert(dataBase);
+	m_dataBase = DataBase::GetInstance(); // We do not make this pointer a member of the class because the MainForm is not due to modify data, it only uses the data model to perform the initial ui setup.
+	assert(m_dataBase);
 
-	ui.m_ipAddressEdit->setText(QString(dataBase->getIpAddress().c_str()));
-	ui.m_portEdit->setText(QString::number(dataBase->getPort()));
+	ui.m_ipAddressEdit->setText(QString(m_dataBase->getIpAddress().c_str()));
+	ui.m_portEdit->setText(QString::number(m_dataBase->getPort()));
 
-	if (dataBase->getIsObservationOn())
+	if (m_dataBase->getIsObservationOn())
 		ui.m_startStopToggleButton->setChecked(true);
 	else
 		ui.m_startStopToggleButton->setChecked(false);
 
-	if (dataBase->getIsFoldAndNameJoints())
+	if (m_dataBase->getIsFoldAndNameJoints())
 		ui.m_foldAndNameJointsCheckBox->setChecked(true);
 	else
 		ui.m_foldAndNameJointsCheckBox->setChecked(false);
+
+	if (m_dataBase->getIsObservationOn() == true)
+		ui.m_tabs->setCurrentWidget(ui.m_logTab);
+	else
+		ui.m_tabs->setCurrentWidget(ui.m_mapsTab);
 
 	// Establish all connections.
 	connect(ui.m_ipAddressEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onIpAddressLineEditTextChanged(const QString&)));
@@ -68,6 +73,19 @@ void MainForm::onIsObservationOnChanged(bool isObservationOn)
 	ui.m_startStopToggleButton->setChecked(isObservationOn);
 	ui.m_foldAndNameJointsCheckBox->setEnabled(!isObservationOn);
 	ui.m_pathsView->setEnabled(!isObservationOn);
+
+	if (isObservationOn == true)
+		ui.m_tabs->setCurrentWidget(ui.m_logTab);
+	else
+		ui.m_tabs->setCurrentWidget(ui.m_mapsTab);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onStartStopToggleButtonClicked()
+{
+	std::string errorMsg;
+	m_dataController->onStartStopToggleButtonClicked(errorMsg);
+	ui.m_logTextEdit->appendPlainText(QString(errorMsg.c_str()));
 }
 
 } // namespace SK.

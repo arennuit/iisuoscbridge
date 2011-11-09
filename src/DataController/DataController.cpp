@@ -43,13 +43,15 @@ void DataController::DestroyInstance()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::onStartStopToggleButtonClicked()
+void DataController::onStartStopToggleButtonClicked(std::string& errorMsg)
 {
+	errorMsg = "";
+
 	if (m_dataBase->getIsObservationOn() == false)
 	{
 		m_dataBase->setIsObservationOn(true);
 
-		if (!initIisu())
+		if (!initIisu(errorMsg))
 			m_dataBase->setIsObservationOn(false);
 	}
 	else
@@ -67,11 +69,15 @@ void DataController::onFoldAndNameJointsCheckBoxClicked( bool isFoldAndNameJoint
 }
 
 //////////////////////////////////////////////////////////////////////////
-bool DataController::initIisu()
+bool DataController::initIisu(std::string& errorMsg)
 {
 	// Linearize path items.
 	if (!m_dataBase->getPathsTreeRoot())
+	{
+		errorMsg = "No paths tree root";
+
 		return false;
+	}
 
 	m_pathMapLinearized.clear();
 	linearizePathMap(m_dataBase->getPathsTreeRoot());
@@ -89,7 +95,7 @@ bool DataController::initIisu()
 	SK::Return<SK::ApplicationConfigurator> retAppConf = SK::ApplicationConfigurator::create("");
 	if (retAppConf.failed())
 	{
-		std::cout << retAppConf.getDescription() << std::endl;
+		errorMsg = retAppConf.getDescription().ptr();
 		return false;
 	}
 	ApplicationConfigurator appConf = retAppConf.get();
@@ -97,7 +103,7 @@ bool DataController::initIisu()
 	SK::Return<SK::IisuHandle*> retHandle = context.createHandle(appConf);
 	if (retHandle.failed())
 	{
-		std::cout << retHandle.getDescription() << std::endl;
+		errorMsg = retHandle.getDescription().ptr();
 		return false;
 	}
 	SK::IisuHandle* handle = retHandle.get();
@@ -106,10 +112,11 @@ bool DataController::initIisu()
 	SK::Return<SK::Device*> retDevice = handle->initializeDevice(appConf);
 	if (retDevice.failed())
 	{
-		std::cout << retDevice.getDescription() << std::endl;
+		// TODO: pb log here.
+		errorMsg = retDevice.getDescription().ptr();
 		SK::Result result = context.destroyHandle(*handle);
 		if (result.failed())
-			std::cout << result.getDescription() << std::endl;
+			errorMsg = result.getDescription().ptr();
 
 		return false;
 	}
@@ -132,6 +139,7 @@ bool DataController::initIisu()
 
 	m_device->start();
 
+	errorMsg = "The iisu engine started correctly\nNow streaming OSC...";
 	return true;
 }
 

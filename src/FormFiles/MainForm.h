@@ -9,6 +9,8 @@
 namespace SK
 {
 
+class DataBase;
+
 //////////////////////////////////////////////////////////////////////////
 /// \brief This class is the main window of the application.
 class MainForm : public QMainWindow
@@ -32,7 +34,7 @@ protected slots:
 	void onIpAddressLineEditTextChanged(const QString& text) {m_dataController->onIpAddressLineEditTextChanged(text.toStdString());}
 	void onPortLineEditTextChanged(const QString& text) {m_dataController->onPortLineEditTextChanged(text.toInt());}
 
-	void onStartStopToggleButtonClicked() {m_dataController->onStartStopToggleButtonClicked();}
+	void onStartStopToggleButtonClicked();
 
 	void onFoldAndNameJointsCheckBoxClicked() {m_dataController->onFoldAndNameJointsCheckBoxClicked(ui.m_foldAndNameJointsCheckBox->isChecked());}
 	//@}
@@ -45,6 +47,7 @@ protected:
 	MvdDataModel m_mvdModel;
 	//@}
 
+	DataBase* m_dataBase;
 	DataController* m_dataController;
 };
 
