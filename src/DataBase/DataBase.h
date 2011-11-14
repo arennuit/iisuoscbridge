@@ -24,6 +24,9 @@ public:
 	virtual int getPort() {return m_port;}
 	virtual void setPort(int port) {m_port = port;}
 
+	virtual const std::string& getIidFilePath() {return m_iidFilePath;}
+	virtual void setIidFilePath(const std::string& iidFilePath) {m_iidFilePath = iidFilePath;}
+
 	virtual PathMapItem* getPathsTreeRoot() {return m_pathsTreeRoot;}
 	virtual void setPathsTreeRoot(PathMapItem* pathsTreeRoot) {m_pathsTreeRoot = pathsTreeRoot;}
 
@@ -47,6 +50,7 @@ protected:
 	//@
 	std::string m_ipAddress;
 	int m_port;
+	std::string m_iidFilePath;
 
 	PathMapItem* m_pathsTreeRoot;
 

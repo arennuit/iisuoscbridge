@@ -25,6 +25,7 @@ public:
 	//@{
 	void onIpAddressLineEditTextChanged(const std::string& newIpAddress) {m_dataBase->setIpAddress(newIpAddress);}
 	void onPortLineEditTextChanged(int newPort) {m_dataBase->setPort(newPort);}
+	void onIidFilePathLineEditTextChanged(const std::string& newIidFilePath) {m_dataBase->setIidFilePath(newIidFilePath);}
 
 	void onStartStopToggleButtonClicked(std::string& errorMsg);
 

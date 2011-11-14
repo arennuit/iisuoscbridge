@@ -33,6 +33,7 @@ protected slots:
 	//@{
 	void onIpAddressLineEditTextChanged(const QString& text) {m_dataController->onIpAddressLineEditTextChanged(text.toStdString());}
 	void onPortLineEditTextChanged(const QString& text) {m_dataController->onPortLineEditTextChanged(text.toInt());}
+	void onIidFilePathLineEditTextChanged(const QString& text) {m_dataController->onIidFilePathLineEditTextChanged(text.toStdString());}
 
 	void onStartStopToggleButtonClicked();
 

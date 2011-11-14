@@ -36,6 +36,7 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
 
 	ui.m_ipAddressEdit->setText(QString(m_dataBase->getIpAddress().c_str()));
 	ui.m_portEdit->setText(QString::number(m_dataBase->getPort()));
+	ui.m_iidFilePathEdit->setText(QString(m_dataBase->getIidFilePath().c_str()));
 
 	if (m_dataBase->getIsObservationOn())
 		ui.m_startStopToggleButton->setChecked(true);
@@ -55,6 +56,7 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
 	// Establish all connections.
 	connect(ui.m_ipAddressEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onIpAddressLineEditTextChanged(const QString&)));
 	connect(ui.m_portEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onPortLineEditTextChanged(const QString&)));
+	connect(ui.m_iidFilePathEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onIidFilePathLineEditTextChanged(const QString&)));
 
 	connect(ui.m_startStopToggleButton, SIGNAL(clicked()), this, SLOT(onStartStopToggleButtonClicked()));
 
