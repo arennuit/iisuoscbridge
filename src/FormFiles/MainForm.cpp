@@ -7,7 +7,8 @@ namespace SK
 
 //////////////////////////////////////////////////////////////////////////
 MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
-	QMainWindow(parent, flags)
+	QMainWindow(parent, flags),
+	m_iidFileSelectDlg(this)
 {
 	ui.setupUi(this);
 
@@ -29,6 +30,10 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
 	ui.m_pathsView->expandAll();
 	ui.m_pathsView->resizeColumnToContents(0);
 	ui.m_pathsView->resizeColumnToContents(1);
+
+	// Setup dialogs.
+	m_iidFileSelectDlg.setFileMode(QFileDialog::ExistingFile);
+	m_iidFileSelectDlg.setNameFilter("Interaction Designer (*.iid)");
 
 	// UI setup.
 	m_dataBase = DataBase::GetInstance(); // We do not make this pointer a member of the class because the MainForm is not due to modify data, it only uses the data model to perform the initial ui setup.
@@ -58,6 +63,7 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
 	connect(ui.m_portEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onPortLineEditTextChanged(const QString&)));
 	connect(ui.m_iidFilePathEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onIidFilePathLineEditTextChanged(const QString&)));
 
+	connect(ui.m_iidFilePathButton, SIGNAL(clicked()), this, SLOT(onIidFilePathButtonClicked()));
 	connect(ui.m_startStopToggleButton, SIGNAL(clicked()), this, SLOT(onStartStopToggleButtonClicked()));
 
 	connect(ui.m_foldAndNameJointsCheckBox, SIGNAL(clicked()), this, SLOT(onFoldAndNameJointsCheckBoxClicked()));
@@ -80,6 +86,19 @@ void MainForm::onIsObservationOnChanged(bool isObservationOn)
 		ui.m_tabs->setCurrentWidget(ui.m_logTab);
 	else
 		ui.m_tabs->setCurrentWidget(ui.m_mapsTab);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onIidFilePathButtonClicked()
+{
+	QStringList fileNames;
+	if (m_iidFileSelectDlg.exec())
+	{
+		fileNames = m_iidFileSelectDlg.selectedFiles();
+
+		ui.m_iidFilePathEdit->setText(fileNames[0]);
+		m_dataBase->setIidFilePath(fileNames[0].toStdString());
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

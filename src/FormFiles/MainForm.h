@@ -2,6 +2,7 @@
 
 #include <QtGui/QMainWindow>
 #include <QMainWindow>
+#include <QFileDialog>
 #include "ui_MainForm.h"
 #include "DataController/DataController.h"
 #include "Mvd/MvdDataModel.h"
@@ -35,6 +36,7 @@ protected slots:
 	void onPortLineEditTextChanged(const QString& text) {m_dataController->onPortLineEditTextChanged(text.toInt());}
 	void onIidFilePathLineEditTextChanged(const QString& text) {m_dataController->onIidFilePathLineEditTextChanged(text.toStdString());}
 
+	void onIidFilePathButtonClicked();
 	void onStartStopToggleButtonClicked();
 
 	void onFoldAndNameJointsCheckBoxClicked() {m_dataController->onFoldAndNameJointsCheckBoxClicked(ui.m_foldAndNameJointsCheckBox->isChecked());}
@@ -47,6 +49,8 @@ protected:
 
 	MvdDataModel m_mvdModel;
 	//@}
+
+	QFileDialog m_iidFileSelectDlg;
 
 	DataBase* m_dataBase;
 	DataController* m_dataController;
