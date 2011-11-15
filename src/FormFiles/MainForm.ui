@@ -617,24 +617,25 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>IP :</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="m_ipAddressEdit">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QLabel" name="label_5">
+              <property name="text">
+               <string>IID :</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="m_iidFilePathEdit"/>
+            </item>
+            <item>
+             <widget class="QPushButton" name="m_iidFilePathButton">
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </item>
@@ -666,24 +667,23 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
             </property>
            </widget>
           </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
-           <widget class="QLabel" name="label_5">
+           <widget class="QLabel" name="label">
             <property name="text">
-             <string>IID :</string>
+             <string>IP :</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="m_iidFilePathEdit"/>
-          </item>
-          <item>
-           <widget class="QPushButton" name="m_iidFilePathButton">
+           <widget class="QLineEdit" name="m_ipAddressEdit">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
-             <string>...</string>
+             <string/>
             </property>
            </widget>
           </item>

@@ -26,8 +26,8 @@ void DataBase::setDefaultValues()
 	m_iidFilePath = "";
 
 	m_pathsTreeRoot = new PathMapItem("iisu");
-	// Users #.
 
+	// Users #.
 	PathMapItem* path_user1 = new PathMapItem("user1", m_pathsTreeRoot);
 	//new Vector3ArrayPathMapItem("centroids", "USER1.SHAPE.CENTROIDS.Positions", path_user1);
 	new BooleanPathMapItem("status", "USER1.SKELETON.Status", path_user1);
