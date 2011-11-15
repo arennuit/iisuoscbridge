@@ -74,7 +74,7 @@ bool DataController::initIisu(std::string& errorMsg)
 	// Linearize path items.
 	if (!m_dataBase->getPathsTreeRoot())
 	{
-		errorMsg = "No paths tree root";
+		errorMsg += "No paths tree root";
 
 		return false;
 	}
@@ -95,7 +95,7 @@ bool DataController::initIisu(std::string& errorMsg)
 	SK::Return<SK::ApplicationConfigurator> retAppConf = SK::ApplicationConfigurator::create("");
 	if (retAppConf.failed())
 	{
-		errorMsg = retAppConf.getDescription().ptr();
+		errorMsg += retAppConf.getDescription().ptr();
 		return false;
 	}
 	ApplicationConfigurator appConf = retAppConf.get();
@@ -103,7 +103,7 @@ bool DataController::initIisu(std::string& errorMsg)
 	SK::Return<SK::IisuHandle*> retHandle = context.createHandle(appConf);
 	if (retHandle.failed())
 	{
-		errorMsg = retHandle.getDescription().ptr();
+		errorMsg += retHandle.getDescription().ptr();
 		return false;
 	}
 	SK::IisuHandle* handle = retHandle.get();
@@ -113,10 +113,10 @@ bool DataController::initIisu(std::string& errorMsg)
 	if (retDevice.failed())
 	{
 		// TODO: pb log here.
-		errorMsg = retDevice.getDescription().ptr();
+		errorMsg += retDevice.getDescription().ptr();
 		SK::Result result = context.destroyHandle(*handle);
 		if (result.failed())
-			errorMsg = result.getDescription().ptr();
+			errorMsg += result.getDescription().ptr();
 
 		return false;
 	}
@@ -131,15 +131,20 @@ bool DataController::initIisu(std::string& errorMsg)
 	for (uint i = 0; i < m_pathMapLinearized.size(); ++i)
 		m_pathMapLinearized[i]->accept(&iisuPathRegistrator);
 
-	//SK::GetVersionCommand cmd(m_device->getCommandManager());
-	////	SK::CommandHandle<SK::Return<SK::String>()> cmd2(m_device->getCommandManager(), "SYSTEM.GetVersion");
-	//SK::Return<SK::String> retCmd = cmd();
-	//if(retCmd.succeeded())
-	//	std::cout << retCmd.get() << std::endl;
+	// Load IID script.
+	if (m_dataBase->getIidFilePath() != std::string(""))
+	{
+		SK::CommandHandle<SK::Result (const SK::String&)> loadIidGraph = m_device->getCommandManager().registerCommandHandle<SK::Result(const SK::String&)>("IID.loadGraph");
+		SK::Result resLoadCmd = loadIidGraph(m_dataBase->getIidFilePath().c_str());
+		if (resLoadCmd.failed())
+			errorMsg += std::string("Load IID graph : ") + resLoadCmd.getDescription().ptr() + std::string("\n");
+		else
+			errorMsg += "IID file loaded correctly\n";
+	}
 
 	m_device->start();
 
-	errorMsg = "The iisu engine started correctly\nNow streaming OSC...";
+	errorMsg += "The iisu engine started correctly\nNow streaming OSC...";
 	return true;
 }
 

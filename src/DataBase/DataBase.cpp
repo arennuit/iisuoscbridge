@@ -23,7 +23,7 @@ void DataBase::setDefaultValues()
 {
 	m_ipAddress = "127.0.0.1";
 	m_port = 8000;
-	m_iidFilePath = "C:/Softkinetic/...";
+	m_iidFilePath = "";
 
 	m_pathsTreeRoot = new PathMapItem("iisu");
 	// Users #.
