@@ -30,6 +30,10 @@ public:
 	void onStartStopToggleButtonClicked(std::string& errorMsg);
 
 	void onFoldAndNameJointsCheckBoxClicked(bool isFoldAndNameJoints);
+
+	void onAddMapButtonClicked() {}
+	void onInsertMapButtonClicked() {}
+	void onDeleteMapButtonClicked() {}
 	//@}
 
 protected:

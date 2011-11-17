@@ -40,6 +40,10 @@ protected slots:
 	void onStartStopToggleButtonClicked();
 
 	void onFoldAndNameJointsCheckBoxClicked() {m_dataController->onFoldAndNameJointsCheckBoxClicked(ui.m_foldAndNameJointsCheckBox->isChecked());}
+	
+	void onAddMapButtonClicked() {m_dataController->onAddMapButtonClicked();};
+	void onInsertMapButtonClicked() {m_dataController->onInsertMapButtonClicked();};
+	void onDeleteMapButtonClicked() {m_dataController->onDeleteMapButtonClicked();};
 	//@}
 
 protected:

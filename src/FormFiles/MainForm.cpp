@@ -27,10 +27,6 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
 
 	m_mvdModel.update();
 
-	ui.m_pathsView->expandAll();
-	ui.m_pathsView->resizeColumnToContents(0);
-	ui.m_pathsView->resizeColumnToContents(1);
-
 	// Setup dialogs.
 	m_iidFileSelectDlg.setFileMode(QFileDialog::ExistingFile);
 	m_iidFileSelectDlg.setNameFilter("Interaction Designer (*.iid)");
@@ -58,6 +54,11 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
 	else
 		ui.m_tabs->setCurrentWidget(ui.m_mapsTab);
 
+	ui.m_pathsView->setAnimated(true);
+	ui.m_pathsView->expandAll();
+	ui.m_pathsView->resizeColumnToContents(0);
+	ui.m_pathsView->resizeColumnToContents(1);
+
 	// Establish all connections.
 	connect(ui.m_ipAddressEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onIpAddressLineEditTextChanged(const QString&)));
 	connect(ui.m_portEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onPortLineEditTextChanged(const QString&)));
@@ -67,6 +68,10 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
 	connect(ui.m_startStopToggleButton, SIGNAL(clicked()), this, SLOT(onStartStopToggleButtonClicked()));
 
 	connect(ui.m_foldAndNameJointsCheckBox, SIGNAL(clicked()), this, SLOT(onFoldAndNameJointsCheckBoxClicked()));
+
+	connect(ui.m_addMapButton, SIGNAL(clicked()), this, SLOT(onAddMapButtonClicked()));
+	connect(ui.m_insertMapButton, SIGNAL(clicked()), this, SLOT(onInsertMapButtonClicked()));
+	connect(ui.m_deleteMapButton, SIGNAL(clicked()), this, SLOT(onDeleteMapButtonClicked()));
 }
 
 //////////////////////////////////////////////////////////////////////////
