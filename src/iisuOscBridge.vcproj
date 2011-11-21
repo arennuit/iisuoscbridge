@@ -39,7 +39,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".\GeneratedFiles;&quot;$(QTDIR)\include&quot;;&quot;.\GeneratedFiles\$(ConfigurationName)&quot;;&quot;$(QTDIR)\include\qtmain&quot;;&quot;$(QTDIR)\include\QtCore&quot;;&quot;$(QTDIR)\include\QtGui&quot;;.\;&quot;$(IISU_SDK_DIR)\include&quot;;.\OSCPack;.\FormFiles"
+				AdditionalIncludeDirectories=".\GeneratedFiles;&quot;$(QTDIR)\include&quot;;&quot;.\GeneratedFiles\$(ConfigurationName)&quot;;&quot;$(QTDIR)\include\qtmain&quot;;&quot;$(QTDIR)\include\QtCore&quot;;&quot;$(QTDIR)\include\QtGui&quot;;.\;&quot;$(IISU_SDK_DIR)\include&quot;;.\ThirdParties\OSCPack;.\FormFiles"
 				PreprocessorDefinitions=",UNICODE,WIN32,QT_LARGEFILE_SUPPORT;QT_NO_DEBUG,NDEBUG;QT_CORE_LIB;QT_GUI_LIB"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
@@ -108,7 +108,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\GeneratedFiles;&quot;$(QTDIR)\include&quot;;&quot;.\GeneratedFiles\$(ConfigurationName)&quot;;&quot;$(QTDIR)\include\qtmain&quot;;&quot;$(QTDIR)\include\QtCore&quot;;&quot;$(QTDIR)\include\QtGui&quot;;.\;&quot;$(IISU_SDK_DIR)\include&quot;;.\OSCPack;.\FormFiles"
+				AdditionalIncludeDirectories=".\GeneratedFiles;&quot;$(QTDIR)\include&quot;;&quot;.\GeneratedFiles\$(ConfigurationName)&quot;;&quot;$(QTDIR)\include\qtmain&quot;;&quot;$(QTDIR)\include\QtCore&quot;;&quot;$(QTDIR)\include\QtGui&quot;;.\;&quot;$(IISU_SDK_DIR)\include&quot;;.\ThirdParties\OSCPack;.\FormFiles"
 				PreprocessorDefinitions=",UNICODE,WIN32,QT_LARGEFILE_SUPPORT;QT_CORE_LIB;QT_GUI_LIB"
 				RuntimeLibrary="3"
 				TreatWChar_tAsBuiltInType="false"
@@ -175,7 +175,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;   -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB  &quot;-I.\GeneratedFiles&quot; &quot;-I$(QTDIR)\include&quot; &quot;-I.\GeneratedFiles\$(ConfigurationName)\.&quot; &quot;-I$(QTDIR)\include\qtmain&quot; &quot;-I$(QTDIR)\include\QtCore&quot; &quot;-I$(QTDIR)\include\QtGui&quot; &quot;-I.&quot; &quot;-I$(IISU_SDK_DIR)\include&quot; &quot;-I.\OSCPack&quot; &quot;-I.\FormFiles&quot; &quot;.\FormFiles\MainForm.h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;&#x0D;&#x0A;"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;   -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB  &quot;-I.\GeneratedFiles&quot; &quot;-I$(QTDIR)\include&quot; &quot;-I.\GeneratedFiles\$(ConfigurationName)\.&quot; &quot;-I$(QTDIR)\include\qtmain&quot; &quot;-I$(QTDIR)\include\QtCore&quot; &quot;-I$(QTDIR)\include\QtGui&quot; &quot;-I.&quot; &quot;-I$(IISU_SDK_DIR)\include&quot; &quot;-I.\ThirdParties\OSCPack&quot; &quot;-I.\FormFiles&quot; &quot;.\FormFiles\MainForm.h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;&#x0D;&#x0A;"
 						AdditionalDependencies="&quot;$(QTDIR)\bin\moc.exe&quot;;$(InputPath)"
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
 					/>
@@ -186,7 +186,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Moc&apos;ing $(InputFileName)..."
-						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;   -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_CORE_LIB -DQT_GUI_LIB  &quot;-I.\GeneratedFiles&quot; &quot;-I$(QTDIR)\include&quot; &quot;-I.\GeneratedFiles\$(ConfigurationName)\.&quot; &quot;-I$(QTDIR)\include\qtmain&quot; &quot;-I$(QTDIR)\include\QtCore&quot; &quot;-I$(QTDIR)\include\QtGui&quot; &quot;-I.&quot; &quot;-I$(IISU_SDK_DIR)\include&quot; &quot;-I.\OSCPack&quot; &quot;-I.\FormFiles&quot; &quot;.\FormFiles\MainForm.h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;&#x0D;&#x0A;"
+						CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;   -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_CORE_LIB -DQT_GUI_LIB  &quot;-I.\GeneratedFiles&quot; &quot;-I$(QTDIR)\include&quot; &quot;-I.\GeneratedFiles\$(ConfigurationName)\.&quot; &quot;-I$(QTDIR)\include\qtmain&quot; &quot;-I$(QTDIR)\include\QtCore&quot; &quot;-I$(QTDIR)\include\QtGui&quot; &quot;-I.&quot; &quot;-I$(IISU_SDK_DIR)\include&quot; &quot;-I.\ThirdParties\OSCPack&quot; &quot;-I.\FormFiles&quot; &quot;.\FormFiles\MainForm.h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;&#x0D;&#x0A;"
 						AdditionalDependencies="&quot;$(QTDIR)\bin\moc.exe&quot;;$(InputPath)"
 						Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
 					/>
@@ -234,7 +234,7 @@
 						<Tool
 							Name="VCCustomBuildTool"
 							Description="Moc&apos;ing $(InputFileName)..."
-							CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;   -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB  &quot;-I.\GeneratedFiles&quot; &quot;-I$(QTDIR)\include&quot; &quot;-I.\GeneratedFiles\$(ConfigurationName)\.&quot; &quot;-I$(QTDIR)\include\qtmain&quot; &quot;-I$(QTDIR)\include\QtCore&quot; &quot;-I$(QTDIR)\include\QtGui&quot; &quot;-I.&quot; &quot;-I$(IISU_SDK_DIR)\include&quot; &quot;-I.\OSCPack&quot; &quot;-I.\FormFiles&quot; &quot;.\FormFiles\Mvd\MvdDataModel.h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;&#x0D;&#x0A;"
+							CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;   -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB  &quot;-I.\GeneratedFiles&quot; &quot;-I$(QTDIR)\include&quot; &quot;-I.\GeneratedFiles\$(ConfigurationName)\.&quot; &quot;-I$(QTDIR)\include\qtmain&quot; &quot;-I$(QTDIR)\include\QtCore&quot; &quot;-I$(QTDIR)\include\QtGui&quot; &quot;-I.&quot; &quot;-I$(IISU_SDK_DIR)\include&quot; &quot;-I.\ThirdParties\OSCPack&quot; &quot;-I.\FormFiles&quot; &quot;.\FormFiles\Mvd\MvdDataModel.h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;&#x0D;&#x0A;"
 							AdditionalDependencies="&quot;$(QTDIR)\bin\moc.exe&quot;;$(InputPath)"
 							Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
 						/>
@@ -245,7 +245,7 @@
 						<Tool
 							Name="VCCustomBuildTool"
 							Description="Moc&apos;ing $(InputFileName)..."
-							CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;   -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_CORE_LIB -DQT_GUI_LIB  &quot;-I.\GeneratedFiles&quot; &quot;-I$(QTDIR)\include&quot; &quot;-I.\GeneratedFiles\$(ConfigurationName)\.&quot; &quot;-I$(QTDIR)\include\qtmain&quot; &quot;-I$(QTDIR)\include\QtCore&quot; &quot;-I$(QTDIR)\include\QtGui&quot; &quot;-I.&quot; &quot;-I$(IISU_SDK_DIR)\include&quot; &quot;-I.\OSCPack&quot; &quot;-I.\FormFiles&quot; &quot;.\FormFiles\Mvd\MvdDataModel.h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;&#x0D;&#x0A;"
+							CommandLine="&quot;$(QTDIR)\bin\moc.exe&quot;   -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_CORE_LIB -DQT_GUI_LIB  &quot;-I.\GeneratedFiles&quot; &quot;-I$(QTDIR)\include&quot; &quot;-I.\GeneratedFiles\$(ConfigurationName)\.&quot; &quot;-I$(QTDIR)\include\qtmain&quot; &quot;-I$(QTDIR)\include\QtCore&quot; &quot;-I$(QTDIR)\include\QtGui&quot; &quot;-I.&quot; &quot;-I$(IISU_SDK_DIR)\include&quot; &quot;-I.\ThirdParties\OSCPack&quot; &quot;-I.\FormFiles&quot; &quot;.\FormFiles\Mvd\MvdDataModel.h&quot; -o &quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;&#x0D;&#x0A;"
 							AdditionalDependencies="&quot;$(QTDIR)\bin\moc.exe&quot;;$(InputPath)"
 							Outputs="&quot;.\GeneratedFiles\$(ConfigurationName)\moc_$(InputName).cpp&quot;"
 						/>
@@ -359,38 +359,38 @@
 				Name="ip"
 				>
 				<File
-					RelativePath=".\OSCPack\ip\IpEndpointName.cpp"
+					RelativePath=".\ThirdParties\OSCPack\ip\IpEndpointName.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\OSCPack\ip\IpEndpointName.h"
+					RelativePath=".\ThirdParties\OSCPack\ip\IpEndpointName.h"
 					>
 				</File>
 				<File
-					RelativePath=".\OSCPack\ip\NetworkingUtils.h"
+					RelativePath=".\ThirdParties\OSCPack\ip\NetworkingUtils.h"
 					>
 				</File>
 				<File
-					RelativePath=".\OSCPack\ip\PacketListener.h"
+					RelativePath=".\ThirdParties\OSCPack\ip\PacketListener.h"
 					>
 				</File>
 				<File
-					RelativePath=".\OSCPack\ip\TimerListener.h"
+					RelativePath=".\ThirdParties\OSCPack\ip\TimerListener.h"
 					>
 				</File>
 				<File
-					RelativePath=".\OSCPack\ip\UdpSocket.h"
+					RelativePath=".\ThirdParties\OSCPack\ip\UdpSocket.h"
 					>
 				</File>
 				<Filter
 					Name="win32"
 					>
 					<File
-						RelativePath=".\OSCPack\ip\win32\NetworkingUtils.cpp"
+						RelativePath=".\ThirdParties\OSCPack\ip\win32\NetworkingUtils.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\OSCPack\ip\win32\UdpSocket.cpp"
+						RelativePath=".\ThirdParties\OSCPack\ip\win32\UdpSocket.cpp"
 						>
 					</File>
 				</Filter>
@@ -399,51 +399,51 @@
 				Name="osc"
 				>
 				<File
-					RelativePath=".\OSCPack\osc\MessageMappingOscPacketListener.h"
+					RelativePath=".\ThirdParties\OSCPack\osc\MessageMappingOscPacketListener.h"
 					>
 				</File>
 				<File
-					RelativePath=".\OSCPack\osc\OscException.h"
+					RelativePath=".\ThirdParties\OSCPack\osc\OscException.h"
 					>
 				</File>
 				<File
-					RelativePath=".\OSCPack\osc\OscHostEndianness.h"
+					RelativePath=".\ThirdParties\OSCPack\osc\OscHostEndianness.h"
 					>
 				</File>
 				<File
-					RelativePath=".\OSCPack\osc\OscOutboundPacketStream.cpp"
+					RelativePath=".\ThirdParties\OSCPack\osc\OscOutboundPacketStream.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\OSCPack\osc\OscOutboundPacketStream.h"
+					RelativePath=".\ThirdParties\OSCPack\osc\OscOutboundPacketStream.h"
 					>
 				</File>
 				<File
-					RelativePath=".\OSCPack\osc\OscPacketListener.h"
+					RelativePath=".\ThirdParties\OSCPack\osc\OscPacketListener.h"
 					>
 				</File>
 				<File
-					RelativePath=".\OSCPack\osc\OscPrintReceivedElements.cpp"
+					RelativePath=".\ThirdParties\OSCPack\osc\OscPrintReceivedElements.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\OSCPack\osc\OscPrintReceivedElements.h"
+					RelativePath=".\ThirdParties\OSCPack\osc\OscPrintReceivedElements.h"
 					>
 				</File>
 				<File
-					RelativePath=".\OSCPack\osc\OscReceivedElements.cpp"
+					RelativePath=".\ThirdParties\OSCPack\osc\OscReceivedElements.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\OSCPack\osc\OscReceivedElements.h"
+					RelativePath=".\ThirdParties\OSCPack\osc\OscReceivedElements.h"
 					>
 				</File>
 				<File
-					RelativePath=".\OSCPack\osc\OscTypes.cpp"
+					RelativePath=".\ThirdParties\OSCPack\osc\OscTypes.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\OSCPack\osc\OscTypes.h"
+					RelativePath=".\ThirdParties\OSCPack\osc\OscTypes.h"
 					>
 				</File>
 			</Filter>
