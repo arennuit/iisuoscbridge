@@ -55,7 +55,9 @@ protected:
 	/// \name Iisu.
 	//@{
 	bool initIisu(std::string& errorMsg); ///< The errorMsg string is only used because we have no log system, this should disappear eventually.
+	void resumeStream(std::string& errorMsg);
 	void newIisuDataFrameListener(const SK::DataFrameEvent& event);
+	void pauseStream(std::string& errorMsg);
 	void termIisu();
 
 	SK::Device* m_device;
