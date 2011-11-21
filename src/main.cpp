@@ -6,11 +6,13 @@
 //////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])
 {
+	QApplication app(argc, argv);
+	SK::MainForm mainForm;
+
 	SK::AppDataBase::CreateInstance();
 	SK::DataController::CreateInstance();
 
-	QApplication app(argc, argv);
-	SK::MainForm mainForm;
+	mainForm.setup();
 
 	SK::AppDataBase::GetInstance()->setMainForm(&mainForm);
 

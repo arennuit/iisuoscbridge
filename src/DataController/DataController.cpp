@@ -2,6 +2,7 @@
 #include "DataBase/PathMapItem.h"
 #include "Visitors/IisuDataRegistrator.h"
 #include "Visitors/IisuReaderOscSender.h"
+#include "LogSystem/Logger.h"
 
 #include "osc/OscOutboundPacketStream.h"
 #include "ip/UdpSocket.h"
@@ -20,16 +21,14 @@ DataController::DataController() :
 	assert(m_dataBase);
 
 	// Init iisu.
-	std::string errorMsg;
-	initIisu(errorMsg);
+	initIisu();
 }
 
 //////////////////////////////////////////////////////////////////////////
 DataController::~DataController()
 {
 	// Pause streaming.
-	std::string errorMsg;
-	pauseStream(errorMsg);
+	pauseStream();
 
 	// Term iisu.
 	termIisu();
@@ -50,19 +49,17 @@ void DataController::DestroyInstance()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::onStartStopToggleButtonClicked(std::string& errorMsg)
+void DataController::onStartStopToggleButtonClicked()
 {
-	errorMsg = "";
-
 	if (m_dataBase->getIsObservationOn() == false)
-		resumeStream(errorMsg);
+		resumeStream();
 	else
-		pauseStream(errorMsg);
+		pauseStream();
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::resumeStream(std::string& errorMsg)
-{
+void DataController::resumeStream()
+{	
 	// Load IID script.
 	// TODO: il faut qu'il soit loadé quand je tape mes paths et qu'il se reload automatiquement si je le change.
 	if (m_dataBase->getIidFilePath() != std::string(""))
@@ -70,18 +67,21 @@ void DataController::resumeStream(std::string& errorMsg)
 		SK::CommandHandle<SK::Result (const SK::String&)> loadIidGraph = m_device->getCommandManager().registerCommandHandle<SK::Result(const SK::String&)>("IID.loadGraph");
 		SK::Result resLoadCmd = loadIidGraph(m_dataBase->getIidFilePath().c_str());
 		if (resLoadCmd.failed())
-			errorMsg += std::string("Load IID graph : ") + resLoadCmd.getDescription().ptr() + std::string("\n");
+			SK_LOGGER(LOG_ERROR) << std::string("Load IID graph : ") + resLoadCmd.getDescription().ptr();
 		else
-			errorMsg += "IID file loaded correctly\n";
+			SK_LOGGER(LOG_INFO) << "IID file loaded correctly.";
 	}
 
 	// Linearize path items.
 	linearizePathMap(m_dataBase->getPathsTreeRoot());
+	SK_LOGGER(LOG_INFO) << "Path maps linearization OK";
 
 	// Find the full path of each DataPathMapItem.
 	m_fullOscPaths.resize(m_pathMapLinearized.size());
 	for (uint i = 0; i < m_pathMapLinearized.size(); ++i)
 		m_fullOscPaths[i] = findFullOscPath(m_pathMapLinearized[i]);
+
+	SK_LOGGER(LOG_INFO) << "Full OSC paths found";
 
 	// Register data handles.
 	IisuDataRegistrator iisuPathRegistrator(m_device, m_iisuDataHandles, m_pathMapLinearized);
@@ -92,15 +92,18 @@ void DataController::resumeStream(std::string& errorMsg)
 	m_device->start();
 	m_dataBase->setIsObservationOn(true);
 
-	errorMsg += "The iisu engine is started\nOscBridge is now streaming OSC...";
+	SK_LOGGER(LOG_INFO) << "The iisu engine is started";
+	SK_LOGGER(LOG_INFO) << "OscBridge is now streaming OSC...";
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::pauseStream(std::string& errorMsg)
+void DataController::pauseStream()
 {
 	// Stop device.
 	m_dataBase->setIsObservationOn(false);
 	m_device->stop();
+
+	SK_LOGGER(LOG_INFO) << "The iisu engine is stopped";
 
 	// Unregister data handles.
 	// TODO: unregister data handles (not possible yet in iisu's API).
@@ -129,47 +132,55 @@ void DataController::onFoldAndNameJointsCheckBoxClicked( bool isFoldAndNameJoint
 }
 
 //////////////////////////////////////////////////////////////////////////
-bool DataController::initIisu(std::string& errorMsg)
+bool DataController::initIisu()
 {
 	// Iisu context.
 	SK::Context& context = SK::Context::Instance();
+
+	SK_LOGGER(LOG_INFO) << "The context instance was instantiated.";
 
 	// Iisu handle.
 	SK::Return<SK::ApplicationConfigurator> retAppConf = SK::ApplicationConfigurator::create("");
 	if (retAppConf.failed())
 	{
-		errorMsg += retAppConf.getDescription().ptr();
+		SK_LOGGER(LOG_ERROR) << retAppConf.getDescription().ptr();
 		return false;
 	}
 	ApplicationConfigurator appConf = retAppConf.get();
 
+	SK_LOGGER(LOG_INFO) << "The application configurator was obtained.";
+
 	SK::Return<SK::IisuHandle*> retHandle = context.createHandle(appConf);
 	if (retHandle.failed())
 	{
-		errorMsg += retHandle.getDescription().ptr();
+		SK_LOGGER(LOG_ERROR) << retHandle.getDescription().ptr();
 		return false;
 	}
 	SK::IisuHandle* handle = retHandle.get();
+
+	SK_LOGGER(LOG_INFO) << "The application handle was obtained.";
 
 	// Iisu device.
 	SK::Return<SK::Device*> retDevice = handle->initializeDevice(appConf);
 	if (retDevice.failed())
 	{
-		// TODO: pb log here.
-		errorMsg += retDevice.getDescription().ptr();
+		SK_LOGGER(LOG_ERROR) << retDevice.getDescription().ptr();
+
 		SK::Result result = context.destroyHandle(*handle);
 		if (result.failed())
-			errorMsg += result.getDescription().ptr();
+			SK_LOGGER(LOG_ERROR) << result.getDescription().ptr();
 
 		return false;
 	}
 	m_device = retDevice.get();
 
+	SK_LOGGER(LOG_INFO) << "The iisu device was obtained.";
+
 	// Iisu events registration.
 	m_device->getEventManager().registerEventListener("DEVICE.DataFrame", *this, &DataController::newIisuDataFrameListener);
 
-	// Return.
-	errorMsg += "The iisu engine inited correctly\n";
+	SK_LOGGER(LOG_INFO) << "The events listener was registered.";
+
 	return true;
 }
 
@@ -190,6 +201,8 @@ void DataController::termIisu()
 		SK::Context::Instance().finalize();
 		m_device = 0;
 	}
+
+	SK_LOGGER(LOG_INFO) << "The iisu engine was destroyed";
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -30,17 +30,10 @@ void DataBase::setDefaultValues()
 	// Users #.
 	PathMapItem* path_user1 = new PathMapItem("user1", m_pathsTreeRoot);
 	//new Vector3ArrayPathMapItem("centroids", "USER1.SHAPE.CENTROIDS.Positions", path_user1);
-	new BooleanPathMapItem("status", "USER1.SKELETON.Status", path_user1);
+	new IntegerPathMapItem("status", "USER1.SKELETON.Status", path_user1);
 	PathMapItem* path_joints1 = new PathMapItem("joints", path_user1);
 	new Vector3ArrayPathMapItem("positions", "USER1.SKELETON.KeyPoints", path_joints1);
 	new FloatArrayPathMapItem("confidences", "USER1.SKELETON.KeyPointsConfidence", path_joints1);
-
-	PathMapItem* path_user2 = new PathMapItem("user2", m_pathsTreeRoot);
-	//new Vector3ArrayPathMapItem("centroids", "USER2.SHAPE.CENTROIDS.Positions", path_user2);
-	new BooleanPathMapItem("status", "USER2.SKELETON.Status", path_user2);
-	PathMapItem* path_joints2 = new PathMapItem("joints", path_user2);
-	new Vector3ArrayPathMapItem("positions", "USER2.SKELETON.KeyPoints", path_joints2);
-	new FloatArrayPathMapItem("confidences", "USER2.SKELETON.KeyPointsConfidence", path_joints2);
 
 	m_isObservationOn = false;
 

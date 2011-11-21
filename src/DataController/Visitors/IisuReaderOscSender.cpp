@@ -66,6 +66,19 @@ void IisuReaderOscSender::visit(BooleanPathMapItem* pathItem)
 }
 
 //////////////////////////////////////////////////////////////////////////
+void IisuReaderOscSender::visit(IntegerPathMapItem* pathItem)
+{
+	// Get the data from iisu.
+	SK::DataHandle<int>* iisuDataHandle = static_cast<SK::DataHandle<int>*>(m_iisuDataHandle);
+	const int& iisuData = iisuDataHandle->get();
+
+	// Send via OSC.
+	*m_outPacketStream << OscBeginMessage(m_fullOscPath);
+	*m_outPacketStream << iisuData;
+	*m_outPacketStream << OscEndMessage();
+}
+
+//////////////////////////////////////////////////////////////////////////
 void IisuReaderOscSender::visit(Vector3PathMapItem* pathItem)
 {
 	// Get the data from iisu.

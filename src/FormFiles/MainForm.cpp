@@ -8,10 +8,25 @@ namespace SK
 //////////////////////////////////////////////////////////////////////////
 MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
 	QMainWindow(parent, flags),
-	m_iidFileSelectDlg(this)
+	m_iidFileSelectDlg(this),
+	m_clogStreamBuf()
 {
 	ui.setupUi(this);
 
+	// Redirect clog streams to the log window.
+	m_clogStreamBuf.setTargetTextEdit(ui.m_logTextEdit);
+	std::clog.rdbuf(&m_clogStreamBuf);
+}
+
+//////////////////////////////////////////////////////////////////////////
+MainForm::~MainForm()
+{
+	m_mvdModel.clear();
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::setup()
+{
 	// Set input masks and validators.
 	QRegExpValidator *validator = new QRegExpValidator(this);
 	QRegExp regExp("((1{0,1}[0-9]{0,2}|2[0-4]{1,1}[0-9]{1,1}|25[0-5]{1,1})\\.){3,3}(1{0,1}[0-9]{0,2}|2[0-4]{1,1}[0-9]{1,1}|25[0-5]{1,1})");
@@ -76,12 +91,6 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
 }
 
 //////////////////////////////////////////////////////////////////////////
-MainForm::~MainForm()
-{
-	m_mvdModel.clear();
-}
-
-//////////////////////////////////////////////////////////////////////////
 void MainForm::onIsObservationOnChanged(bool isObservationOn)
 {
 	ui.m_startStopToggleButton->setChecked(isObservationOn);
@@ -105,14 +114,6 @@ void MainForm::onIidFilePathButtonClicked()
 		ui.m_iidFilePathEdit->setText(fileNames[0]);
 		m_dataBase->setIidFilePath(fileNames[0].toStdString());
 	}
-}
-
-//////////////////////////////////////////////////////////////////////////
-void MainForm::onStartStopToggleButtonClicked()
-{
-	std::string errorMsg;
-	m_dataController->onStartStopToggleButtonClicked(errorMsg);
-	ui.m_logTextEdit->appendPlainText(QString(errorMsg.c_str()));
 }
 
 } // namespace SK.

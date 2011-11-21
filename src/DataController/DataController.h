@@ -27,7 +27,7 @@ public:
 	void onPortLineEditTextChanged(int newPort) {m_dataBase->setPort(newPort);}
 	void onIidFilePathLineEditTextChanged(const std::string& newIidFilePath) {m_dataBase->setIidFilePath(newIidFilePath);}
 
-	void onStartStopToggleButtonClicked(std::string& errorMsg);
+	void onStartStopToggleButtonClicked();
 
 	void onFoldAndNameJointsCheckBoxClicked(bool isFoldAndNameJoints);
 
@@ -55,10 +55,10 @@ protected:
 
 	/// \name Iisu.
 	//@{
-	bool initIisu(std::string& errorMsg); ///< The errorMsg string is only used because we have no log system, this should disappear eventually.
-	void resumeStream(std::string& errorMsg);
+	bool initIisu();
+	void resumeStream();
 	void newIisuDataFrameListener(const SK::DataFrameEvent& event);
-	void pauseStream(std::string& errorMsg);
+	void pauseStream();
 	void termIisu();
 
 	SK::Device* m_device;

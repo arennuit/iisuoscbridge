@@ -55,6 +55,17 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////////
+class IntegerPathMapItem : public DataPathMapItem
+{
+public:
+	IntegerPathMapItem(const std::string& oscPathItem, const std::string& iisuPath, PathMapItem* parent = 0) :
+		DataPathMapItem(oscPathItem, iisuPath, parent) {}
+
+	// Visitor.
+	void accept(PathMapItemVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}
+};
+
+//////////////////////////////////////////////////////////////////////////
 class Vector3PathMapItem : public DataPathMapItem
 {
 public:

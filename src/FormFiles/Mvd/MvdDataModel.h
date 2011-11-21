@@ -39,6 +39,7 @@ protected:
 	void visit(PathMapItem* pathItem) SK_OVERRIDE;
 	void visit(DataPathMapItem* pathItem) SK_OVERRIDE;
 	void visit(BooleanPathMapItem* pathItem) SK_OVERRIDE {visit((DataPathMapItem*)pathItem);}
+	void visit(IntegerPathMapItem* pathItem) SK_OVERRIDE {visit((DataPathMapItem*)pathItem);}
 	void visit(Vector3PathMapItem* pathItem) SK_OVERRIDE {visit((DataPathMapItem*)pathItem);}
 	void visit(ArrayPathMapItem* pathItem) SK_OVERRIDE {visit((DataPathMapItem*)pathItem);}
 	void visit(FloatArrayPathMapItem* pathItem) SK_OVERRIDE {visit((DataPathMapItem*)pathItem);}
