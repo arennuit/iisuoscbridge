@@ -34,6 +34,7 @@ public:
 	void onAddMapButtonClicked() {}
 	void onInsertMapButtonClicked() {}
 	void onDeleteMapButtonClicked() {}
+	void onClearMapsButtonClicked() {}
 	//@}
 
 protected:
