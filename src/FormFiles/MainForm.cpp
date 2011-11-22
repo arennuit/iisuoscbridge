@@ -98,10 +98,9 @@ void MainForm::onIsObservationOnChanged(bool isObservationOn)
 	ui.m_foldAndNameJointsCheckBox->setEnabled(!isObservationOn);
 	ui.m_pathsView->setEnabled(!isObservationOn);
 
+	// Show log tab when streaming.
 	if (isObservationOn == true)
 		ui.m_tabs->setCurrentWidget(ui.m_logTab);
-	else
-		ui.m_tabs->setCurrentWidget(ui.m_mapsTab);
 }
 
 //////////////////////////////////////////////////////////////////////////
