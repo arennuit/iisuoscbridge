@@ -64,6 +64,14 @@ void DataController::onFoldAndNameJointsCheckBoxClicked( bool isFoldAndNameJoint
 }
 
 //////////////////////////////////////////////////////////////////////////
+void DataController::onClearMapsButtonClicked()
+{
+	delete m_dataBase->getPathsTreeRoot();
+
+	m_dataBase->setPathMapsTreeRoot(0);
+}
+
+//////////////////////////////////////////////////////////////////////////
 bool DataController::initIisu()
 {
 	// Iisu context.

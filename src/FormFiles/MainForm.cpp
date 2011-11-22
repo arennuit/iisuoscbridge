@@ -38,7 +38,7 @@ void MainForm::setup()
 	assert(m_dataController);
 
 	// Setup model.
-	ui.m_pathsView->setModel(&m_mvdModel);
+	ui.m_pathMapsView->setModel(&m_mvdModel);
 
 	m_mvdModel.update();
 
@@ -69,11 +69,11 @@ void MainForm::setup()
 	else
 		ui.m_tabs->setCurrentWidget(ui.m_mapsTab);
 
-	ui.m_pathsView->setAnimated(true);
-	ui.m_pathsView->expandAll();
-	ui.m_pathsView->resizeColumnToContents(0);
-	ui.m_pathsView->resizeColumnToContents(1);
-	ui.m_pathsView->setAlternatingRowColors(true);
+	ui.m_pathMapsView->setAnimated(true);
+	ui.m_pathMapsView->expandAll();
+	ui.m_pathMapsView->resizeColumnToContents(0);
+	ui.m_pathMapsView->resizeColumnToContents(1);
+	ui.m_pathMapsView->setAlternatingRowColors(true);
 
 	// Establish all connections.
 	connect(ui.m_ipAddressEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onIpAddressLineEditTextChanged(const QString&)));
@@ -96,7 +96,7 @@ void MainForm::onIsObservationOnChanged(bool isObservationOn)
 {
 	ui.m_startStopToggleButton->setChecked(isObservationOn);
 	ui.m_foldAndNameJointsCheckBox->setEnabled(!isObservationOn);
-	ui.m_pathsView->setEnabled(!isObservationOn);
+	ui.m_pathMapsView->setEnabled(!isObservationOn);
 
 	// Show log tab when streaming.
 	if (isObservationOn == true)

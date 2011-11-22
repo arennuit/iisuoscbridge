@@ -27,8 +27,8 @@ public:
 	virtual const std::string& getIidFilePath() {return m_iidFilePath;}
 	virtual void setIidFilePath(const std::string& iidFilePath) {m_iidFilePath = iidFilePath;}
 
-	virtual PathMap* getPathsTreeRoot() {return m_pathsTreeRoot;}
-	virtual void setPathsTreeRoot(PathMap* pathsTreeRoot) {m_pathsTreeRoot = pathsTreeRoot;}
+	virtual PathMap* getPathsTreeRoot() {return m_pathMapsTreeRoot;}
+	virtual void setPathMapsTreeRoot(PathMap* pathMapsTreeRoot) {m_pathMapsTreeRoot = pathMapsTreeRoot;}
 
 	virtual bool getIsObservationOn() {return m_isObservationOn;}
 	virtual void setIsObservationOn(bool isObservationOn) {m_isObservationOn = isObservationOn;}
@@ -52,7 +52,7 @@ protected:
 	int m_port;
 	std::string m_iidFilePath;
 
-	PathMap* m_pathsTreeRoot;
+	PathMap* m_pathMapsTreeRoot;
 
 	bool m_isObservationOn;
 

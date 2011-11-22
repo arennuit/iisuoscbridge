@@ -76,7 +76,8 @@ void MvdDataModel::update()
 	setHorizontalHeaderLabels(QStringList() << "OSC hierarchy" << "iisu path");
 
 	// Parse the path associations.
-	DataBase::GetInstance()->getPathsTreeRoot()->accept(this);
+	if (DataBase::GetInstance()->getPathsTreeRoot())
+		DataBase::GetInstance()->getPathsTreeRoot()->accept(this);
 }
 
 //////////////////////////////////////////////////////////////////////////

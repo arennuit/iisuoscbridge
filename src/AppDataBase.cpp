@@ -8,6 +8,14 @@ namespace SK
 DEFINE_DATA_BASE(AppDataBase, DataBase)
 
 //////////////////////////////////////////////////////////////////////////
+void AppDataBase::setPathMapsTreeRoot(PathMap* pathMapsTreeRoot)
+{
+	DataBase::setPathMapsTreeRoot(pathMapsTreeRoot);
+
+	m_mainForm->onIsPathMapsTreeRootChanged();
+}
+
+//////////////////////////////////////////////////////////////////////////
 void AppDataBase::setIsObservationOn(bool isObservationOn)
 {
 	DataBase::setIsObservationOn(isObservationOn);

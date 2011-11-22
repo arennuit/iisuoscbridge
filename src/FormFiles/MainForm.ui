@@ -712,7 +712,7 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_6">
           <item>
-           <widget class="QTreeView" name="m_pathsView"/>
+           <widget class="QTreeView" name="m_pathMapsView"/>
           </item>
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_4">

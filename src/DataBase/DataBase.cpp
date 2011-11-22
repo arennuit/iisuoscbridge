@@ -15,7 +15,7 @@ DataBase::DataBase()
 //////////////////////////////////////////////////////////////////////////
 DataBase::~DataBase()
 {
-	delete m_pathsTreeRoot;
+	delete m_pathMapsTreeRoot;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -25,10 +25,10 @@ void DataBase::setDefaultValues()
 	m_port = 8000;
 	m_iidFilePath = "";
 
-	m_pathsTreeRoot = new PathMap("iisu");
+	m_pathMapsTreeRoot = new PathMap("iisu");
 
 	// Users #.
-	PathMap* path_user1 = new PathMap("user1", m_pathsTreeRoot);
+	PathMap* path_user1 = new PathMap("user1", m_pathMapsTreeRoot);
 	//new Vector3ArrayPathMap("centroids", "USER1.SHAPE.CENTROIDS.Positions", path_user1);
 	new IntegerPathMap("status", "USER1.SKELETON.Status", path_user1);
 	PathMap* path_joints1 = new PathMap("joints", path_user1);
