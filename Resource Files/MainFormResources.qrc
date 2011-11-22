@@ -1,5 +1,9 @@
 <RCC>
   <qresource prefix="/">
+    <file>png/16x16/actions/go-down-8.png</file>
+    <file>png/16x16/actions/go-up-8.png</file>
+    <file>png/stylesheet-branch-closed.png</file>
+    <file>png/stylesheet-branch-open.png</file>
     <file>Play_icon_32x32.png</file>
     <file>SK_logo_256x256.ico</file>
     <file>Settings_icon_32x32.png</file>

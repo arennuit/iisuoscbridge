@@ -192,7 +192,7 @@ background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 rgb(180, 180, 1
 
 QComboxBox::down-arrow
 {
-image: url(:/iisu_Toolbox/png/16x16/actions/go-down-8.png);
+image: url(:/png/16x16/actions/go-down-8.png);
 }
 
 QComboxBox::down-arrow:on
@@ -283,13 +283,13 @@ color:rgb(120, 120, 120);
 QTreeView::branch:has-children:!has-siblings:closed, QTreeView::branch:closed:has-children:has-siblings
 {
 border-image: none;
-image: url(:/iisu_Toolbox/png/stylesheet-branch-closed.png);
+image: url(:/png/stylesheet-branch-closed.png);
 }
 
 QTreeView::branch:open:has-children:!has-siblings, QTreeView::branch:open:has-children:has-siblings
 {
 border-image: none;
-image: url(:/iisu_Toolbox/png/stylesheet-branch-open.png);
+image: url(:/png/stylesheet-branch-open.png);
 }
 
 /*----------------------------------------------------------------------------*/
@@ -457,13 +457,13 @@ background-position: center;
 QScrollBar::up-arrow:vertical
 {
 background-position: center;
-image: url(:/iisu_Toolbox/png/16x16/actions/go-up-8.png);
+image: url(:/png/16x16/actions/go-up-8.png);
 }
 
 QScrollBar::down-arrow:vertical
 {
 background-position: center;
-image: url(:/iisu_Toolbox/png/16x16/actions/go-down-8.png);
+image: url(:/png/16x16/actions/go-down-8.png);
 }
 
 /*----------------------------------------------------------------------------*/
