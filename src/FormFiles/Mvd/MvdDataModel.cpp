@@ -5,11 +5,11 @@
 #include <QStandardItem>
 #include <QVariant>
 #include <QString>
-#include "DataBase/PathMapItem.h"
+#include "DataBase/PathMap.h"
 #include "DataBase/DataBase.h"
 
-Q_DECLARE_METATYPE(SK::PathMapItem*);
-Q_DECLARE_METATYPE(SK::DataPathMapItem*);
+Q_DECLARE_METATYPE(SK::PathMap*);
+Q_DECLARE_METATYPE(SK::DataPathMap*);
 
 namespace SK
 {
@@ -17,7 +17,7 @@ namespace SK
 //////////////////////////////////////////////////////////////////////////
 MvdDataModel::MvdDataModel(QObject *parent) :
 	QStandardItemModel(parent),
-	PathMapItemVisitor(),
+	PathMapVisitor(),
 	m_parentItem(0)
 {
 
@@ -38,24 +38,24 @@ bool MvdDataModel::setData(const QModelIndex& index, const QVariant& value, int 
 	{
 	case PathMapRole:
 		{
-			// Get the PathMapItem.
-			PathMapItem* pathMap = index.data(PathMapRole).value<PathMapItem*>();
+			// Get the PathMap.
+			PathMap* pathMap = index.data(PathMapRole).value<PathMap*>();
 			assert(pathMap);
 
-			// Change its m_oscPathItem value.
+			// Change its m_oscPathBit value.
 			std::string newOscPathBit = value.toString().toStdString();
-			pathMap->m_oscPathItem = newOscPathBit;
+			pathMap->m_oscPathBit = newOscPathBit;
 
 			emit dataChanged(index, index);
 			return true;
 		}
 	case DataPathMapRole:
 		{
-			// Get the PathMapItem.
-			DataPathMapItem* pathMap = index.data(DataPathMapRole).value<DataPathMapItem*>();
+			// Get the PathMap.
+			DataPathMap* pathMap = index.data(DataPathMapRole).value<DataPathMap*>();
 			assert(pathMap);
 
-			// Change its m_oscPathItem value.
+			// Change its m_iisuPath value.
 			std::string newIisuPath = value.toString().toStdString();
 			pathMap->m_iisuPath = newIisuPath;
 
@@ -80,14 +80,14 @@ void MvdDataModel::update()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void MvdDataModel::visit(PathMapItem* pathItem)
+void MvdDataModel::visit(PathMap* pathMap)
 {
-	assert(pathItem);
+	assert(pathMap);
 
 	// Row.
-	QStandardItem* oscItem = new QStandardItem(pathItem->m_oscPathItem.c_str());
+	QStandardItem* oscItem = new QStandardItem(pathMap->m_oscPathBit.c_str());
 	oscItem->setData((int)PathMapRole, RoleIndexRole);
-	oscItem->setData(QVariant::fromValue(pathItem), PathMapRole);
+	oscItem->setData(QVariant::fromValue(pathMap), PathMapRole);
 
 	if (!m_parentItem)
 	{
@@ -97,30 +97,30 @@ void MvdDataModel::visit(PathMapItem* pathItem)
 		m_parentItem->appendRow(QList<QStandardItem*>() << oscItem);
 
 	// Recursive call to children.
-	for (uint i = 0; i < pathItem->m_children.size(); ++i)
+	for (uint i = 0; i < pathMap->m_children.size(); ++i)
 	{
 		m_parentItem = oscItem;
-		pathItem->m_children[i]->accept(this);
+		pathMap->m_children[i]->accept(this);
 	}
 }
 
 //////////////////////////////////////////////////////////////////////////
-void MvdDataModel::visit(DataPathMapItem* pathItem)
+void MvdDataModel::visit(DataPathMap* pathMap)
 {
-	assert(pathItem);
+	assert(pathMap);
 
 	// TODO: quand je saurai ajouter un item à droite d'un item existant je pourrais appeler l'overload
-	//       de visit() sur PathMapItem et compléter par un itel à droite de oscItem pour iisuItem,
+	//       de visit() sur PathMap et compléter par un itel à droite de oscItem pour iisuItem,
 	//       à la place de réécrire tout le code.
 
 	// Row.
-	QStandardItem* oscItem = new QStandardItem(pathItem->m_oscPathItem.c_str());
+	QStandardItem* oscItem = new QStandardItem(pathMap->m_oscPathBit.c_str());
 	oscItem->setData((int)PathMapRole, RoleIndexRole);
-	oscItem->setData(QVariant::fromValue((PathMapItem*)pathItem), PathMapRole);
+	oscItem->setData(QVariant::fromValue((PathMap*)pathMap), PathMapRole);
 
-	QStandardItem* iisuItem = new QStandardItem(pathItem->m_iisuPath.c_str());
+	QStandardItem* iisuItem = new QStandardItem(pathMap->m_iisuPath.c_str());
 	iisuItem->setData((int)DataPathMapRole, RoleIndexRole);
-	iisuItem->setData(QVariant::fromValue(pathItem), DataPathMapRole);
+	iisuItem->setData(QVariant::fromValue(pathMap), DataPathMapRole);
 
 	if (!m_parentItem)
 	{
@@ -131,10 +131,10 @@ void MvdDataModel::visit(DataPathMapItem* pathItem)
 		m_parentItem->appendRow(QList<QStandardItem*>() << oscItem << iisuItem);
 
 	// Recursive call to children.
-	for (uint i = 0; i < pathItem->m_children.size(); ++i)
+	for (uint i = 0; i < pathMap->m_children.size(); ++i)
 	{
 		m_parentItem = oscItem;
-		pathItem->m_children[i]->accept(this);
+		pathMap->m_children[i]->accept(this);
 	}
 }
 

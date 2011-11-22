@@ -1,5 +1,5 @@
 #include <Platform/SkPlatform.h>
-#include "DataBase/PathMapItemVisitor.h"
+#include "DataBase/PathMapVisitor.h"
 #include <string>
 
 namespace osc
@@ -15,25 +15,25 @@ class IIisuDataExtractor;
 
 //////////////////////////////////////////////////////////////////////////
 /// \brief This class reads the data from the iisu pulse and streams it via OSC.
-class IisuReaderOscSender : public PathMapItemVisitor
+class IisuReaderOscSender : public PathMapVisitor
 {
 public:
 	IisuReaderOscSender(DataBase* dataBase, osc::OutboundPacketStream* outPacketStream);
 	~IisuReaderOscSender() {}
 
-	void setPathItemData(const std::string& fullOscPath, SK::IIisuDataExtractor* iisuDataHandle) {m_fullOscPath = fullOscPath; m_iisuDataHandle = iisuDataHandle;}
+	void setPathMapData(const std::string& fullOscPath, SK::IIisuDataExtractor* iisuDataHandle) {m_fullOscPath = fullOscPath; m_iisuDataHandle = iisuDataHandle;}
 
 protected:
 	/// \name Visitor's methods.
 	//@{
-	void visit(PathMapItem* pathItem) SK_OVERRIDE {} // It makes no sense to read or stream a concrete PathMapItem.
-	void visit(DataPathMapItem* pathItem) SK_OVERRIDE {} // It makes no sense to read or stream a generic data.
-	void visit(BooleanPathMapItem* pathItem) SK_OVERRIDE;
-	void visit(IntegerPathMapItem* pathItem) SK_OVERRIDE;
-	void visit(Vector3PathMapItem* pathItem) SK_OVERRIDE;
-	void visit(ArrayPathMapItem* pathItem) SK_OVERRIDE {} // It makes no sense to read or stream a generic array.
-	void visit(FloatArrayPathMapItem* pathItem) SK_OVERRIDE;
-	void visit(Vector3ArrayPathMapItem* pathItem) SK_OVERRIDE;
+	void visit(PathMap* pathMap) SK_OVERRIDE {} // It makes no sense to read or stream a concrete PathMap.
+	void visit(DataPathMap* pathMap) SK_OVERRIDE {} // It makes no sense to read or stream a generic data.
+	void visit(BooleanPathMap* pathMap) SK_OVERRIDE;
+	void visit(IntegerPathMap* pathMap) SK_OVERRIDE;
+	void visit(Vector3PathMap* pathMap) SK_OVERRIDE;
+	void visit(ArrayPathMap* pathMap) SK_OVERRIDE {} // It makes no sense to read or stream a generic array.
+	void visit(FloatArrayPathMap* pathMap) SK_OVERRIDE;
+	void visit(Vector3ArrayPathMap* pathMap) SK_OVERRIDE;
 	//@}
 
 	DataBase* m_dataBase;

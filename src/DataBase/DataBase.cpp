@@ -1,5 +1,5 @@
 #include "DataBase.h"
-#include "PathMapItem.h"
+#include "PathMap.h"
 
 namespace SK
 {
@@ -25,15 +25,15 @@ void DataBase::setDefaultValues()
 	m_port = 8000;
 	m_iidFilePath = "";
 
-	m_pathsTreeRoot = new PathMapItem("iisu");
+	m_pathsTreeRoot = new PathMap("iisu");
 
 	// Users #.
-	PathMapItem* path_user1 = new PathMapItem("user1", m_pathsTreeRoot);
-	//new Vector3ArrayPathMapItem("centroids", "USER1.SHAPE.CENTROIDS.Positions", path_user1);
-	new IntegerPathMapItem("status", "USER1.SKELETON.Status", path_user1);
-	PathMapItem* path_joints1 = new PathMapItem("joints", path_user1);
-	new Vector3ArrayPathMapItem("positions", "USER1.SKELETON.KeyPoints", path_joints1);
-	new FloatArrayPathMapItem("confidences", "USER1.SKELETON.KeyPointsConfidence", path_joints1);
+	PathMap* path_user1 = new PathMap("user1", m_pathsTreeRoot);
+	//new Vector3ArrayPathMap("centroids", "USER1.SHAPE.CENTROIDS.Positions", path_user1);
+	new IntegerPathMap("status", "USER1.SKELETON.Status", path_user1);
+	PathMap* path_joints1 = new PathMap("joints", path_user1);
+	new Vector3ArrayPathMap("positions", "USER1.SKELETON.KeyPoints", path_joints1);
+	new FloatArrayPathMap("confidences", "USER1.SKELETON.KeyPointsConfidence", path_joints1);
 
 	m_isObservationOn = false;
 

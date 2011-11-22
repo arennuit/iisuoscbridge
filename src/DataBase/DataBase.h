@@ -6,7 +6,7 @@
 namespace SK
 {
 
-class PathMapItem;
+class PathMap;
 
 //////////////////////////////////////////////////////////////////////////
 /// \brief This class is a singleton, it keeps all the data handled by the application.
@@ -27,8 +27,8 @@ public:
 	virtual const std::string& getIidFilePath() {return m_iidFilePath;}
 	virtual void setIidFilePath(const std::string& iidFilePath) {m_iidFilePath = iidFilePath;}
 
-	virtual PathMapItem* getPathsTreeRoot() {return m_pathsTreeRoot;}
-	virtual void setPathsTreeRoot(PathMapItem* pathsTreeRoot) {m_pathsTreeRoot = pathsTreeRoot;}
+	virtual PathMap* getPathsTreeRoot() {return m_pathsTreeRoot;}
+	virtual void setPathsTreeRoot(PathMap* pathsTreeRoot) {m_pathsTreeRoot = pathsTreeRoot;}
 
 	virtual bool getIsObservationOn() {return m_isObservationOn;}
 	virtual void setIsObservationOn(bool isObservationOn) {m_isObservationOn = isObservationOn;}
@@ -52,7 +52,7 @@ protected:
 	int m_port;
 	std::string m_iidFilePath;
 
-	PathMapItem* m_pathsTreeRoot;
+	PathMap* m_pathsTreeRoot;
 
 	bool m_isObservationOn;
 

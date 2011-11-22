@@ -2,11 +2,6 @@
 
 #include "Platform/SkPlatform.h"
 
-//#include <fstream>
-//#include <map>
-//#include <string>
-//#include <list>
-
 //////////////////////////////////////////////////////////////////////////
 #define DECLARE_DATA_BASE(DataBaseClass)\
 public:\

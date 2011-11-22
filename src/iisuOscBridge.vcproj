@@ -384,19 +384,19 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DataBase\PathMapItem.cpp"
+				RelativePath=".\DataBase\PathMap.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\DataBase\PathMapItem.h"
+				RelativePath=".\DataBase\PathMap.h"
 				>
 			</File>
 			<File
-				RelativePath=".\DataBase\PathMapItemVisitor.cpp"
+				RelativePath=".\DataBase\PathMapVisitor.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\DataBase\PathMapItemVisitor.h"
+				RelativePath=".\DataBase\PathMapVisitor.h"
 				>
 			</File>
 		</Filter>

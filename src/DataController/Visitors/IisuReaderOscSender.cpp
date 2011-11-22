@@ -1,7 +1,7 @@
 #include "IisuReaderOscSender.h"
 #include "SDK/iisuSDK.h"
 #include "osc/OscOutboundPacketStream.h"
-#include "DataBase/PathMapItem.h"
+#include "DataBase/PathMap.h"
 #include "DataBase/DataBase.h"
 
 namespace SK
@@ -43,7 +43,7 @@ osc::MessageTerminator OscEndMessage() {return osc::MessageTerminator();}
 
 //////////////////////////////////////////////////////////////////////////
 IisuReaderOscSender::IisuReaderOscSender(DataBase* dataBase, osc::OutboundPacketStream* outPacketStream) :
-	PathMapItemVisitor(),
+	PathMapVisitor(),
 	m_dataBase(dataBase),
 	m_outPacketStream(outPacketStream),
 	m_iisuDataHandle(0)
@@ -53,7 +53,7 @@ IisuReaderOscSender::IisuReaderOscSender(DataBase* dataBase, osc::OutboundPacket
 }
 
 //////////////////////////////////////////////////////////////////////////
-void IisuReaderOscSender::visit(BooleanPathMapItem* pathItem)
+void IisuReaderOscSender::visit(BooleanPathMap* pathMap)
 {
 	// Get the data from iisu.
 	SK::DataHandle<bool>* iisuDataHandle = static_cast<SK::DataHandle<bool>*>(m_iisuDataHandle);
@@ -66,7 +66,7 @@ void IisuReaderOscSender::visit(BooleanPathMapItem* pathItem)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void IisuReaderOscSender::visit(IntegerPathMapItem* pathItem)
+void IisuReaderOscSender::visit(IntegerPathMap* pathMap)
 {
 	// Get the data from iisu.
 	SK::DataHandle<int>* iisuDataHandle = static_cast<SK::DataHandle<int>*>(m_iisuDataHandle);
@@ -79,7 +79,7 @@ void IisuReaderOscSender::visit(IntegerPathMapItem* pathItem)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void IisuReaderOscSender::visit(Vector3PathMapItem* pathItem)
+void IisuReaderOscSender::visit(Vector3PathMap* pathMap)
 {
 	// Get the data from iisu.
 	SK::DataHandle<SK::Vector3>* iisuDataHandle = static_cast<SK::DataHandle<SK::Vector3>*>(m_iisuDataHandle);
@@ -109,7 +109,7 @@ void IisuReaderOscSender::visit(Vector3PathMapItem* pathItem)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void IisuReaderOscSender::visit(FloatArrayPathMapItem* pathItem)
+void IisuReaderOscSender::visit(FloatArrayPathMap* pathMap)
 {
 	// Get the data from iisu.
 	SK::DataHandle<SK::Array<float> >* iisuDataHandle = static_cast<SK::DataHandle<SK::Array<float> >*>(m_iisuDataHandle);
@@ -145,7 +145,7 @@ void IisuReaderOscSender::visit(FloatArrayPathMapItem* pathItem)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void IisuReaderOscSender::visit(Vector3ArrayPathMapItem* pathItem)
+void IisuReaderOscSender::visit(Vector3ArrayPathMap* pathMap)
 {
 	// Get the data from iisu.
 	SK::DataHandle<SK::Array<SK::Vector3> >* iisuDataHandle = static_cast<SK::DataHandle<SK::Array<SK::Vector3> >*>(m_iisuDataHandle);

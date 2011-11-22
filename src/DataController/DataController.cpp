@@ -1,5 +1,5 @@
 #include "DataController.h"
-#include "DataBase/PathMapItem.h"
+#include "DataBase/PathMap.h"
 #include "Visitors/IisuDataRegistrator.h"
 #include "Visitors/IisuReaderOscSender.h"
 #include "LogSystem/Logger.h"
@@ -135,7 +135,7 @@ void DataController::resumeStream()
 	linearizePathMap(m_dataBase->getPathsTreeRoot());
 	SK_LOGGER(LOG_INFO) << "Path maps linearization OK";
 
-	// Find the full path of each DataPathMapItem.
+	// Find the full path of each DataPathMap.
 	m_fullOscPaths.resize(m_pathMapLinearized.size());
 	for (uint i = 0; i < m_pathMapLinearized.size(); ++i)
 		m_fullOscPaths[i] = findFullOscPath(m_pathMapLinearized[i]);
@@ -206,26 +206,26 @@ void DataController::termIisu()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::linearizePathMap(PathMapItem* pathItem)
+void DataController::linearizePathMap(PathMap* pathMap)
 {
-	m_pathMapLinearized.push_back(pathItem);
+	m_pathMapLinearized.push_back(pathMap);
 
-	for (uint i = 0; i < pathItem->m_children.size(); ++i)
-		linearizePathMap(pathItem->m_children[i]);
+	for (uint i = 0; i < pathMap->m_children.size(); ++i)
+		linearizePathMap(pathMap->m_children[i]);
 }
 
 //////////////////////////////////////////////////////////////////////////
-std::string DataController::findFullOscPath( PathMapItem* pathItem )
+std::string DataController::findFullOscPath( PathMap* pathMap )
 {
-	if (!pathItem)
+	if (!pathMap)
 		return "";
 
-	// Parse PathMapItems up-tree.
+	// Parse PathMaps up-tree.
 	std::string fullPath;
-	PathMapItem* currentPath = pathItem;
+	PathMap* currentPath = pathMap;
 	while (currentPath != 0)
 	{
-		fullPath = std::string("/") + currentPath->m_oscPathItem + fullPath;
+		fullPath = std::string("/") + currentPath->m_oscPathBit + fullPath;
 
 		currentPath = currentPath->m_parent;
 	}
@@ -248,7 +248,7 @@ void DataController::oscSend()
 	IisuReaderOscSender iisuReaderOscSender(m_dataBase, &outPacketStream);
 	for (uint i = 0; i < m_pathMapLinearized.size(); ++i)
 	{
-		iisuReaderOscSender.setPathItemData(m_fullOscPaths[i], m_iisuDataHandles[i]);
+		iisuReaderOscSender.setPathMapData(m_fullOscPaths[i], m_iisuDataHandles[i]);
 		m_pathMapLinearized[i]->accept(&iisuReaderOscSender);
 	}
 
