@@ -43,16 +43,6 @@ protected:
 
 	static DataController* sm_instance;
 
-	/// \name Temporaries.
-	//@{
-	DataBase* m_dataBase;
-
-	void linearizePathMap(PathMapItem* pathItem);
-	std::vector<PathMapItem*> m_pathMapLinearized;
-
-	void clearIisuDataHandles();
-	//@}
-
 	/// \name Iisu.
 	//@{
 	bool initIisu();
@@ -65,13 +55,18 @@ protected:
 	std::vector<SK::IIisuDataExtractor*> m_iisuDataHandles;
 	//@}
 
-	/// \name Osc.
+	/// \name Helpers.
 	//@{
+	DataBase* m_dataBase;
+
+	std::vector<PathMapItem*> m_pathMapLinearized;
+	void linearizePathMap(PathMapItem* pathItem);
+
 	std::vector<std::string> m_fullOscPaths;
 	std::string findFullOscPath(PathMapItem* pathItem);
-	void oscSend();
 
 	char m_oscBuffer[OUTPUT_BUFFER_SIZE];
+	void oscSend();
 	//@}
 };
 

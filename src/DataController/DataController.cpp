@@ -58,74 +58,6 @@ void DataController::onStartStopToggleButtonClicked()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::resumeStream()
-{	
-	// Load IID script.
-	// TODO: il faut qu'il soit loadé quand je tape mes paths et qu'il se reload automatiquement si je le change.
-	if (m_dataBase->getIidFilePath() != std::string(""))
-	{
-		SK::CommandHandle<SK::Result (const SK::String&)> loadIidGraph = m_device->getCommandManager().registerCommandHandle<SK::Result(const SK::String&)>("IID.loadGraph");
-		SK::Result resLoadCmd = loadIidGraph(m_dataBase->getIidFilePath().c_str());
-		if (resLoadCmd.failed())
-			SK_LOGGER(LOG_ERROR) << std::string("Load IID graph : ") + resLoadCmd.getDescription().ptr();
-		else
-			SK_LOGGER(LOG_INFO) << "IID file loaded correctly.";
-	}
-
-	// Linearize path items.
-	linearizePathMap(m_dataBase->getPathsTreeRoot());
-	SK_LOGGER(LOG_INFO) << "Path maps linearization OK";
-
-	// Find the full path of each DataPathMapItem.
-	m_fullOscPaths.resize(m_pathMapLinearized.size());
-	for (uint i = 0; i < m_pathMapLinearized.size(); ++i)
-		m_fullOscPaths[i] = findFullOscPath(m_pathMapLinearized[i]);
-
-	SK_LOGGER(LOG_INFO) << "Full OSC paths found";
-
-	// Register data handles.
-	IisuDataRegistrator iisuPathRegistrator(m_device, m_iisuDataHandles, m_pathMapLinearized);
-	for (uint i = 0; i < m_pathMapLinearized.size(); ++i)
-		m_pathMapLinearized[i]->accept(&iisuPathRegistrator);
-
-	// Start device.
-	m_device->start();
-	m_dataBase->setIsObservationOn(true);
-
-	SK_LOGGER(LOG_INFO) << "The iisu engine is started";
-	SK_LOGGER(LOG_INFO) << "OscBridge is now streaming OSC...";
-}
-
-//////////////////////////////////////////////////////////////////////////
-void DataController::pauseStream()
-{
-	// Stop device.
-	m_dataBase->setIsObservationOn(false);
-	m_device->stop();
-
-	SK_LOGGER(LOG_INFO) << "The iisu engine is stopped";
-
-	// Unregister data handles.
-	// TODO: unregister data handles (not possible yet in iisu's API).
-	//for (uint i = 0; i < m_pathMapLinearized.size(); ++i)
-	//	m_device->unregisterData(m_iisuDataHandles[i]);
-
-	for (uint i = 0; i < m_iisuDataHandles.size(); ++i)
-	{
-		if (m_iisuDataHandles[i])
-			delete m_iisuDataHandles[i];
-	}
-
-	m_iisuDataHandles.clear();
-
-	// Clear the full OSC paths.
-	m_fullOscPaths.clear();
-
-	// clear the array of linearized path maps.
-	m_pathMapLinearized.clear();
-}
-
-//////////////////////////////////////////////////////////////////////////
 void DataController::onFoldAndNameJointsCheckBoxClicked( bool isFoldAndNameJoints )
 {
 	m_dataBase->setIsFoldAndNameJoints(isFoldAndNameJoints);
@@ -185,12 +117,80 @@ bool DataController::initIisu()
 }
 
 //////////////////////////////////////////////////////////////////////////
+void DataController::resumeStream()
+{	
+	// Load IID script.
+	// TODO: il faut qu'il soit loadé quand je tape mes paths et qu'il se reload automatiquement si je le change.
+	if (m_dataBase->getIidFilePath() != std::string(""))
+	{
+		SK::CommandHandle<SK::Result (const SK::String&)> loadIidGraph = m_device->getCommandManager().registerCommandHandle<SK::Result(const SK::String&)>("IID.loadGraph");
+		SK::Result resLoadCmd = loadIidGraph(m_dataBase->getIidFilePath().c_str());
+		if (resLoadCmd.failed())
+			SK_LOGGER(LOG_ERROR) << std::string("Load IID graph : ") + resLoadCmd.getDescription().ptr();
+		else
+			SK_LOGGER(LOG_INFO) << "IID file loaded correctly.";
+	}
+
+	// Linearize path items.
+	linearizePathMap(m_dataBase->getPathsTreeRoot());
+	SK_LOGGER(LOG_INFO) << "Path maps linearization OK";
+
+	// Find the full path of each DataPathMapItem.
+	m_fullOscPaths.resize(m_pathMapLinearized.size());
+	for (uint i = 0; i < m_pathMapLinearized.size(); ++i)
+		m_fullOscPaths[i] = findFullOscPath(m_pathMapLinearized[i]);
+
+	SK_LOGGER(LOG_INFO) << "Full OSC paths found";
+
+	// Register data handles.
+	IisuDataRegistrator iisuPathRegistrator(m_device, m_iisuDataHandles, m_pathMapLinearized);
+	for (uint i = 0; i < m_pathMapLinearized.size(); ++i)
+		m_pathMapLinearized[i]->accept(&iisuPathRegistrator);
+
+	// Start device.
+	m_device->start();
+	m_dataBase->setIsObservationOn(true);
+
+	SK_LOGGER(LOG_INFO) << "The iisu engine is started";
+	SK_LOGGER(LOG_INFO) << "OscBridge is now streaming OSC...";
+}
+
+//////////////////////////////////////////////////////////////////////////
 void DataController::newIisuDataFrameListener( const SK::DataFrameEvent& event )
 {
 	m_device->updateFrame(true);
 	std::cout << event.getFrameID() << std::endl;
 
 	oscSend();
+}
+
+//////////////////////////////////////////////////////////////////////////
+void DataController::pauseStream()
+{
+	// Stop device.
+	m_dataBase->setIsObservationOn(false);
+	m_device->stop();
+
+	SK_LOGGER(LOG_INFO) << "The iisu engine is stopped";
+
+	// Unregister data handles.
+	// TODO: unregister data handles (not possible yet in iisu's API).
+	//for (uint i = 0; i < m_pathMapLinearized.size(); ++i)
+	//	m_device->unregisterData(m_iisuDataHandles[i]);
+
+	for (uint i = 0; i < m_iisuDataHandles.size(); ++i)
+	{
+		if (m_iisuDataHandles[i])
+			delete m_iisuDataHandles[i];
+	}
+
+	m_iisuDataHandles.clear();
+
+	// Clear the full OSC paths.
+	m_fullOscPaths.clear();
+
+	// clear the array of linearized path maps.
+	m_pathMapLinearized.clear();
 }
 
 //////////////////////////////////////////////////////////////////////////
