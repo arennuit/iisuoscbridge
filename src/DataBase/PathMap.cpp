@@ -1,11 +1,11 @@
-#include "PathMapItem.h"
+#include "PathMap.h"
 
 namespace SK
 {
 
 //////////////////////////////////////////////////////////////////////////
-PathMapItem::PathMapItem(const std::string& oscPathItem, PathMapItem* parent/* = 0*/) :
-	m_oscPathItem(oscPathItem),
+PathMap::PathMap(const std::string& oscPathBit, PathMap* parent/* = 0*/) :
+	m_oscPathBit(oscPathBit),
 	m_parent(parent)
 {
 	if (m_parent)
@@ -13,7 +13,7 @@ PathMapItem::PathMapItem(const std::string& oscPathItem, PathMapItem* parent/* =
 }
 
 //////////////////////////////////////////////////////////////////////////
-PathMapItem::~PathMapItem()
+PathMap::~PathMap()
 {
 	// Recursive deletion of the children.
 	for (unsigned int i = 0; i < m_children.size(); ++i)

@@ -3,110 +3,110 @@
 #include <vector>
 #include <string>
 #include "Platform/SkPlatform.h"
-#include "PathMapItemVisitor.h"
+#include "PathMapVisitor.h"
 
 namespace SK
 {
 
 //////////////////////////////////////////////////////////////////////////
-/// \brief The concrete PathMapItem class is used to format OSC paths. But the class is also inherited
+/// \brief The concrete PathMap class is used to format OSC paths. But the class is also inherited
 ///       by items actually pointing to proper iisu data.
-class PathMapItem
+class PathMap
 {
 public:
-	PathMapItem(const std::string& oscPathItem, PathMapItem* parent = 0);
-	virtual ~PathMapItem();
+	PathMap(const std::string& oscPathBit, PathMap* parent = 0);
+	virtual ~PathMap();
 
 	// Map.
-	std::string m_oscPathItem;
+	std::string m_oscPathBit;
 
-	// Handle hierarchy tree of PathMapItems.
-	PathMapItem* m_parent;
-	std::vector<PathMapItem*> m_children;
+	// Handle hierarchy tree of PathMaps.
+	PathMap* m_parent;
+	std::vector<PathMap*> m_children;
 
 	// Visitor.
-	virtual void accept(PathMapItemVisitor* visitor) {visitor->visit(this);}
+	virtual void accept(PathMapVisitor* visitor) {visitor->visit(this);}
 };
 
 //////////////////////////////////////////////////////////////////////////
-class DataPathMapItem : public PathMapItem
+class DataPathMap : public PathMap
 {
 public:
-	DataPathMapItem(const std::string& oscPathItem, const std::string& iisuPath, PathMapItem* parent = 0) :
-		PathMapItem(oscPathItem, parent),
+	DataPathMap(const std::string& oscPathBit, const std::string& iisuPath, PathMap* parent = 0) :
+		PathMap(oscPathBit, parent),
 		m_iisuPath(iisuPath) {}
 
 	// Map.
 	std::string m_iisuPath;
 
 	// Visitor.
-	void accept(PathMapItemVisitor* visitor) SK_OVERRIDE = 0;
+	void accept(PathMapVisitor* visitor) SK_OVERRIDE = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////
-class BooleanPathMapItem : public DataPathMapItem
+class BooleanPathMap : public DataPathMap
 {
 public:
-	BooleanPathMapItem(const std::string& oscPathItem, const std::string& iisuPath, PathMapItem* parent = 0) :
-		DataPathMapItem(oscPathItem, iisuPath, parent) {}
+	BooleanPathMap(const std::string& oscPathBit, const std::string& iisuPath, PathMap* parent = 0) :
+		DataPathMap(oscPathBit, iisuPath, parent) {}
 
 	// Visitor.
-	void accept(PathMapItemVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}
+	void accept(PathMapVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}
 };
 
 //////////////////////////////////////////////////////////////////////////
-class IntegerPathMapItem : public DataPathMapItem
+class IntegerPathMap : public DataPathMap
 {
 public:
-	IntegerPathMapItem(const std::string& oscPathItem, const std::string& iisuPath, PathMapItem* parent = 0) :
-		DataPathMapItem(oscPathItem, iisuPath, parent) {}
+	IntegerPathMap(const std::string& oscPathBit, const std::string& iisuPath, PathMap* parent = 0) :
+		DataPathMap(oscPathBit, iisuPath, parent) {}
 
 	// Visitor.
-	void accept(PathMapItemVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}
+	void accept(PathMapVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}
 };
 
 //////////////////////////////////////////////////////////////////////////
-class Vector3PathMapItem : public DataPathMapItem
+class Vector3PathMap : public DataPathMap
 {
 public:
-	Vector3PathMapItem(const std::string& oscPathItem, const std::string& iisuPath, PathMapItem* parent = 0) :
-		DataPathMapItem(oscPathItem, iisuPath, parent) {}
+	Vector3PathMap(const std::string& oscPathBit, const std::string& iisuPath, PathMap* parent = 0) :
+		DataPathMap(oscPathBit, iisuPath, parent) {}
 
 	// Visitor.
-	void accept(PathMapItemVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}
+	void accept(PathMapVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}
 };
 
 //////////////////////////////////////////////////////////////////////////
-class ArrayPathMapItem : public DataPathMapItem
+class ArrayPathMap : public DataPathMap
 {
 public:
-	ArrayPathMapItem(const std::string& oscPathItem, const std::string& iisuPath, PathMapItem* parent = 0) :
-		DataPathMapItem(oscPathItem, iisuPath, parent) {}
+	ArrayPathMap(const std::string& oscPathBit, const std::string& iisuPath, PathMap* parent = 0) :
+		DataPathMap(oscPathBit, iisuPath, parent) {}
 
 	// Visitor.
-	void accept(PathMapItemVisitor* visitor) = 0;
+	void accept(PathMapVisitor* visitor) = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////
-class FloatArrayPathMapItem : public ArrayPathMapItem
+class FloatArrayPathMap : public ArrayPathMap
 {
 public:
-	FloatArrayPathMapItem(const std::string& oscPathItem, const std::string& iisuPath, PathMapItem* parent = 0) :
-		ArrayPathMapItem(oscPathItem, iisuPath, parent) {}
+	FloatArrayPathMap(const std::string& oscPathBit, const std::string& iisuPath, PathMap* parent = 0) :
+		ArrayPathMap(oscPathBit, iisuPath, parent) {}
 
 	// Visitor.
-	void accept(PathMapItemVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}
+	void accept(PathMapVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}
 };
 
 //////////////////////////////////////////////////////////////////////////
-class Vector3ArrayPathMapItem : public ArrayPathMapItem
+class Vector3ArrayPathMap : public ArrayPathMap
 {
 public:
-	Vector3ArrayPathMapItem(const std::string& oscPathItem, const std::string& iisuPath, PathMapItem* parent = 0) :
-		ArrayPathMapItem(oscPathItem, iisuPath, parent) {}
+	Vector3ArrayPathMap(const std::string& oscPathBit, const std::string& iisuPath, PathMap* parent = 0) :
+		ArrayPathMap(oscPathBit, iisuPath, parent) {}
 
 	// Visitor.
-	void accept(PathMapItemVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}
+	void accept(PathMapVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}
 };
 
 } // namespace SK.

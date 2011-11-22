@@ -1,4 +1,4 @@
-#include "PathMapItemVisitor.h"
+#include "PathMapVisitor.h"
 
 namespace SK
 {
