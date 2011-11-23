@@ -85,17 +85,24 @@ void MvdDataModel::visit(PathMap* pathMap)
 {
 	assert(pathMap);
 
+	// TODO: quand je saurai ajouter un item à droite d'un item existant je pourrais appeler l'overload
+	//       de visit() sur PathMap et compléter par un itel à droite de oscItem pour iisuItem,
+	//       à la place de réécrire tout le code.
+
 	// Row.
 	QStandardItem* oscItem = new QStandardItem(pathMap->m_oscPathBit.c_str());
 	oscItem->setData((int)PathMapRole, RoleIndexRole);
 	oscItem->setData(QVariant::fromValue(pathMap), PathMapRole);
 
+	QStandardItem* iisuItem = new QStandardItem("");
+
 	if (!m_parentItem)
 	{
 		setItem(0, 0, oscItem);
+		setItem(0, 1, iisuItem);
 	}
 	else
-		m_parentItem->appendRow(QList<QStandardItem*>() << oscItem);
+		m_parentItem->appendRow(QList<QStandardItem*>() << oscItem << iisuItem);
 
 	// Recursive call to children.
 	for (uint i = 0; i < pathMap->m_children.size(); ++i)

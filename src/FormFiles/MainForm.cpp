@@ -74,6 +74,7 @@ void MainForm::setup()
 	ui.m_pathMapsView->resizeColumnToContents(0);
 	ui.m_pathMapsView->resizeColumnToContents(1);
 	ui.m_pathMapsView->setAlternatingRowColors(true);
+	ui.m_pathMapsView->setItemDelegate(&m_pathDelegate);
 
 	// Establish all connections.
 	connect(ui.m_ipAddressEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onIpAddressLineEditTextChanged(const QString&)));

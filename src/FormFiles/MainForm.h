@@ -6,6 +6,7 @@
 #include "ui_MainForm.h"
 #include "DataController/DataController.h"
 #include "Mvd/MvdDataModel.h"
+#include "Mvd/MvdPathDelegate.h"
 
 namespace SK
 {
@@ -80,6 +81,7 @@ protected:
 	Ui::MainFormClass ui;
 
 	MvdDataModel m_mvdModel;
+	MvdPathDelegate m_pathDelegate;
 	//@}
 
 	QFileDialog m_iidFileSelectDlg;
