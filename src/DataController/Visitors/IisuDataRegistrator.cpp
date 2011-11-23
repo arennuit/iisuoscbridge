@@ -29,6 +29,7 @@ void IisuDataRegistrator::visit(PathMap* pathMap)
 void IisuDataRegistrator::visit(BooleanPathMap* pathMap)
 {
 	assert(pathMap);
+	assert(m_device);
 
 	// Register iisu path.
 	SK::DataHandle<bool> handleTmp = m_device->registerDataHandle<bool>(pathMap->m_iisuPath.c_str());
@@ -54,6 +55,7 @@ void IisuDataRegistrator::visit(BooleanPathMap* pathMap)
 void IisuDataRegistrator::visit(IntegerPathMap* pathMap)
 {
 	assert(pathMap);
+	assert(m_device);
 
 	// Register iisu path.
 	SK::DataHandle<int> handleTmp = m_device->registerDataHandle<int>(pathMap->m_iisuPath.c_str());
@@ -79,6 +81,7 @@ void IisuDataRegistrator::visit(IntegerPathMap* pathMap)
 void IisuDataRegistrator::visit(Vector3PathMap* pathMap)
 {
 	assert(pathMap);
+	assert(m_device);
 
 	// Register iisu path.
 	SK::DataHandle<SK::Vector3> handleTmp = m_device->registerDataHandle<SK::Vector3>(pathMap->m_iisuPath.c_str());
@@ -104,6 +107,7 @@ void IisuDataRegistrator::visit(Vector3PathMap* pathMap)
 void IisuDataRegistrator::visit(FloatArrayPathMap* pathMap)
 {
 	assert(pathMap);
+	assert(m_device);
 
 	// Register iisu path.
 	SK::DataHandle<SK::Array<float> > handleTmp = m_device->registerDataHandle<SK::Array<float> >(pathMap->m_iisuPath.c_str());
@@ -129,6 +133,7 @@ void IisuDataRegistrator::visit(FloatArrayPathMap* pathMap)
 void IisuDataRegistrator::visit(Vector3ArrayPathMap* pathMap)
 {
 	assert(pathMap);
+	assert(m_device);
 
 	// Register iisu path.
 	SK::DataHandle<SK::Array<SK::Vector3> > handleTmp = m_device->registerDataHandle<SK::Array<SK::Vector3> >(pathMap->m_iisuPath.c_str());

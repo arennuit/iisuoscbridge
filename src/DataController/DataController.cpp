@@ -127,6 +127,15 @@ bool DataController::initIisu()
 //////////////////////////////////////////////////////////////////////////
 void DataController::resumeStream()
 {	
+	// Check device.
+	if (!m_device)
+	{
+		m_dataBase->setIsObservationOn(false);
+
+		SK_LOGGER(LOG_ERROR) << "No iisu device available: cannot stream.";
+		return;
+	}
+
 	// Load IID script.
 	// TODO: il faut qu'il soit loadé quand je tape mes paths et qu'il se reload automatiquement si je le change.
 	if (m_dataBase->getIidFilePath() != std::string(""))
@@ -177,9 +186,12 @@ void DataController::pauseStream()
 {
 	// Stop device.
 	m_dataBase->setIsObservationOn(false);
-	m_device->stop();
+	if (m_device)
+	{
+		m_device->stop();
 
-	SK_LOGGER(LOG_INFO) << "The iisu engine is stopped";
+		SK_LOGGER(LOG_INFO) << "The iisu engine is stopped";
+	}
 
 	// Unregister data handles.
 	// TODO: unregister data handles (not possible yet in iisu's API).
