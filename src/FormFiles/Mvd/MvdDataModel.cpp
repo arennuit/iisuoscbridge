@@ -85,10 +85,6 @@ void MvdDataModel::visit(TypedPathMap* typedPathMap)
 {
 	assert(typedPathMap);
 
-	// TODO: quand je saurai ajouter un item à droite d'un item existant je pourrais appeler l'overload
-	//       de visit() sur TypedPathMap et compléter par un itel à droite de oscItem pour iisuItem,
-	//       à la place de réécrire tout le code.
-
 	// Row.
 	QStandardItem* oscItem = new QStandardItem(typedPathMap->m_oscPathBit.c_str());
 	oscItem->setData((int)PathMapRole, RoleIndexRole);
@@ -102,7 +98,11 @@ void MvdDataModel::visit(TypedPathMap* typedPathMap)
 		setItem(0, 1, iisuItem);
 	}
 	else
-		m_parentItem->appendRow(QList<QStandardItem*>() << oscItem << iisuItem);
+	{
+		int rowIdx = m_parentItem->rowCount();
+		m_parentItem->setChild(rowIdx, 0, oscItem);
+		m_parentItem->setChild(rowIdx, 1, iisuItem);
+	}
 
 	// Recursive call to children.
 	for (uint i = 0; i < typedPathMap->m_children.size(); ++i)
@@ -116,10 +116,6 @@ void MvdDataModel::visit(TypedPathMap* typedPathMap)
 void MvdDataModel::visit(DataTypedPathMap* typedPathMap)
 {
 	assert(typedPathMap);
-
-	// TODO: quand je saurai ajouter un item à droite d'un item existant je pourrais appeler l'overload
-	//       de visit() sur TypedPathMap et compléter par un itel à droite de oscItem pour iisuItem,
-	//       à la place de réécrire tout le code.
 
 	// Row.
 	QStandardItem* oscItem = new QStandardItem(typedPathMap->m_oscPathBit.c_str());
@@ -136,7 +132,11 @@ void MvdDataModel::visit(DataTypedPathMap* typedPathMap)
 		setItem(0, 1, iisuItem);
 	}
 	else
-		m_parentItem->appendRow(QList<QStandardItem*>() << oscItem << iisuItem);
+	{
+		int rowIdx = m_parentItem->rowCount();
+		m_parentItem->setChild(rowIdx, 0, oscItem);
+		m_parentItem->setChild(rowIdx, 1, iisuItem);
+	}
 
 	// Recursive call to children.
 	for (uint i = 0; i < typedPathMap->m_children.size(); ++i)
