@@ -21,6 +21,9 @@ public:
 	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
 
 	void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+
+protected:
+	static int sm_iisuPathColumnIdx;
 };
 
 } // namespace SK.
