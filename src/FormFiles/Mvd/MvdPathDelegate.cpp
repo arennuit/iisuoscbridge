@@ -1,4 +1,5 @@
 #include "MvdPathDelegate.h"
+#include "DataController/DataController.h"
 
 namespace SK
 {
@@ -14,71 +15,66 @@ MvdPathDelegate::MvdPathDelegate(QObject *parent) :
 //////////////////////////////////////////////////////////////////////////
 QWidget* MvdPathDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-	if (index.column() == sm_iisuPathColumnIdx)
-	{
-		QComboBox *comboBox = new QComboBox(parent);
-	
-		comboBox->setInsertPolicy(QComboBox::NoInsert);
-		comboBox->setEditable(true);
-		comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-	
-		// TODO: populate the combox box correctly.
-		comboBox->addItem("");
-		comboBox->addItem("USER1.SKELETON.Status");
-		comboBox->addItem("USER1.SKELETON.KeyPoints");
-		comboBox->addItem("USER1.SKELETON.KeyPointsConfidence");
-	
-		return comboBox;
-	}
+	if (index.column() != sm_iisuPathColumnIdx)
+		return QItemDelegate::createEditor(parent, option, index);
 
-	return QItemDelegate::createEditor(parent, option, index);
+	// Create a combo box delegate.
+	DataController* dataController = DataController::GetInstance();
+	assert(dataController);
+
+	QComboBox *comboBox = new QComboBox(parent);
+
+	comboBox->setInsertPolicy(QComboBox::NoInsert);
+	comboBox->setEditable(true);
+	comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+
+	// Populate combo box items.
+	std::vector<std::string> iisuDataPaths;
+	dataController->onMvdPathDelegateEditorCreation(iisuDataPaths);
+
+	comboBox->addItem("");
+	for (uint i = 0; i < iisuDataPaths.size(); ++i)
+		comboBox->addItem(iisuDataPaths[i].c_str());
+
+	return comboBox;
 }
 
 //////////////////////////////////////////////////////////////////////////
 void MvdPathDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
-	if (index.column() == sm_iisuPathColumnIdx)
-	{
-		QString val = index.model()->data(index, Qt::EditRole).toString();
+	if (index.column() != sm_iisuPathColumnIdx)
+		return QItemDelegate::setEditorData(editor, index);
 
-		QComboBox *comboBox = static_cast<QComboBox*>(editor);
-		int currentIdx = comboBox->findText(val, Qt::MatchExactly);
-		if (currentIdx != -1)
-			comboBox->setCurrentIndex(currentIdx);
+	// Set combo box's text.
+	QString val = index.model()->data(index, Qt::EditRole).toString();
 
-		return;
-	}
-
-	QItemDelegate::setEditorData(editor, index);
+	QComboBox *comboBox = static_cast<QComboBox*>(editor);
+	int currentIdx = comboBox->findText(val, Qt::MatchExactly);
+	if (currentIdx != -1)
+		comboBox->setCurrentIndex(currentIdx);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void MvdPathDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
 {
-	if (index.column() == sm_iisuPathColumnIdx)
-	{
-		QComboBox *comboBox = static_cast<QComboBox*>(editor);
-		QString val = comboBox->currentText();
+	if (index.column() != sm_iisuPathColumnIdx)
+		return QItemDelegate::setModelData(editor, model, index);
 
-		model->setData(index, val, Qt::EditRole);
+	// Update model.
+	QComboBox *comboBox = static_cast<QComboBox*>(editor);
+	QString val = comboBox->currentText();
 
-		return;
-	}
-
-	QItemDelegate::setModelData(editor, model, index);
+	model->setData(index, val, Qt::EditRole);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void MvdPathDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-	if (index.column() == sm_iisuPathColumnIdx)
-	{
-		editor->setGeometry(option.rect);
+	if (index.column() != sm_iisuPathColumnIdx)
+		return QItemDelegate::updateEditorGeometry(editor, option, index);
 
-		return;
-	}
-
-	QItemDelegate::updateEditorGeometry(editor, option, index);
+	// Update edito's geometry.
+	editor->setGeometry(option.rect);
 }
 
 } // namespace SK.

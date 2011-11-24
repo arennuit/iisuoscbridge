@@ -72,6 +72,30 @@ void DataController::onClearMapsButtonClicked()
 }
 
 //////////////////////////////////////////////////////////////////////////
+void DataController::onMvdPathDelegateEditorCreation(std::vector<std::string>& iisuDataPaths)
+{
+	iisuDataPaths.clear();
+
+	if (!m_device)
+		return;
+
+	SK::Return<uint32_t> iisuDataNum_return = m_device->getDataCount();
+	if (iisuDataNum_return.failed())
+		return;
+
+	// Fills in iisuDataPaths with the iisu data paths.
+	int iisuDataNum = iisuDataNum_return.get();
+	for (uint i = 0; i < iisuDataNum; ++i)
+	{
+		SK::Return<SK::String> iisuDataPath_return = m_device->getDataName(i);
+		if (iisuDataPath_return.failed())
+			continue;
+
+		iisuDataPaths.push_back(std::string(iisuDataPath_return.get().ptr()));
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////
 bool DataController::initIisu()
 {
 	// Iisu context.
