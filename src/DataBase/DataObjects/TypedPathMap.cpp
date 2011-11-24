@@ -1,10 +1,10 @@
-#include "PathMap.h"
+#include "TypedPathMap.h"
 
 namespace SK
 {
 
 //////////////////////////////////////////////////////////////////////////
-PathMap::PathMap(const std::string& oscPathBit, PathMap* parent/* = 0*/) :
+TypedPathMap::TypedPathMap(const std::string& oscPathBit, TypedPathMap* parent/* = 0*/) :
 	m_oscPathBit(oscPathBit),
 	m_parent(parent)
 {
@@ -13,7 +13,7 @@ PathMap::PathMap(const std::string& oscPathBit, PathMap* parent/* = 0*/) :
 }
 
 //////////////////////////////////////////////////////////////////////////
-PathMap::~PathMap()
+TypedPathMap::~TypedPathMap()
 {
 	// Recursive deletion of the children.
 	for (unsigned int i = 0; i < m_children.size(); ++i)
