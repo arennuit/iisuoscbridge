@@ -1,5 +1,5 @@
 #include "DataController.h"
-#include "DataBase/PathMap.h"
+#include "DataBase/DataObjects/TypedPathMap.h"
 #include "Visitors/IisuDataRegistrator.h"
 #include "Visitors/IisuReaderOscSender.h"
 #include "LogSystem/Logger.h"
@@ -226,23 +226,23 @@ void DataController::termIisu()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::linearizePathMap(PathMap* pathMap)
+void DataController::linearizePathMap(TypedPathMap* typedPathMap)
 {
-	m_pathMapLinearized.push_back(pathMap);
+	m_pathMapLinearized.push_back(typedPathMap);
 
-	for (uint i = 0; i < pathMap->m_children.size(); ++i)
-		linearizePathMap(pathMap->m_children[i]);
+	for (uint i = 0; i < typedPathMap->m_children.size(); ++i)
+		linearizePathMap(typedPathMap->m_children[i]);
 }
 
 //////////////////////////////////////////////////////////////////////////
-std::string DataController::findFullOscPath( PathMap* pathMap )
+std::string DataController::findFullOscPath( TypedPathMap* typedPathMap )
 {
-	if (!pathMap)
+	if (!typedPathMap)
 		return "";
 
 	// Parse PathMaps up-tree.
 	std::string fullPath;
-	PathMap* currentPath = pathMap;
+	TypedPathMap* currentPath = typedPathMap;
 	while (currentPath != 0)
 	{
 		fullPath = std::string("/") + currentPath->m_oscPathBit + fullPath;

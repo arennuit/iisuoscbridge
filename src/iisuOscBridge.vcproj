@@ -437,22 +437,26 @@
 				RelativePath=".\DataBase\DataBase.h"
 				>
 			</File>
-			<File
-				RelativePath=".\DataBase\PathMap.cpp"
+			<Filter
+				Name="DataObjects"
 				>
-			</File>
-			<File
-				RelativePath=".\DataBase\PathMap.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DataBase\PathMapVisitor.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\DataBase\PathMapVisitor.h"
-				>
-			</File>
+				<File
+					RelativePath=".\DataBase\DataObjects\TypedPathMap.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DataBase\DataObjects\TypedPathMap.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DataBase\DataObjects\TypedPathMapVisitor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DataBase\DataObjects\TypedPathMapVisitor.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="DataController"

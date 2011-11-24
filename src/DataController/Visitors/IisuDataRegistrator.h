@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Platform/SkPlatform.h>
-#include "DataBase/PathMapVisitor.h"
+#include "DataBase/DataObjects/TypedPathMapVisitor.h"
 #include <vector>
 
 namespace SK
@@ -9,32 +9,32 @@ namespace SK
 
 class Device;
 class IIisuDataExtractor;
-class PathMap;
+class TypedPathMap;
 
 //////////////////////////////////////////////////////////////////////////
-/// \brief This class is a visitor that makes the path registration in iisu for the PathMap objects.
-class IisuDataRegistrator : public PathMapVisitor
+/// \brief This class is a visitor that makes the path registration in iisu for the TypedPathMap objects.
+class IisuDataRegistrator : public TypedPathMapVisitor
 {
 public:
-	IisuDataRegistrator(SK::Device* device, std::vector<SK::IIisuDataExtractor*>& dataHandles, std::vector<PathMap*>& pathAssociators);
+	IisuDataRegistrator(SK::Device* device, std::vector<SK::IIisuDataExtractor*>& dataHandles, std::vector<TypedPathMap*>& pathAssociators);
 	~IisuDataRegistrator() {}
 
 protected:
 	/// \name Visitor's methods.
 	//@{
-	void visit(PathMap* pathMap) SK_OVERRIDE;
-	void visit(DataPathMap* pathMap) SK_OVERRIDE {} // Cannot register a generic data.
-	void visit(BooleanPathMap* pathMap) SK_OVERRIDE;
-	void visit(IntegerPathMap* pathMap) SK_OVERRIDE;
-	void visit(Vector3PathMap* pathMap) SK_OVERRIDE;
-	void visit(ArrayPathMap* pathMap) SK_OVERRIDE {} // Cannot register a generic array.
-	void visit(FloatArrayPathMap* pathMap) SK_OVERRIDE;
-	void visit(Vector3ArrayPathMap* pathMap) SK_OVERRIDE;
+	void visit(TypedPathMap* typedPathMap) SK_OVERRIDE;
+	void visit(DataTypedPathMap* typedPathMap) SK_OVERRIDE {} // Cannot register a generic data.
+	void visit(BooleanPathMap* typedPathMap) SK_OVERRIDE;
+	void visit(IntegerPathMap* typedPathMap) SK_OVERRIDE;
+	void visit(Vector3PathMap* typedPathMap) SK_OVERRIDE;
+	void visit(ArrayPathMap* typedPathMap) SK_OVERRIDE {} // Cannot register a generic array.
+	void visit(FloatArrayPathMap* typedPathMap) SK_OVERRIDE;
+	void visit(Vector3ArrayPathMap* typedPathMap) SK_OVERRIDE;
 	//@}
 
 	SK::Device* m_device;
 	std::vector<IIisuDataExtractor*>& m_dataHandles;
-	std::vector<PathMap*>& m_pathAssociators;
+	std::vector<TypedPathMap*>& m_pathAssociators;
 };
 
 } // namespace SK.

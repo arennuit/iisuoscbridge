@@ -3,7 +3,7 @@
 #include <QtGui>
 #include <QStandardItemModel>
 #include <Platform/SkPlatform.h>
-#include "DataBase/PathMapVisitor.h"
+#include "DataBase/DataObjects/TypedPathMapVisitor.h"
 
 class QStandardItem;
 
@@ -12,7 +12,7 @@ namespace SK
 
 //////////////////////////////////////////////////////////////////////////
 /// \brief This class is the model in the MVD / MVC pattern.
-class MvdDataModel : public QStandardItemModel, public PathMapVisitor
+class MvdDataModel : public QStandardItemModel, public TypedPathMapVisitor
 {
 	Q_OBJECT
 
@@ -36,14 +36,14 @@ protected:
 
 	/// \name Visitor's methods.
 	//@{
-	void visit(PathMap* pathMap) SK_OVERRIDE;
-	void visit(DataPathMap* pathMap) SK_OVERRIDE;
-	void visit(BooleanPathMap* pathMap) SK_OVERRIDE {visit((DataPathMap*)pathMap);}
-	void visit(IntegerPathMap* pathMap) SK_OVERRIDE {visit((DataPathMap*)pathMap);}
-	void visit(Vector3PathMap* pathMap) SK_OVERRIDE {visit((DataPathMap*)pathMap);}
-	void visit(ArrayPathMap* pathMap) SK_OVERRIDE {visit((DataPathMap*)pathMap);}
-	void visit(FloatArrayPathMap* pathMap) SK_OVERRIDE {visit((DataPathMap*)pathMap);}
-	void visit(Vector3ArrayPathMap* pathMap) SK_OVERRIDE {visit((DataPathMap*)pathMap);}
+	void visit(TypedPathMap* typedPathMap) SK_OVERRIDE;
+	void visit(DataTypedPathMap* typedPathMap) SK_OVERRIDE;
+	void visit(BooleanPathMap* typedPathMap) SK_OVERRIDE {visit((DataTypedPathMap*)typedPathMap);}
+	void visit(IntegerPathMap* typedPathMap) SK_OVERRIDE {visit((DataTypedPathMap*)typedPathMap);}
+	void visit(Vector3PathMap* typedPathMap) SK_OVERRIDE {visit((DataTypedPathMap*)typedPathMap);}
+	void visit(ArrayPathMap* typedPathMap) SK_OVERRIDE {visit((DataTypedPathMap*)typedPathMap);}
+	void visit(FloatArrayPathMap* typedPathMap) SK_OVERRIDE {visit((DataTypedPathMap*)typedPathMap);}
+	void visit(Vector3ArrayPathMap* typedPathMap) SK_OVERRIDE {visit((DataTypedPathMap*)typedPathMap);}
 	//@}
 
 	QStandardItem* m_parentItem;

@@ -59,11 +59,11 @@ protected:
 	//@{
 	DataBase* m_dataBase;
 
-	std::vector<PathMap*> m_pathMapLinearized;
-	void linearizePathMap(PathMap* pathMap);
+	std::vector<TypedPathMap*> m_pathMapLinearized;
+	void linearizePathMap(TypedPathMap* typedPathMap);
 
 	std::vector<std::string> m_fullOscPaths;
-	std::string findFullOscPath(PathMap* pathMap);
+	std::string findFullOscPath(TypedPathMap* typedPathMap);
 
 	char m_oscBuffer[OUTPUT_BUFFER_SIZE];
 	void oscSend();

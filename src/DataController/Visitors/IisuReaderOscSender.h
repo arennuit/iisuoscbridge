@@ -1,5 +1,5 @@
 #include <Platform/SkPlatform.h>
-#include "DataBase/PathMapVisitor.h"
+#include "DataBase/DataObjects/TypedPathMapVisitor.h"
 #include <string>
 
 namespace osc
@@ -15,7 +15,7 @@ class IIisuDataExtractor;
 
 //////////////////////////////////////////////////////////////////////////
 /// \brief This class reads the data from the iisu pulse and streams it via OSC.
-class IisuReaderOscSender : public PathMapVisitor
+class IisuReaderOscSender : public TypedPathMapVisitor
 {
 public:
 	IisuReaderOscSender(DataBase* dataBase, osc::OutboundPacketStream* outPacketStream);
@@ -26,14 +26,14 @@ public:
 protected:
 	/// \name Visitor's methods.
 	//@{
-	void visit(PathMap* pathMap) SK_OVERRIDE {} // It makes no sense to read or stream a concrete PathMap.
-	void visit(DataPathMap* pathMap) SK_OVERRIDE {} // It makes no sense to read or stream a generic data.
-	void visit(BooleanPathMap* pathMap) SK_OVERRIDE;
-	void visit(IntegerPathMap* pathMap) SK_OVERRIDE;
-	void visit(Vector3PathMap* pathMap) SK_OVERRIDE;
-	void visit(ArrayPathMap* pathMap) SK_OVERRIDE {} // It makes no sense to read or stream a generic array.
-	void visit(FloatArrayPathMap* pathMap) SK_OVERRIDE;
-	void visit(Vector3ArrayPathMap* pathMap) SK_OVERRIDE;
+	void visit(TypedPathMap* typedPathMap) SK_OVERRIDE {} // It makes no sense to read or stream an abstract TypedPathMap.
+	void visit(DataTypedPathMap* typedPathMap) SK_OVERRIDE {} // It makes no sense to read or stream a generic data.
+	void visit(BooleanPathMap* typedPathMap) SK_OVERRIDE;
+	void visit(IntegerPathMap* typedPathMap) SK_OVERRIDE;
+	void visit(Vector3PathMap* typedPathMap) SK_OVERRIDE;
+	void visit(ArrayPathMap* typedPathMap) SK_OVERRIDE {} // It makes no sense to read or stream a generic array.
+	void visit(FloatArrayPathMap* typedPathMap) SK_OVERRIDE;
+	void visit(Vector3ArrayPathMap* typedPathMap) SK_OVERRIDE;
 	//@}
 
 	DataBase* m_dataBase;
