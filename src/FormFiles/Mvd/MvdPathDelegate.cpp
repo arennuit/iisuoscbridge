@@ -12,30 +12,39 @@ MvdPathDelegate::MvdPathDelegate(QObject *parent) :
 //////////////////////////////////////////////////////////////////////////
 QWidget* MvdPathDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem& /*option*/, const QModelIndex& /*index*/) const
 {
-	QSpinBox *editor = new QSpinBox(parent);
-	editor->setMinimum(0);
-	editor->setMaximum(100);
+	QComboBox *comboBox = new QComboBox(parent);
 
-	return editor;
+	comboBox->setInsertPolicy(QComboBox::NoInsert);
+	comboBox->setEditable(true);
+	comboBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+
+	// TODO: populate the combox box correctly.
+	comboBox->addItem("");
+	comboBox->addItem("USER1.SKELETON.Status");
+	comboBox->addItem("USER1.SKELETON.KeyPoints");
+	comboBox->addItem("USER1.SKELETON.KeyPointsConfidence");
+
+	return comboBox;
 }
 
 //////////////////////////////////////////////////////////////////////////
 void MvdPathDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
-	int value = index.model()->data(index, Qt::EditRole).toInt();
+	QString val = index.model()->data(index, Qt::EditRole).toString();
 
-	QSpinBox *spinBox = static_cast<QSpinBox*>(editor);
-	spinBox->setValue(value);
+	QComboBox *comboBox = static_cast<QComboBox*>(editor);
+	int currentIdx = comboBox->findText(val, Qt::MatchExactly);
+	if (currentIdx != -1)
+		comboBox->setCurrentIndex(currentIdx);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void MvdPathDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
 {
-	QSpinBox *spinBox = static_cast<QSpinBox*>(editor);
-	spinBox->interpretText();
-	int value = spinBox->value();
+	QComboBox *comboBox = static_cast<QComboBox*>(editor);
+	QString val = comboBox->currentText();
 
-	model->setData(index, value, Qt::EditRole);
+	model->setData(index, val, Qt::EditRole);
 }
 
 //////////////////////////////////////////////////////////////////////////
