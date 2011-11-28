@@ -26,6 +26,12 @@ public:
 
 	// Visitor.
 	virtual void accept(TypedPathMapVisitor* visitor) {visitor->visit(this);}
+
+protected:
+
+	// Helpers.
+	bool unParent(TypedPathMap* child);
+
 };
 
 //////////////////////////////////////////////////////////////////////////

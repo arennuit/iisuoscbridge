@@ -64,11 +64,23 @@ void DataController::onFoldAndNameJointsCheckBoxClicked( bool isFoldAndNameJoint
 }
 
 //////////////////////////////////////////////////////////////////////////
+void DataController::onDeleteMapButtonClicked(TypedPathMap* typedPathMap)
+{
+	if (!typedPathMap)
+		return;
+
+	if (!typedPathMap->m_parent)
+		m_dataBase->setPathMapsTreeRoot(0);
+
+	delete typedPathMap;
+}
+
+//////////////////////////////////////////////////////////////////////////
 void DataController::onClearMapsButtonClicked()
 {
-	delete m_dataBase->getPathsTreeRoot();
-
 	m_dataBase->setPathMapsTreeRoot(0);
+
+	delete m_dataBase->getPathsTreeRoot();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -252,6 +264,9 @@ void DataController::termIisu()
 //////////////////////////////////////////////////////////////////////////
 void DataController::linearizePathMap(TypedPathMap* typedPathMap)
 {
+	if (!typedPathMap)
+		return;
+
 	m_pathMapLinearized.push_back(typedPathMap);
 
 	for (uint i = 0; i < typedPathMap->m_children.size(); ++i)

@@ -23,6 +23,26 @@ TypedPathMap::~TypedPathMap()
 
 		delete m_children[i];
 	}
+
+	if (m_parent)
+		m_parent->unParent(this);
+}
+
+//////////////////////////////////////////////////////////////////////////
+bool TypedPathMap::unParent(TypedPathMap* child)
+{
+	// Look for 'child' in the array of children.
+	for (std::vector<TypedPathMap*>::iterator childIt = m_children.begin(); childIt != m_children.end(); ++childIt)
+	{
+		if (*childIt == child)
+		{
+			m_children.erase(childIt);
+
+			return true;
+		}
+	}
+
+	return false;
 }
 
 } // namespace SK.

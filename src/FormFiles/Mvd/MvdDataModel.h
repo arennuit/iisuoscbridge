@@ -7,6 +7,9 @@
 
 class QStandardItem;
 
+Q_DECLARE_METATYPE(SK::TypedPathMap*);
+Q_DECLARE_METATYPE(SK::DataTypedPathMap*);
+
 namespace SK
 {
 
@@ -17,13 +20,6 @@ class MvdDataModel : public QStandardItemModel, public TypedPathMapVisitor
 	Q_OBJECT
 
 public:
-	MvdDataModel(QObject *parent = 0);
-
-	void update();
-
-	bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
-
-protected:
 
 	enum CustomRolesEnum
 	{
@@ -33,6 +29,14 @@ protected:
 
 		CustomRolesNum
 	};
+
+	MvdDataModel(QObject *parent = 0);
+
+	void update();
+
+	bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
+
+protected:
 
 	/// \name Visitor's methods.
 	//@{

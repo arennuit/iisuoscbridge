@@ -1,6 +1,7 @@
 #include "MainForm.h"
 
 #include "DataBase/DataBase.h"
+#include "FormFiles/Mvd/MvdDataModel.h"
 
 namespace SK
 {
@@ -116,5 +117,42 @@ void MainForm::onIidFilePathButtonClicked()
 		m_dataBase->setIidFilePath(fileNames[0].toStdString());
 	}
 }
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onDeleteMapButtonClicked()
+{
+	QModelIndex currentIndex = ui.m_pathMapsView->currentIndex();
+
+	TypedPathMap* typedPathMap = 0;
+
+	// TODO: specifying a behavior per type is really restrictive, we would like to be able to specify
+	//       a behavior for a class, its inherited classes and only redefine the behavior on some
+	//       specific child classes.
+	int customRole = currentIndex.data(MvdDataModel::RoleIndexRole).toInt();
+	switch (customRole)
+	{
+	case MvdDataModel::PathMapRole:
+		{
+			// Get the TypedPathMap.
+			typedPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<TypedPathMap*>();
+
+			break;
+		}
+	case MvdDataModel::DataPathMapRole:
+		{
+			// Get the TypedPathMap.
+			typedPathMap = (TypedPathMap*)currentIndex.data(MvdDataModel::DataPathMapRole).value<DataTypedPathMap*>();
+
+			break;
+		}
+	}
+
+	m_dataController->onDeleteMapButtonClicked(typedPathMap);
+
+	m_mvdModel.update(); // TODO: ne pas faire un update complet. Il doit y avoir moyen...
+	ui.m_pathMapsView->expandAll();
+
+	//emit dataChanged(index, index);
+};
 
 } // namespace SK.

@@ -8,9 +8,6 @@
 #include "DataBase/DataObjects/TypedPathMap.h"
 #include "DataBase/DataBase.h"
 
-Q_DECLARE_METATYPE(SK::TypedPathMap*);
-Q_DECLARE_METATYPE(SK::DataTypedPathMap*);
-
 namespace SK
 {
 
@@ -71,6 +68,7 @@ bool MvdDataModel::setData(const QModelIndex& index, const QVariant& value, int 
 void MvdDataModel::update()
 {
 	clear();
+	m_parentItem = 0;
 
 	// Describe all data objects and their properties.
 	setHorizontalHeaderLabels(QStringList() << "OSC hierarchy" << "iisu path");

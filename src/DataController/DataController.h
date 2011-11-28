@@ -33,7 +33,7 @@ public:
 
 	void onAddMapButtonClicked() {}
 	void onInsertMapButtonClicked() {}
-	void onDeleteMapButtonClicked() {}
+	void onDeleteMapButtonClicked(TypedPathMap* typedPathMap);
 	void onClearMapsButtonClicked();
 
 	void onMvdPathDelegateEditorCreation(std::vector<std::string>& iisuDataPaths);

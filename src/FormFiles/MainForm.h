@@ -71,7 +71,7 @@ protected slots:
 	
 	void onAddMapButtonClicked() {m_dataController->onAddMapButtonClicked();};
 	void onInsertMapButtonClicked() {m_dataController->onInsertMapButtonClicked();};
-	void onDeleteMapButtonClicked() {m_dataController->onDeleteMapButtonClicked();};
+	void onDeleteMapButtonClicked();
 	void onClearMapsButtonClicked() {m_dataController->onClearMapsButtonClicked();};
 	//@}
 
