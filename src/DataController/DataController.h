@@ -51,7 +51,8 @@ protected:
 	//@{
 	bool initIisu();
 	void resumeStream();
-	void newIisuDataFrameListener(const SK::DataFrameEvent& event);
+	void iisuErrorListener( const SK::ErrorEvent& event );
+	void newIisuDataFrameListener( const SK::DataFrameEvent& event );
 	void pauseStream();
 	void termIisu();
 
@@ -70,6 +71,7 @@ protected:
 
 	std::vector<TypedPathMap*> m_typedPathMapsLinearized;
 
+	// TODO: check buffer is large enough when putting the message together.
 	char m_oscBuffer[OUTPUT_BUFFER_SIZE];
 	void oscSend();
 	//@}

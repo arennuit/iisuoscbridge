@@ -155,9 +155,10 @@ bool DataController::initIisu()
 	SK_LOGGER(LOG_INFO) << "The iisu device was obtained.";
 
 	// Iisu events registration.
+	m_device->getEventManager().registerEventListener("SYSTEM.Error", *this, &DataController::iisuErrorListener);
 	m_device->getEventManager().registerEventListener("DEVICE.DataFrame", *this, &DataController::newIisuDataFrameListener);
 
-	SK_LOGGER(LOG_INFO) << "The events listener was registered.";
+	SK_LOGGER(LOG_INFO) << "The event listeners were registered.";
 
 	return true;
 }
@@ -230,6 +231,12 @@ void DataController::resumeStream()
 
 	SK_LOGGER(LOG_INFO) << "The iisu engine is started";
 	SK_LOGGER(LOG_INFO) << "OscBridge is now streaming OSC...";
+}
+
+//////////////////////////////////////////////////////////////////////////
+void DataController::iisuErrorListener( const SK::ErrorEvent& event )
+{
+	SK_LOGGER(LOG_ERROR) << event.getError().getDescription();
 }
 
 //////////////////////////////////////////////////////////////////////////
