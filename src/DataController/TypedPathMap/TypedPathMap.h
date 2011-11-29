@@ -10,36 +10,26 @@ namespace SK
 
 //////////////////////////////////////////////////////////////////////////
 /// \brief The concrete TypedPathMap class is used to format OSC paths. But the class is also inherited
-///       by items actually pointing to proper iisu data.
+///        by items actually pointing to proper iisu data.
 class TypedPathMap
 {
 public:
-	TypedPathMap(const std::string& oscPathBit, TypedPathMap* parent = 0);
-	virtual ~TypedPathMap();
+	TypedPathMap(const std::string& fullOscPath);
+	virtual ~TypedPathMap() {}
 
 	// Map.
-	std::string m_oscPathBit;
-
-	// Handle hierarchy tree of PathMaps.
-	TypedPathMap* m_parent;
-	std::vector<TypedPathMap*> m_children;
+	std::string m_fullOscPath;
 
 	// Visitor.
 	virtual void accept(TypedPathMapVisitor* visitor) {visitor->visit(this);}
-
-protected:
-
-	// Helpers.
-	bool unParent(TypedPathMap* child);
-
 };
 
 //////////////////////////////////////////////////////////////////////////
 class DataTypedPathMap : public TypedPathMap
 {
 public:
-	DataTypedPathMap(const std::string& oscPathBit, const std::string& iisuPath, TypedPathMap* parent = 0) :
-		TypedPathMap(oscPathBit, parent),
+	DataTypedPathMap(const std::string& fullOscPath, const std::string& iisuPath) :
+		TypedPathMap(fullOscPath),
 		m_iisuPath(iisuPath) {}
 
 	// Map.
@@ -53,8 +43,8 @@ public:
 class BooleanPathMap : public DataTypedPathMap
 {
 public:
-	BooleanPathMap(const std::string& oscPathBit, const std::string& iisuPath, TypedPathMap* parent = 0) :
-		DataTypedPathMap(oscPathBit, iisuPath, parent) {}
+	BooleanPathMap(const std::string& fullOscPath, const std::string& iisuPath) :
+		DataTypedPathMap(fullOscPath, iisuPath) {}
 
 	// Visitor.
 	void accept(TypedPathMapVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}
@@ -64,8 +54,8 @@ public:
 class IntegerPathMap : public DataTypedPathMap
 {
 public:
-	IntegerPathMap(const std::string& oscPathBit, const std::string& iisuPath, TypedPathMap* parent = 0) :
-		DataTypedPathMap(oscPathBit, iisuPath, parent) {}
+	IntegerPathMap(const std::string& fullOscPath, const std::string& iisuPath) :
+		DataTypedPathMap(fullOscPath, iisuPath) {}
 
 	// Visitor.
 	void accept(TypedPathMapVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}
@@ -75,8 +65,8 @@ public:
 class Vector3PathMap : public DataTypedPathMap
 {
 public:
-	Vector3PathMap(const std::string& oscPathBit, const std::string& iisuPath, TypedPathMap* parent = 0) :
-		DataTypedPathMap(oscPathBit, iisuPath, parent) {}
+	Vector3PathMap(const std::string& fullOscPath, const std::string& iisuPath) :
+		DataTypedPathMap(fullOscPath, iisuPath) {}
 
 	// Visitor.
 	void accept(TypedPathMapVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}
@@ -86,8 +76,8 @@ public:
 class ArrayPathMap : public DataTypedPathMap
 {
 public:
-	ArrayPathMap(const std::string& oscPathBit, const std::string& iisuPath, TypedPathMap* parent = 0) :
-		DataTypedPathMap(oscPathBit, iisuPath, parent) {}
+	ArrayPathMap(const std::string& fullOscPath, const std::string& iisuPath) :
+		DataTypedPathMap(fullOscPath, iisuPath) {}
 
 	// Visitor.
 	void accept(TypedPathMapVisitor* visitor) = 0;
@@ -97,8 +87,8 @@ public:
 class FloatArrayPathMap : public ArrayPathMap
 {
 public:
-	FloatArrayPathMap(const std::string& oscPathBit, const std::string& iisuPath, TypedPathMap* parent = 0) :
-		ArrayPathMap(oscPathBit, iisuPath, parent) {}
+	FloatArrayPathMap(const std::string& fullOscPath, const std::string& iisuPath) :
+		ArrayPathMap(fullOscPath, iisuPath) {}
 
 	// Visitor.
 	void accept(TypedPathMapVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}
@@ -108,8 +98,8 @@ public:
 class Vector3ArrayPathMap : public ArrayPathMap
 {
 public:
-	Vector3ArrayPathMap(const std::string& oscPathBit, const std::string& iisuPath, TypedPathMap* parent = 0) :
-		ArrayPathMap(oscPathBit, iisuPath, parent) {}
+	Vector3ArrayPathMap(const std::string& fullOscPath, const std::string& iisuPath) :
+		ArrayPathMap(fullOscPath, iisuPath) {}
 
 	// Visitor.
 	void accept(TypedPathMapVisitor* visitor) SK_OVERRIDE {visitor->visit(this);}

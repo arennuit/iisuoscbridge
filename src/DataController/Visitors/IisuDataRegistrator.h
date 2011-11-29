@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Platform/SkPlatform.h>
-#include "DataBase/DataObjects/TypedPathMapVisitor.h"
+#include "DataController/TypedPathMap/TypedPathMapVisitor.h"
 #include <vector>
 
 namespace SK
@@ -16,7 +16,7 @@ class TypedPathMap;
 class IisuDataRegistrator : public TypedPathMapVisitor
 {
 public:
-	IisuDataRegistrator(SK::Device* device, std::vector<SK::IIisuDataExtractor*>& dataHandles, std::vector<TypedPathMap*>& pathAssociators);
+	IisuDataRegistrator(SK::Device* device, std::vector<SK::IIisuDataExtractor*>& dataHandles);
 	~IisuDataRegistrator() {}
 
 protected:
@@ -34,7 +34,6 @@ protected:
 
 	SK::Device* m_device;
 	std::vector<IIisuDataExtractor*>& m_dataHandles;
-	std::vector<TypedPathMap*>& m_pathAssociators;
 };
 
 } // namespace SK.

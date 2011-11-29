@@ -24,6 +24,11 @@ public:
 	// Handle hierarchy tree of PathMaps.
 	PathMap* m_parent;
 	std::vector<PathMap*> m_children;
+
+protected:
+
+	// Helpers.
+	bool unParent(PathMap* child);
 };
 
 } // namespace SK.

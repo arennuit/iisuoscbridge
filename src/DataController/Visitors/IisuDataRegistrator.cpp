@@ -1,17 +1,16 @@
 #include "IisuDataRegistrator.h"
 #include "SDK/iisuSDK.h"
-#include "DataBase/DataObjects/TypedPathMap.h"
+#include "DataController/TypedPathMap/TypedPathMap.h"
 #include "LogSystem/Logger.h"
 
 namespace SK
 {
 
 //////////////////////////////////////////////////////////////////////////
-IisuDataRegistrator::IisuDataRegistrator(SK::Device* device, std::vector<SK::IIisuDataExtractor*>& dataHandles, std::vector<TypedPathMap*>& pathAssociators) :
+IisuDataRegistrator::IisuDataRegistrator(SK::Device* device, std::vector<SK::IIisuDataExtractor*>& dataHandles) :
 	TypedPathMapVisitor(),
 	m_device(device),
-	m_dataHandles(dataHandles),
-	m_pathAssociators(pathAssociators)
+	m_dataHandles(dataHandles)
 {
 	assert(device);
 }

@@ -24,6 +24,26 @@ PathMap::~PathMap()
 
 		delete m_children[i];
 	}
-}	
+
+	if (m_parent)
+		m_parent->unParent(this);
+}
+
+//////////////////////////////////////////////////////////////////////////
+bool PathMap::unParent(PathMap* child)
+{
+	// Look for 'child' in the array of children.
+	for (std::vector<PathMap*>::iterator childIt = m_children.begin(); childIt != m_children.end(); ++childIt)
+	{
+		if (*childIt == child)
+		{
+			m_children.erase(childIt);
+
+			return true;
+		}
+	}
+
+	return false;
+}
 
 } // namespace SK.

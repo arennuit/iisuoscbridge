@@ -1,7 +1,7 @@
 #include "IisuReaderOscSender.h"
 #include "SDK/iisuSDK.h"
 #include "osc/OscOutboundPacketStream.h"
-#include "DataBase/DataObjects/TypedPathMap.h"
+#include "DataController/TypedPathMap/TypedPathMap.h"
 #include "DataBase/DataBase.h"
 
 namespace SK
