@@ -9,6 +9,8 @@
 namespace SK
 {
 
+class TypedPathMap;
+
 //////////////////////////////////////////////////////////////////////////
 /// \brief This class is the controller in the MVD / MVC pattern.
 class DataController
@@ -33,7 +35,7 @@ public:
 
 	void onAddMapButtonClicked() {}
 	void onInsertMapButtonClicked() {}
-	void onDeleteMapButtonClicked(TypedPathMap* typedPathMap);
+	void onDeleteMapButtonClicked(PathMap* PathMap);
 	void onClearMapsButtonClicked();
 
 	void onMvdPathDelegateEditorCreation(std::vector<std::string>& iisuDataPaths);
@@ -61,11 +63,12 @@ protected:
 	//@{
 	DataBase* m_dataBase;
 
-	std::vector<TypedPathMap*> m_pathMapLinearized;
-	void linearizePathMap(TypedPathMap* typedPathMap);
+	std::vector<PathMap*> m_pathMapsLinearized;
+	void linearizePathMap(PathMap* PathMap);
 
-	std::vector<std::string> m_fullOscPaths;
-	std::string findFullOscPath(TypedPathMap* typedPathMap);
+	std::string findFullOscPath(PathMap* PathMap);
+
+	std::vector<TypedPathMap*> m_typedPathMapsLinearized;
 
 	char m_oscBuffer[OUTPUT_BUFFER_SIZE];
 	void oscSend();

@@ -51,7 +51,7 @@ public:
 
 	/// \name App -> UI logic.
 	//@{
-	void onIsPathMapsTreeRootChanged() {m_mvdModel.update();}
+	void onPathMapsRootChanged() {m_mvdModel.cleanAndReBuildAll();}
 	void onIsObservationOnChanged(bool isObservationOn);
 	void onOscPacketSizeChanged(uint oscPacketSize) {ui.m_oscPacketSizeLineEdit->setText(QString::number(oscPacketSize));}
 	//@}

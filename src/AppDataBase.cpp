@@ -8,11 +8,11 @@ namespace SK
 DEFINE_DATA_BASE(AppDataBase, DataBase)
 
 //////////////////////////////////////////////////////////////////////////
-void AppDataBase::setPathMapsTreeRoot(TypedPathMap* pathMapsTreeRoot)
+void AppDataBase::setPathMapsRoot(PathMap* pathMapsRoot)
 {
-	DataBase::setPathMapsTreeRoot(pathMapsTreeRoot);
+	DataBase::setPathMapsRoot(pathMapsRoot);
 
-	m_mainForm->onIsPathMapsTreeRootChanged();
+	m_mainForm->onPathMapsRootChanged();
 }
 
 //////////////////////////////////////////////////////////////////////////

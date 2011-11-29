@@ -1,5 +1,7 @@
 #include "DataController.h"
-#include "DataBase/DataObjects/TypedPathMap.h"
+#include "DataBase/PathMap.h"
+#include "TypedPathMap/TypedPathMap.h"
+#include "TypedPathMap/TypedPathMapFactory.h"
 #include "Visitors/IisuDataRegistrator.h"
 #include "Visitors/IisuReaderOscSender.h"
 #include "LogSystem/Logger.h"
@@ -64,23 +66,23 @@ void DataController::onFoldAndNameJointsCheckBoxClicked( bool isFoldAndNameJoint
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::onDeleteMapButtonClicked(TypedPathMap* typedPathMap)
+void DataController::onDeleteMapButtonClicked(PathMap* PathMap)
 {
-	if (!typedPathMap)
+	if (!PathMap)
 		return;
 
-	if (!typedPathMap->m_parent)
-		m_dataBase->setPathMapsTreeRoot(0);
+	if (!PathMap->m_parent)
+		m_dataBase->setPathMapsRoot(0);
 
-	delete typedPathMap;
+	delete PathMap;
 }
 
 //////////////////////////////////////////////////////////////////////////
 void DataController::onClearMapsButtonClicked()
 {
-	m_dataBase->setPathMapsTreeRoot(0);
+	m_dataBase->setPathMapsRoot(0);
 
-	delete m_dataBase->getPathsTreeRoot();
+	delete m_dataBase->getPathMapsRoot();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -184,21 +186,43 @@ void DataController::resumeStream()
 			SK_LOGGER(LOG_INFO) << "IID file loaded correctly.";
 	}
 
-	// Linearize path items.
-	linearizePathMap(m_dataBase->getPathsTreeRoot());
+	// Linearize PathMaps.
+	linearizePathMap(m_dataBase->getPathMapsRoot());
 	SK_LOGGER(LOG_INFO) << "Path maps linearization OK";
 
-	// Find the full path of each DataPathMap.
-	m_fullOscPaths.resize(m_pathMapLinearized.size());
-	for (uint i = 0; i < m_pathMapLinearized.size(); ++i)
-		m_fullOscPaths[i] = findFullOscPath(m_pathMapLinearized[i]);
+	// Create the TypedPathMaps (depending of their type returned by iisu).
+	for (uint i = 0; i < m_pathMapsLinearized.size(); ++i)
+	{
+		PathMap* pathMap = m_pathMapsLinearized[i];
+		assert(pathMap);
 
-	SK_LOGGER(LOG_INFO) << "Full OSC paths found";
+		if (pathMap->m_iisuPath == "")
+			continue;
+
+		std::string fullOscPaths = findFullOscPath(m_pathMapsLinearized[i]);
+
+		// Check the path exists and get its type.
+		SK::Return<SK::TypeInfo> retType = m_device->getDataType(pathMap->m_iisuPath.c_str()) ;
+		if (retType.failed())
+		{
+			SK_LOGGER(LOG_ERROR) << "Path \'" << pathMap->m_iisuPath << "\' does not exist.";
+
+			continue;
+		}
+
+		SK::TypeInfo typeInfo = retType.get() ;
+		TypedPathMap* typedPathMap = SK::TypeInfo::injectIisuType<BaseTypedPathMapFactory, TypedPathMapFactory>(typeInfo)->create(fullOscPaths, pathMap->m_iisuPath);
+	
+		assert(typedPathMap);
+		m_typedPathMapsLinearized.push_back(typedPathMap);
+	}
+
+	SK_LOGGER(LOG_INFO) << "TypedPathMaps instantiated.";
 
 	// Register data handles.
-	IisuDataRegistrator iisuPathRegistrator(m_device, m_iisuDataHandles, m_pathMapLinearized);
-	for (uint i = 0; i < m_pathMapLinearized.size(); ++i)
-		m_pathMapLinearized[i]->accept(&iisuPathRegistrator);
+	IisuDataRegistrator iisuPathRegistrator(m_device, m_iisuDataHandles);
+	for (uint i = 0; i < m_typedPathMapsLinearized.size(); ++i)
+		m_typedPathMapsLinearized[i]->accept(&iisuPathRegistrator);
 
 	// Start device.
 	m_device->start();
@@ -242,11 +266,18 @@ void DataController::pauseStream()
 
 	m_iisuDataHandles.clear();
 
-	// Clear the full OSC paths.
-	m_fullOscPaths.clear();
+	// Delete the TypedPathMaps.
+	for (uint i = 0; i < m_typedPathMapsLinearized.size(); ++i)
+	{
+		TypedPathMap* typedPathMap = m_typedPathMapsLinearized[i];
+		if (typedPathMap)
+			delete typedPathMap;
+	}
+
+	m_typedPathMapsLinearized.clear();
 
 	// clear the array of linearized path maps.
-	m_pathMapLinearized.clear();
+	m_pathMapsLinearized.clear();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -262,26 +293,25 @@ void DataController::termIisu()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::linearizePathMap(TypedPathMap* typedPathMap)
+void DataController::linearizePathMap(PathMap* pathMap)
 {
-	if (!typedPathMap)
+	if (!pathMap)
 		return;
 
-	m_pathMapLinearized.push_back(typedPathMap);
-
-	for (uint i = 0; i < typedPathMap->m_children.size(); ++i)
-		linearizePathMap(typedPathMap->m_children[i]);
+	m_pathMapsLinearized.push_back(pathMap);
+	for (uint i = 0; i < pathMap->m_children.size(); ++i)
+		linearizePathMap(pathMap->m_children[i]);
 }
 
 //////////////////////////////////////////////////////////////////////////
-std::string DataController::findFullOscPath( TypedPathMap* typedPathMap )
+std::string DataController::findFullOscPath( PathMap* pathMap )
 {
-	if (!typedPathMap)
+	if (!pathMap)
 		return "";
 
 	// Parse PathMaps up-tree.
 	std::string fullPath;
-	TypedPathMap* currentPath = typedPathMap;
+	PathMap* currentPath = pathMap;
 	while (currentPath != 0)
 	{
 		fullPath = std::string("/") + currentPath->m_oscPathBit + fullPath;
@@ -305,10 +335,13 @@ void DataController::oscSend()
 	outPacketStream	<< osc::BeginBundleImmediate;;
 
 	IisuReaderOscSender iisuReaderOscSender(m_dataBase, &outPacketStream);
-	for (uint i = 0; i < m_pathMapLinearized.size(); ++i)
+	for (uint i = 0; i < m_typedPathMapsLinearized.size(); ++i)
 	{
-		iisuReaderOscSender.setPathMapData(m_fullOscPaths[i], m_iisuDataHandles[i]);
-		m_pathMapLinearized[i]->accept(&iisuReaderOscSender);
+		TypedPathMap* typedPathMap = m_typedPathMapsLinearized[i];
+		assert(typedPathMap);
+
+		iisuReaderOscSender.setPathMapData(typedPathMap->m_fullOscPath, m_iisuDataHandles[i]);
+		typedPathMap->accept(&iisuReaderOscSender);
 	}
 
 	outPacketStream	<< osc::EndBundle;

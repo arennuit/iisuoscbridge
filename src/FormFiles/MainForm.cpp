@@ -41,7 +41,7 @@ void MainForm::setup()
 	// Setup model.
 	ui.m_pathMapsView->setModel(&m_mvdModel);
 
-	m_mvdModel.update();
+	m_mvdModel.cleanAndReBuildAll();
 
 	// Setup dialogs.
 	m_iidFileSelectDlg.setFileMode(QFileDialog::ExistingFile);
@@ -121,36 +121,26 @@ void MainForm::onIidFilePathButtonClicked()
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onDeleteMapButtonClicked()
 {
+	// Check the value of current item's role 'RoleIndexRole' is 'PathMapRole'.
 	QModelIndex currentIndex = ui.m_pathMapsView->currentIndex();
 
-	TypedPathMap* typedPathMap = 0;
-
-	// TODO: specifying a behavior per type is really restrictive, we would like to be able to specify
-	//       a behavior for a class, its inherited classes and only redefine the behavior on some
-	//       specific child classes.
 	int customRole = currentIndex.data(MvdDataModel::RoleIndexRole).toInt();
-	switch (customRole)
-	{
-	case MvdDataModel::PathMapRole:
-		{
-			// Get the TypedPathMap.
-			typedPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<TypedPathMap*>();
+	if (customRole != MvdDataModel::PathMapRole)
+		return;
+	
+	// Delete the PathMap.
+	PathMap* pathMap = pathMap = currentIndex.data(MvdDataModel::PathMapRole).value<PathMap*>();
 
-			break;
-		}
-	case MvdDataModel::DataPathMapRole:
-		{
-			// Get the TypedPathMap.
-			typedPathMap = (TypedPathMap*)currentIndex.data(MvdDataModel::DataPathMapRole).value<DataTypedPathMap*>();
+	m_dataController->onDeleteMapButtonClicked(pathMap);
 
-			break;
-		}
-	}
+	// Update the model.
+	QModelIndex parentIndex = currentIndex.parent();
+	if (parentIndex.isValid())
+		m_mvdModel.removeRow(currentIndex.row(), parentIndex);
+	else
+		m_mvdModel.removeRow(currentIndex.row(), QModelIndex());
 
-	m_dataController->onDeleteMapButtonClicked(typedPathMap);
-
-	m_mvdModel.update(); // TODO: ne pas faire un update complet. Il doit y avoir moyen...
-	ui.m_pathMapsView->expandAll();
+	ui.m_pathMapsView->setCurrentIndex(parentIndex);
 
 	//emit dataChanged(index, index);
 };

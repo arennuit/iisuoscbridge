@@ -437,26 +437,14 @@
 				RelativePath=".\DataBase\DataBase.h"
 				>
 			</File>
-			<Filter
-				Name="DataObjects"
+			<File
+				RelativePath=".\DataBase\PathMap.cpp"
 				>
-				<File
-					RelativePath=".\DataBase\DataObjects\TypedPathMap.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\DataBase\DataObjects\TypedPathMap.h"
-					>
-				</File>
-				<File
-					RelativePath=".\DataBase\DataObjects\TypedPathMapVisitor.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\DataBase\DataObjects\TypedPathMapVisitor.h"
-					>
-				</File>
-			</Filter>
+			</File>
+			<File
+				RelativePath=".\DataBase\PathMap.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="DataController"
@@ -486,6 +474,30 @@
 				</File>
 				<File
 					RelativePath=".\DataController\Visitors\IisuReaderOscSender.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="TypedPathMap"
+				>
+				<File
+					RelativePath=".\DataController\TypedPathMap\TypedPathMap.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DataController\TypedPathMap\TypedPathMap.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DataController\TypedPathMap\TypedPathMapFactory.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DataController\TypedPathMap\TypedPathMapVisitor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DataController\TypedPathMap\TypedPathMapVisitor.h"
 					>
 				</File>
 			</Filter>
