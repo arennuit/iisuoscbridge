@@ -33,9 +33,10 @@ public:
 
 	void onFoldAndNameJointsCheckBoxClicked(bool isFoldAndNameJoints);
 
-	void onAddMapButtonClicked() {}
-	void onInsertMapButtonClicked() {}
-	void onDeleteMapButtonClicked(PathMap* PathMap);
+	PathMap* onAddMapButtonClicked(PathMap* siblingPathMap);
+	PathMap* onInsertMapButtonClicked(PathMap* siblingPathMap);
+	PathMap* onAddChildMapButtonClicked(PathMap* parentPathMap);
+	void onDeleteMapButtonClicked(PathMap* pathMap);
 	void onClearMapsButtonClicked();
 
 	void onMvdPathDelegateEditorCreation(std::vector<std::string>& iisuDataPaths);

@@ -2,6 +2,7 @@
 
 #include "DataBase/DataBase.h"
 #include "FormFiles/Mvd/MvdDataModel.h"
+#include "DataBase/PathMap.h"
 
 namespace SK
 {
@@ -89,6 +90,7 @@ void MainForm::setup()
 
 	connect(ui.m_addMapButton, SIGNAL(clicked()), this, SLOT(onAddMapButtonClicked()));
 	connect(ui.m_insertMapButton, SIGNAL(clicked()), this, SLOT(onInsertMapButtonClicked()));
+	connect(ui.m_addChildMapButton, SIGNAL(clicked()), this, SLOT(onAddChildMapButtonClicked()));
 	connect(ui.m_deleteMapButton, SIGNAL(clicked()), this, SLOT(onDeleteMapButtonClicked()));
 	connect(ui.m_clearMapsButton, SIGNAL(clicked()), this, SLOT(onClearMapsButtonClicked()));
 }
@@ -119,28 +121,98 @@ void MainForm::onIidFilePathButtonClicked()
 }
 
 //////////////////////////////////////////////////////////////////////////
+void MainForm::onAddMapButtonClicked()
+{
+
+};
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onInsertMapButtonClicked()
+{
+
+};
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onAddChildMapButtonClicked()
+{
+	// Get the current PathMap.
+	QModelIndex currentIndex = ui.m_pathMapsView->currentIndex();
+	if (!currentIndex.isValid())
+		return;
+
+	QStandardItem* currentItem = m_mvdModel.itemFromIndex(currentIndex);
+	if (!currentItem)
+		return;
+
+	int customRole = currentIndex.data(MvdDataModel::RoleIndexRole).toInt();
+	if (customRole != MvdDataModel::PathMapRole)
+		return;
+
+	PathMap* currentPathMap = currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<PathMap*>();
+	if (!currentPathMap)
+		return;
+
+	// Call the controller's method. 
+	PathMap* newPathMap = m_dataController->onAddChildMapButtonClicked(currentPathMap);
+
+	// Update the model.
+	QStandardItem* oscItem = new QStandardItem(newPathMap->m_oscPathBit.c_str());
+	assert(oscItem);
+	oscItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
+	oscItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
+
+	QStandardItem* iisuItem = new QStandardItem(newPathMap->m_iisuPath.c_str());
+	assert(iisuItem);
+	iisuItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
+	iisuItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
+
+	int rowIdx = currentItem->rowCount();
+	currentItem->setChild(rowIdx, 0, oscItem);
+	currentItem->setChild(rowIdx, 1, iisuItem);
+
+	// Update the views.
+	ui.m_pathMapsView->setCurrentIndex(oscItem);	
+
+	//emit dataChanged(index, index);
+};
+
+//////////////////////////////////////////////////////////////////////////
 void MainForm::onDeleteMapButtonClicked()
 {
-	// Check the value of current item's role 'RoleIndexRole' is 'PathMapRole'.
+	// Get the current PathMap.
 	QModelIndex currentIndex = ui.m_pathMapsView->currentIndex();
+	if (!currentIndex.isValid())
+		return;
 
 	int customRole = currentIndex.data(MvdDataModel::RoleIndexRole).toInt();
 	if (customRole != MvdDataModel::PathMapRole)
 		return;
 	
-	// Delete the PathMap.
-	PathMap* pathMap = pathMap = currentIndex.data(MvdDataModel::PathMapRole).value<PathMap*>();
+	PathMap* currentPathMap = currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<PathMap*>();
+	if (!currentPathMap)
+		return;
 
-	m_dataController->onDeleteMapButtonClicked(pathMap);
+	// Call the controller's method. 
+	m_dataController->onDeleteMapButtonClicked(currentPathMap);
 
 	// Update the model.
 	QModelIndex parentIndex = currentIndex.parent();
-	if (parentIndex.isValid())
-		m_mvdModel.removeRow(currentIndex.row(), parentIndex);
-	else
-		m_mvdModel.removeRow(currentIndex.row(), QModelIndex());
+	m_mvdModel.removeRow(currentIndex.row(), parentIndex);
 
+	// Update the views.
 	ui.m_pathMapsView->setCurrentIndex(parentIndex);
+
+	//emit dataChanged(index, index);
+};
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onClearMapsButtonClicked()
+{
+	// Call the controller's method. 
+	m_dataController->onClearMapsButtonClicked();
+
+	// Update the model.
+	m_mvdModel.clear();
 
 	//emit dataChanged(index, index);
 };

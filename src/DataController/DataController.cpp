@@ -66,15 +66,35 @@ void DataController::onFoldAndNameJointsCheckBoxClicked( bool isFoldAndNameJoint
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::onDeleteMapButtonClicked(PathMap* PathMap)
+PathMap* DataController::onAddMapButtonClicked(PathMap* siblingPathMap)
 {
-	if (!PathMap)
+	return 0;
+}
+
+//////////////////////////////////////////////////////////////////////////
+PathMap* DataController::onInsertMapButtonClicked(PathMap* siblingPathMap)
+{
+	return 0;
+}
+
+//////////////////////////////////////////////////////////////////////////
+PathMap* DataController::onAddChildMapButtonClicked(PathMap* parentPathMap)
+{
+	assert(parentPathMap);
+
+	return new PathMap("new Osc Path Bit", "New Iisu Path", parentPathMap);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void DataController::onDeleteMapButtonClicked(PathMap* pathMap)
+{
+	if (!pathMap)
 		return;
 
-	if (!PathMap->m_parent)
+	if (!pathMap->m_parent)
 		m_dataBase->setPathMapsRoot(0);
 
-	delete PathMap;
+	delete pathMap;
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -50,7 +50,9 @@ bool MvdDataModel::setData(const QModelIndex& index, const QVariant& value, int 
 		pathMap->m_iisuPath = newIisuPath;
 	}
 
+	// Update the views.
 	emit dataChanged(index, index);
+
 	return true;
 }
 

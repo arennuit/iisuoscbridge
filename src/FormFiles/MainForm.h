@@ -51,7 +51,6 @@ public:
 
 	/// \name App -> UI logic.
 	//@{
-	void onPathMapsRootChanged() {m_mvdModel.cleanAndReBuildAll();}
 	void onIsObservationOnChanged(bool isObservationOn);
 	void onOscPacketSizeChanged(uint oscPacketSize) {ui.m_oscPacketSizeLineEdit->setText(QString::number(oscPacketSize));}
 	//@}
@@ -69,10 +68,11 @@ protected slots:
 
 	void onFoldAndNameJointsCheckBoxClicked() {m_dataController->onFoldAndNameJointsCheckBoxClicked(ui.m_foldAndNameJointsCheckBox->isChecked());}
 	
-	void onAddMapButtonClicked() {m_dataController->onAddMapButtonClicked();};
-	void onInsertMapButtonClicked() {m_dataController->onInsertMapButtonClicked();};
+	void onAddMapButtonClicked();
+	void onInsertMapButtonClicked();
+	void onAddChildMapButtonClicked();
 	void onDeleteMapButtonClicked();
-	void onClearMapsButtonClicked() {m_dataController->onClearMapsButtonClicked();};
+	void onClearMapsButtonClicked();
 	//@}
 
 protected:

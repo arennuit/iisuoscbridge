@@ -731,9 +731,9 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="m_deleteMapButton">
+             <widget class="QPushButton" name="m_addChildMapButton">
               <property name="text">
-               <string>Delete</string>
+               <string>Add Child</string>
               </property>
              </widget>
             </item>
@@ -752,6 +752,13 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
                </size>
               </property>
              </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="m_deleteMapButton">
+              <property name="text">
+               <string>Delete</string>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QPushButton" name="m_clearMapsButton">

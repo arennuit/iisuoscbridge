@@ -17,7 +17,6 @@ public:
 
 	/// \name Application data accessors redefinitions.
 	//@{
-	void setPathMapsRoot(PathMap* pathMapsRoot) SK_OVERRIDE;
 	void setIsObservationOn(bool isObservationOn) SK_OVERRIDE;
 	void setOscPacketSize(uint oscPacketSize) SK_OVERRIDE;
 	//@}
