@@ -16,8 +16,7 @@ struct TypedPathMapFactory : public BaseTypedPathMapFactory
 {
 	virtual TypedPathMap* create(const std::string& fullOscPath, const std::string& iisuPath)
 	{
-		assert(false) ; // Unknown type.
-
+		// Type is not handled.
 		return 0 ;
 	};
 };

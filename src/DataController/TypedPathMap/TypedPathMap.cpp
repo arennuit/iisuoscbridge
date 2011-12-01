@@ -4,8 +4,8 @@ namespace SK
 {
 
 //////////////////////////////////////////////////////////////////////////
-TypedPathMap::TypedPathMap(const std::string& oscPathBit) :
-	m_oscPathBit(oscPathBit)
+TypedPathMap::TypedPathMap(const std::string& fullOscPath) :
+	m_fullOscPath(fullOscPath)
 {
 
 }

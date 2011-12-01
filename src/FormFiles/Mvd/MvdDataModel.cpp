@@ -5,7 +5,7 @@
 #include <QStandardItem>
 #include <QVariant>
 #include <QString>
-#include "DataBase/DataObjects/PathMap.h"
+#include "DataBase/PathMap.h"
 #include "DataBase/DataBase.h"
 
 namespace SK
@@ -41,13 +41,13 @@ bool MvdDataModel::setData(const QModelIndex& index, const QVariant& value, int 
 	{
 		// Change its m_oscPathBit value.
 		std::string newOscPathBit = value.toString().toStdString();
-		pathMap->m_oscPathBit = newOscPathBit;
+		pathMap->setOscPathBit(newOscPathBit);
 	}
 	else if (index.column() == 1)
 	{
 		// Change its m_iisuPath value.
 		std::string newIisuPath = value.toString().toStdString();
-		pathMap->m_iisuPath = newIisuPath;
+		pathMap->setIisuPath(newIisuPath);
 	}
 
 	// Update the views.
@@ -76,11 +76,11 @@ void MvdDataModel::cleanAndReBuild_pathMap(PathMap* pathMap)
 	assert(pathMap);
 
 	// Row.
-	QStandardItem* oscItem = new QStandardItem(pathMap->m_oscPathBit.c_str());
+	QStandardItem* oscItem = new QStandardItem(pathMap->getOscPathBit().c_str());
 	oscItem->setData((int)PathMapRole, RoleIndexRole);
 	oscItem->setData(QVariant::fromValue(pathMap), PathMapRole);
 
-	QStandardItem* iisuItem = new QStandardItem(pathMap->m_iisuPath.c_str());
+	QStandardItem* iisuItem = new QStandardItem(pathMap->getIisuPath().c_str());
 	iisuItem->setData((int)PathMapRole, RoleIndexRole);
 	iisuItem->setData(QVariant::fromValue(pathMap), PathMapRole);
 
@@ -97,10 +97,10 @@ void MvdDataModel::cleanAndReBuild_pathMap(PathMap* pathMap)
 	}
 
 	// Recursive call to children.
-	for (uint i = 0; i < pathMap->m_children.size(); ++i)
+	for (uint i = 0; i < pathMap->getChildren().size(); ++i)
 	{
 		m_parentItem = oscItem;
-		cleanAndReBuild_pathMap(pathMap->m_children[i]);
+		cleanAndReBuild_pathMap(pathMap->getChildren()[i]);
 	}
 }
 

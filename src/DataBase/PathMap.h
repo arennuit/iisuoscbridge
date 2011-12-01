@@ -14,8 +14,30 @@ namespace SK
 class PathMap
 {
 public:
-	PathMap(const std::string& oscPathBit, const std::string& iisuPath = "", PathMap* parent = 0);
+	PathMap(const std::string& oscPathBit, const std::string& iisuPath, PathMap* parent = 0);
 	virtual ~PathMap();
+
+	/// \name Accessors.
+	//@{
+	std::string& getOscPathBit() {return m_oscPathBit;}
+	void setOscPathBit(const std::string& oscPathBit) {m_oscPathBit = oscPathBit;}
+
+	std::string& getIisuPath() {return m_iisuPath;}
+	void setIisuPath(const std::string& iisuPath) {m_iisuPath = iisuPath;}
+
+	PathMap* getParent() {return m_parent;}
+
+	std::vector<PathMap*> getChildren() {return m_children;}
+	//@}
+
+	/// \name API.
+	//@{
+	PathMap* addPathMap(const std::string& oscPathBit, const std::string& iisuPath);
+	PathMap* insertPathMap(const std::string& oscPathBit, const std::string& iisuPath);
+	PathMap* addChildMap(const std::string& oscPathBit, const std::string& iisuPath) {return new PathMap(oscPathBit, iisuPath, this);}
+	//@}
+
+protected:
 
 	// Map.
 	std::string m_oscPathBit;
@@ -24,8 +46,6 @@ public:
 	// Handle hierarchy tree of PathMaps.
 	PathMap* m_parent;
 	std::vector<PathMap*> m_children;
-
-protected:
 
 	// Helpers.
 	bool unParent(PathMap* child);

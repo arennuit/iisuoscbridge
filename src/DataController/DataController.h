@@ -1,10 +1,14 @@
 #pragma once
 
 #include "DataBase/DataBase.h"
+#include "DataBase/PathMap.h"
 #include "SDK/iisuSDK.h"
 #include <string>
 
 #define OUTPUT_BUFFER_SIZE 32768
+
+#define NEW_OSC_PATH_BIT "New Osc Path Bit"
+#define NEW_IISU_PATH "New Iisu Path"
 
 namespace SK
 {

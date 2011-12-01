@@ -123,19 +123,7 @@ void MainForm::onIidFilePathButtonClicked()
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onAddMapButtonClicked()
 {
-
-};
-
-//////////////////////////////////////////////////////////////////////////
-void MainForm::onInsertMapButtonClicked()
-{
-
-};
-
-//////////////////////////////////////////////////////////////////////////
-void MainForm::onAddChildMapButtonClicked()
-{
-	// Get the current PathMap.
+	// Call the controller's method.
 	QModelIndex currentIndex = ui.m_pathMapsView->currentIndex();
 	if (!currentIndex.isValid())
 		return;
@@ -152,16 +140,118 @@ void MainForm::onAddChildMapButtonClicked()
 	if (!currentPathMap)
 		return;
 
-	// Call the controller's method. 
-	PathMap* newPathMap = m_dataController->onAddChildMapButtonClicked(currentPathMap);
+	PathMap* newPathMap = m_dataController->onAddMapButtonClicked(currentPathMap);
+	if (!newPathMap)
+		return;
 
 	// Update the model.
-	QStandardItem* oscItem = new QStandardItem(newPathMap->m_oscPathBit.c_str());
+	QStandardItem* oscItem = new QStandardItem(newPathMap->getOscPathBit().c_str());
 	assert(oscItem);
 	oscItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
 	oscItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
 
-	QStandardItem* iisuItem = new QStandardItem(newPathMap->m_iisuPath.c_str());
+	QStandardItem* iisuItem = new QStandardItem(newPathMap->getIisuPath().c_str());
+	assert(iisuItem);
+	iisuItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
+	iisuItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
+
+	QStandardItem* parentItem = currentItem->parent();
+	assert(parentItem);
+
+	int rowIdx = parentItem->rowCount();
+	parentItem->setChild(rowIdx, 0, oscItem);
+	parentItem->setChild(rowIdx, 1, iisuItem);
+
+	// Update the views.
+	QModelIndex oscIndex = m_mvdModel.indexFromItem(oscItem);
+
+	if (oscIndex.isValid())
+		ui.m_pathMapsView->setCurrentIndex(oscIndex);	
+
+	//emit dataChanged(index, index);
+};
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onInsertMapButtonClicked()
+{
+	// Call the controller's method.
+	QModelIndex currentIndex = ui.m_pathMapsView->currentIndex();
+	if (!currentIndex.isValid())
+		return;
+
+	QStandardItem* currentItem = m_mvdModel.itemFromIndex(currentIndex);
+	if (!currentItem)
+		return;
+
+	int customRole = currentIndex.data(MvdDataModel::RoleIndexRole).toInt();
+	if (customRole != MvdDataModel::PathMapRole)
+		return;
+
+	PathMap* currentPathMap = currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<PathMap*>();
+	if (!currentPathMap)
+		return;
+
+	PathMap* newPathMap = m_dataController->onInsertMapButtonClicked(currentPathMap);
+	if (!newPathMap)
+		return;
+
+	// Update the model.
+	QStandardItem* oscItem = new QStandardItem(newPathMap->getOscPathBit().c_str());
+	assert(oscItem);
+	oscItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
+	oscItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
+
+	QStandardItem* iisuItem = new QStandardItem(newPathMap->getIisuPath().c_str());
+	assert(iisuItem);
+	iisuItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
+	iisuItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
+
+	QStandardItem* parentItem = currentItem->parent();
+	assert(parentItem);
+
+	int rowIdx = currentIndex.row();
+	parentItem->insertRow(rowIdx, QList<QStandardItem*>() << oscItem << iisuItem);
+
+	// Update the views.
+	QModelIndex oscIndex = m_mvdModel.indexFromItem(oscItem);
+
+	if (oscIndex.isValid())
+		ui.m_pathMapsView->setCurrentIndex(oscIndex);	
+
+	//emit dataChanged(index, index);
+};
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onAddChildMapButtonClicked()
+{
+	// Call the controller's method.
+	QModelIndex currentIndex = ui.m_pathMapsView->currentIndex();
+	if (!currentIndex.isValid())
+		return;
+
+	QStandardItem* currentItem = m_mvdModel.itemFromIndex(currentIndex);
+	if (!currentItem)
+		return;
+
+	int customRole = currentIndex.data(MvdDataModel::RoleIndexRole).toInt();
+	if (customRole != MvdDataModel::PathMapRole)
+		return;
+
+	PathMap* currentPathMap = currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<PathMap*>();
+	if (!currentPathMap)
+		return;
+ 
+	PathMap* newPathMap = m_dataController->onAddChildMapButtonClicked(currentPathMap);
+	if (!newPathMap)
+		return;
+
+	// Update the model.
+	QStandardItem* oscItem = new QStandardItem(newPathMap->getOscPathBit().c_str());
+	assert(oscItem);
+	oscItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
+	oscItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
+
+	QStandardItem* iisuItem = new QStandardItem(newPathMap->getIisuPath().c_str());
 	assert(iisuItem);
 	iisuItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
 	iisuItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
@@ -171,7 +261,10 @@ void MainForm::onAddChildMapButtonClicked()
 	currentItem->setChild(rowIdx, 1, iisuItem);
 
 	// Update the views.
-	ui.m_pathMapsView->setCurrentIndex(oscItem);	
+	QModelIndex oscIndex = m_mvdModel.indexFromItem(oscItem);
+
+	if (oscIndex.isValid())
+		ui.m_pathMapsView->setCurrentIndex(oscIndex);	
 
 	//emit dataChanged(index, index);
 };

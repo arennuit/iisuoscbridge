@@ -68,21 +68,29 @@ void DataController::onFoldAndNameJointsCheckBoxClicked( bool isFoldAndNameJoint
 //////////////////////////////////////////////////////////////////////////
 PathMap* DataController::onAddMapButtonClicked(PathMap* siblingPathMap)
 {
-	return 0;
+	if (!siblingPathMap)
+		return 0;
+
+	return siblingPathMap->addPathMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
 }
 
 //////////////////////////////////////////////////////////////////////////
 PathMap* DataController::onInsertMapButtonClicked(PathMap* siblingPathMap)
 {
-	return 0;
+	if (!siblingPathMap)
+		return 0;
+
+	return siblingPathMap->insertPathMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
 }
+
 
 //////////////////////////////////////////////////////////////////////////
 PathMap* DataController::onAddChildMapButtonClicked(PathMap* parentPathMap)
 {
-	assert(parentPathMap);
+	if (!parentPathMap)
+		return 0;
 
-	return new PathMap("new Osc Path Bit", "New Iisu Path", parentPathMap);
+	return parentPathMap->addChildMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -91,7 +99,7 @@ void DataController::onDeleteMapButtonClicked(PathMap* pathMap)
 	if (!pathMap)
 		return;
 
-	if (!pathMap->m_parent)
+	if (!pathMap->getParent())
 		m_dataBase->setPathMapsRoot(0);
 
 	delete pathMap;
@@ -217,24 +225,30 @@ void DataController::resumeStream()
 		PathMap* pathMap = m_pathMapsLinearized[i];
 		assert(pathMap);
 
-		if (pathMap->m_iisuPath == "")
+		if (pathMap->getIisuPath() == "")
 			continue;
 
-		std::string fullOscPaths = findFullOscPath(m_pathMapsLinearized[i]);
-
 		// Check the path exists and get its type.
-		SK::Return<SK::TypeInfo> retType = m_device->getDataType(pathMap->m_iisuPath.c_str()) ;
+		SK::Return<SK::TypeInfo> retType = m_device->getDataType(pathMap->getIisuPath().c_str()) ;
 		if (retType.failed())
 		{
-			SK_LOGGER(LOG_ERROR) << "Path \'" << pathMap->m_iisuPath << "\' does not exist.";
+			SK_LOGGER(LOG_ERROR) << "Path \'" << pathMap->getIisuPath() << "\' does not exist.";
 
 			continue;
 		}
 
+		std::string fullOscPaths = findFullOscPath(m_pathMapsLinearized[i]);
+
 		SK::TypeInfo typeInfo = retType.get() ;
-		TypedPathMap* typedPathMap = SK::TypeInfo::injectIisuType<BaseTypedPathMapFactory, TypedPathMapFactory>(typeInfo)->create(fullOscPaths, pathMap->m_iisuPath);
+		TypedPathMap* typedPathMap = SK::TypeInfo::injectIisuType<BaseTypedPathMapFactory, TypedPathMapFactory>(typeInfo)->create(fullOscPaths, pathMap->getIisuPath());
 	
-		assert(typedPathMap);
+		if (!typedPathMap)
+		{
+			SK_LOGGER(LOG_WARNING) << "Type \'" << typeInfo.name() << "\' is not handled by the OSC stream. Data \'" << pathMap->getIisuPath() << "\' will not stream.";
+
+			continue;
+		}
+
 		m_typedPathMapsLinearized.push_back(typedPathMap);
 	}
 
@@ -326,8 +340,8 @@ void DataController::linearizePathMap(PathMap* pathMap)
 		return;
 
 	m_pathMapsLinearized.push_back(pathMap);
-	for (uint i = 0; i < pathMap->m_children.size(); ++i)
-		linearizePathMap(pathMap->m_children[i]);
+	for (uint i = 0; i < pathMap->getChildren().size(); ++i)
+		linearizePathMap(pathMap->getChildren()[i]);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -337,16 +351,20 @@ std::string DataController::findFullOscPath( PathMap* pathMap )
 		return "";
 
 	// Parse PathMaps up-tree.
-	std::string fullPath;
+	std::string fullOscPath;
 	PathMap* currentPath = pathMap;
 	while (currentPath != 0)
 	{
-		fullPath = std::string("/") + currentPath->m_oscPathBit + fullPath;
+		// Concatenate fullOscPath only if the PathMap's oscPathBit contains something.
+		// NOTE: if the oscPathBit of a PathMap is empty, it does not modify the fullOscPath of its children,
+		//       this is so that this PathMap is an organizational placeholder.
+		if (currentPath->getOscPathBit()!= "")
+			fullOscPath = std::string("/") + currentPath->getOscPathBit() + fullOscPath;
 
-		currentPath = currentPath->m_parent;
+		currentPath = currentPath->getParent();
 	}
 
-	return fullPath;
+	return fullOscPath;
 }
 
 //////////////////////////////////////////////////////////////////////////
