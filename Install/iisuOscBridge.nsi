@@ -18,6 +18,10 @@
 !define LIC_FILE_PATH "License.txt"
 
 !define RESOURCES_FOLDER "..\Resource Files"
+!define DEPENDENCIES_FOLDER "..\..\Dependencies"
+!define QT_BIN_FOLDER "${DEPENDENCIES_FOLDER}\Qt_4.6.2\bin"
+!define DOC_FOLDER "..\Doc"
+!define SAMPLES_FOLDER "..\Samples"
 
 ;--------------------------------
 ; General
@@ -117,16 +121,18 @@ Section "Core" Section_Core
     SetOutPath "$INSTDIR"
 
     File "..\Release\iisuOscBridge.exe"
+    File "${QT_BIN_FOLDER}\QtCore4.dll"
+    File "${QT_BIN_FOLDER}\QtGui4.dll"
     File "${LIC_FILE_PATH}"
 	
     SetOutPath "$INSTDIR\Doc"
 	
-    File "..\Doc\StartUp.txt"
+    File "${DOC_FOLDER}\StartUp.txt"
 	
     SetOutPath "$INSTDIR\Samples"
 	
-    File "..\Samples\PureData_readMe.txt"
-    File "..\Samples\PureData_simple_rightHand.pd"
+    File "${SAMPLES_FOLDER}\PureData_readMe.txt"
+    File "${SAMPLES_FOLDER}\PureData_simple_rightHand.pd"
   
     ; Install the menu items.
     !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
