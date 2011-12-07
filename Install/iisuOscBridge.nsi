@@ -6,81 +6,82 @@
 ;--------------------------------
 ; Includes.
 
-    !include "MUI2.nsh"
+!include "MUI2.nsh"
 
 ;--------------------------------
 ; Defines.
 
-    !define INSTALL_DIR_REG_SUB_KEY "Software\Softkinetic\iisuOscBridge"
-    !define INSTALL_DIR_REG_ENTRY "Install_Dir"
+!define DEFAUT_INSTALL_DIR "C:\iisuOscBridge" ; It should be '$PROGRAMFILES\iisuOscBridge', but as iisu writes files in the install dir, and the install dir is 'read only', this causes a crash or requires the admin rights.
+!define INSTALL_DIR_REG_SUB_KEY "Software\Softkinetic\iisuOscBridge"
+!define INSTALL_DIR_REG_ENTRY "Install_Dir"
 
-    !define LIC_FILE_PATH "License.txt"
+!define LIC_FILE_PATH "License.txt"
 
-    !define RESOURCES_FOLDER "..\Resource Files"
-    !define DEPENDENCIES_FOLDER "..\..\Dependencies"
-    !define QT_BIN_FOLDER "${DEPENDENCIES_FOLDER}\Qt_4.6.2\bin"
-    !define DOC_FOLDER "..\Doc"
-    !define SAMPLES_FOLDER "..\Samples"
+!define RESOURCES_FOLDER "..\Resource Files"
+!define DEPENDENCIES_FOLDER "..\..\Dependencies"
+!define QT_BIN_FOLDER "${DEPENDENCIES_FOLDER}\Qt_4.6.2\bin"
+!define DOC_FOLDER "..\Doc"
+!define SAMPLES_FOLDER "..\Samples"
 
 ;--------------------------------
 ; General.
 
-    ; The name of the program to install.
-    Name "iisuOscBridge™"
+; The name of the program to install.
+Name "iisuOscBridge™"
 
-    ; The file to write.
-    OutFile "iisuOscBridge_setup.exe"
+; The file to write.
+OutFile "iisuOscBridge_setup.exe"
 
-    ; Default installation folder.
-    InstallDir "C:\iisuOscBridge" ; Should be '$PROGRAMFILES\iisuOscBridge' but as iisu writes files in the install dir, and the install dir is 'read only', this causes a crash or requires the admin rights.
+; Default installation folder (the actual installation folder is in '$INSTDIR' and is set via priorities, among which 'InstallDir' is lowest).
+InstallDir "${DEFAUT_INSTALL_DIR}"
 
-    ; Overwrite installation folder from registry if available.
-    InstallDirRegKey HKLM "${INSTALL_DIR_REG_SUB_KEY}" "${INSTALL_DIR_REG_ENTRY}"
+; Overwrite installation folder from registry if available.
+InstallDirRegKey HKLM "${INSTALL_DIR_REG_SUB_KEY}" "${INSTALL_DIR_REG_ENTRY}"
 
-    ; Request application privileges for Windows Vista.
-    RequestExecutionLevel admin
+; Request application privileges for Windows Vista.
+RequestExecutionLevel admin
 
 ;--------------------------------
 ; Variables.
 
-    Var STARTMENU_FOLDER
-    Var MUI_TEMP
+Var STARTMENU_FOLDER
+Var MUI_TEMP
 
 ;--------------------------------
 ; Interface settings.
 
-    !define MUI_ICON "${RESOURCES_FOLDER}\SK_logo_256x256.ico"
+!define MUI_ICON "${RESOURCES_FOLDER}\SK_logo_256x256.ico"
 
-    !define MUI_ABORTWARNING
+!define MUI_ABORTWARNING
 
-    !define MUI_WELCOMEPAGE_TITLE "Welcome to the iisuOscBridge™ Setup Wizard"
-    !define MUI_WELCOMEPAGE_TEXT  "This wizard will guide you through the installation of iisuOscBridge™, the bridge between iisu™ and OSC networking.$\r$\n$\r$\nThe iisuOscBridge™ provides the following functionalities:$\r$\n$\r$\n  (1) Launch iisu™,$\r$\n  (2) Configure maps between iisu™ output data and OSC paths,$\r$\n  (3) Send data over a network using the OSC protocol.$\r$\n$\r$\n$_CLICK"
+!define MUI_WELCOMEPAGE_TITLE "Welcome to the iisuOscBridge™ Setup Wizard"
+!define MUI_WELCOMEPAGE_TEXT  "This wizard will guide you through the installation of iisuOscBridge™, the bridge between iisu™ and OSC networking.$\r$\n$\r$\nThe iisuOscBridge™ provides the following functionalities:$\r$\n$\r$\n  (1) Launch iisu™,$\r$\n  (2) Configure maps between iisu™ output data and OSC paths,$\r$\n  (3) Send data over a network using the OSC protocol.$\r$\n$\r$\n$_CLICK"
 
-    !define MUI_LICENSEPAGE_CHECKBOX
+!define MUI_LICENSEPAGE_CHECKBOX
 
-    !define MUI_FINISHPAGE_TITLE "Completing the iisuOscBridge™ Setup Wizard"
+!define MUI_FINISHPAGE_TITLE "Completing the iisuOscBridge™ Setup Wizard"
 
-    !define MUI_FINISHPAGE_LINK "Visit the Softkinetic site for the latest news and support."
-    !define MUI_FINISHPAGE_LINK_LOCATION "http://www.softkinetic.com/"
+!define MUI_FINISHPAGE_LINK "Visit the Softkinetic site for the latest news and support."
+!define MUI_FINISHPAGE_LINK_LOCATION "http://www.softkinetic.com/"
 
 ;--------------------------------
 ; Pages.
 
-    !insertmacro MUI_PAGE_WELCOME
-    !insertmacro MUI_PAGE_LICENSE "${LIC_FILE_PATH}"
-    !insertmacro MUI_PAGE_COMPONENTS
-    !insertmacro MUI_PAGE_DIRECTORY
-    !insertmacro MUI_PAGE_INSTFILES
-    !insertmacro MUI_PAGE_STARTMENU Application $STARTMENU_FOLDER
-    !insertmacro MUI_PAGE_FINISH
+!insertmacro MUI_PAGE_WELCOME
+!insertmacro MUI_PAGE_LICENSE "${LIC_FILE_PATH}"
+!insertmacro MUI_PAGE_COMPONENTS
+!insertmacro MUI_PAGE_DIRECTORY
+!insertmacro MUI_PAGE_INSTFILES
+!insertmacro MUI_PAGE_STARTMENU Application $STARTMENU_FOLDER
+!insertmacro MUI_PAGE_FINISH
 
-    !insertmacro MUI_UNPAGE_CONFIRM
-    !insertmacro MUI_UNPAGE_INSTFILES
+!insertmacro MUI_UNPAGE_CONFIRM
+!insertmacro MUI_UNPAGE_INSTFILES
 
 ;--------------------------------
 ; Languages.
  
-    !insertmacro MUI_LANGUAGE "English"
+!insertmacro MUI_LANGUAGE "English"
 
 ;--------------------------------
 ; Functions.
@@ -105,12 +106,15 @@ Function .onInit
         next:
     ${EndIf}
 
+    ; Make sure the install dir's default value is the default one (the default one is normally not used if reg key 'InstallDirRegKey' was defined).
+    StrCpy $INSTDIR "${DEFAUT_INSTALL_DIR}"
+
 FunctionEnd
 
 ;--------------------------------
 ; Installer Sections.
 
-    Section "Core" Section_Core
+Section "Core" Section_Core
 
     ; SetShellVarContext all.
 
@@ -166,13 +170,13 @@ SectionEnd
 ;--------------------------------
 ; Descriptions.
 
-    ; Language strings.
-    LangString DESC_iisuOscBridgeCore ${LANG_ENGLISH} "This is the core of iisuOscBridge™, the section actually bridging iisu™ output data with OSC networking."
+; Language strings.
+LangString DESC_iisuOscBridgeCore ${LANG_ENGLISH} "This is the core of iisuOscBridge™, the section actually bridging iisu™ output data with OSC networking."
 
-    ; Assign language strings to sections.
-    !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-    !insertmacro MUI_DESCRIPTION_TEXT ${Section_Core} $(DESC_iisuOscBridgeCore)
-    !insertmacro MUI_FUNCTION_DESCRIPTION_END
+; Assign language strings to sections.
+!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+!insertmacro MUI_DESCRIPTION_TEXT ${Section_Core} $(DESC_iisuOscBridgeCore)
+!insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 ;--------------------------------
 ; Uninstaller Section.
