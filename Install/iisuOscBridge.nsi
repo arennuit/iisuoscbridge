@@ -7,7 +7,6 @@
 ; Includes.
 
     !include "MUI2.nsh"
-    !include "EnvVarUpdate.nsh"
 
 ;--------------------------------
 ; Defines.
@@ -159,11 +158,6 @@ FunctionEnd
     ; Update registry.
     WriteRegStr HKLM "${INSTALL_DIR_REG_SUB_KEY}" "${INSTALL_DIR_REG_ENTRY}" $INSTDIR ; Installation directory.
 
-    ; TODO: make page to ask where file iisuSDK.dll is with default value provided.
-    ; TODO: function 'EnvVarUpdate' corrupts environment variables longer than 1024 characters (as mentioned in its doc). Find a workaround.
-    ReadRegStr $1 HKLM "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "IISU_BIN_DIR"
-    ${EnvVarUpdate} $0 "PATH" "A" "HKLM" $1 ; Append IISU_BIN_DIR to the environment variable 'path'.
-
     ; Create uninstaller.
     WriteUninstaller "$INSTDIR\Uninstall.exe"
 
@@ -192,10 +186,6 @@ Section "Uninstall"
     ; Uninstall the menu items.
     !insertmacro MUI_STARTMENU_GETFOLDER Application $MUI_TEMP
     RMDIR /r "$SMPROGRAMS\$MUI_TEMP"
-
-    ; Restore registry.
-    ReadRegStr $1 HKLM "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "IISU_BIN_DIR"
-    ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" $1 ; Remove IISU_BIN_DIR from the environment variable 'path'.
 
     DeleteRegKey /ifempty HKLM "${INSTALL_DIR_REG_SUB_KEY}"
 

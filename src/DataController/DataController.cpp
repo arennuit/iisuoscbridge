@@ -289,7 +289,6 @@ void DataController::iisuErrorListener( const SK::ErrorEvent& event )
 void DataController::newIisuDataFrameListener( const SK::DataFrameEvent& event )
 {
 	m_device->updateFrame(true);
-	std::cout << event.getFrameID() << std::endl;
 
 	oscSend();
 }
