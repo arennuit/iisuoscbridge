@@ -51,6 +51,27 @@ void DataController::DestroyInstance()
 }
 
 //////////////////////////////////////////////////////////////////////////
+bool DataController::onIidFilePathEditChanged( const std::string& newIidFilePath )
+{
+	// Update the database.
+	m_dataBase->setIidFilePath(newIidFilePath);
+
+	// Load the IID script.
+	SK::CommandHandle<SK::Result (const SK::String&)> loadIidGraph = m_device->getCommandManager().registerCommandHandle<SK::Result(const SK::String&)>("IID.loadGraph");
+	SK::Result resLoadCmd = loadIidGraph(m_dataBase->getIidFilePath().c_str());
+	if (resLoadCmd.failed())
+	{
+		SK_LOGGER(LOG_ERROR) << std::string("Load IID graph : ") + resLoadCmd.getDescription().ptr();
+
+		return false;
+	}
+
+	SK_LOGGER(LOG_INFO) << "IID file loaded correctly.";
+
+	return true;
+}
+
+//////////////////////////////////////////////////////////////////////////
 void DataController::onStartStopToggleButtonClicked()
 {
 	if (m_dataBase->getIsObservationOn() == false)
@@ -143,20 +164,22 @@ bool DataController::initIisu()
 	// Iisu context.
 	SK::Context& context = SK::Context::Instance();
 
-	SK_LOGGER(LOG_INFO) << "The context instance was instantiated.";
+	SK_LOGGER(LOG_INFO) << "The context instance was obtained.";
 
 	// Iisu handle.
-	SK::Return<SK::ApplicationConfigurator> retAppConf = SK::ApplicationConfigurator::create("");
-	if (retAppConf.failed())
+	char* iisuSdkDir_char = getenv("IISU_SDK_DIR");
+	if (iisuSdkDir_char == 0)
 	{
-		SK_LOGGER(LOG_ERROR) << retAppConf.getDescription().ptr();
+		SK_LOGGER(LOG_ERROR) << "Cannot find environment variable \'IISU_SDK_DIR\':";
+		SK_LOGGER(LOG_ERROR) << "     -> the iisu runtime may not have been installed correctly.";
 		return false;
 	}
-	ApplicationConfigurator appConf = retAppConf.get();
 
-	SK_LOGGER(LOG_INFO) << "The application configurator was obtained.";
+	std::string iisuSdkDir(iisuSdkDir_char);
+	std::string iisuBinDir = iisuSdkDir + "\\bin";
 
-	SK::Return<SK::IisuHandle*> retHandle = context.createHandle(appConf);
+	SK::IisuHandle::Configuration handleConf(iisuBinDir.c_str());
+	SK::Return<SK::IisuHandle*> retHandle = context.createHandle(handleConf);
 	if (retHandle.failed())
 	{
 		SK_LOGGER(LOG_ERROR) << retHandle.getDescription().ptr();
@@ -167,7 +190,8 @@ bool DataController::initIisu()
 	SK_LOGGER(LOG_INFO) << "The application handle was obtained.";
 
 	// Iisu device.
-	SK::Return<SK::Device*> retDevice = handle->initializeDevice(appConf);
+	SK::Device::Configuration deviceConf;
+	SK::Return<SK::Device*> retDevice = handle->initializeDevice(deviceConf);
 	if (retDevice.failed())
 	{
 		SK_LOGGER(LOG_ERROR) << retDevice.getDescription().ptr();
@@ -201,18 +225,6 @@ void DataController::resumeStream()
 
 		SK_LOGGER(LOG_ERROR) << "No iisu device available: cannot stream.";
 		return;
-	}
-
-	// Load IID script.
-	// TODO: il faut qu'il soit loadé quand je tape mes paths et qu'il se reload automatiquement si je le change.
-	if (m_dataBase->getIidFilePath() != std::string(""))
-	{
-		SK::CommandHandle<SK::Result (const SK::String&)> loadIidGraph = m_device->getCommandManager().registerCommandHandle<SK::Result(const SK::String&)>("IID.loadGraph");
-		SK::Result resLoadCmd = loadIidGraph(m_dataBase->getIidFilePath().c_str());
-		if (resLoadCmd.failed())
-			SK_LOGGER(LOG_ERROR) << std::string("Load IID graph : ") + resLoadCmd.getDescription().ptr();
-		else
-			SK_LOGGER(LOG_INFO) << "IID file loaded correctly.";
 	}
 
 	// Linearize PathMaps.

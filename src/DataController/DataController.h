@@ -29,9 +29,9 @@ public:
 
 	/// \name Data control.
 	//@{
-	void onIpAddressLineEditTextChanged(const std::string& newIpAddress) {m_dataBase->setIpAddress(newIpAddress);}
-	void onPortLineEditTextChanged(int newPort) {m_dataBase->setPort(newPort);}
-	void onIidFilePathLineEditTextChanged(const std::string& newIidFilePath) {m_dataBase->setIidFilePath(newIidFilePath);}
+	void onIpAddressEditEditingFinished(const std::string& newIpAddress) {m_dataBase->setIpAddress(newIpAddress);}
+	void onPortEditEditingFinished(int newPort) {m_dataBase->setPort(newPort);}
+	bool onIidFilePathEditChanged(const std::string& newIidFilePath);
 
 	void onStartStopToggleButtonClicked();
 

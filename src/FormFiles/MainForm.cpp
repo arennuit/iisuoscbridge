@@ -79,9 +79,9 @@ void MainForm::setup()
 	ui.m_pathMapsView->setItemDelegate(&m_pathDelegate);
 
 	// Establish all connections.
-	connect(ui.m_ipAddressEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onIpAddressLineEditTextChanged(const QString&)));
-	connect(ui.m_portEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onPortLineEditTextChanged(const QString&)));
-	connect(ui.m_iidFilePathEdit, SIGNAL(textChanged(const QString&)), this, SLOT(onIidFilePathLineEditTextChanged(const QString&)));
+	connect(ui.m_ipAddressEdit, SIGNAL(editingFinished()), this, SLOT(onIpAddressEditEditingFinished()));
+	connect(ui.m_portEdit, SIGNAL(editingFinished()), this, SLOT(onPortEditEditingFinished()));
+	connect(ui.m_iidFilePathEdit, SIGNAL(editingFinished()), this, SLOT(onIidFilePathEditEditingFinished()));
 
 	connect(ui.m_iidFilePathButton, SIGNAL(clicked()), this, SLOT(onIidFilePathButtonClicked()));
 	connect(ui.m_startStopToggleButton, SIGNAL(clicked()), this, SLOT(onStartStopToggleButtonClicked()));
@@ -108,16 +108,24 @@ void MainForm::onIsObservationOnChanged(bool isObservationOn)
 }
 
 //////////////////////////////////////////////////////////////////////////
+void MainForm::onIidFilePathEditEditingFinished()
+{
+	bool isIidFileOk = m_dataController->onIidFilePathEditChanged(ui.m_iidFilePathEdit->text().toStdString());
+}
+
+//////////////////////////////////////////////////////////////////////////
 void MainForm::onIidFilePathButtonClicked()
 {
+	// Get the new iid filepath.
 	QStringList fileNames;
-	if (m_iidFileSelectDlg.exec())
-	{
-		fileNames = m_iidFileSelectDlg.selectedFiles();
+	if (!m_iidFileSelectDlg.exec())
+		return;
 
-		ui.m_iidFilePathEdit->setText(fileNames[0]);
-		m_dataBase->setIidFilePath(fileNames[0].toStdString());
-	}
+	fileNames = m_iidFileSelectDlg.selectedFiles();
+
+	ui.m_iidFilePathEdit->setText(fileNames[0]);
+
+	bool isIidFileOk = m_dataController->onIidFilePathEditChanged(ui.m_iidFilePathEdit->text().toStdString());
 }
 
 //////////////////////////////////////////////////////////////////////////

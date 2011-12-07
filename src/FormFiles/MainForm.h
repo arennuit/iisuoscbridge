@@ -59,9 +59,9 @@ protected slots:
 
 	/// \name UI -> app logic.
 	//@{
-	void onIpAddressLineEditTextChanged(const QString& text) {m_dataController->onIpAddressLineEditTextChanged(text.toStdString());}
-	void onPortLineEditTextChanged(const QString& text) {m_dataController->onPortLineEditTextChanged(text.toInt());}
-	void onIidFilePathLineEditTextChanged(const QString& text) {m_dataController->onIidFilePathLineEditTextChanged(text.toStdString());}
+	void onIpAddressEditEditingFinished() {m_dataController->onIpAddressEditEditingFinished(ui.m_ipAddressEdit->text().toStdString());}
+	void onPortEditEditingFinished() {m_dataController->onPortEditEditingFinished(ui.m_portEdit->text().toInt());}
+	void onIidFilePathEditEditingFinished();
 
 	void onIidFilePathButtonClicked();
 	void onStartStopToggleButtonClicked() {m_dataController->onStartStopToggleButtonClicked();}
