@@ -33,7 +33,7 @@
     OutFile "iisuOscBridge_setup.exe"
 
     ; Default installation folder.
-    InstallDir "$PROGRAMFILES\iisuOscBridge"
+    InstallDir "C:\iisuOscBridge" ; Should be '$PROGRAMFILES\iisuOscBridge' but as iisu writes files in the install dir, and the install dir is 'read only', this causes a crash or requires the admin rights.
 
     ; Overwrite installation folder from registry if available.
     InstallDirRegKey HKLM "${INSTALL_DIR_REG_SUB_KEY}" "${INSTALL_DIR_REG_ENTRY}"
