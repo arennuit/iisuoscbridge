@@ -3,6 +3,7 @@
 #include "DataBase/DataBase.h"
 #include "FormFiles/Mvd/MvdDataModel.h"
 #include "DataBase/PathMap.h"
+#include "LogSystem/Logger.h"
 
 namespace SK
 {
@@ -11,9 +12,22 @@ namespace SK
 MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
 	QMainWindow(parent, flags),
 	m_iidFileSelectDlg(this),
+	m_openFileSelectDlg(this),
+	m_saveAsFileSelectDlg(this),
 	m_clogStreamBuf()
 {
+	// Designer-defined UI setup.
 	ui.setupUi(this);
+
+	// Custom UI setup.
+	m_recentFilesSeparatorAction = ui.m_fileMenu->addSeparator();
+	m_recentFilesSeparatorAction->setVisible(false);
+	for (int i = 0; i < RECENT_FILES_MAX_NUM; ++i)
+	{
+		m_recentFileActions[i] = new QAction(this);
+		ui.m_fileMenu->addAction(m_recentFileActions[i]);
+		m_recentFileActions[i]->setVisible(false);
+	}
 
 	// Redirect clog streams to the log window.
 	m_clogStreamBuf.setTargetTextEdit(ui.m_logTextEdit);
@@ -48,7 +62,13 @@ void MainForm::setup()
 	m_iidFileSelectDlg.setFileMode(QFileDialog::ExistingFile);
 	m_iidFileSelectDlg.setNameFilter("Interaction Designer (*.iid)");
 
-	// UI setup.
+	m_openFileSelectDlg.setFileMode(QFileDialog::ExistingFile);
+	m_openFileSelectDlg.setNameFilter("Iisu Osc Bridge (*.iob)");
+
+	m_saveAsFileSelectDlg.setFileMode(QFileDialog::AnyFile);
+	m_saveAsFileSelectDlg.setNameFilter("Iisu Osc Bridge (*.iob)");
+
+	// Setup UI.
 	m_dataBase = DataBase::GetInstance(); // We do not make this pointer a member of the class because the MainForm is not due to modify data, it only uses the data model to perform the initial ui setup.
 	assert(m_dataBase);
 
@@ -78,7 +98,18 @@ void MainForm::setup()
 	ui.m_pathMapsView->setAlternatingRowColors(true);
 	ui.m_pathMapsView->setItemDelegate(&m_pathDelegate);
 
+	updateRecentFileActions();
+
 	// Establish all connections.
+	connect(ui.m_newAction, SIGNAL(triggered()), this, SLOT(onNewActionTriggered()));
+	connect(ui.m_openAction, SIGNAL(triggered()), this, SLOT(onOpenActionTriggered()));
+	connect(ui.m_saveAction, SIGNAL(triggered()), this, SLOT(onSaveActionTriggered()));
+	connect(ui.m_saveAsAction, SIGNAL(triggered()), this, SLOT(onSaveAsActionTriggered()));
+	connect(ui.m_quitAction, SIGNAL(triggered()), this, SLOT(onQuitActionTriggered()));
+
+	connect(ui.m_mapsViewAction, SIGNAL(triggered()), this, SLOT(onMapsViewActionTriggered()));
+	connect(ui.m_logViewAction, SIGNAL(triggered()), this, SLOT(onLogViewActionTriggered()));
+
 	connect(ui.m_ipAddressEdit, SIGNAL(editingFinished()), this, SLOT(onIpAddressEditEditingFinished()));
 	connect(ui.m_portEdit, SIGNAL(editingFinished()), this, SLOT(onPortEditEditingFinished()));
 	connect(ui.m_iidFilePathEdit, SIGNAL(editingFinished()), this, SLOT(onIidFilePathEditEditingFinished()));
@@ -93,6 +124,9 @@ void MainForm::setup()
 	connect(ui.m_addChildMapButton, SIGNAL(clicked()), this, SLOT(onAddChildMapButtonClicked()));
 	connect(ui.m_deleteMapButton, SIGNAL(clicked()), this, SLOT(onDeleteMapButtonClicked()));
 	connect(ui.m_clearMapsButton, SIGNAL(clicked()), this, SLOT(onClearMapsButtonClicked()));
+
+	for (uint i = 0; i < RECENT_FILES_MAX_NUM; ++i)
+		connect(m_recentFileActions[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -105,6 +139,81 @@ void MainForm::onIsObservationOnChanged(bool isObservationOn)
 	// Show log tab when streaming.
 	if (isObservationOn == true)
 		ui.m_tabs->setCurrentWidget(ui.m_logTab);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onNewActionTriggered()
+{
+	m_dataController->newProject();
+
+	// Update the GUI.
+	setCurrentFilePath(std::string(""));
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onOpenActionTriggered()
+{
+	// Get the filepath.
+	if (!m_openFileSelectDlg.exec())
+		return;
+
+	std::string filePath = m_openFileSelectDlg.selectedFiles()[0].toStdString();
+	if (filePath == "")
+	{
+		SK_LOGGER(LOG_WARNING) << "Selected file for \'Open\' command is invalid.";
+		return;
+	}
+
+	m_dataController->loadProjectFromFile(filePath);
+
+	// Update the GUI.
+	setCurrentFilePath(filePath);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onSaveActionTriggered()
+{
+	QString filePath = windowFilePath();
+
+	// If there is no current file then the behavior is the same as for 'Save As'.
+	if (filePath.isEmpty())
+		return onSaveAsActionTriggered();
+
+	// Save in the current file.
+	m_dataController->saveProjectToFile(filePath.toStdString());
+
+	// Update the GUI.
+	setCurrentFilePath(filePath.toStdString());
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onSaveAsActionTriggered()
+{
+	// Get the filepath.
+	if (!m_saveAsFileSelectDlg.exec())
+		return;
+
+	std::string filePath = m_saveAsFileSelectDlg.selectedFiles()[0].toStdString();
+	if (filePath == "")
+	{
+		SK_LOGGER(LOG_WARNING) << "Selected file for \'Save As\' command is invalid.";
+		return;
+	}
+
+	m_dataController->saveProjectToFile(filePath);
+
+	// Update the GUI.
+	setCurrentFilePath(filePath);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::openRecentFile()
+{
+	QAction *action = qobject_cast<QAction*>(sender());
+	if (!action)
+		return;
+
+	m_dataController->loadProjectFromFile(action->data().toString().toStdString());
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -316,6 +425,49 @@ void MainForm::onClearMapsButtonClicked()
 	m_mvdModel.clear();
 
 	//emit dataChanged(index, index);
-};
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::setCurrentFilePath( std::string& filePath )
+{
+	// Update the window.
+	setWindowFilePath(filePath.c_str());
+
+	// Update the settings' list of recent files.
+	if (filePath == "")
+		return;
+
+	QString filePath_asQString = QString().fromStdString(filePath);
+	QSettings settings;
+	QStringList recentFilesList = settings.value("recentFileList").toStringList();
+	recentFilesList.removeAll(filePath_asQString);
+	recentFilesList.prepend(filePath_asQString);
+	while (recentFilesList.size() > RECENT_FILES_MAX_NUM)
+		recentFilesList.removeLast();
+
+	settings.setValue("recentFileList", recentFilesList);
+
+	// Update recent file actions.
+	updateRecentFileActions();
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::updateRecentFileActions()
+{
+	QSettings settings;
+	QStringList recentFilesList = settings.value("recentFileList").toStringList();
+
+	m_recentFilesSeparatorAction->setVisible(recentFilesList.size() > 0);
+
+	for (int i = 0; i < recentFilesList.size(); ++i)
+	{
+		m_recentFileActions[i]->setText(QFileInfo(recentFilesList[i]).fileName());
+		m_recentFileActions[i]->setData(recentFilesList[i]);
+		m_recentFileActions[i]->setVisible(true);
+	}
+
+	for (int i = recentFilesList.size(); i < RECENT_FILES_MAX_NUM; ++i)
+		m_recentFileActions[i]->setVisible(false);
+}
 
 } // namespace SK.

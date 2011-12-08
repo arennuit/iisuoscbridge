@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>IisuOscBridge</string>
+   <string/>
   </property>
   <property name="windowIcon">
    <iconset resource="../../Resource Files/MainFormResources.qrc">
@@ -867,6 +867,84 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
     </item>
    </layout>
   </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>662</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="m_fileMenu">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="m_openAction"/>
+    <addaction name="m_newAction"/>
+    <addaction name="separator"/>
+    <addaction name="m_saveAction"/>
+    <addaction name="m_saveAsAction"/>
+    <addaction name="separator"/>
+    <addaction name="m_quitAction"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="m_mapsViewAction"/>
+    <addaction name="m_logViewAction"/>
+   </widget>
+   <addaction name="m_fileMenu"/>
+   <addaction name="menuView"/>
+  </widget>
+  <action name="m_saveAction">
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="m_saveAsAction">
+   <property name="text">
+    <string>Save As...</string>
+   </property>
+  </action>
+  <action name="m_newAction">
+   <property name="text">
+    <string>New</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="m_openAction">
+   <property name="text">
+    <string>Open...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="m_quitAction">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="m_mapsViewAction">
+   <property name="text">
+    <string>Maps</string>
+   </property>
+  </action>
+  <action name="m_logViewAction">
+   <property name="text">
+    <string>Log</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

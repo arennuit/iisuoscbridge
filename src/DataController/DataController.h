@@ -44,6 +44,10 @@ public:
 	void onClearMapsButtonClicked();
 
 	void onMvdPathDelegateEditorCreation(std::vector<std::string>& iisuDataPaths);
+
+	void newProject();
+	void saveProjectToFile(std::string& filePath);
+	void loadProjectFromFile(std::string& filePath);
 	//@}
 
 protected:

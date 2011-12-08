@@ -8,6 +8,8 @@
 #include "Mvd/MvdDataModel.h"
 #include "Mvd/MvdPathDelegate.h"
 
+#define RECENT_FILES_MAX_NUM 5
+
 namespace SK
 {
 
@@ -59,6 +61,16 @@ protected slots:
 
 	/// \name UI -> app logic.
 	//@{
+	void onNewActionTriggered();
+	void onOpenActionTriggered();
+	void onSaveActionTriggered();
+	void onSaveAsActionTriggered();
+	void onQuitActionTriggered() {QApplication::quit();}
+	void openRecentFile();
+
+	void onMapsViewActionTriggered() {ui.m_tabs->setCurrentWidget(ui.m_mapsTab);}
+	void onLogViewActionTriggered() {ui.m_tabs->setCurrentWidget(ui.m_logTab);}
+
 	void onIpAddressEditEditingFinished() {m_dataController->onIpAddressEditEditingFinished(ui.m_ipAddressEdit->text().toStdString());}
 	void onPortEditEditingFinished() {m_dataController->onPortEditEditingFinished(ui.m_portEdit->text().toInt());}
 	void onIidFilePathEditEditingFinished();
@@ -85,10 +97,17 @@ protected:
 	//@}
 
 	QFileDialog m_iidFileSelectDlg;
+	QFileDialog m_openFileSelectDlg;
+	QFileDialog m_saveAsFileSelectDlg;
 	StreamBufToLogEdit m_clogStreamBuf;
 
 	DataBase* m_dataBase;
 	DataController* m_dataController;
+
+	void setCurrentFilePath(std::string& filePath);
+	void updateRecentFileActions();
+	QAction* m_recentFilesSeparatorAction;
+	QAction* m_recentFileActions[RECENT_FILES_MAX_NUM];
 };
 
 } // namespace SK.

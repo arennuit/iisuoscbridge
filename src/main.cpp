@@ -7,6 +7,10 @@
 int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
+	app.setApplicationName("IisuOscBridge");
+	app.setOrganizationName("SoftKinetic");
+	app.setOrganizationDomain("sofkinetic.com");
+
 	SK::MainForm mainForm;
 
 	SK::AppDataBase::CreateInstance();
