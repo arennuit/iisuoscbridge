@@ -219,7 +219,7 @@ void MainForm::openRecentFile()
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onIidFilePathEditEditingFinished()
 {
-	bool isIidFileOk = m_dataController->onIidFilePathEditChanged(ui.m_iidFilePathEdit->text().toStdString());
+	bool isIidFileOk = m_dataController->editIidFilePath(ui.m_iidFilePathEdit->text().toStdString());
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -234,7 +234,7 @@ void MainForm::onIidFilePathButtonClicked()
 
 	ui.m_iidFilePathEdit->setText(fileNames[0]);
 
-	bool isIidFileOk = m_dataController->onIidFilePathEditChanged(ui.m_iidFilePathEdit->text().toStdString());
+	bool isIidFileOk = m_dataController->editIidFilePath(ui.m_iidFilePathEdit->text().toStdString());
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -257,7 +257,7 @@ void MainForm::onAddMapButtonClicked()
 	if (!currentPathMap)
 		return;
 
-	PathMap* newPathMap = m_dataController->onAddMapButtonClicked(currentPathMap);
+	PathMap* newPathMap = m_dataController->addPathMap(currentPathMap);
 	if (!newPathMap)
 		return;
 
@@ -308,7 +308,7 @@ void MainForm::onInsertMapButtonClicked()
 	if (!currentPathMap)
 		return;
 
-	PathMap* newPathMap = m_dataController->onInsertMapButtonClicked(currentPathMap);
+	PathMap* newPathMap = m_dataController->insertPathMap(currentPathMap);
 	if (!newPathMap)
 		return;
 
@@ -358,7 +358,7 @@ void MainForm::onAddChildMapButtonClicked()
 	if (!currentPathMap)
 		return;
  
-	PathMap* newPathMap = m_dataController->onAddChildMapButtonClicked(currentPathMap);
+	PathMap* newPathMap = m_dataController->addChildMap(currentPathMap);
 	if (!newPathMap)
 		return;
 
@@ -403,7 +403,7 @@ void MainForm::onDeleteMapButtonClicked()
 		return;
 
 	// Call the controller's method. 
-	m_dataController->onDeleteMapButtonClicked(currentPathMap);
+	m_dataController->deletePathMap(currentPathMap);
 
 	// Update the model.
 	QModelIndex parentIndex = currentIndex.parent();
@@ -419,7 +419,7 @@ void MainForm::onDeleteMapButtonClicked()
 void MainForm::onClearMapsButtonClicked()
 {
 	// Call the controller's method. 
-	m_dataController->onClearMapsButtonClicked();
+	m_dataController->clearPathMaps();
 
 	// Update the model.
 	m_mvdModel.clear();

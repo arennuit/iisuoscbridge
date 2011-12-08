@@ -51,7 +51,7 @@ void DataController::DestroyInstance()
 }
 
 //////////////////////////////////////////////////////////////////////////
-bool DataController::onIidFilePathEditChanged( const std::string& newIidFilePath )
+bool DataController::editIidFilePath( const std::string& newIidFilePath )
 {
 	// Update the database.
 	m_dataBase->setIidFilePath(newIidFilePath);
@@ -72,7 +72,7 @@ bool DataController::onIidFilePathEditChanged( const std::string& newIidFilePath
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::onStartStopToggleButtonClicked()
+void DataController::toggleResumePause()
 {
 	if (m_dataBase->getIsObservationOn() == false)
 		resumeStream();
@@ -81,13 +81,13 @@ void DataController::onStartStopToggleButtonClicked()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::onFoldAndNameJointsCheckBoxClicked( bool isFoldAndNameJoints )
+void DataController::editFoldAndNameJointsOption( bool isFoldAndNameJoints )
 {
 	m_dataBase->setIsFoldAndNameJoints(isFoldAndNameJoints);
 }
 
 //////////////////////////////////////////////////////////////////////////
-PathMap* DataController::onAddMapButtonClicked(PathMap* siblingPathMap)
+PathMap* DataController::addPathMap(PathMap* siblingPathMap)
 {
 	if (!siblingPathMap)
 		return 0;
@@ -96,7 +96,7 @@ PathMap* DataController::onAddMapButtonClicked(PathMap* siblingPathMap)
 }
 
 //////////////////////////////////////////////////////////////////////////
-PathMap* DataController::onInsertMapButtonClicked(PathMap* siblingPathMap)
+PathMap* DataController::insertPathMap(PathMap* siblingPathMap)
 {
 	if (!siblingPathMap)
 		return 0;
@@ -106,7 +106,7 @@ PathMap* DataController::onInsertMapButtonClicked(PathMap* siblingPathMap)
 
 
 //////////////////////////////////////////////////////////////////////////
-PathMap* DataController::onAddChildMapButtonClicked(PathMap* parentPathMap)
+PathMap* DataController::addChildMap(PathMap* parentPathMap)
 {
 	if (!parentPathMap)
 		return 0;
@@ -115,7 +115,7 @@ PathMap* DataController::onAddChildMapButtonClicked(PathMap* parentPathMap)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::onDeleteMapButtonClicked(PathMap* pathMap)
+void DataController::deletePathMap(PathMap* pathMap)
 {
 	if (!pathMap)
 		return;
@@ -127,7 +127,7 @@ void DataController::onDeleteMapButtonClicked(PathMap* pathMap)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::onClearMapsButtonClicked()
+void DataController::clearPathMaps()
 {
 	m_dataBase->setPathMapsRoot(0);
 
@@ -135,7 +135,7 @@ void DataController::onClearMapsButtonClicked()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::onMvdPathDelegateEditorCreation(std::vector<std::string>& iisuDataPaths)
+void DataController::retrieveIisuDataPaths(std::vector<std::string>& iisuDataPaths)
 {
 	iisuDataPaths.clear();
 
@@ -161,7 +161,7 @@ void DataController::onMvdPathDelegateEditorCreation(std::vector<std::string>& i
 //////////////////////////////////////////////////////////////////////////
 void DataController::newProject()
 {
-
+	
 }
 
 //////////////////////////////////////////////////////////////////////////

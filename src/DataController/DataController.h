@@ -27,23 +27,26 @@ public:
 	static DataController* GetInstance() {return sm_instance;}
 	//@}
 
-	/// \name Data control.
+	/// \name Helpers.
 	//@{
-	void onIpAddressEditEditingFinished(const std::string& newIpAddress) {m_dataBase->setIpAddress(newIpAddress);}
-	void onPortEditEditingFinished(int newPort) {m_dataBase->setPort(newPort);}
-	bool onIidFilePathEditChanged(const std::string& newIidFilePath);
+	void retrieveIisuDataPaths(std::vector<std::string>& iisuDataPaths);
+	//@}
 
-	void onStartStopToggleButtonClicked();
+	/// \name API.
+	//@{
+	void editIpAddress(const std::string& newIpAddress) {m_dataBase->setIpAddress(newIpAddress);}
+	void editPort(int newPort) {m_dataBase->setPort(newPort);}
+	bool editIidFilePath(const std::string& newIidFilePath);
 
-	void onFoldAndNameJointsCheckBoxClicked(bool isFoldAndNameJoints);
+	void toggleResumePause();
 
-	PathMap* onAddMapButtonClicked(PathMap* siblingPathMap);
-	PathMap* onInsertMapButtonClicked(PathMap* siblingPathMap);
-	PathMap* onAddChildMapButtonClicked(PathMap* parentPathMap);
-	void onDeleteMapButtonClicked(PathMap* pathMap);
-	void onClearMapsButtonClicked();
+	void editFoldAndNameJointsOption(bool isFoldAndNameJoints);
 
-	void onMvdPathDelegateEditorCreation(std::vector<std::string>& iisuDataPaths);
+	PathMap* addPathMap(PathMap* siblingPathMap);
+	PathMap* insertPathMap(PathMap* siblingPathMap);
+	PathMap* addChildMap(PathMap* parentPathMap);
+	void deletePathMap(PathMap* pathMap);
+	void clearPathMaps();
 
 	void newProject();
 	void saveProjectToFile(std::string& filePath);

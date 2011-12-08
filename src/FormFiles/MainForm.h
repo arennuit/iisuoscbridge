@@ -71,14 +71,14 @@ protected slots:
 	void onMapsViewActionTriggered() {ui.m_tabs->setCurrentWidget(ui.m_mapsTab);}
 	void onLogViewActionTriggered() {ui.m_tabs->setCurrentWidget(ui.m_logTab);}
 
-	void onIpAddressEditEditingFinished() {m_dataController->onIpAddressEditEditingFinished(ui.m_ipAddressEdit->text().toStdString());}
-	void onPortEditEditingFinished() {m_dataController->onPortEditEditingFinished(ui.m_portEdit->text().toInt());}
+	void onIpAddressEditEditingFinished() {m_dataController->editIpAddress(ui.m_ipAddressEdit->text().toStdString());}
+	void onPortEditEditingFinished() {m_dataController->editPort(ui.m_portEdit->text().toInt());}
 	void onIidFilePathEditEditingFinished();
 
 	void onIidFilePathButtonClicked();
-	void onStartStopToggleButtonClicked() {m_dataController->onStartStopToggleButtonClicked();}
+	void onStartStopToggleButtonClicked() {m_dataController->toggleResumePause();}
 
-	void onFoldAndNameJointsCheckBoxClicked() {m_dataController->onFoldAndNameJointsCheckBoxClicked(ui.m_foldAndNameJointsCheckBox->isChecked());}
+	void onFoldAndNameJointsCheckBoxClicked() {m_dataController->editFoldAndNameJointsOption(ui.m_foldAndNameJointsCheckBox->isChecked());}
 	
 	void onAddMapButtonClicked();
 	void onInsertMapButtonClicked();

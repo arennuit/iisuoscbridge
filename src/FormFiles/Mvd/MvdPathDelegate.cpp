@@ -10,6 +10,7 @@ int MvdPathDelegate::sm_iisuPathColumnIdx = 1;
 MvdPathDelegate::MvdPathDelegate(QObject *parent) :
 	QItemDelegate(parent)
 {
+
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -30,7 +31,7 @@ QWidget* MvdPathDelegate::createEditor(QWidget *parent, const QStyleOptionViewIt
 
 	// Populate combo box items.
 	std::vector<std::string> iisuDataPaths;
-	dataController->onMvdPathDelegateEditorCreation(iisuDataPaths);
+	dataController->retrieveIisuDataPaths(iisuDataPaths);
 
 	comboBox->addItem("");
 	for (uint i = 0; i < iisuDataPaths.size(); ++i)
