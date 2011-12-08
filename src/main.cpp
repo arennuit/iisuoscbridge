@@ -11,6 +11,9 @@ int main(int argc, char *argv[])
 	app.setOrganizationName("SoftKinetic");
 	app.setOrganizationDomain("sofkinetic.com");
 
+	// The main form needs to be existing before the database and data controller are instantiated. And the data base
+	// and controller need to be existing before the main form is setup. Hence we separated the form's instantiation
+	// and setup.
 	SK::MainForm mainForm;
 
 	SK::AppDataBase::CreateInstance();
