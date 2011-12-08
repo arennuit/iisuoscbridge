@@ -714,6 +714,22 @@
 					</File>
 				</Filter>
 			</Filter>
+			<Filter
+				Name="PugiXml"
+				>
+				<File
+					RelativePath=".\ThirdParties\PugiXml\src\pugiconfig.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ThirdParties\PugiXml\src\pugixml.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ThirdParties\PugiXml\src\pugixml.hpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\AppDataBase.cpp"
