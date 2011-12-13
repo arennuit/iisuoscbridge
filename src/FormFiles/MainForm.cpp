@@ -109,6 +109,7 @@ void MainForm::setup()
 
 	connect(ui.m_mapsViewAction, SIGNAL(triggered()), this, SLOT(onMapsViewActionTriggered()));
 	connect(ui.m_logViewAction, SIGNAL(triggered()), this, SLOT(onLogViewActionTriggered()));
+	connect(ui.m_fullScreenAction, SIGNAL(triggered()), this, SLOT(onFullScreenAction()));
 
 	connect(ui.m_ipAddressEdit, SIGNAL(editingFinished()), this, SLOT(onIpAddressEditEditingFinished()));
 	connect(ui.m_portEdit, SIGNAL(editingFinished()), this, SLOT(onPortEditEditingFinished()));
@@ -214,6 +215,16 @@ void MainForm::openRecentFile()
 		return;
 
 	m_dataController->loadProjectFromFile(action->data().toString().toStdString());
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onFullScreenAction()
+{
+	Qt::WindowStates windowStates = windowState();
+	if (windowStates & Qt::WindowFullScreen)
+		showNormal();
+	else
+		showFullScreen();
 }
 
 //////////////////////////////////////////////////////////////////////////

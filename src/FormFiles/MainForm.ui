@@ -894,6 +894,8 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
     </property>
     <addaction name="m_mapsViewAction"/>
     <addaction name="m_logViewAction"/>
+    <addaction name="separator"/>
+    <addaction name="m_fullScreenAction"/>
    </widget>
    <addaction name="m_fileMenu"/>
    <addaction name="menuView"/>
@@ -943,6 +945,14 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
   <action name="m_logViewAction">
    <property name="text">
     <string>Log</string>
+   </property>
+  </action>
+  <action name="m_fullScreenAction">
+   <property name="text">
+    <string>Full Screen</string>
+   </property>
+   <property name="shortcut">
+    <string>F11</string>
    </property>
   </action>
  </widget>

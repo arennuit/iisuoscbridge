@@ -70,6 +70,7 @@ protected slots:
 
 	void onMapsViewActionTriggered() {ui.m_tabs->setCurrentWidget(ui.m_mapsTab);}
 	void onLogViewActionTriggered() {ui.m_tabs->setCurrentWidget(ui.m_logTab);}
+	void onFullScreenAction();
 
 	void onIpAddressEditEditingFinished() {m_dataController->editIpAddress(ui.m_ipAddressEdit->text().toStdString());}
 	void onPortEditEditingFinished() {m_dataController->editPort(ui.m_portEdit->text().toInt());}
