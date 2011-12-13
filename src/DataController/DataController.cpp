@@ -8,6 +8,7 @@
 
 #include "osc/OscOutboundPacketStream.h"
 #include "ip/UdpSocket.h"
+#include "src/pugixml.hpp"
 
 namespace SK
 {
@@ -129,9 +130,11 @@ void DataController::deletePathMap(PathMap* pathMap)
 //////////////////////////////////////////////////////////////////////////
 void DataController::clearPathMaps()
 {
-	m_dataBase->setPathMapsRoot(0);
-
-	delete m_dataBase->getPathMapsRoot();
+	if (m_dataBase->getPathMapsRoot())
+	{
+		delete m_dataBase->getPathMapsRoot();
+		m_dataBase->setPathMapsRoot(0);
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -167,13 +170,40 @@ void DataController::newProject()
 //////////////////////////////////////////////////////////////////////////
 void DataController::saveProjectToFile(std::string& filePath)
 {
+	// Create the xml document and root node. 
+	pugi::xml_document docXml;
+	pugi::xml_node node_iisuOscBride = docXml.append_child("IisuOscBridge");
 
+	// Iid file path, IP address and port are stored as attributes.
+	node_iisuOscBride.append_attribute("iidFilePath") = m_dataBase->getIidFilePath().c_str();
+	node_iisuOscBride.append_attribute("ipAddress") = m_dataBase->getIpAddress().c_str();
+	node_iisuOscBride.append_attribute("ipPort") = m_dataBase->getPort();
+	node_iisuOscBride.append_attribute("foldAndNameJoints") = m_dataBase->getIsFoldAndNameJoints();
+
+	// Recursive dive into PathMaps.
+	saveProjectToFile_recursive(node_iisuOscBride, m_dataBase->getPathMapsRoot());
+
+	docXml.save_file(filePath.c_str());
 }
 
 //////////////////////////////////////////////////////////////////////////
 void DataController::loadProjectFromFile(std::string& filePath)
 {
 
+}
+
+//////////////////////////////////////////////////////////////////////////
+void DataController::saveProjectToFile_recursive(pugi::xml_node& parent, PathMap* pathMap)
+{
+	// Create node and attributes.
+	pugi::xml_node node_pathMap = parent.append_child("PathMap");
+
+	node_pathMap.append_attribute("oscPathBit") = pathMap->getOscPathBit().c_str();
+	node_pathMap.append_attribute("iisuPath") = pathMap->getIisuPath().c_str();
+
+	// Recursion into children.
+	for (uint i = 0; i < pathMap->getChildren().size(); ++i)
+		saveProjectToFile_recursive(node_pathMap, pathMap->getChildren()[i]);
 }
 
 //////////////////////////////////////////////////////////////////////////

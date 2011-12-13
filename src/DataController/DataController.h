@@ -10,6 +10,11 @@
 #define NEW_OSC_PATH_BIT "New Osc Path Bit"
 #define NEW_IISU_PATH "New Iisu Path"
 
+namespace pugi
+{
+	class xml_node;
+}
+
 namespace SK
 {
 
@@ -86,6 +91,8 @@ protected:
 	// TODO: check buffer is large enough when putting the message together.
 	char m_oscBuffer[OUTPUT_BUFFER_SIZE];
 	void oscSend();
+
+	void saveProjectToFile_recursive(pugi::xml_node& parent, PathMap* pathMap);
 	//@}
 };
 

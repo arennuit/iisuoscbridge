@@ -61,12 +61,16 @@ void MainForm::setup()
 	// Setup dialogs.
 	m_iidFileSelectDlg.setFileMode(QFileDialog::ExistingFile);
 	m_iidFileSelectDlg.setNameFilter("Interaction Designer (*.iid)");
+	m_iidFileSelectDlg.setAcceptMode(QFileDialog::AcceptOpen);
 
 	m_openFileSelectDlg.setFileMode(QFileDialog::ExistingFile);
 	m_openFileSelectDlg.setNameFilter("Iisu Osc Bridge (*.iob)");
+	m_openFileSelectDlg.setAcceptMode(QFileDialog::AcceptOpen);
 
 	m_saveAsFileSelectDlg.setFileMode(QFileDialog::AnyFile);
 	m_saveAsFileSelectDlg.setNameFilter("Iisu Osc Bridge (*.iob)");
+	m_saveAsFileSelectDlg.setAcceptMode(QFileDialog::AcceptSave);
+	m_saveAsFileSelectDlg.setDefaultSuffix("iob");
 
 	// Setup UI.
 	m_dataBase = DataBase::GetInstance(); // We do not make this pointer a member of the class because the MainForm is not due to modify data, it only uses the data model to perform the initial ui setup.
@@ -190,7 +194,7 @@ void MainForm::onSaveActionTriggered()
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onSaveAsActionTriggered()
 {
-	// Get the filepath.
+	// Get the filepath (add the extension if needed).
 	if (!m_saveAsFileSelectDlg.exec())
 		return;
 
