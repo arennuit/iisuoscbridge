@@ -71,7 +71,7 @@ void MvdDataModel::cleanAndReBuildAll()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void MvdDataModel::cleanAndReBuild_pathMap(PathMap* pathMap)
+void MvdDataModel::cleanAndReBuild_pathMap(const PathMap* pathMap)
 {
 	assert(pathMap);
 

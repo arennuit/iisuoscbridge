@@ -19,15 +19,15 @@ public:
 
 	/// \name Accessors.
 	//@{
-	std::string& getOscPathBit() {return m_oscPathBit;}
+	const std::string& getOscPathBit() const {return m_oscPathBit;}
 	void setOscPathBit(const std::string& oscPathBit) {m_oscPathBit = oscPathBit;}
 
-	std::string& getIisuPath() {return m_iisuPath;}
+	const std::string& getIisuPath() const {return m_iisuPath;}
 	void setIisuPath(const std::string& iisuPath) {m_iisuPath = iisuPath;}
 
-	PathMap* getParent() {return m_parent;}
+	PathMap* getParent() const {return m_parent;}
 
-	std::vector<PathMap*> getChildren() {return m_children;}
+	std::vector<PathMap*> getChildren() const {return m_children;}
 	//@}
 
 	/// \name API.

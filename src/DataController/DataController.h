@@ -7,9 +7,6 @@
 
 #define OUTPUT_BUFFER_SIZE 32768
 
-#define NEW_OSC_PATH_BIT "New Osc Path Bit"
-#define NEW_IISU_PATH "New Iisu Path"
-
 namespace pugi
 {
 	class xml_node;
@@ -47,11 +44,11 @@ public:
 
 	void editFoldAndNameJointsOption(bool isFoldAndNameJoints);
 
-	PathMap* addPathMap(PathMap* siblingPathMap);
-	PathMap* insertPathMap(PathMap* siblingPathMap);
-	PathMap* addChildMap(PathMap* parentPathMap);
-	void deletePathMap(PathMap* pathMap);
-	void clearPathMaps();
+	PathMap* addPathMap(PathMap* siblingPathMap) {return m_dataBase->addPathMap(siblingPathMap);}
+	PathMap* insertPathMap(PathMap* siblingPathMap) {return m_dataBase->insertPathMap(siblingPathMap);}
+	PathMap* addChildMap(PathMap* parentPathMap) {return m_dataBase->addChildMap(parentPathMap);}
+	void deletePathMap(PathMap* pathMap) {m_dataBase->deletePathMap(pathMap);}
+	void clearPathMaps() {m_dataBase->clearPathMaps();}
 
 	void newProject();
 	void saveProjectToFile(std::string& filePath);
@@ -81,10 +78,10 @@ protected:
 	//@{
 	DataBase* m_dataBase;
 
-	std::vector<PathMap*> m_pathMapsLinearized;
-	void linearizePathMap(PathMap* PathMap);
+	std::vector<const PathMap*> m_pathMapsLinearized;
+	void linearizePathMap(const PathMap* pathMap);
 
-	std::string findFullOscPath(PathMap* PathMap);
+	std::string findFullOscPath(const PathMap* pathMap) const;
 
 	std::vector<TypedPathMap*> m_typedPathMapsLinearized;
 
@@ -92,7 +89,7 @@ protected:
 	char m_oscBuffer[OUTPUT_BUFFER_SIZE];
 	void oscSend();
 
-	void saveProjectToFile_recursive(pugi::xml_node& parent, PathMap* pathMap);
+	void saveProjectToFile_recursive(pugi::xml_node& parent, const PathMap* pathMap);
 	//@}
 };
 

@@ -1,6 +1,9 @@
 #include "DataBase.h"
 #include "PathMap.h"
 
+#define NEW_OSC_PATH_BIT "New Osc Path Bit"
+#define NEW_IISU_PATH "New Iisu Path"
+
 namespace SK
 {
 
@@ -41,6 +44,58 @@ void DataBase::setDefaultValues()
 	m_isFoldAndNameJoints = true;
 
 	m_oscPacketSize = 0;
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////
+PathMap* DataBase::addPathMap(PathMap* siblingPathMap)
+{
+	if (!siblingPathMap)
+		return 0;
+
+	return siblingPathMap->addPathMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
+}
+
+//////////////////////////////////////////////////////////////////////////
+PathMap* DataBase::insertPathMap(PathMap* siblingPathMap)
+{
+	if (!siblingPathMap)
+		return 0;
+
+	return siblingPathMap->insertPathMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+PathMap* DataBase::addChildMap(PathMap* parentPathMap)
+{
+	if (!parentPathMap)
+		return 0;
+
+	return parentPathMap->addChildMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void DataBase::deletePathMap(PathMap* pathMap)
+{
+	if (!pathMap)
+		return;
+
+	if (!pathMap->getParent())
+		m_pathMapsRoot = 0;
+
+	delete pathMap;
+}
+
+//////////////////////////////////////////////////////////////////////////
+void DataBase::clearPathMaps()
+{
+	if (m_pathMapsRoot)
+	{
+		delete m_pathMapsRoot;
+		m_pathMapsRoot = 0;
+	}
 }
 
 } // namespace SK.

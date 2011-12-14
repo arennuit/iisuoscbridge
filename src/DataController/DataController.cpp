@@ -88,56 +88,6 @@ void DataController::editFoldAndNameJointsOption( bool isFoldAndNameJoints )
 }
 
 //////////////////////////////////////////////////////////////////////////
-PathMap* DataController::addPathMap(PathMap* siblingPathMap)
-{
-	if (!siblingPathMap)
-		return 0;
-
-	return siblingPathMap->addPathMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
-}
-
-//////////////////////////////////////////////////////////////////////////
-PathMap* DataController::insertPathMap(PathMap* siblingPathMap)
-{
-	if (!siblingPathMap)
-		return 0;
-
-	return siblingPathMap->insertPathMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
-}
-
-
-//////////////////////////////////////////////////////////////////////////
-PathMap* DataController::addChildMap(PathMap* parentPathMap)
-{
-	if (!parentPathMap)
-		return 0;
-
-	return parentPathMap->addChildMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
-}
-
-//////////////////////////////////////////////////////////////////////////
-void DataController::deletePathMap(PathMap* pathMap)
-{
-	if (!pathMap)
-		return;
-
-	if (!pathMap->getParent())
-		m_dataBase->setPathMapsRoot(0);
-
-	delete pathMap;
-}
-
-//////////////////////////////////////////////////////////////////////////
-void DataController::clearPathMaps()
-{
-	if (m_dataBase->getPathMapsRoot())
-	{
-		delete m_dataBase->getPathMapsRoot();
-		m_dataBase->setPathMapsRoot(0);
-	}
-}
-
-//////////////////////////////////////////////////////////////////////////
 void DataController::retrieveIisuDataPaths(std::vector<std::string>& iisuDataPaths)
 {
 	iisuDataPaths.clear();
@@ -193,7 +143,7 @@ void DataController::loadProjectFromFile(std::string& filePath)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::saveProjectToFile_recursive(pugi::xml_node& parent, PathMap* pathMap)
+void DataController::saveProjectToFile_recursive( pugi::xml_node& parent, const PathMap* pathMap )
 {
 	// Create node and attributes.
 	pugi::xml_node node_pathMap = parent.append_child("PathMap");
@@ -282,7 +232,7 @@ void DataController::resumeStream()
 	// Create the TypedPathMaps (depending of their type returned by iisu).
 	for (uint i = 0; i < m_pathMapsLinearized.size(); ++i)
 	{
-		PathMap* pathMap = m_pathMapsLinearized[i];
+		const PathMap* pathMap = m_pathMapsLinearized[i];
 		assert(pathMap);
 
 		if (pathMap->getIisuPath() == "")
@@ -393,7 +343,7 @@ void DataController::termIisu()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::linearizePathMap(PathMap* pathMap)
+void DataController::linearizePathMap( const PathMap* pathMap )
 {
 	if (!pathMap)
 		return;
@@ -404,14 +354,14 @@ void DataController::linearizePathMap(PathMap* pathMap)
 }
 
 //////////////////////////////////////////////////////////////////////////
-std::string DataController::findFullOscPath( PathMap* pathMap )
+std::string DataController::findFullOscPath( const PathMap* pathMap ) const
 {
 	if (!pathMap)
 		return "";
 
 	// Parse PathMaps up-tree.
 	std::string fullOscPath;
-	PathMap* currentPath = pathMap;
+	const PathMap* currentPath = pathMap;
 	while (currentPath != 0)
 	{
 		// Concatenate fullOscPath only if the PathMap's oscPathBit contains something.

@@ -12,6 +12,7 @@ namespace SK
 
 class PathMap;
 
+Q_DECLARE_METATYPE(const SK::PathMap*);
 Q_DECLARE_METATYPE(SK::PathMap*);
 
 //////////////////////////////////////////////////////////////////////////
@@ -40,7 +41,7 @@ protected:
 
 	/// \name Helpers.
 	//@{
-	void cleanAndReBuild_pathMap(PathMap* pathMap);
+	void cleanAndReBuild_pathMap(const PathMap* pathMap);
 	//@}
 
 	QStandardItem* m_parentItem;
