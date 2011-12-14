@@ -153,6 +153,8 @@ void MainForm::onNewActionTriggered()
 
 	// Update the GUI.
 	setCurrentFilePath(std::string(""));
+
+	m_mvdModel.clear();
 }
 
 //////////////////////////////////////////////////////////////////////////
