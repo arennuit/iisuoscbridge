@@ -13,7 +13,10 @@ class PathMap;
 ///
 /// It is important that the database knows about any changes done to the data (so we can inherit an app db from
 /// it that does operations when changes on the data are performed). In order to do so we need to make sure the
-/// get accessors returns const data and we also need to provide an API that allows to modify any data.
+/// get accessors return const data and we also need to provide an API that allows to modify any data.
+/// Handling the db modifications this way allows to specify the data/GUI synchronization once only and at the
+/// lowest level, so the GUI update is the same whether we perform the modification via the GUI or by code and the
+/// maintenance is easy (as things are only done once).
 /// It would be even better to have an observers' mechanism on data change with registered callbacks but this is
 /// a more involving solution. It probably needs properties in order not to have to code the callback registrators
 /// mechanism for any single piece of data.
