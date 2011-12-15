@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QFileDialog>
 #include "ui_MainForm.h"
-#include "DataController/DataController.h"
+#include "Core/DataController.h"
 #include "Mvd/MvdDataModel.h"
 #include "Mvd/MvdPathDelegate.h"
 

@@ -5,8 +5,8 @@
 #include <QStandardItem>
 #include <QVariant>
 #include <QString>
-#include "DataBase/PathMap.h"
-#include "DataBase/DataBase.h"
+#include "Core/DataBase/PathMap.h"
+#include "Core/DataBase/DataBase.h"
 
 namespace SK
 {

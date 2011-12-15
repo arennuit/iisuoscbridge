@@ -1,7 +1,7 @@
 #include "MainForm.h"
 #include <QtGui/QApplication>
 #include "AppDataBase.h"
-#include "DataController/DataController.h"
+#include "Core/DataController.h"
 
 //////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])

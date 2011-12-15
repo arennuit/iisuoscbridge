@@ -1,8 +1,8 @@
 #include "MainForm.h"
 
-#include "DataBase/DataBase.h"
+#include "Core/DataBase/DataBase.h"
 #include "FormFiles/Mvd/MvdDataModel.h"
-#include "DataBase/PathMap.h"
+#include "Core/DataBase/PathMap.h"
 #include "LogSystem/Logger.h"
 
 namespace SK
@@ -270,11 +270,11 @@ void MainForm::onAddMapButtonClicked()
 	if (customRole != MvdDataModel::PathMapRole)
 		return;
 
-	PathMap* currentPathMap = currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<PathMap*>();
+	const PathMap* currentPathMap = currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<const PathMap*>();
 	if (!currentPathMap)
 		return;
 
-	PathMap* newPathMap = m_dataController->addPathMap(currentPathMap);
+	const PathMap* newPathMap = m_dataController->addPathMap(currentPathMap);
 	if (!newPathMap)
 		return;
 
@@ -321,11 +321,11 @@ void MainForm::onInsertMapButtonClicked()
 	if (customRole != MvdDataModel::PathMapRole)
 		return;
 
-	PathMap* currentPathMap = currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<PathMap*>();
+	const PathMap* currentPathMap = currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<const PathMap*>();
 	if (!currentPathMap)
 		return;
 
-	PathMap* newPathMap = m_dataController->insertPathMap(currentPathMap);
+	const PathMap* newPathMap = m_dataController->insertPathMap(currentPathMap);
 	if (!newPathMap)
 		return;
 
@@ -371,11 +371,11 @@ void MainForm::onAddChildMapButtonClicked()
 	if (customRole != MvdDataModel::PathMapRole)
 		return;
 
-	PathMap* currentPathMap = currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<PathMap*>();
+	const PathMap* currentPathMap = currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<const PathMap*>();
 	if (!currentPathMap)
 		return;
  
-	PathMap* newPathMap = m_dataController->addChildMap(currentPathMap);
+	const PathMap* newPathMap = m_dataController->addChildMap(currentPathMap);
 	if (!newPathMap)
 		return;
 
