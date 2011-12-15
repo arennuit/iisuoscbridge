@@ -28,8 +28,9 @@ class PathMap;
 ///       In order to allow data edition, the GUI keeps a pointer or ref to each displayed data. These pointers are
 ///       consts because the DataBase only returns const pointers. As the pointers are consts, one cannot call an
 ///       editing function against these pointers.
-///       At the moment we use a workaround: we transform the const points into non-consts in the DataController.
-///       This is not ideal and requires a bit more TLC...
+///       Currently we use a workaround: we transform the const points into non-consts in the DataController. This
+///       conversion could also be done just before storing the pointers in the GUI (so we would store non-const
+///       pointers, as they are due to be used for editing). This situation is not ideal and requires a bit more TLC...
 class DataBase : public AbstractDataBase
 {
 	DECLARE_DATA_BASE(DataBase)
