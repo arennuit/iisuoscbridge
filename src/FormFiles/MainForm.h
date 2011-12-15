@@ -81,6 +81,8 @@ protected slots:
 
 	void onFoldAndNameJointsCheckBoxClicked() {m_dataController->editFoldAndNameJointsOption(ui.m_foldAndNameJointsCheckBox->isChecked());}
 	
+	void onSelectionChanged( const QModelIndex& newModelIndex, const QModelIndex& oldModelIndex );
+
 	void onAddMapButtonClicked();
 	void onInsertMapButtonClicked();
 	void onAddChildMapButtonClicked();

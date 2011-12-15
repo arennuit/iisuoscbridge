@@ -132,6 +132,8 @@ void MainForm::setup()
 
 	for (uint i = 0; i < RECENT_FILES_MAX_NUM; ++i)
 		connect(m_recentFileActions[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
+
+	connect(ui.m_pathMapsView->selectionModel(), SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)), this, SLOT(onSelectionChanged(const QModelIndex&, const QModelIndex&)));
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -255,6 +257,27 @@ void MainForm::onIidFilePathButtonClicked()
 }
 
 //////////////////////////////////////////////////////////////////////////
+void MainForm::onSelectionChanged( const QModelIndex& newModelIndex, const QModelIndex& /*oldModelIndex*/ )
+{
+	// Get the underlying PathMap.
+	if (!newModelIndex.isValid())
+		return;
+
+	QStandardItem* newItem = m_mvdModel.itemFromIndex(newModelIndex);
+	if (!newItem)
+		return;
+
+	int customRole = newModelIndex.data(MvdDataModel::RoleIndexRole).toInt();
+	if (customRole != MvdDataModel::PathMapRole)
+		return;
+
+	const PathMap* newSelectedPathMap = newModelIndex.data(MvdDataModel::PathMapRole).value<const PathMap*>();
+
+	// Call the controller's method.
+	m_dataController->onSelectionChanged(newSelectedPathMap);
+}
+
+//////////////////////////////////////////////////////////////////////////
 void MainForm::onAddMapButtonClicked()
 {
 	// Call the controller's method.
@@ -270,7 +293,7 @@ void MainForm::onAddMapButtonClicked()
 	if (customRole != MvdDataModel::PathMapRole)
 		return;
 
-	const PathMap* currentPathMap = currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<const PathMap*>();
+	const PathMap* currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<const PathMap*>();
 	if (!currentPathMap)
 		return;
 
@@ -321,7 +344,7 @@ void MainForm::onInsertMapButtonClicked()
 	if (customRole != MvdDataModel::PathMapRole)
 		return;
 
-	const PathMap* currentPathMap = currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<const PathMap*>();
+	const PathMap* currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<const PathMap*>();
 	if (!currentPathMap)
 		return;
 
@@ -371,7 +394,7 @@ void MainForm::onAddChildMapButtonClicked()
 	if (customRole != MvdDataModel::PathMapRole)
 		return;
 
-	const PathMap* currentPathMap = currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<const PathMap*>();
+	const PathMap* currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<const PathMap*>();
 	if (!currentPathMap)
 		return;
  
@@ -415,7 +438,7 @@ void MainForm::onDeleteMapButtonClicked()
 	if (customRole != MvdDataModel::PathMapRole)
 		return;
 	
-	PathMap* currentPathMap = currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<PathMap*>();
+	PathMap* currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<PathMap*>();
 	if (!currentPathMap)
 		return;
 

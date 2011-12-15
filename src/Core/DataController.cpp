@@ -11,7 +11,10 @@ namespace SK
 DataController* DataController::sm_instance = 0;
 
 //////////////////////////////////////////////////////////////////////////
-DataController::DataController() : m_dataBase(DataBase::GetInstance()), m_iisuManager(DataBase::GetInstance())
+DataController::DataController() :
+	m_dataBase(DataBase::GetInstance()),
+	m_iisuManager(DataBase::GetInstance()),
+	m_selectedPathMap(0)
 {
 	assert(m_dataBase);
 
