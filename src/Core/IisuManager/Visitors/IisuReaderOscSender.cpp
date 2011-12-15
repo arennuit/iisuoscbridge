@@ -7,36 +7,6 @@
 namespace SK
 {
 
-// TODO: share and use joints names in ProtoPose.h.
-static const std::string JointsName[SK::SkeletonEnum::_COUNT] =
-{
-	"pelvis",
-	"waist",
-	"collar",
-	"neck",
-	"head",
-
-	"rightShoulder",
-	"rightElbow",
-	"rightWrist",
-	"rightHand",
-
-	"rightHip",
-	"rightKnee",
-	"rightAnkle",
-	"rightFoot",
-
-	"leftShoulder",
-	"leftElbow",
-	"leftWrist",
-	"leftHand",
-
-	"leftHip",
-	"leftKnee",
-	"leftAnkle",
-	"leftFoot"
-};
-
 // Make osc::BeginMessage() easier to use with std::string.
 osc::BeginMessage OscBeginMessage(const std::string& oscPath) {return osc::BeginMessage(oscPath.c_str());}
 osc::MessageTerminator OscEndMessage() {return osc::MessageTerminator();}
@@ -126,7 +96,7 @@ void IisuReaderOscSender::visit(FloatArrayPathMap* typedPathMap)
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
-			*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/" + JointsName[i]);
+			*m_outPacketStream << OscBeginMessage(m_fullOscPath + std::string("/") + SK::SkeletonEnum::KeyPointsLabels[i].ptr());
 			*m_outPacketStream << iisuData[i];
 			*m_outPacketStream << OscEndMessage();
 		}
@@ -162,7 +132,7 @@ void IisuReaderOscSender::visit(Vector3ArrayPathMap* typedPathMap)
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
-			std::string messagePath = m_fullOscPath + "/" + JointsName[i];
+			std::string messagePath = m_fullOscPath + std::string("/") + SK::SkeletonEnum::KeyPointsLabels[i].ptr();
 
 			*m_outPacketStream << OscBeginMessage(messagePath + "/x");
 			*m_outPacketStream << iisuData[i].x;
