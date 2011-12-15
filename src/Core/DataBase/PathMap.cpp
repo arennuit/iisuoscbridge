@@ -60,8 +60,13 @@ PathMap* PathMap::insertPathMap(const std::string& oscPathBit, const std::string
 		if (child != this)
 			continue;
 
-		PathMap* newChild = new PathMap(oscPathBit, iisuPath, 0);
+		// The PathMap constructor appends the parent's children array (at the end of the array) and sets the new
+		// PathMap's parent. Here we cannot use the constructor's hierarchy handling because we do not want to
+		// append the new PathMap at the end of the parent's array of children: we want to insert it. Hence we have
+		// to handle the hierarchy update by hand.
+		PathMap* newChild = new PathMap(oscPathBit, iisuPath);
 		children.insert(it, newChild);
+		newChild->m_parent = parentPathMap;
 
 		return newChild;
 	}
