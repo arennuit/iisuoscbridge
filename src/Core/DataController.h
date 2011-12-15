@@ -43,12 +43,12 @@ public:
 
 	void editFoldAndNameJointsOption(bool isFoldAndNameJoints);
 
-	void onSelectionChanged(const PathMap* newSelectedPathMap) {m_selectedPathMap = newSelectedPathMap;}
+	void onSelectionChanged(const PathMap* newSelectedPathMap) {m_selectedPathMap = (PathMap*)newSelectedPathMap;}
 
-	const PathMap* addPathMap(const PathMap* siblingPathMap) {return m_dataBase->addPathMap((PathMap*)siblingPathMap);}
-	const PathMap* insertPathMap(const PathMap* siblingPathMap) {return m_dataBase->insertPathMap((PathMap*)siblingPathMap);}
-	const PathMap* addChildMap(const PathMap* parentPathMap) {return m_dataBase->addChildMap((PathMap*)parentPathMap);}
-	void deletePathMap(const PathMap* pathMap) {m_dataBase->deletePathMap((PathMap*)pathMap);}
+	const PathMap* addPathMap() {return m_dataBase->addPathMap(m_selectedPathMap);}
+	const PathMap* insertPathMap() {return m_dataBase->insertPathMap(m_selectedPathMap);}
+	const PathMap* addChildMap() {return m_dataBase->addChildMap(m_selectedPathMap);}
+	void deletePathMap() {m_dataBase->deletePathMap(m_selectedPathMap);}
 	void clearPathMaps() {m_dataBase->clearPathMaps();}
 
 	void newProject();
@@ -69,7 +69,7 @@ protected:
 
 	IisuManager m_iisuManager;
 
-	const PathMap* m_selectedPathMap;
+	PathMap* m_selectedPathMap;
 
 	void saveProjectToFile_recursive(pugi::xml_node& parent, const PathMap* pathMap);
 };

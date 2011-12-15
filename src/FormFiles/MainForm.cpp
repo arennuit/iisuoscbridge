@@ -280,24 +280,8 @@ void MainForm::onSelectionChanged( const QModelIndex& newModelIndex, const QMode
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onAddMapButtonClicked()
 {
-	// Call the controller's method.
-	QModelIndex currentIndex = ui.m_pathMapsView->currentIndex();
-	if (!currentIndex.isValid())
-		return;
-
-	QStandardItem* currentItem = m_mvdModel.itemFromIndex(currentIndex);
-	if (!currentItem)
-		return;
-
-	int customRole = currentIndex.data(MvdDataModel::RoleIndexRole).toInt();
-	if (customRole != MvdDataModel::PathMapRole)
-		return;
-
-	const PathMap* currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<const PathMap*>();
-	if (!currentPathMap)
-		return;
-
-	const PathMap* newPathMap = m_dataController->addPathMap(currentPathMap);
+	// Add PathMap.
+	const PathMap* newPathMap = m_dataController->addPathMap();
 	if (!newPathMap)
 		return;
 
@@ -311,6 +295,12 @@ void MainForm::onAddMapButtonClicked()
 	assert(iisuItem);
 	iisuItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
 	iisuItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
+
+	QModelIndex currentIndex = ui.m_pathMapsView->currentIndex();
+	assert(currentIndex.isValid());
+
+	QStandardItem* currentItem = m_mvdModel.itemFromIndex(currentIndex);
+	assert(currentItem);
 
 	QStandardItem* parentItem = currentItem->parent();
 	assert(parentItem);
@@ -323,32 +313,14 @@ void MainForm::onAddMapButtonClicked()
 	QModelIndex oscIndex = m_mvdModel.indexFromItem(oscItem);
 
 	if (oscIndex.isValid())
-		ui.m_pathMapsView->setCurrentIndex(oscIndex);	
-
-	//emit dataChanged(index, index);
+		ui.m_pathMapsView->setCurrentIndex(oscIndex);
 };
 
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onInsertMapButtonClicked()
 {
-	// Call the controller's method.
-	QModelIndex currentIndex = ui.m_pathMapsView->currentIndex();
-	if (!currentIndex.isValid())
-		return;
-
-	QStandardItem* currentItem = m_mvdModel.itemFromIndex(currentIndex);
-	if (!currentItem)
-		return;
-
-	int customRole = currentIndex.data(MvdDataModel::RoleIndexRole).toInt();
-	if (customRole != MvdDataModel::PathMapRole)
-		return;
-
-	const PathMap* currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<const PathMap*>();
-	if (!currentPathMap)
-		return;
-
-	const PathMap* newPathMap = m_dataController->insertPathMap(currentPathMap);
+	// Insert PathMap.
+	const PathMap* newPathMap = m_dataController->insertPathMap();
 	if (!newPathMap)
 		return;
 
@@ -362,6 +334,12 @@ void MainForm::onInsertMapButtonClicked()
 	assert(iisuItem);
 	iisuItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
 	iisuItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
+
+	QModelIndex currentIndex = ui.m_pathMapsView->currentIndex();
+	assert(currentIndex.isValid());
+
+	QStandardItem* currentItem = m_mvdModel.itemFromIndex(currentIndex);
+	assert(currentItem);
 
 	QStandardItem* parentItem = currentItem->parent();
 	assert(parentItem);
@@ -373,32 +351,14 @@ void MainForm::onInsertMapButtonClicked()
 	QModelIndex oscIndex = m_mvdModel.indexFromItem(oscItem);
 
 	if (oscIndex.isValid())
-		ui.m_pathMapsView->setCurrentIndex(oscIndex);	
-
-	//emit dataChanged(index, index);
+		ui.m_pathMapsView->setCurrentIndex(oscIndex);
 };
 
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onAddChildMapButtonClicked()
 {
-	// Call the controller's method.
-	QModelIndex currentIndex = ui.m_pathMapsView->currentIndex();
-	if (!currentIndex.isValid())
-		return;
-
-	QStandardItem* currentItem = m_mvdModel.itemFromIndex(currentIndex);
-	if (!currentItem)
-		return;
-
-	int customRole = currentIndex.data(MvdDataModel::RoleIndexRole).toInt();
-	if (customRole != MvdDataModel::PathMapRole)
-		return;
-
-	const PathMap* currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<const PathMap*>();
-	if (!currentPathMap)
-		return;
- 
-	const PathMap* newPathMap = m_dataController->addChildMap(currentPathMap);
+	// Add child to PathMap. 
+	const PathMap* newPathMap = m_dataController->addChildMap();
 	if (!newPathMap)
 		return;
 
@@ -413,6 +373,12 @@ void MainForm::onAddChildMapButtonClicked()
 	iisuItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
 	iisuItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
 
+	QModelIndex currentIndex = ui.m_pathMapsView->currentIndex();
+	assert(currentIndex.isValid());
+
+	QStandardItem* currentItem = m_mvdModel.itemFromIndex(currentIndex);
+	assert(currentItem);
+
 	int rowIdx = currentItem->rowCount();
 	currentItem->setChild(rowIdx, 0, oscItem);
 	currentItem->setChild(rowIdx, 1, iisuItem);
@@ -421,38 +387,24 @@ void MainForm::onAddChildMapButtonClicked()
 	QModelIndex oscIndex = m_mvdModel.indexFromItem(oscItem);
 
 	if (oscIndex.isValid())
-		ui.m_pathMapsView->setCurrentIndex(oscIndex);	
-
-	//emit dataChanged(index, index);
+		ui.m_pathMapsView->setCurrentIndex(oscIndex);
 };
 
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onDeleteMapButtonClicked()
 {
-	// Get the current PathMap.
-	QModelIndex currentIndex = ui.m_pathMapsView->currentIndex();
-	if (!currentIndex.isValid())
-		return;
-
-	int customRole = currentIndex.data(MvdDataModel::RoleIndexRole).toInt();
-	if (customRole != MvdDataModel::PathMapRole)
-		return;
-	
-	PathMap* currentPathMap = currentIndex.data(MvdDataModel::PathMapRole).value<PathMap*>();
-	if (!currentPathMap)
-		return;
-
-	// Call the controller's method. 
-	m_dataController->deletePathMap(currentPathMap);
+	// Delete PathMap.
+	m_dataController->deletePathMap();
 
 	// Update the model.
+	QModelIndex currentIndex = ui.m_pathMapsView->currentIndex();
+	assert(currentIndex.isValid());
+
 	QModelIndex parentIndex = currentIndex.parent();
 	m_mvdModel.removeRow(currentIndex.row(), parentIndex);
 
 	// Update the views.
 	ui.m_pathMapsView->setCurrentIndex(parentIndex);
-
-	//emit dataChanged(index, index);
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -463,8 +415,6 @@ void MainForm::onClearMapsButtonClicked()
 
 	// Update the model.
 	m_mvdModel.clear();
-
-	//emit dataChanged(index, index);
 }
 
 //////////////////////////////////////////////////////////////////////////
