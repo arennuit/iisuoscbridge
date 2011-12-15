@@ -20,6 +20,16 @@ class PathMap;
 /// It would be even better to have an observers' mechanism on data change with registered callbacks but this is
 /// a more involving solution. It probably needs properties in order not to have to code the callback registrators
 /// mechanism for any single piece of data.
+/// TODO: there is a problem with the architecture here. In order to protect the data and keep the integrity of the
+///       different layers of the app (ie keeping the data and the GUI up to date), all the modifications are due
+///       to be performed through the DataBase (and not directly on the data themselves). This means outside of the
+///       DataBase, all the reference and pointers to the data are consts (the DataBase's get accessors all return
+///       const values).
+///       In order to allow data edition, the GUI keeps a pointer or ref to each displayed data. These pointers are
+///       consts because the DataBase only returns const pointers. As the pointers are consts, one cannot call an
+///       editing function against these pointers.
+///       At the moment we use a workaround: we transform the const points into non-consts in the DataController.
+///       This is not ideal and requires a bit more TLC...
 class DataBase : public AbstractDataBase
 {
 	DECLARE_DATA_BASE(DataBase)
@@ -30,9 +40,9 @@ public:
 	//@{
 	void reset();
 
-	virtual PathMap* addPathMap(PathMap* siblingPathMap);
-	virtual PathMap* insertPathMap(PathMap* siblingPathMap);
-	virtual PathMap* addChildMap(PathMap* parentPathMap);
+	virtual const PathMap* addPathMap(PathMap* siblingPathMap);
+	virtual const PathMap* insertPathMap(PathMap* siblingPathMap);
+	virtual const PathMap* addChildMap(PathMap* parentPathMap);
 	virtual void deletePathMap(PathMap* pathMap);
 	virtual void clearPathMaps();
 	//@}

@@ -49,7 +49,7 @@ void DataBase::setDefaultValues()
 
 
 //////////////////////////////////////////////////////////////////////////
-PathMap* DataBase::addPathMap(PathMap* siblingPathMap)
+const PathMap* DataBase::addPathMap(PathMap* siblingPathMap)
 {
 	if (!siblingPathMap)
 		return 0;
@@ -58,7 +58,7 @@ PathMap* DataBase::addPathMap(PathMap* siblingPathMap)
 }
 
 //////////////////////////////////////////////////////////////////////////
-PathMap* DataBase::insertPathMap(PathMap* siblingPathMap)
+const PathMap* DataBase::insertPathMap(PathMap* siblingPathMap)
 {
 	if (!siblingPathMap)
 		return 0;
@@ -68,7 +68,7 @@ PathMap* DataBase::insertPathMap(PathMap* siblingPathMap)
 
 
 //////////////////////////////////////////////////////////////////////////
-PathMap* DataBase::addChildMap(PathMap* parentPathMap)
+const PathMap* DataBase::addChildMap(PathMap* parentPathMap)
 {
 	if (!parentPathMap)
 		return 0;

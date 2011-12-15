@@ -1,6 +1,6 @@
 #include "IisuDataRegistrator.h"
 #include "SDK/iisuSDK.h"
-#include "DataController/TypedPathMap/TypedPathMap.h"
+#include "Core/IisuManager/TypedPathMap/TypedPathMap.h"
 #include "LogSystem/Logger.h"
 
 namespace SK

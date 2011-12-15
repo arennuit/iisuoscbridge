@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Platform/SkPlatform.h>
-#include "DataController/TypedPathMap/TypedPathMapVisitor.h"
+#include "Core/IisuManager/TypedPathMap/TypedPathMapVisitor.h"
 #include <vector>
 
 namespace SK

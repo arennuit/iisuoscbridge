@@ -1,5 +1,5 @@
 #include <Platform/SkPlatform.h>
-#include "DataController/TypedPathMap/TypedPathMapVisitor.h"
+#include "Core/IisuManager/TypedPathMap/TypedPathMapVisitor.h"
 #include <string>
 
 namespace osc
