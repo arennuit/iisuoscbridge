@@ -8,6 +8,7 @@ namespace SK
 
 //////////////////////////////////////////////////////////////////////////
 /// \brief This maintains the type-agnostic mapping between the iisu data path and its OSC counterpart.
+///
 /// See class TypedPathMap for the typed version of it. Also note that PathMap maintains the path
 /// hierarchy and thus it does not store the full OSC paths but only the bit corresponding to itself.
 /// This is unlike TypedPathMap which keeps the full OSC path.

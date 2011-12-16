@@ -48,7 +48,7 @@ public:
 	virtual void clearPathMaps();
 	//@}
 
-	/// \name Application.
+	/// \name Accessors.
 	//@{
 	virtual const std::string& getIpAddress() const {return m_ipAddress;}
 	virtual void setIpAddress(const std::string& ipAddress) {m_ipAddress = ipAddress;}

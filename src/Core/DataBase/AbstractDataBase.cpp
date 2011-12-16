@@ -1,7 +1,3 @@
-//#include <Iisu/Processing/DataModel/CoreManager.h>
-//#include <Iisu/Processing/DataModel/DataObject.h>
-//#include <algorithm>
-//#include <assert.h>
 #include "AbstractDataBase.h"
 
 namespace SK
