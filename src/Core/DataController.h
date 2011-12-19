@@ -43,13 +43,13 @@ public:
 
 	void editFoldAndNameJointsOption(bool isFoldAndNameJoints);
 
-	void onSelectionChanged(const PathMap* newSelectedPathMap) {m_selectedPathMap = (PathMap*)newSelectedPathMap;}
+	void editSelection(const PathMap* newSelectedPathMap) {m_selectedPathMap = (PathMap*)newSelectedPathMap;}
 
-	const PathMap* addPathMap() {return m_dataBase->addPathMap(m_selectedPathMap);}
-	const PathMap* insertPathMap() {return m_dataBase->insertPathMap(m_selectedPathMap);}
-	const PathMap* addChildMap() {return m_dataBase->addChildMap(m_selectedPathMap);}
-	void deletePathMap() {m_dataBase->deletePathMap(m_selectedPathMap);}
-	void clearPathMaps() {m_dataBase->clearPathMaps();}
+	const PathMap* addPathMap();
+	const PathMap* insertPathMap();
+	const PathMap* addChildMap();
+	bool deletePathMap();
+	bool clearPathMaps();
 
 	void newProject();
 	void saveProjectToFile(std::string& filePath);

@@ -15,7 +15,16 @@ class AppDataBase : public DataBase
 
 public:
 
-	/// \name Application data accessors redefinitions.
+	/// \name API redefinitions.
+	//@{
+	const PathMap* addPathMap(PathMap* siblingPathMap) SK_OVERRIDE;
+	const PathMap* insertPathMap(PathMap* siblingPathMap) SK_OVERRIDE;
+	const PathMap* addChildMap(PathMap* parentPathMap) SK_OVERRIDE;
+	bool deletePathMap(PathMap* pathMap) SK_OVERRIDE;
+	bool clearPathMaps() SK_OVERRIDE;
+	//@}
+
+	/// \name Accessors redefinitions.
 	//@{
 	void setIsObservationOn(bool isObservationOn) SK_OVERRIDE;
 	void setOscPacketSize(uint oscPacketSize) SK_OVERRIDE;

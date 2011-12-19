@@ -53,6 +53,12 @@ public:
 
 	/// \name App -> UI logic.
 	//@{
+	void onAddPathMap(const PathMap* newPathMap);
+	void onInsertPathMap(const PathMap* newPathMap);
+	void onAddChildMap(const PathMap* newPathMap);
+	void onDeletePathMap();
+	void onClearPathMaps();
+
 	void onIsObservationOnChanged(bool isObservationOn);
 	void onOscPacketSizeChanged(uint oscPacketSize) {ui.m_oscPacketSizeLineEdit->setText(QString::number(oscPacketSize));}
 	//@}
@@ -83,11 +89,11 @@ protected slots:
 	
 	void onSelectionChanged( const QModelIndex& newModelIndex, const QModelIndex& oldModelIndex );
 
-	void onAddMapButtonClicked();
-	void onInsertMapButtonClicked();
-	void onAddChildMapButtonClicked();
-	void onDeleteMapButtonClicked();
-	void onClearMapsButtonClicked();
+	void onAddMapButtonClicked() {m_dataController->addPathMap();}
+	void onInsertMapButtonClicked() {m_dataController->insertPathMap();}
+	void onAddChildMapButtonClicked() {m_dataController->addChildMap();}
+	void onDeleteMapButtonClicked() {m_dataController->deletePathMap();}
+	void onClearMapsButtonClicked() {m_dataController->clearPathMaps();}
 	//@}
 
 protected:
@@ -111,6 +117,8 @@ protected:
 	void updateRecentFileActions();
 	QAction* m_recentFilesSeparatorAction;
 	QAction* m_recentFileActions[RECENT_FILES_MAX_NUM];
+
+	QStandardItem* m_selectedItem;
 };
 
 } // namespace SK.

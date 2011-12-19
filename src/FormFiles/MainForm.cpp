@@ -14,7 +14,8 @@ MainForm::MainForm(QWidget *parent, Qt::WFlags flags) :
 	m_iidFileSelectDlg(this),
 	m_openFileSelectDlg(this),
 	m_saveAsFileSelectDlg(this),
-	m_clogStreamBuf()
+	m_clogStreamBuf(),
+	m_selectedItem(0)
 {
 	// Designer-defined UI setup.
 	ui.setupUi(this);
@@ -134,6 +135,164 @@ void MainForm::setup()
 		connect(m_recentFileActions[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
 
 	connect(ui.m_pathMapsView->selectionModel(), SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)), this, SLOT(onSelectionChanged(const QModelIndex&, const QModelIndex&)));
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onAddPathMap(const PathMap* newPathMap)
+{
+	assert(m_selectedItem);
+
+	// Create the new model's items.
+	QStandardItem* oscItem = new QStandardItem(newPathMap->getOscPathBit().c_str());
+	assert(oscItem);
+	oscItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
+	oscItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
+
+	QStandardItem* iisuItem = new QStandardItem(newPathMap->getIisuPath().c_str());
+	assert(iisuItem);
+	iisuItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
+	iisuItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
+
+	// Attach the new items.
+	QStandardItem* parentItem = m_selectedItem->parent();
+	assert(parentItem);
+
+	int rowIdx = parentItem->rowCount();
+	parentItem->setChild(rowIdx, 0, oscItem);
+	parentItem->setChild(rowIdx, 1, iisuItem);
+
+	// Update the selection.
+	// TODO: make an AppDataController and make the AppDataBase know about the AppDataController rather than the
+	//       MainForm, and the AppDataController know about the MainForm so the commands go forth and back through
+	//       all app layers, the AppDataController passing the AppDataBase messages through to the MainForm. This
+	//       will allow the DataController to have its selection changed as a result of a new PathMap created or
+	//       deleted.
+	//       Or even better: we could implement the callback mechanism on DataBase update mentioned in a comment
+	//       in DataBase.h.
+	m_selectedItem = oscItem;
+
+	QModelIndex oscIndex = m_mvdModel.indexFromItem(oscItem);
+	if (oscIndex.isValid())
+		ui.m_pathMapsView->setCurrentIndex(oscIndex);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onInsertPathMap(const PathMap* newPathMap)
+{
+	assert(m_selectedItem);
+
+	// Create the new model's items.
+	QStandardItem* oscItem = new QStandardItem(newPathMap->getOscPathBit().c_str());
+	assert(oscItem);
+	oscItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
+	oscItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
+
+	QStandardItem* iisuItem = new QStandardItem(newPathMap->getIisuPath().c_str());
+	assert(iisuItem);
+	iisuItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
+	iisuItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
+
+	// Attach the new items.
+	QStandardItem* parentItem = m_selectedItem->parent();
+	assert(parentItem);
+
+	int rowIdx = m_selectedItem->row();
+	parentItem->insertRow(rowIdx, QList<QStandardItem*>() << oscItem << iisuItem);
+
+	// Update the selection.
+	// TODO: make an AppDataController and make the AppDataBase know about the AppDataController rather than the
+	//       MainForm, and the AppDataController know about the MainForm so the commands go forth and back through
+	//       all app layers, the AppDataController passing the AppDataBase messages through to the MainForm. This
+	//       will allow the DataController to have its selection changed as a result of a new PathMap created or
+	//       deleted.
+	//       Or even better: we could implement the callback mechanism on DataBase update mentioned in a comment
+	//       in DataBase.h.
+	m_selectedItem = oscItem;
+
+	QModelIndex oscIndex = m_mvdModel.indexFromItem(oscItem);
+	if (oscIndex.isValid())
+		ui.m_pathMapsView->setCurrentIndex(oscIndex);
+};
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onAddChildMap(const PathMap* newPathMap)
+{
+	assert(m_selectedItem);
+
+	// Create the new model's items.
+	QStandardItem* oscItem = new QStandardItem(newPathMap->getOscPathBit().c_str());
+	assert(oscItem);
+	oscItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
+	oscItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
+
+	QStandardItem* iisuItem = new QStandardItem(newPathMap->getIisuPath().c_str());
+	assert(iisuItem);
+	iisuItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
+	iisuItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
+
+	// Attach the new items.
+	int rowIdx = m_selectedItem->rowCount();
+	m_selectedItem->setChild(rowIdx, 0, oscItem);
+	m_selectedItem->setChild(rowIdx, 1, iisuItem);
+
+	// Update the selection.
+	// TODO: make an AppDataController and make the AppDataBase know about the AppDataController rather than the
+	//       MainForm, and the AppDataController know about the MainForm so the commands go forth and back through
+	//       all app layers, the AppDataController passing the AppDataBase messages through to the MainForm. This
+	//       will allow the DataController to have its selection changed as a result of a new PathMap created or
+	//       deleted.
+	//       Or even better: we could implement the callback mechanism on DataBase update mentioned in a comment
+	//       in DataBase.h.
+	m_selectedItem = oscItem;
+
+	QModelIndex oscIndex = m_mvdModel.indexFromItem(oscItem);
+	if (oscIndex.isValid())
+		ui.m_pathMapsView->setCurrentIndex(oscIndex);
+};
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onDeletePathMap()
+{
+	assert(m_selectedItem);
+
+	// Delete the model's items.
+	QModelIndex selectedIndex = m_mvdModel.indexFromItem(m_selectedItem);
+	assert(selectedIndex.isValid());
+
+	QModelIndex parentIndex = selectedIndex.parent();
+	assert(parentIndex.isValid());
+
+	m_mvdModel.removeRow(selectedIndex.row(), parentIndex);
+
+	// Update the selection.
+	// TODO: make an AppDataController and make the AppDataBase know about the AppDataController rather than the
+	//       MainForm, and the AppDataController know about the MainForm so the commands go forth and back through
+	//       all app layers, the AppDataController passing the AppDataBase messages through to the MainForm. This
+	//       will allow the DataController to have its selection changed as a result of a new PathMap created or
+	//       deleted.
+	//       Or even better: we could implement the callback mechanism on DataBase update mentioned in a comment
+	//       in DataBase.h.
+	QStandardItem* parentItem = m_mvdModel.itemFromIndex(parentIndex);
+	m_selectedItem = parentItem;
+
+	ui.m_pathMapsView->setCurrentIndex(parentIndex);
+};
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onClearPathMaps()
+{
+	// Clear the model.
+	m_mvdModel.clear();
+
+	// Update the selection.
+	// TODO: make an AppDataController and make the AppDataBase know about the AppDataController rather than the
+	//       MainForm, and the AppDataController know about the MainForm so the commands go forth and back through
+	//       all app layers, the AppDataController passing the AppDataBase messages through to the MainForm. This
+	//       will allow the DataController to have its selection changed as a result of a new PathMap created or
+	//       deleted.
+	//       Or even better: we could implement the callback mechanism on DataBase update mentioned in a comment
+	//       in DataBase.h.
+	m_selectedItem = 0;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -260,161 +419,18 @@ void MainForm::onIidFilePathButtonClicked()
 void MainForm::onSelectionChanged( const QModelIndex& newModelIndex, const QModelIndex& /*oldModelIndex*/ )
 {
 	// Get the underlying PathMap.
-	if (!newModelIndex.isValid())
-		return;
+	assert(newModelIndex.isValid());
 
-	QStandardItem* newItem = m_mvdModel.itemFromIndex(newModelIndex);
-	if (!newItem)
-		return;
+	m_selectedItem = m_mvdModel.itemFromIndex(newModelIndex);
+	assert(m_selectedItem);
 
 	int customRole = newModelIndex.data(MvdDataModel::RoleIndexRole).toInt();
-	if (customRole != MvdDataModel::PathMapRole)
-		return;
+	assert(customRole == MvdDataModel::PathMapRole);
 
 	const PathMap* newSelectedPathMap = newModelIndex.data(MvdDataModel::PathMapRole).value<const PathMap*>();
 
 	// Call the controller's method.
-	m_dataController->onSelectionChanged(newSelectedPathMap);
-}
-
-//////////////////////////////////////////////////////////////////////////
-void MainForm::onAddMapButtonClicked()
-{
-	// Add PathMap.
-	const PathMap* newPathMap = m_dataController->addPathMap();
-	if (!newPathMap)
-		return;
-
-	// Update the model.
-	QStandardItem* oscItem = new QStandardItem(newPathMap->getOscPathBit().c_str());
-	assert(oscItem);
-	oscItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
-	oscItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
-
-	QStandardItem* iisuItem = new QStandardItem(newPathMap->getIisuPath().c_str());
-	assert(iisuItem);
-	iisuItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
-	iisuItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
-
-	QModelIndex currentIndex = ui.m_pathMapsView->currentIndex();
-	assert(currentIndex.isValid());
-
-	QStandardItem* currentItem = m_mvdModel.itemFromIndex(currentIndex);
-	assert(currentItem);
-
-	QStandardItem* parentItem = currentItem->parent();
-	assert(parentItem);
-
-	int rowIdx = parentItem->rowCount();
-	parentItem->setChild(rowIdx, 0, oscItem);
-	parentItem->setChild(rowIdx, 1, iisuItem);
-
-	// Update the views.
-	QModelIndex oscIndex = m_mvdModel.indexFromItem(oscItem);
-
-	if (oscIndex.isValid())
-		ui.m_pathMapsView->setCurrentIndex(oscIndex);
-};
-
-//////////////////////////////////////////////////////////////////////////
-void MainForm::onInsertMapButtonClicked()
-{
-	// Insert PathMap.
-	const PathMap* newPathMap = m_dataController->insertPathMap();
-	if (!newPathMap)
-		return;
-
-	// Update the model.
-	QStandardItem* oscItem = new QStandardItem(newPathMap->getOscPathBit().c_str());
-	assert(oscItem);
-	oscItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
-	oscItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
-
-	QStandardItem* iisuItem = new QStandardItem(newPathMap->getIisuPath().c_str());
-	assert(iisuItem);
-	iisuItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
-	iisuItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
-
-	QModelIndex currentIndex = ui.m_pathMapsView->currentIndex();
-	assert(currentIndex.isValid());
-
-	QStandardItem* currentItem = m_mvdModel.itemFromIndex(currentIndex);
-	assert(currentItem);
-
-	QStandardItem* parentItem = currentItem->parent();
-	assert(parentItem);
-
-	int rowIdx = currentIndex.row();
-	parentItem->insertRow(rowIdx, QList<QStandardItem*>() << oscItem << iisuItem);
-
-	// Update the views.
-	QModelIndex oscIndex = m_mvdModel.indexFromItem(oscItem);
-
-	if (oscIndex.isValid())
-		ui.m_pathMapsView->setCurrentIndex(oscIndex);
-};
-
-//////////////////////////////////////////////////////////////////////////
-void MainForm::onAddChildMapButtonClicked()
-{
-	// Add child to PathMap. 
-	const PathMap* newPathMap = m_dataController->addChildMap();
-	if (!newPathMap)
-		return;
-
-	// Update the model.
-	QStandardItem* oscItem = new QStandardItem(newPathMap->getOscPathBit().c_str());
-	assert(oscItem);
-	oscItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
-	oscItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
-
-	QStandardItem* iisuItem = new QStandardItem(newPathMap->getIisuPath().c_str());
-	assert(iisuItem);
-	iisuItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
-	iisuItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
-
-	QModelIndex currentIndex = ui.m_pathMapsView->currentIndex();
-	assert(currentIndex.isValid());
-
-	QStandardItem* currentItem = m_mvdModel.itemFromIndex(currentIndex);
-	assert(currentItem);
-
-	int rowIdx = currentItem->rowCount();
-	currentItem->setChild(rowIdx, 0, oscItem);
-	currentItem->setChild(rowIdx, 1, iisuItem);
-
-	// Update the views.
-	QModelIndex oscIndex = m_mvdModel.indexFromItem(oscItem);
-
-	if (oscIndex.isValid())
-		ui.m_pathMapsView->setCurrentIndex(oscIndex);
-};
-
-//////////////////////////////////////////////////////////////////////////
-void MainForm::onDeleteMapButtonClicked()
-{
-	// Delete PathMap.
-	m_dataController->deletePathMap();
-
-	// Update the model.
-	QModelIndex currentIndex = ui.m_pathMapsView->currentIndex();
-	assert(currentIndex.isValid());
-
-	QModelIndex parentIndex = currentIndex.parent();
-	m_mvdModel.removeRow(currentIndex.row(), parentIndex);
-
-	// Update the views.
-	ui.m_pathMapsView->setCurrentIndex(parentIndex);
-};
-
-//////////////////////////////////////////////////////////////////////////
-void MainForm::onClearMapsButtonClicked()
-{
-	// Call the controller's method. 
-	m_dataController->clearPathMaps();
-
-	// Update the model.
-	m_mvdModel.clear();
+	m_dataController->editSelection(newSelectedPathMap);
 }
 
 //////////////////////////////////////////////////////////////////////////
