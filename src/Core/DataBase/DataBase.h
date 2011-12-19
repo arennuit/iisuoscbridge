@@ -44,8 +44,8 @@ public:
 	virtual const PathMap* addPathMap(PathMap* siblingPathMap);
 	virtual const PathMap* insertPathMap(PathMap* siblingPathMap);
 	virtual const PathMap* addChildMap(PathMap* parentPathMap);
-	virtual void deletePathMap(PathMap* pathMap);
-	virtual void clearPathMaps();
+	virtual bool deletePathMap(PathMap* pathMap);
+	virtual bool clearPathMaps();
 	//@}
 
 	/// \name Accessors.

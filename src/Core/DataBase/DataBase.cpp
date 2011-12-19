@@ -77,25 +77,29 @@ const PathMap* DataBase::addChildMap(PathMap* parentPathMap)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataBase::deletePathMap(PathMap* pathMap)
+bool DataBase::deletePathMap( PathMap* pathMap )
 {
 	if (!pathMap)
-		return;
+		return false;
+
+	delete pathMap;
 
 	if (!pathMap->getParent())
 		m_pathMapsRoot = 0;
 
-	delete pathMap;
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataBase::clearPathMaps()
+bool DataBase::clearPathMaps()
 {
-	if (m_pathMapsRoot)
-	{
-		delete m_pathMapsRoot;
-		m_pathMapsRoot = 0;
-	}
+	if (!m_pathMapsRoot)
+		return true;
+
+	delete m_pathMapsRoot;
+	m_pathMapsRoot = 0;
+
+	return true;
 }
 
 } // namespace SK.
