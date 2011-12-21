@@ -3,6 +3,9 @@
 #include "AbstractDataBase.h"
 #include <string>
 
+#define NEW_OSC_PATH_BIT "New Osc Path Bit"
+#define NEW_IISU_PATH "New Iisu Path"
+
 namespace SK
 {
 
@@ -41,10 +44,10 @@ public:
 	//@{
 	void reset();
 
-	virtual const PathMap* addPathMap(PathMap* siblingPathMap);
-	virtual const PathMap* insertPathMap(PathMap* siblingPathMap);
-	virtual const PathMap* addChildMap(PathMap* parentPathMap);
-	virtual bool deletePathMap(PathMap* pathMap);
+	virtual const PathMap* addPathMap(const PathMap* siblingPathMap, const std::string& oscPathBit = NEW_OSC_PATH_BIT, const std::string& iisuPath = NEW_IISU_PATH);
+	virtual const PathMap* insertPathMap(const PathMap* siblingPathMap, const std::string& oscPathBit = NEW_OSC_PATH_BIT, const std::string& iisuPath = NEW_IISU_PATH);
+	virtual const PathMap* addChildMap(const PathMap* parentPathMap, const std::string& oscPathBit = NEW_OSC_PATH_BIT, const std::string& iisuPath = NEW_IISU_PATH);
+	virtual bool deletePathMap(const PathMap* pathMap);
 	virtual bool clearPathMaps();
 	//@}
 

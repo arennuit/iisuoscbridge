@@ -8,9 +8,9 @@ namespace SK
 DEFINE_DATA_BASE(AppDataBase, DataBase)
 
 //////////////////////////////////////////////////////////////////////////
-const PathMap* AppDataBase::addPathMap(PathMap* siblingPathMap)
+const PathMap* AppDataBase::addPathMap(const PathMap* siblingPathMap, const std::string& oscPathBit /*= NEW_OSC_PATH_BIT*/, const std::string& iisuPath /*= NEW_IISU_PATH*/)
 {
-	const PathMap* newPathMap = DataBase::addPathMap(siblingPathMap);
+	const PathMap* newPathMap = DataBase::addPathMap(siblingPathMap, oscPathBit, iisuPath);
 	if (!newPathMap)
 		return 0;
 
@@ -21,9 +21,9 @@ const PathMap* AppDataBase::addPathMap(PathMap* siblingPathMap)
 }
 
 //////////////////////////////////////////////////////////////////////////
-const PathMap* AppDataBase::insertPathMap(PathMap* siblingPathMap)
+const PathMap* AppDataBase::insertPathMap(const PathMap* siblingPathMap, const std::string& oscPathBit /*= NEW_OSC_PATH_BIT*/, const std::string& iisuPath /*= NEW_IISU_PATH*/)
 {
-	const PathMap* newPathMap = DataBase::insertPathMap(siblingPathMap);
+	const PathMap* newPathMap = DataBase::insertPathMap(siblingPathMap, oscPathBit, iisuPath);
 	if (!newPathMap)
 		return 0;
 
@@ -34,9 +34,9 @@ const PathMap* AppDataBase::insertPathMap(PathMap* siblingPathMap)
 }
 
 //////////////////////////////////////////////////////////////////////////
-const PathMap* AppDataBase::addChildMap(PathMap* parentPathMap)
+const PathMap* AppDataBase::addChildMap(const PathMap* parentPathMap, const std::string& oscPathBit /*= NEW_OSC_PATH_BIT*/, const std::string& iisuPath /*= NEW_IISU_PATH*/)
 {
-	const PathMap* newPathMap = DataBase::addChildMap(parentPathMap);
+	const PathMap* newPathMap = DataBase::addChildMap(parentPathMap, oscPathBit, iisuPath);
 	if (!newPathMap)
 		return 0;
 
@@ -47,7 +47,7 @@ const PathMap* AppDataBase::addChildMap(PathMap* parentPathMap)
 }
 
 //////////////////////////////////////////////////////////////////////////
-bool AppDataBase::deletePathMap(PathMap* pathMap)
+bool AppDataBase::deletePathMap(const PathMap* pathMap)
 {
 	bool retVal = DataBase::deletePathMap(pathMap);
 	if (!retVal)

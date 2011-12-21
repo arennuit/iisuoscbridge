@@ -119,6 +119,8 @@ protected:
 	QAction* m_recentFileActions[RECENT_FILES_MAX_NUM];
 
 	QStandardItem* m_selectedItem;
+
+	std::map<PathMap*, QStandardItem*> m_pathMapItemMap;
 };
 
 } // namespace SK.

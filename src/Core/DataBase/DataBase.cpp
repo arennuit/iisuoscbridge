@@ -1,16 +1,14 @@
 #include "DataBase.h"
 #include "PathMap.h"
 
-#define NEW_OSC_PATH_BIT "New Osc Path Bit"
-#define NEW_IISU_PATH "New Iisu Path"
-
 namespace SK
 {
 
 DEFINE_DATA_BASE(DataBase, AbstractDataBase)
 
 //////////////////////////////////////////////////////////////////////////
-DataBase::DataBase()
+DataBase::DataBase() : 
+	m_pathMapsRoot(0)
 {
 	setDefaultValues();
 }
@@ -29,15 +27,16 @@ void DataBase::setDefaultValues()
 	m_port = 8000;
 	m_iidFilePath = "";
 
-	m_pathMapsRoot = new PathMap("iisu", "");
+	// Root.
+	addPathMap(0, "iisu", "");
 
 	// Users 1.
-	PathMap* path_user1 = m_pathMapsRoot->addChildMap("user1", "");
-	//path_user1->addChildMap("centroids", "USER1.SHAPE.CENTROIDS.Positions");
-	path_user1->addChildMap("status", "USER1.SKELETON.Status");
-	PathMap* path_joints1 = path_user1->addChildMap("joints", "");
-	path_joints1->addChildMap("positions", "USER1.SKELETON.KeyPoints");
-	path_joints1->addChildMap("confidences", "USER1.SKELETON.KeyPointsConfidence");
+	const PathMap* path_user1 = addChildMap(m_pathMapsRoot, "user1", "");
+	//addChildMap(path_user1, "centroids", "USER1.SHAPE.CENTROIDS.Positions");
+	addChildMap(path_user1, "status", "USER1.SKELETON.Status");
+	const PathMap* path_joints1 = addChildMap(path_user1, "joints", "");
+	addChildMap(path_joints1, "positions", "USER1.SKELETON.KeyPoints");
+	addChildMap(path_joints1, "confidences", "USER1.SKELETON.KeyPointsConfidence");
 
 	m_isObservationOn = false;
 
@@ -47,7 +46,7 @@ void DataBase::setDefaultValues()
 }
 
 //////////////////////////////////////////////////////////////////////////
-const PathMap* DataBase::addPathMap(PathMap* siblingPathMap)
+const PathMap* DataBase::addPathMap(const PathMap* siblingPathMap, const std::string& oscPathBit /*= NEW_OSC_PATH_BIT*/, const std::string& iisuPath /*= NEW_IISU_PATH*/)
 {
 	assert(!(siblingPathMap && !m_pathMapsRoot));
 
@@ -58,10 +57,10 @@ const PathMap* DataBase::addPathMap(PathMap* siblingPathMap)
 	// Nominal case: siblingPathMap !0 && m_pathMapsRoot != 0.
 	// NOTE: with the assert above we know m_pathMapsRoot != 0 if siblingPathMap != 0.
 	if (siblingPathMap) 
-		return siblingPathMap->addPathMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
+		return ((PathMap*)siblingPathMap)->addPathMap(oscPathBit, iisuPath);
 
 	// Case where siblingPathMap == 0 && m_pathMapsRoot == 0.
-	PathMap* newPathMap = new PathMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
+	PathMap* newPathMap = new PathMap(oscPathBit, iisuPath);
 	assert(newPathMap);
 
 	assert(!m_pathMapsRoot);
@@ -71,7 +70,7 @@ const PathMap* DataBase::addPathMap(PathMap* siblingPathMap)
 }
 
 //////////////////////////////////////////////////////////////////////////
-const PathMap* DataBase::insertPathMap(PathMap* siblingPathMap)
+const PathMap* DataBase::insertPathMap(const PathMap* siblingPathMap, const std::string& oscPathBit /*= NEW_OSC_PATH_BIT*/, const std::string& iisuPath /*= NEW_IISU_PATH*/)
 {
 	assert(!(siblingPathMap && !m_pathMapsRoot));
 
@@ -82,10 +81,10 @@ const PathMap* DataBase::insertPathMap(PathMap* siblingPathMap)
 	// Nominal case: siblingPathMap !0 && m_pathMapsRoot != 0.
 	// NOTE: with the assert above we know m_pathMapsRoot != 0 if siblingPathMap != 0.
 	if (siblingPathMap) 
-		return siblingPathMap->insertPathMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
+		return ((PathMap*)siblingPathMap)->insertPathMap(oscPathBit, iisuPath);
 	
 	// Case where siblingPathMap == 0 && m_pathMapsRoot == 0.
-	PathMap* newPathMap = new PathMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
+	PathMap* newPathMap = new PathMap(oscPathBit, iisuPath);
 	assert(newPathMap);
 
 	assert(!m_pathMapsRoot);
@@ -95,7 +94,7 @@ const PathMap* DataBase::insertPathMap(PathMap* siblingPathMap)
 }
 
 //////////////////////////////////////////////////////////////////////////
-const PathMap* DataBase::addChildMap(PathMap* parentPathMap)
+const PathMap* DataBase::addChildMap(const PathMap* parentPathMap, const std::string& oscPathBit /*= NEW_OSC_PATH_BIT*/, const std::string& iisuPath /*= NEW_IISU_PATH*/)
 {
 	assert(!(parentPathMap && !m_pathMapsRoot));
 
@@ -106,10 +105,10 @@ const PathMap* DataBase::addChildMap(PathMap* parentPathMap)
 	// Nominal case: parentPathMap !0 && m_pathMapsRoot != 0.
 	// NOTE: with the assert above we know m_pathMapsRoot != 0 if parentPathMap != 0.
 	if (parentPathMap) 
-		return parentPathMap->addChildMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
+		return ((PathMap*)parentPathMap)->addChildMap(oscPathBit, iisuPath);
 
 	// Case where parentPathMap == 0 && m_pathMapsRoot == 0.
-	PathMap* newPathMap = new PathMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
+	PathMap* newPathMap = new PathMap(oscPathBit, iisuPath);
 	assert(newPathMap);
 
 	assert(!m_pathMapsRoot);
@@ -119,12 +118,12 @@ const PathMap* DataBase::addChildMap(PathMap* parentPathMap)
 }
 
 //////////////////////////////////////////////////////////////////////////
-bool DataBase::deletePathMap( PathMap* pathMap )
+bool DataBase::deletePathMap( const PathMap* pathMap )
 {
 	if (!pathMap)
 		return false;
 
-	delete pathMap;
+	delete (PathMap*)pathMap;
 
 	// Check there is no more root PathMap.
 	if (!pathMap->getParent())
