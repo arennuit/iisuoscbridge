@@ -134,7 +134,7 @@ void MainForm::setup()
 	for (uint i = 0; i < RECENT_FILES_MAX_NUM; ++i)
 		connect(m_recentFileActions[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
 
-	connect(ui.m_pathMapsView->selectionModel(), SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)), this, SLOT(onSelectionChanged(const QModelIndex&, const QModelIndex&)));
+	connect(ui.m_pathMapsView->selectionModel(), SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)), this, SLOT(onSelectionModelCurrentChanged(const QModelIndex&, const QModelIndex&)));
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -445,7 +445,7 @@ void MainForm::onIidFilePathButtonClicked()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void MainForm::onSelectionChanged( const QModelIndex& newModelIndex, const QModelIndex& /*oldModelIndex*/ )
+void MainForm::onSelectionModelCurrentChanged( const QModelIndex& newModelIndex, const QModelIndex& /*oldModelIndex*/ )
 {
 	// Get the underlying PathMap.
 	assert(newModelIndex.isValid());
