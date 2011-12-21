@@ -46,34 +46,76 @@ void DataBase::setDefaultValues()
 	m_oscPacketSize = 0;
 }
 
-
-
 //////////////////////////////////////////////////////////////////////////
 const PathMap* DataBase::addPathMap(PathMap* siblingPathMap)
 {
-	if (!siblingPathMap)
+	assert(!(siblingPathMap && !m_pathMapsRoot));
+
+	// If there are already PathMaps in the tree but siblingPathMap == 0, we don't know where to attach the new PathMap.
+	if (!siblingPathMap && m_pathMapsRoot)
 		return 0;
 
-	return siblingPathMap->addPathMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
+	// Nominal case: siblingPathMap !0 && m_pathMapsRoot != 0.
+	// NOTE: with the assert above we know m_pathMapsRoot != 0 if siblingPathMap != 0.
+	if (siblingPathMap) 
+		return siblingPathMap->addPathMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
+
+	// Case where siblingPathMap == 0 && m_pathMapsRoot == 0.
+	PathMap* newPathMap = new PathMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
+	assert(newPathMap);
+
+	assert(!m_pathMapsRoot);
+	m_pathMapsRoot = newPathMap;
+
+	return newPathMap;
 }
 
 //////////////////////////////////////////////////////////////////////////
 const PathMap* DataBase::insertPathMap(PathMap* siblingPathMap)
 {
-	if (!siblingPathMap)
+	assert(!(siblingPathMap && !m_pathMapsRoot));
+
+	// If there are already PathMaps in the tree but siblingPathMap == 0, we don't know where to attach the new PathMap.
+	if (!siblingPathMap && m_pathMapsRoot)
 		return 0;
 
-	return siblingPathMap->insertPathMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
-}
+	// Nominal case: siblingPathMap !0 && m_pathMapsRoot != 0.
+	// NOTE: with the assert above we know m_pathMapsRoot != 0 if siblingPathMap != 0.
+	if (siblingPathMap) 
+		return siblingPathMap->insertPathMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
+	
+	// Case where siblingPathMap == 0 && m_pathMapsRoot == 0.
+	PathMap* newPathMap = new PathMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
+	assert(newPathMap);
 
+	assert(!m_pathMapsRoot);
+	m_pathMapsRoot = newPathMap;
+
+	return newPathMap;
+}
 
 //////////////////////////////////////////////////////////////////////////
 const PathMap* DataBase::addChildMap(PathMap* parentPathMap)
 {
-	if (!parentPathMap)
+	assert(!(parentPathMap && !m_pathMapsRoot));
+
+	// If there are already PathMaps in the tree but parentPathMap == 0, we don't know where to attach the new PathMap.
+	if (!parentPathMap && m_pathMapsRoot)
 		return 0;
 
-	return parentPathMap->addChildMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
+	// Nominal case: parentPathMap !0 && m_pathMapsRoot != 0.
+	// NOTE: with the assert above we know m_pathMapsRoot != 0 if parentPathMap != 0.
+	if (parentPathMap) 
+		return parentPathMap->addChildMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
+
+	// Case where parentPathMap == 0 && m_pathMapsRoot == 0.
+	PathMap* newPathMap = new PathMap(NEW_OSC_PATH_BIT, NEW_IISU_PATH);
+	assert(newPathMap);
+
+	assert(!m_pathMapsRoot);
+	m_pathMapsRoot = newPathMap;
+
+	return newPathMap;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -84,6 +126,7 @@ bool DataBase::deletePathMap( PathMap* pathMap )
 
 	delete pathMap;
 
+	// Check there is no more root PathMap.
 	if (!pathMap->getParent())
 		m_pathMapsRoot = 0;
 
@@ -97,6 +140,8 @@ bool DataBase::clearPathMaps()
 		return true;
 
 	delete m_pathMapsRoot;
+
+	// There is no more root PathMap.
 	m_pathMapsRoot = 0;
 
 	return true;

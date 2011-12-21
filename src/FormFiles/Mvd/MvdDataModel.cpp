@@ -78,11 +78,11 @@ void MvdDataModel::cleanAndReBuild_pathMap(const PathMap* pathMap)
 	// Row.
 	QStandardItem* oscItem = new QStandardItem(pathMap->getOscPathBit().c_str());
 	oscItem->setData((int)PathMapRole, RoleIndexRole);
-	oscItem->setData(QVariant::fromValue(pathMap), PathMapRole);
+	oscItem->setData(QVariant::fromValue((PathMap*)pathMap), PathMapRole);
 
 	QStandardItem* iisuItem = new QStandardItem(pathMap->getIisuPath().c_str());
 	iisuItem->setData((int)PathMapRole, RoleIndexRole);
-	iisuItem->setData(QVariant::fromValue(pathMap), PathMapRole);
+	iisuItem->setData(QVariant::fromValue((PathMap*)pathMap), PathMapRole);
 
 	if (!m_parentItem)
 	{

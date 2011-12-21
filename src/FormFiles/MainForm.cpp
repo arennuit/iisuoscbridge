@@ -140,26 +140,35 @@ void MainForm::setup()
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onAddPathMap(const PathMap* newPathMap)
 {
-	assert(m_selectedItem);
+	assert(newPathMap);
+	assert((bool)m_selectedItem == (bool)newPathMap->getParent()); // A new PathMap can be added to a clear model only if the selection is empty.
 
 	// Create the new model's items.
 	QStandardItem* oscItem = new QStandardItem(newPathMap->getOscPathBit().c_str());
 	assert(oscItem);
 	oscItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
-	oscItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
+	oscItem->setData(QVariant::fromValue((PathMap*)newPathMap), MvdDataModel::PathMapRole);
 
 	QStandardItem* iisuItem = new QStandardItem(newPathMap->getIisuPath().c_str());
 	assert(iisuItem);
 	iisuItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
-	iisuItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
+	iisuItem->setData(QVariant::fromValue((PathMap*)newPathMap), MvdDataModel::PathMapRole);
 
 	// Attach the new items.
-	QStandardItem* parentItem = m_selectedItem->parent();
-	assert(parentItem);
-
-	int rowIdx = parentItem->rowCount();
-	parentItem->setChild(rowIdx, 0, oscItem);
-	parentItem->setChild(rowIdx, 1, iisuItem);
+	if (newPathMap->getParent())
+	{
+		QStandardItem* parentItem = m_selectedItem->parent();
+		assert(parentItem);
+	
+		int rowIdx = parentItem->rowCount();
+		parentItem->setChild(rowIdx, 0, oscItem);
+		parentItem->setChild(rowIdx, 1, iisuItem);
+	}
+	else
+	{
+		m_mvdModel.setItem(0, 0, oscItem);
+		m_mvdModel.setItem(0, 1, iisuItem);
+	}
 
 	// Update the selection.
 	// TODO: make an AppDataController and make the AppDataBase know about the AppDataController rather than the
@@ -179,25 +188,34 @@ void MainForm::onAddPathMap(const PathMap* newPathMap)
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onInsertPathMap(const PathMap* newPathMap)
 {
-	assert(m_selectedItem);
+	assert(newPathMap);
+	assert((bool)m_selectedItem == (bool)newPathMap->getParent()); // A new PathMap can be added to a clear model only if the selection is empty.
 
 	// Create the new model's items.
 	QStandardItem* oscItem = new QStandardItem(newPathMap->getOscPathBit().c_str());
 	assert(oscItem);
 	oscItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
-	oscItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
+	oscItem->setData(QVariant::fromValue((PathMap*)newPathMap), MvdDataModel::PathMapRole);
 
 	QStandardItem* iisuItem = new QStandardItem(newPathMap->getIisuPath().c_str());
 	assert(iisuItem);
 	iisuItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
-	iisuItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
+	iisuItem->setData(QVariant::fromValue((PathMap*)newPathMap), MvdDataModel::PathMapRole);
 
 	// Attach the new items.
-	QStandardItem* parentItem = m_selectedItem->parent();
-	assert(parentItem);
+	if (newPathMap->getParent())
+	{
+		QStandardItem* parentItem = m_selectedItem->parent();
+		assert(parentItem);
 
-	int rowIdx = m_selectedItem->row();
-	parentItem->insertRow(rowIdx, QList<QStandardItem*>() << oscItem << iisuItem);
+		int rowIdx = m_selectedItem->row();
+		parentItem->insertRow(rowIdx, QList<QStandardItem*>() << oscItem << iisuItem);
+	}
+	else
+	{
+		m_mvdModel.setItem(0, 0, oscItem);
+		m_mvdModel.setItem(0, 1, iisuItem);
+	}
 
 	// Update the selection.
 	// TODO: make an AppDataController and make the AppDataBase know about the AppDataController rather than the
@@ -217,23 +235,32 @@ void MainForm::onInsertPathMap(const PathMap* newPathMap)
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onAddChildMap(const PathMap* newPathMap)
 {
-	assert(m_selectedItem);
+	assert(newPathMap);
+	assert((bool)m_selectedItem == (bool)newPathMap->getParent()); // A new PathMap can be added to a clear model only if the selection is empty.
 
 	// Create the new model's items.
 	QStandardItem* oscItem = new QStandardItem(newPathMap->getOscPathBit().c_str());
 	assert(oscItem);
 	oscItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
-	oscItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
+	oscItem->setData(QVariant::fromValue((PathMap*)newPathMap), MvdDataModel::PathMapRole);
 
 	QStandardItem* iisuItem = new QStandardItem(newPathMap->getIisuPath().c_str());
 	assert(iisuItem);
 	iisuItem->setData((int)MvdDataModel::PathMapRole, MvdDataModel::RoleIndexRole);
-	iisuItem->setData(QVariant::fromValue(newPathMap), MvdDataModel::PathMapRole);
+	iisuItem->setData(QVariant::fromValue((PathMap*)newPathMap), MvdDataModel::PathMapRole);
 
 	// Attach the new items.
-	int rowIdx = m_selectedItem->rowCount();
-	m_selectedItem->setChild(rowIdx, 0, oscItem);
-	m_selectedItem->setChild(rowIdx, 1, iisuItem);
+	if (newPathMap->getParent())
+	{
+		int rowIdx = m_selectedItem->rowCount();
+		m_selectedItem->setChild(rowIdx, 0, oscItem);
+		m_selectedItem->setChild(rowIdx, 1, iisuItem);
+	}
+	else
+	{
+		m_mvdModel.setItem(0, 0, oscItem);
+		m_mvdModel.setItem(0, 1, iisuItem);
+	}
 
 	// Update the selection.
 	// TODO: make an AppDataController and make the AppDataBase know about the AppDataController rather than the
@@ -282,7 +309,9 @@ void MainForm::onDeletePathMap()
 void MainForm::onClearPathMaps()
 {
 	// Clear the model.
-	m_mvdModel.clear();
+	// NOTE: we clear all the model's top rows.
+	for (uint i = 0; i < m_mvdModel.rowCount(); ++i)
+		m_mvdModel.removeRow(i, QModelIndex());
 
 	// Update the selection.
 	// TODO: make an AppDataController and make the AppDataBase know about the AppDataController rather than the
@@ -427,7 +456,7 @@ void MainForm::onSelectionChanged( const QModelIndex& newModelIndex, const QMode
 	int customRole = newModelIndex.data(MvdDataModel::RoleIndexRole).toInt();
 	assert(customRole == MvdDataModel::PathMapRole);
 
-	const PathMap* newSelectedPathMap = newModelIndex.data(MvdDataModel::PathMapRole).value<const PathMap*>();
+	PathMap* newSelectedPathMap = newModelIndex.data(MvdDataModel::PathMapRole).value<PathMap*>();
 
 	// Call the controller's method.
 	m_dataController->editSelection(newSelectedPathMap);
