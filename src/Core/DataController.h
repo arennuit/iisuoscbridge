@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core/AbstractDataController.h"
 #include "Core/DataBase/DataBase.h"
 #include "Core/IisuManager/IisuManager.h"
 #include <string>
@@ -18,52 +19,43 @@ class PathMap;
 /// \brief This class makes the different parts of the system work together.
 ///
 /// The DataController keeps track of the selection and calls actions on it depending on its own state.
-class DataController
+class DataController : public AbstractDataController
 {
+	DECLARE_DATA_CONTROLLER(DataController)
+
 public:
-	/// \name Singleton management.
+
+	/// \name API.
 	//@{
-	static void CreateInstance();
-	static void DestroyInstance();
-	static DataController* GetInstance() {return sm_instance;}
+	virtual void editIpAddress(const std::string& newIpAddress) {m_dataBase->setIpAddress(newIpAddress);}
+	virtual void editPort(int newPort) {m_dataBase->setPort(newPort);}
+	virtual bool editIidFilePath(const std::string& newIidFilePath);
+
+	virtual void toggleResumePause();
+
+	virtual void editFoldAndNameJointsOption(bool isFoldAndNameJoints);
+
+	virtual void editSelection(const PathMap* newSelectedPathMap) {m_selectedPathMap = (PathMap*)newSelectedPathMap;}
+
+	virtual const PathMap* addPathMap();
+	virtual const PathMap* insertPathMap();
+	virtual const PathMap* addChildMap();
+	virtual bool deletePathMap();
+	virtual bool clearPathMaps();
+
+	virtual void newProject();
+	virtual void saveProjectToFile(std::string& filePath);
+	virtual void loadProjectFromFile(std::string& filePath);
 	//@}
 
 	/// \name Helpers.
 	//@{
-	void retrieveIisuDataPaths(std::vector<std::string>& iisuDataPaths) {m_iisuManager.retrieveIisuDataPaths(iisuDataPaths);}
-	//@}
-
-	/// \name API.
-	//@{
-	void editIpAddress(const std::string& newIpAddress) {m_dataBase->setIpAddress(newIpAddress);}
-	void editPort(int newPort) {m_dataBase->setPort(newPort);}
-	bool editIidFilePath(const std::string& newIidFilePath);
-
-	void toggleResumePause();
-
-	void editFoldAndNameJointsOption(bool isFoldAndNameJoints);
-
-	void editSelection(const PathMap* newSelectedPathMap) {m_selectedPathMap = (PathMap*)newSelectedPathMap;}
-
-	const PathMap* addPathMap();
-	const PathMap* insertPathMap();
-	const PathMap* addChildMap();
-	bool deletePathMap();
-	bool clearPathMaps();
-
-	void newProject();
-	void saveProjectToFile(std::string& filePath);
-	void loadProjectFromFile(std::string& filePath);
+	virtual void retrieveIisuDataPaths(std::vector<std::string>& iisuDataPaths) {m_iisuManager.retrieveIisuDataPaths(iisuDataPaths);}
 	//@}
 
 protected:
-	/// \name Singleton management.
-	//@{
 	DataController();
 	virtual ~DataController();
-
-	static DataController* sm_instance;
-	//@}
 
 	DataBase* m_dataBase;
 

@@ -8,7 +8,7 @@
 namespace SK
 {
 
-DataController* DataController::sm_instance = 0;
+DEFINE_DATA_CONTROLLER(DataController, AbstractDataController)
 
 //////////////////////////////////////////////////////////////////////////
 DataController::DataController() :
@@ -30,20 +30,6 @@ DataController::~DataController()
 
 	// Term iisu.
 	m_iisuManager.termIisu();
-}
-
-//////////////////////////////////////////////////////////////////////////
-void DataController::CreateInstance()
-{
-	if (!sm_instance)
-		sm_instance = new DataController();
-}
-
-//////////////////////////////////////////////////////////////////////////
-void DataController::DestroyInstance()
-{
-	if (sm_instance)
-		delete sm_instance;
 }
 
 //////////////////////////////////////////////////////////////////////////

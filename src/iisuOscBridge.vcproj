@@ -651,6 +651,14 @@
 			Name="Core"
 			>
 			<File
+				RelativePath=".\Core\AbstractDataController.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Core\AbstractDataController.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Core\DataController.cpp"
 				>
 			</File>
@@ -749,6 +757,14 @@
 		</File>
 		<File
 			RelativePath=".\AppDataBase.h"
+			>
+		</File>
+		<File
+			RelativePath=".\AppDataController.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\AppDataController.h"
 			>
 		</File>
 		<File

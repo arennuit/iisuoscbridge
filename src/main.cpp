@@ -1,7 +1,7 @@
 #include "MainForm.h"
 #include <QtGui/QApplication>
 #include "AppDataBase.h"
-#include "Core/DataController.h"
+#include "AppDataController.h"
 
 //////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])
@@ -17,11 +17,12 @@ int main(int argc, char *argv[])
 	SK::MainForm mainForm;
 
 	SK::AppDataBase::CreateInstance();
-	SK::DataController::CreateInstance();
+	SK::AppDataController::CreateInstance();
 
 	mainForm.setup();
 
 	SK::AppDataBase::GetInstance()->setMainForm(&mainForm);
+	SK::AppDataController::GetInstance()->setMainForm(&mainForm);
 
 	mainForm.show();
 	app.exec();
