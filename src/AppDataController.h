@@ -5,9 +5,13 @@
 namespace SK
 {
 
+class MainForm;
+
 /// \brief This class adds the UI update service on data change.
 class AppDataController : public DataController
 {
+	DECLARE_DATA_BASE(AppDataController)
+
 public:
 
 	/// \name Accessors.
