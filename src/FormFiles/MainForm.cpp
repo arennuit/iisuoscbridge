@@ -138,6 +138,25 @@ void MainForm::setup()
 }
 
 //////////////////////////////////////////////////////////////////////////
+void MainForm::onEditSelection(const PathMap* newSelectedPathMap)
+{
+	// Look for newSelectedPathMap in m_pathMapItemMap.
+	std::map<const PathMap*, QStandardItem*>::const_iterator it = m_pathMapItemMap.find(newSelectedPathMap);
+	assert(it != m_pathMapItemMap.end());
+
+	QStandardItem* oscItem = it->second;
+
+	// Update the selection.
+	m_selectedItem = oscItem;
+
+	m_pathMapItemMap.insert(std::make_pair(newSelectedPathMap, oscItem));
+
+	QModelIndex oscIndex = m_mvdModel.indexFromItem(oscItem);
+	if (oscIndex.isValid())
+		ui.m_pathMapsView->setCurrentIndex(oscIndex);
+}
+
+//////////////////////////////////////////////////////////////////////////
 void MainForm::onAddPathMap(const PathMap* newPathMap)
 {
 	assert(newPathMap);
@@ -179,6 +198,8 @@ void MainForm::onAddPathMap(const PathMap* newPathMap)
 	//       Or even better: we could implement the callback mechanism on DataBase update mentioned in a comment
 	//       in DataBase.h.
 	m_selectedItem = oscItem;
+
+	m_pathMapItemMap.insert(std::make_pair(newPathMap, oscItem));
 
 	QModelIndex oscIndex = m_mvdModel.indexFromItem(oscItem);
 	if (oscIndex.isValid())
@@ -227,6 +248,8 @@ void MainForm::onInsertPathMap(const PathMap* newPathMap)
 	//       in DataBase.h.
 	m_selectedItem = oscItem;
 
+	m_pathMapItemMap.insert(std::make_pair(newPathMap, oscItem));
+
 	QModelIndex oscIndex = m_mvdModel.indexFromItem(oscItem);
 	if (oscIndex.isValid())
 		ui.m_pathMapsView->setCurrentIndex(oscIndex);
@@ -272,6 +295,8 @@ void MainForm::onAddChildMap(const PathMap* newPathMap)
 	//       in DataBase.h.
 	m_selectedItem = oscItem;
 
+	m_pathMapItemMap.insert(std::make_pair(newPathMap, oscItem));
+
 	QModelIndex oscIndex = m_mvdModel.indexFromItem(oscItem);
 	if (oscIndex.isValid())
 		ui.m_pathMapsView->setCurrentIndex(oscIndex);
@@ -283,13 +308,16 @@ void MainForm::onDeletePathMap()
 	assert(m_selectedItem);
 
 	// Delete the model's items.
+	// NOTE: we do not assert on parentIndex, as the parent can be invalid if selectedIndex is the root index.
 	QModelIndex selectedIndex = m_mvdModel.indexFromItem(m_selectedItem);
 	assert(selectedIndex.isValid());
 
-	QModelIndex parentIndex = selectedIndex.parent();
-	assert(parentIndex.isValid());
+	PathMap* pathMap = selectedIndex.data(MvdDataModel::PathMapRole).value<PathMap*>();
+	assert(pathMap);
 
-	m_mvdModel.removeRow(selectedIndex.row(), parentIndex);
+	QModelIndex parentIndex = selectedIndex.parent();
+
+	m_mvdModel.removeRow(selectedIndex.row(), QModelIndex());
 
 	// Update the selection.
 	// TODO: make an AppDataController and make the AppDataBase know about the AppDataController rather than the
@@ -299,8 +327,19 @@ void MainForm::onDeletePathMap()
 	//       deleted.
 	//       Or even better: we could implement the callback mechanism on DataBase update mentioned in a comment
 	//       in DataBase.h.
-	QStandardItem* parentItem = m_mvdModel.itemFromIndex(parentIndex);
-	m_selectedItem = parentItem;
+	if (parentIndex.isValid())
+	{
+		QStandardItem* parentItem = m_mvdModel.itemFromIndex(parentIndex);
+		m_selectedItem = parentItem;
+	}
+	else
+		m_selectedItem = 0;
+
+	std::vector<PathMap*> pathMapsToBeDeleted;
+	pathMapsToBeDeleted.push_back(pathMap);
+	addChildrenToArray_recursive(pathMap, pathMapsToBeDeleted);
+	for (uint i = 0; i < pathMapsToBeDeleted.size(); ++i)
+		m_pathMapItemMap.erase(pathMapsToBeDeleted[i]);	
 
 	ui.m_pathMapsView->setCurrentIndex(parentIndex);
 };
@@ -322,6 +361,22 @@ void MainForm::onClearPathMaps()
 	//       Or even better: we could implement the callback mechanism on DataBase update mentioned in a comment
 	//       in DataBase.h.
 	m_selectedItem = 0;
+
+	m_pathMapItemMap.clear();
+
+	ui.m_pathMapsView->setCurrentIndex(QModelIndex());
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::addChildrenToArray_recursive(PathMap* pathMap, std::vector<PathMap*>& pathMapsToBeDeleted)
+{
+	// Add children to the list.
+	for (uint i = 0; i < pathMap->getChildren().size(); ++i)
+		pathMapsToBeDeleted.push_back(pathMap->getChildren()[i]);
+
+	// Recursion into children.
+	for (uint i = 0; i < pathMap->getChildren().size(); ++i)
+		addChildrenToArray_recursive(pathMap->getChildren()[i], pathMapsToBeDeleted);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -447,9 +502,15 @@ void MainForm::onIidFilePathButtonClicked()
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onSelectionModelCurrentChanged( const QModelIndex& newModelIndex, const QModelIndex& /*oldModelIndex*/ )
 {
-	// Get the underlying PathMap.
-	assert(newModelIndex.isValid());
+	if (!newModelIndex.isValid())
+	{
+		m_selectedItem = 0;
+		m_dataController->editSelection(0);
 
+		return;
+	}
+
+	// Get the underlying PathMap.
 	m_selectedItem = m_mvdModel.itemFromIndex(newModelIndex);
 	assert(m_selectedItem);
 

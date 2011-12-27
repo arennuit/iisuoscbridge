@@ -53,6 +53,8 @@ public:
 
 	/// \name App -> UI logic.
 	//@{
+	void onEditSelection(const PathMap* newSelectedPathMap);
+
 	void onAddPathMap(const PathMap* newPathMap);
 	void onInsertPathMap(const PathMap* newPathMap);
 	void onAddChildMap(const PathMap* newPathMap);
@@ -120,7 +122,8 @@ protected:
 
 	QStandardItem* m_selectedItem;
 
-	std::map<PathMap*, QStandardItem*> m_pathMapItemMap;
+	std::map<const PathMap*, QStandardItem*> m_pathMapItemMap;
+	void addChildrenToArray_recursive(PathMap* pathMap, std::vector<PathMap*>& pathMapsToBeDeleted);
 };
 
 } // namespace SK.
