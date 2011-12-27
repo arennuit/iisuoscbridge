@@ -99,6 +99,9 @@ const PathMap* DataController::addChildMap()
 //////////////////////////////////////////////////////////////////////////
 bool DataController::deletePathMap()
 {
+	if (!m_selectedPathMap)
+		return true;
+
 	// Update selection (1/2).
 	const PathMap* parentPathMap = m_selectedPathMap->getParent();
 

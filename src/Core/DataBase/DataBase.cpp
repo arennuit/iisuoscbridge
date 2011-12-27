@@ -123,10 +123,14 @@ bool DataBase::deletePathMap( const PathMap* pathMap )
 	if (!pathMap)
 		return false;
 
+	// Get the parent before deleting pathMap (parentMap is used to reset m_pathMapsRoot).
+	PathMap* parentMap = pathMap->getParent();
+
+	// Delete.
 	delete (PathMap*)pathMap;
 
 	// Check there is no more root PathMap.
-	if (!pathMap->getParent())
+	if (!parentMap)
 		m_pathMapsRoot = 0;
 
 	return true;
