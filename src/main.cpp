@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 
 	mainForm.setup();
 
-	SK::AppDataBase::GetInstance()->setMainForm(&mainForm);
+	SK::AppDataBase::GetInstance()->setDataController(SK::DataController::GetInstance());
 	SK::AppDataController::GetInstance()->setMainForm(&mainForm);
 
 	mainForm.show();

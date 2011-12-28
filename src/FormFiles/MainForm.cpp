@@ -140,20 +140,26 @@ void MainForm::setup()
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onEditSelection(const PathMap* newSelectedPathMap)
 {
+	if (!newSelectedPathMap)
+	{
+		m_selectedItem = 0;
+
+		ui.m_pathMapsView->setCurrentIndex(QModelIndex());
+
+		return;
+	}
+
 	// Look for newSelectedPathMap in m_pathMapItemMap.
 	std::map<const PathMap*, QStandardItem*>::const_iterator it = m_pathMapItemMap.find(newSelectedPathMap);
 	assert(it != m_pathMapItemMap.end());
 
-	QStandardItem* oscItem = it->second;
-
 	// Update the selection.
-	m_selectedItem = oscItem;
+	m_selectedItem = it->second;
 
-	m_pathMapItemMap.insert(std::make_pair(newSelectedPathMap, oscItem));
+	QModelIndex oscIndex = m_mvdModel.indexFromItem(m_selectedItem);
+	assert(oscIndex.isValid());
 
-	QModelIndex oscIndex = m_mvdModel.indexFromItem(oscItem);
-	if (oscIndex.isValid())
-		ui.m_pathMapsView->setCurrentIndex(oscIndex);
+	ui.m_pathMapsView->setCurrentIndex(oscIndex);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -189,21 +195,8 @@ void MainForm::onAddPathMap(const PathMap* newPathMap)
 		m_mvdModel.setItem(0, 1, iisuItem);
 	}
 
-	// Update the selection.
-	// TODO: make an AppDataController and make the AppDataBase know about the AppDataController rather than the
-	//       MainForm, and the AppDataController know about the MainForm so the commands go forth and back through
-	//       all app layers, the AppDataController passing the AppDataBase messages through to the MainForm. This
-	//       will allow the DataController to have its selection changed as a result of a new PathMap created or
-	//       deleted.
-	//       Or even better: we could implement the callback mechanism on DataBase update mentioned in a comment
-	//       in DataBase.h.
-	m_selectedItem = oscItem;
-
+	// Update m_pathMapItemMap.
 	m_pathMapItemMap.insert(std::make_pair(newPathMap, oscItem));
-
-	QModelIndex oscIndex = m_mvdModel.indexFromItem(oscItem);
-	if (oscIndex.isValid())
-		ui.m_pathMapsView->setCurrentIndex(oscIndex);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -238,21 +231,8 @@ void MainForm::onInsertPathMap(const PathMap* newPathMap)
 		m_mvdModel.setItem(0, 1, iisuItem);
 	}
 
-	// Update the selection.
-	// TODO: make an AppDataController and make the AppDataBase know about the AppDataController rather than the
-	//       MainForm, and the AppDataController know about the MainForm so the commands go forth and back through
-	//       all app layers, the AppDataController passing the AppDataBase messages through to the MainForm. This
-	//       will allow the DataController to have its selection changed as a result of a new PathMap created or
-	//       deleted.
-	//       Or even better: we could implement the callback mechanism on DataBase update mentioned in a comment
-	//       in DataBase.h.
-	m_selectedItem = oscItem;
-
+	// Update m_pathMapItemMap.
 	m_pathMapItemMap.insert(std::make_pair(newPathMap, oscItem));
-
-	QModelIndex oscIndex = m_mvdModel.indexFromItem(oscItem);
-	if (oscIndex.isValid())
-		ui.m_pathMapsView->setCurrentIndex(oscIndex);
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -285,63 +265,37 @@ void MainForm::onAddChildMap(const PathMap* newPathMap)
 		m_mvdModel.setItem(0, 1, iisuItem);
 	}
 
-	// Update the selection.
-	// TODO: make an AppDataController and make the AppDataBase know about the AppDataController rather than the
-	//       MainForm, and the AppDataController know about the MainForm so the commands go forth and back through
-	//       all app layers, the AppDataController passing the AppDataBase messages through to the MainForm. This
-	//       will allow the DataController to have its selection changed as a result of a new PathMap created or
-	//       deleted.
-	//       Or even better: we could implement the callback mechanism on DataBase update mentioned in a comment
-	//       in DataBase.h.
-	m_selectedItem = oscItem;
-
+	// Update m_pathMapItemMap.
 	m_pathMapItemMap.insert(std::make_pair(newPathMap, oscItem));
-
-	QModelIndex oscIndex = m_mvdModel.indexFromItem(oscItem);
-	if (oscIndex.isValid())
-		ui.m_pathMapsView->setCurrentIndex(oscIndex);
 };
 
 //////////////////////////////////////////////////////////////////////////
-void MainForm::onDeletePathMap()
+void MainForm::onDeletePathMap(const PathMap* pathMapToBeDeleted)
 {
-	assert(m_selectedItem);
+	assert(pathMapToBeDeleted);
 
 	// Delete the model's items.
 	// NOTE: we do not assert on parentIndex, as the parent can be invalid if selectedIndex is the root index.
-	QModelIndex selectedIndex = m_mvdModel.indexFromItem(m_selectedItem);
-	assert(selectedIndex.isValid());
+	std::map<const PathMap*, QStandardItem*>::const_iterator it = m_pathMapItemMap.find(pathMapToBeDeleted);
+	assert(it != m_pathMapItemMap.end());
 
-	PathMap* pathMap = selectedIndex.data(MvdDataModel::PathMapRole).value<PathMap*>();
-	assert(pathMap);
+	QStandardItem* itemToBeDeleted = it->second;
+	assert(itemToBeDeleted);
 
-	QModelIndex parentIndex = selectedIndex.parent();
+	QModelIndex indexToBeDeleted = m_mvdModel.indexFromItem(itemToBeDeleted);
+	assert(indexToBeDeleted.isValid());
 
-	m_mvdModel.removeRow(selectedIndex.row(), QModelIndex());
+	QModelIndex parentIndex = indexToBeDeleted.parent();
 
-	// Update the selection.
-	// TODO: make an AppDataController and make the AppDataBase know about the AppDataController rather than the
-	//       MainForm, and the AppDataController know about the MainForm so the commands go forth and back through
-	//       all app layers, the AppDataController passing the AppDataBase messages through to the MainForm. This
-	//       will allow the DataController to have its selection changed as a result of a new PathMap created or
-	//       deleted.
-	//       Or even better: we could implement the callback mechanism on DataBase update mentioned in a comment
-	//       in DataBase.h.
-	if (parentIndex.isValid())
-	{
-		QStandardItem* parentItem = m_mvdModel.itemFromIndex(parentIndex);
-		m_selectedItem = parentItem;
-	}
-	else
-		m_selectedItem = 0;
+	m_mvdModel.removeRow(indexToBeDeleted.row(), parentIndex);
 
+	// Update m_pathMapItemMap.
 	std::vector<PathMap*> pathMapsToBeDeleted;
-	pathMapsToBeDeleted.push_back(pathMap);
-	addChildrenToArray_recursive(pathMap, pathMapsToBeDeleted);
-	for (uint i = 0; i < pathMapsToBeDeleted.size(); ++i)
-		m_pathMapItemMap.erase(pathMapsToBeDeleted[i]);	
+	pathMapsToBeDeleted.push_back((PathMap*)pathMapToBeDeleted);
+	addChildrenToArray_recursive((PathMap*)pathMapToBeDeleted, pathMapsToBeDeleted);
 
-	ui.m_pathMapsView->setCurrentIndex(parentIndex);
+	for (uint i = 0; i < pathMapsToBeDeleted.size(); ++i)
+		m_pathMapItemMap.erase(pathMapsToBeDeleted[i]);
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -352,19 +306,8 @@ void MainForm::onClearPathMaps()
 	for (uint i = 0; i < m_mvdModel.rowCount(); ++i)
 		m_mvdModel.removeRow(i, QModelIndex());
 
-	// Update the selection.
-	// TODO: make an AppDataController and make the AppDataBase know about the AppDataController rather than the
-	//       MainForm, and the AppDataController know about the MainForm so the commands go forth and back through
-	//       all app layers, the AppDataController passing the AppDataBase messages through to the MainForm. This
-	//       will allow the DataController to have its selection changed as a result of a new PathMap created or
-	//       deleted.
-	//       Or even better: we could implement the callback mechanism on DataBase update mentioned in a comment
-	//       in DataBase.h.
-	m_selectedItem = 0;
-
+	// Update m_pathMapItemMap.
 	m_pathMapItemMap.clear();
-
-	ui.m_pathMapsView->setCurrentIndex(QModelIndex());
 }
 
 //////////////////////////////////////////////////////////////////////////

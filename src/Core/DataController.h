@@ -37,11 +37,11 @@ public:
 
 	virtual void editSelection(const PathMap* newSelectedPathMap) {m_selectedPathMap = (PathMap*)newSelectedPathMap;}
 
-	virtual const PathMap* addPathMap();
-	virtual const PathMap* insertPathMap();
-	virtual const PathMap* addChildMap();
-	virtual bool deletePathMap();
-	virtual bool clearPathMaps();
+	virtual const PathMap* addPathMap() {return m_dataBase->addPathMap(m_selectedPathMap);}
+	virtual const PathMap* insertPathMap() {return m_dataBase->insertPathMap(m_selectedPathMap);}
+	virtual const PathMap* addChildMap() {return m_dataBase->addChildMap(m_selectedPathMap);}
+	virtual bool deletePathMap() {return m_dataBase->deletePathMap(m_selectedPathMap);}
+	virtual bool clearPathMaps() {return m_dataBase->clearPathMaps();}
 
 	virtual void newProject();
 	virtual void saveProjectToFile(std::string& filePath);
@@ -51,6 +51,18 @@ public:
 	/// \name Helpers.
 	//@{
 	virtual void retrieveIisuDataPaths(std::vector<std::string>& iisuDataPaths) {m_iisuManager.retrieveIisuDataPaths(iisuDataPaths);}
+	//@}
+
+	/// \name Callbacks.
+	//@{
+	virtual void onAddPathMap(const PathMap* newPathMap) {editSelection(newPathMap);}
+	virtual void onInsertPathMap(const PathMap* newPathMap) {editSelection(newPathMap);}
+	virtual void onAddChildMap(const PathMap* newPathMap) {editSelection(newPathMap);}
+	virtual void onDeletePathMap(const PathMap* pathMapToBeDeleted);
+	virtual void onClearPathMaps() {editSelection(0);}
+
+	virtual void onIsObservationOnChanged(bool isObservationOn) {}
+	virtual void onOscPacketSizeChanged(uint oscPacketSize) {}
 	//@}
 
 protected:

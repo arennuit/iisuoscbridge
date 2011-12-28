@@ -5,10 +5,16 @@
 namespace SK
 {
 
-class MainForm;
+class DataController;
 
 //////////////////////////////////////////////////////////////////////////
 /// \brief This class adds the UI update service on data change.
+///
+/// When creating a new PathMap, we perform the actual operation before updating the controller, because
+/// updating the controller needs to know about the newly created PathMap. On the opposite, when deleting
+/// a PathMap, we perform the actual operation after updating the controller, because updating the
+/// controller needs to know about the PathMaps to be deleted. When editing, the operations can be done
+/// in any order.
 class AppDataBase : public DataBase
 {
 	DECLARE_DATA_BASE(AppDataBase)
@@ -32,14 +38,14 @@ public:
 
 	/// \name Accessors.
 	//@{
-	void setMainForm(MainForm* mainForm) {m_mainForm = mainForm;}
+	void setDataController(DataController* dataController) {m_dataController = dataController;}
 	//@}
 
 protected:
-	AppDataBase() : DataBase(), m_mainForm(0) {}
+	AppDataBase() : DataBase(), m_dataController(0) {}
 	virtual ~AppDataBase() {}
 
-	MainForm* m_mainForm;
+	DataController* m_dataController;
 };
 
 } // namespace SK.

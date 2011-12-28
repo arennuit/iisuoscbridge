@@ -1,6 +1,6 @@
 #include "AppDataBase.h"
 
-#include "MainForm.h"
+#include "Core/DataController.h"
 
 namespace SK
 {
@@ -15,8 +15,8 @@ const PathMap* AppDataBase::addPathMap(const PathMap* siblingPathMap, const std:
 	if (!newPathMap)
 		return 0;
 
-	// GUI.
-	m_mainForm->onAddPathMap(newPathMap);
+	// Controller.
+	m_dataController->onAddPathMap(newPathMap);
 
 	return newPathMap;
 }
@@ -29,8 +29,8 @@ const PathMap* AppDataBase::insertPathMap(const PathMap* siblingPathMap, const s
 	if (!newPathMap)
 		return 0;
 
-	// GUI.
-	m_mainForm->onInsertPathMap(newPathMap);
+	// Controller.
+	m_dataController->onInsertPathMap(newPathMap);
 
 	return newPathMap;
 }
@@ -43,8 +43,8 @@ const PathMap* AppDataBase::addChildMap(const PathMap* parentPathMap, const std:
 	if (!newPathMap)
 		return 0;
 
-	// GUI.
-	m_mainForm->onAddChildMap(newPathMap);
+	// Controller.
+	m_dataController->onAddChildMap(newPathMap);
 
 	return newPathMap;
 }
@@ -52,47 +52,41 @@ const PathMap* AppDataBase::addChildMap(const PathMap* parentPathMap, const std:
 //////////////////////////////////////////////////////////////////////////
 bool AppDataBase::deletePathMap(const PathMap* pathMap)
 {
-	// GUI.
-	m_mainForm->onDeletePathMap();
+	// Controller.
+	m_dataController->onDeletePathMap(pathMap);
 
 	// Actually perform the operation.
-	bool retVal = DataBase::deletePathMap(pathMap);
-	if (!retVal)
-		return false;
-
-	return true;
+	return DataBase::deletePathMap(pathMap);
 }
 
 //////////////////////////////////////////////////////////////////////////
 bool AppDataBase::clearPathMaps()
 {
-	// GUI.
-	m_mainForm->onClearPathMaps();
+	// Controller.
+	m_dataController->onClearPathMaps();
 
 	// Actually perform the operation.
-	bool retVal = DataBase::clearPathMaps();
-	if (!retVal)
-		return false;
-
-	return true;
+	return DataBase::clearPathMaps();
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataBase::setIsObservationOn(bool isObservationOn)
 {
+	// Actually perform the operation.
 	DataBase::setIsObservationOn(isObservationOn);
 
-	// GUI.
-	m_mainForm->onIsObservationOnChanged(isObservationOn);
+	// Controller.
+	m_dataController->onIsObservationOnChanged(isObservationOn);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataBase::setOscPacketSize(uint oscPacketSize)
 {
+	// Actually perform the operation.
 	DataBase::setOscPacketSize(oscPacketSize);
 
-	// GUI.
-	m_mainForm->onOscPacketSizeChanged(m_oscPacketSize);
+	// Controller.
+	m_dataController->onOscPacketSizeChanged(m_oscPacketSize);
 }
 
 } // namespace SK.

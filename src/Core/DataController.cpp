@@ -58,82 +58,6 @@ void DataController::editFoldAndNameJointsOption( bool isFoldAndNameJoints )
 }
 
 //////////////////////////////////////////////////////////////////////////
-const PathMap* DataController::addPathMap()
-{
-	const PathMap* newPathMap = m_dataBase->addPathMap(m_selectedPathMap);
-
-	// Update selection.
-	// TODO: to be done as a callback in the AppDataController.
-	if (newPathMap)
-		editSelection(newPathMap);
-
-	return newPathMap;
-}
-
-//////////////////////////////////////////////////////////////////////////
-const PathMap* DataController::insertPathMap()
-{
-	const PathMap* newPathMap = m_dataBase->insertPathMap(m_selectedPathMap);
-	
-	// Update selection.
-	// TODO: to be done as a callback in the AppDataController.
-	if (newPathMap)
-		editSelection(newPathMap);
-
-	return newPathMap;
-}
-
-//////////////////////////////////////////////////////////////////////////
-const PathMap* DataController::addChildMap()
-{
-	const PathMap* newPathMap = m_dataBase->addChildMap(m_selectedPathMap);
-
-	// Update selection.
-	// TODO: to be done as a callback in the AppDataController.
-	if (newPathMap)
-		editSelection(newPathMap);
-
-	return newPathMap;
-}
-
-//////////////////////////////////////////////////////////////////////////
-bool DataController::deletePathMap()
-{
-	if (!m_selectedPathMap)
-		return true;
-
-	// Update selection (1/2).
-	const PathMap* parentPathMap = m_selectedPathMap->getParent();
-
-	// Actually perform the action.
-	bool retState = m_dataBase->deletePathMap(m_selectedPathMap);
-
-	if (!retState)
-		return false;
-
-	// Update selection (2/2).
-	// TODO: to be done as a callback in the AppDataController.
-	editSelection(parentPathMap);
-
-	return true;
-}
-
-//////////////////////////////////////////////////////////////////////////
-bool DataController::clearPathMaps()
-{
-	bool retState = m_dataBase->clearPathMaps();
-
-	if (!retState)
-		return false;
-
-	// Update selection.
-	// TODO: to be done as a callback in the AppDataController.
-	editSelection(0);
-
-	return true;
-}
-
-//////////////////////////////////////////////////////////////////////////
 void DataController::newProject()
 {
 	
@@ -176,6 +100,14 @@ void DataController::saveProjectToFile_recursive( pugi::xml_node& parent, const 
 	// Recursion into children.
 	for (uint i = 0; i < pathMap->getChildren().size(); ++i)
 		saveProjectToFile_recursive(node_pathMap, pathMap->getChildren()[i]);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void DataController::onDeletePathMap(const PathMap* pathMapToBeDeleted)
+{
+	const PathMap* parentPathMap = pathMapToBeDeleted->getParent();
+
+	editSelection(parentPathMap);
 }
 
 } // namespace SK.

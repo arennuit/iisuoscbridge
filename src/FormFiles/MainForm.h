@@ -49,16 +49,19 @@ public:
 	MainForm(QWidget *parent = 0, Qt::WFlags flags = 0);
 	~MainForm();
 
+	/// \name API.
+	//@{
 	void setup();
+	//@}
 
-	/// \name App -> UI logic.
+	/// \name Callbacks.
 	//@{
 	void onEditSelection(const PathMap* newSelectedPathMap);
 
 	void onAddPathMap(const PathMap* newPathMap);
 	void onInsertPathMap(const PathMap* newPathMap);
 	void onAddChildMap(const PathMap* newPathMap);
-	void onDeletePathMap();
+	void onDeletePathMap(const PathMap* pathMapToBeDeleted);
 	void onClearPathMaps();
 
 	void onIsObservationOnChanged(bool isObservationOn);
