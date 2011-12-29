@@ -13,8 +13,8 @@ class DataController;
 /// When creating a new PathMap, we perform the actual operation before updating the controller, because
 /// updating the controller needs to know about the newly created PathMap. On the opposite, when deleting
 /// a PathMap, we perform the actual operation after updating the controller, because updating the
-/// controller needs to know about the PathMaps to be deleted. When editing, the operations can be done
-/// in any order.
+/// controller needs to know about the PathMaps to be deleted. When editing, we need to perform the
+/// operation first then when it is available we can update the controller.
 class AppDataBase : public DataBase
 {
 	DECLARE_DATA_BASE(AppDataBase)
@@ -32,7 +32,11 @@ public:
 
 	/// \name Accessors redefinitions.
 	//@{
+	void setIpAddress(const std::string& ipAddress) SK_OVERRIDE;
+	void setPort(int port) SK_OVERRIDE;
+	void setIidFilePath(const std::string& iidFilePath) SK_OVERRIDE;
 	void setIsObservationOn(bool isObservationOn) SK_OVERRIDE;
+	void setIsFoldAndNameJoints(bool isFoldAndNameJoints) SK_OVERRIDE;
 	void setOscPacketSize(uint oscPacketSize) SK_OVERRIDE;
 	//@}
 

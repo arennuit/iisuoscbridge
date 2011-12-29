@@ -66,6 +66,36 @@ void AppDataController::onClearPathMaps()
 }
 
 //////////////////////////////////////////////////////////////////////////
+void AppDataController::onIpAddressChanged(const std::string& ipAddress)
+{
+	// Actual callback.
+	DataController::onIpAddressChanged(ipAddress);
+
+	// GUI.
+	m_mainForm->onIpAddressChanged(ipAddress);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void AppDataController::onPortChanged(int port)
+{
+	// Actual callback.
+	DataController::onPortChanged(port);
+
+	// GUI.
+	m_mainForm->onPortChanged(port);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void AppDataController::onIidFilePathChanged(const std::string& iidFilePath)
+{
+	// Actual callback.
+	DataController::onIidFilePathChanged(iidFilePath);
+
+	// GUI.
+	m_mainForm->onIidFilePathChanged(iidFilePath);
+}
+
+//////////////////////////////////////////////////////////////////////////
 void AppDataController::onIsObservationOnChanged(bool isObservationOn)
 {
 	// Actual callback.
@@ -73,6 +103,16 @@ void AppDataController::onIsObservationOnChanged(bool isObservationOn)
 
 	// GUI.
 	m_mainForm->onIsObservationOnChanged(isObservationOn);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void AppDataController::onIsFoldAndNameJointsChanged(bool isFoldAndNameJoints)
+{
+	// Actual callback.
+	DataController::onIsFoldAndNameJointsChanged(isFoldAndNameJoints);
+
+	// GUI.
+	m_mainForm->onIsFoldAndNameJointsChanged(isFoldAndNameJoints);
 }
 
 //////////////////////////////////////////////////////////////////////////

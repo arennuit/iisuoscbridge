@@ -302,7 +302,7 @@ void MainForm::onDeletePathMap(const PathMap* pathMapToBeDeleted)
 void MainForm::onClearPathMaps()
 {
 	// Clear the model.
-	// NOTE: we clear all the model's top rows.
+	// NOTE: we only clear all the model's top rows, in order to keep the columns headers.
 	for (uint i = 0; i < m_mvdModel.rowCount(); ++i)
 		m_mvdModel.removeRow(i, QModelIndex());
 
@@ -326,6 +326,7 @@ void MainForm::addChildrenToArray_recursive(PathMap* pathMap, std::vector<PathMa
 void MainForm::onIsObservationOnChanged(bool isObservationOn)
 {
 	ui.m_startStopToggleButton->setChecked(isObservationOn);
+
 	ui.m_foldAndNameJointsCheckBox->setEnabled(!isObservationOn);
 	ui.m_pathMapsView->setEnabled(!isObservationOn);
 
@@ -341,8 +342,6 @@ void MainForm::onNewActionTriggered()
 
 	// Update the GUI.
 	setCurrentFilePath(std::string(""));
-
-	m_mvdModel.clear();
 }
 
 //////////////////////////////////////////////////////////////////////////

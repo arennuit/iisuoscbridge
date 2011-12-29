@@ -12,7 +12,8 @@ namespace SK
 /// the base callback, this is because we need to spread the PathMap creation operation on all layers of the app
 /// (db, controller and GUI) before changing the selection (which is done in the base callback). It is exactly
 /// the opposite when deleting PathMaps, one needs to call the base callback (that is changing the selection)
-/// before starting the deletion operation. The order of operations does not matter when editing a data.
+/// before starting the deletion operation. When editing data, we should first spread the operation and only
+/// then should we perform DataController specifics (such as changing the selection).
 ///
 /// PathMap creation and selection change are well separated. In the case of PathMap creation, the instantiation
 /// is first performed on all layers to its end, then when the creation is fully finished on all layers, the
@@ -58,7 +59,11 @@ public:
 	void onDeletePathMap(const PathMap* pathMapToBeDeleted) SK_OVERRIDE;
 	void onClearPathMaps() SK_OVERRIDE;
 
+	void onIpAddressChanged(const std::string& ipAddress) SK_OVERRIDE;
+	void onPortChanged(int port) SK_OVERRIDE;
+	void onIidFilePathChanged(const std::string& iidFilePath) SK_OVERRIDE;
 	void onIsObservationOnChanged(bool isObservationOn) SK_OVERRIDE;
+	void onIsFoldAndNameJointsChanged(bool isFoldAndNameJoints) SK_OVERRIDE;
 	void onOscPacketSizeChanged(uint oscPacketSize) SK_OVERRIDE;
 	//@}
 

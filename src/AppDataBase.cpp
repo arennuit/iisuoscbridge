@@ -70,6 +70,36 @@ bool AppDataBase::clearPathMaps()
 }
 
 //////////////////////////////////////////////////////////////////////////
+void AppDataBase::setIpAddress(const std::string& ipAddress)
+{
+	// Actually perform the operation.
+	DataBase::setIpAddress(ipAddress);
+
+	// Controller.
+	m_dataController->onIpAddressChanged(ipAddress);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void AppDataBase::setPort(int port)
+{
+	// Actually perform the operation.
+	DataBase::setPort(port);
+
+	// Controller.
+	m_dataController->onPortChanged(port);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void AppDataBase::setIidFilePath(const std::string& iidFilePath)
+{
+	// Actually perform the operation.
+	DataBase::setIidFilePath(iidFilePath);
+
+	// Controller.
+	m_dataController->onIidFilePathChanged(iidFilePath);
+}
+
+//////////////////////////////////////////////////////////////////////////
 void AppDataBase::setIsObservationOn(bool isObservationOn)
 {
 	// Actually perform the operation.
@@ -77,6 +107,16 @@ void AppDataBase::setIsObservationOn(bool isObservationOn)
 
 	// Controller.
 	m_dataController->onIsObservationOnChanged(isObservationOn);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void AppDataBase::setIsFoldAndNameJoints(bool isFoldAndNameJoints)
+{
+	// Actually perform the operation.
+	DataBase::setIsFoldAndNameJoints(isFoldAndNameJoints);
+
+	// Controller.
+	m_dataController->onIsFoldAndNameJointsChanged(isFoldAndNameJoints);
 }
 
 //////////////////////////////////////////////////////////////////////////

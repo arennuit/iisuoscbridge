@@ -46,6 +46,21 @@ void DataBase::setDefaultValues()
 }
 
 //////////////////////////////////////////////////////////////////////////
+void DataBase::reset()
+{
+	setIsObservationOn(false);
+
+	setIpAddress("127.0.0.1");
+	setPort(8000);
+	setIidFilePath("");
+
+	clearPathMaps();
+
+	setIsFoldAndNameJoints(true);
+	setOscPacketSize(0);
+}
+
+//////////////////////////////////////////////////////////////////////////
 const PathMap* DataBase::addPathMap(const PathMap* siblingPathMap, const std::string& oscPathBit /*= NEW_OSC_PATH_BIT*/, const std::string& iisuPath /*= NEW_IISU_PATH*/)
 {
 	assert(!(siblingPathMap && !m_pathMapsRoot));

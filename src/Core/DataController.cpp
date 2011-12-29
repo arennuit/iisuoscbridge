@@ -58,12 +58,6 @@ void DataController::editFoldAndNameJointsOption( bool isFoldAndNameJoints )
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::newProject()
-{
-	
-}
-
-//////////////////////////////////////////////////////////////////////////
 void DataController::saveProjectToFile(std::string& filePath)
 {
 	// Create the xml document and root node. 

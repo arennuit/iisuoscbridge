@@ -43,7 +43,7 @@ public:
 	virtual bool deletePathMap() {return m_dataBase->deletePathMap(m_selectedPathMap);}
 	virtual bool clearPathMaps() {return m_dataBase->clearPathMaps();}
 
-	virtual void newProject();
+	virtual void newProject() {m_dataBase->reset();}
 	virtual void saveProjectToFile(std::string& filePath);
 	virtual void loadProjectFromFile(std::string& filePath);
 	//@}
@@ -61,7 +61,11 @@ public:
 	virtual void onDeletePathMap(const PathMap* pathMapToBeDeleted);
 	virtual void onClearPathMaps() {editSelection(0);}
 
+	virtual void onIpAddressChanged(const std::string& ipAddress) {}
+	virtual void onPortChanged(int port) {}
+	virtual void onIidFilePathChanged(const std::string& iidFilePath) {}
 	virtual void onIsObservationOnChanged(bool isObservationOn) {}
+	virtual void onIsFoldAndNameJointsChanged(bool isFoldAndNameJoints) {}
 	virtual void onOscPacketSizeChanged(uint oscPacketSize) {}
 	//@}
 
