@@ -8,120 +8,120 @@ DEFINE_DATA_BASE(AppDataController, DataController)
 //////////////////////////////////////////////////////////////////////////
 void AppDataController::editSelection(const PathMap* newSelectedPathMap)
 {
-	// Actual callback.
+	// Perform operation.
 	DataController::editSelection(newSelectedPathMap);
 
-	// GUI.
+	// Propagate operation up-stream.
 	m_mainForm->onEditSelection(newSelectedPathMap);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataController::onAddPathMap(const PathMap* newPathMap)
 {
-	// GUI.
+	// Propagate operation up-stream.
 	m_mainForm->onAddPathMap(newPathMap);
 
-	// Actual callback.
+	// Base callback.
 	DataController::onAddPathMap(newPathMap);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataController::onInsertPathMap(const PathMap* newPathMap)
 {
-	// GUI.
+	// Propagate operation up-stream.
 	m_mainForm->onInsertPathMap(newPathMap);
 
-	// Actual callback.
+	// Base callback.
 	DataController::onInsertPathMap(newPathMap);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataController::onAddChildMap(const PathMap* newPathMap)
 {
-	// GUI.
+	// Propagate operation up-stream.
 	m_mainForm->onAddChildMap(newPathMap);
 
-	// Actual callback.
+	// Base callback.
 	DataController::onAddChildMap(newPathMap);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataController::onDeletePathMap(const PathMap* pathMapToBeDeleted)
 {
-	// Actual callback.
+	// Base callback.
 	DataController::onDeletePathMap(pathMapToBeDeleted);
 
-	// GUI.
+	// Propagate operation up-stream.
 	m_mainForm->onDeletePathMap(pathMapToBeDeleted);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataController::onClearPathMaps()
 {
-	// Actual callback.
+	// Base callback.
 	DataController::onClearPathMaps();
 
-	// GUI.
+	// Propagate operation up-stream.
 	m_mainForm->onClearPathMaps();
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataController::onIpAddressChanged(const std::string& ipAddress)
 {
-	// Actual callback.
+	// Base callback.
 	DataController::onIpAddressChanged(ipAddress);
 
-	// GUI.
+	// Propagate operation up-stream.
 	m_mainForm->onIpAddressChanged(ipAddress);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataController::onPortChanged(int port)
 {
-	// Actual callback.
+	// Base callback.
 	DataController::onPortChanged(port);
 
-	// GUI.
+	// Propagate operation up-stream.
 	m_mainForm->onPortChanged(port);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataController::onIidFilePathChanged(const std::string& iidFilePath)
 {
-	// Actual callback.
+	// Base callback.
 	DataController::onIidFilePathChanged(iidFilePath);
 
-	// GUI.
+	// Propagate operation up-stream.
 	m_mainForm->onIidFilePathChanged(iidFilePath);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataController::onIsObservationOnChanged(bool isObservationOn)
 {
-	// Actual callback.
+	// Base callback.
 	DataController::onIsObservationOnChanged(isObservationOn);
 
-	// GUI.
+	// Propagate operation up-stream.
 	m_mainForm->onIsObservationOnChanged(isObservationOn);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataController::onIsFoldAndNameJointsChanged(bool isFoldAndNameJoints)
 {
-	// Actual callback.
+	// Base callback.
 	DataController::onIsFoldAndNameJointsChanged(isFoldAndNameJoints);
 
-	// GUI.
+	// Propagate operation up-stream.
 	m_mainForm->onIsFoldAndNameJointsChanged(isFoldAndNameJoints);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataController::onOscPacketSizeChanged(uint oscPacketSize)
 {
-	// Actual callback.
+	// Base callback.
 	DataController::onOscPacketSizeChanged(oscPacketSize);
 
-	// GUI.
+	// Propagate operation up-stream.
 	m_mainForm->onOscPacketSizeChanged(oscPacketSize);
 }
 

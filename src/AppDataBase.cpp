@@ -10,12 +10,12 @@ DEFINE_DATA_BASE(AppDataBase, DataBase)
 //////////////////////////////////////////////////////////////////////////
 const PathMap* AppDataBase::addPathMap(const PathMap* siblingPathMap, const std::string& oscPathBit /*= NEW_OSC_PATH_BIT*/, const std::string& iisuPath /*= NEW_IISU_PATH*/)
 {
-	// Actually perform the operation.
+	// Perform operation.
 	const PathMap* newPathMap = DataBase::addPathMap(siblingPathMap, oscPathBit, iisuPath);
 	if (!newPathMap)
 		return 0;
 
-	// Controller.
+	// Propagate operation up-stream.
 	m_dataController->onAddPathMap(newPathMap);
 
 	return newPathMap;
@@ -24,12 +24,12 @@ const PathMap* AppDataBase::addPathMap(const PathMap* siblingPathMap, const std:
 //////////////////////////////////////////////////////////////////////////
 const PathMap* AppDataBase::insertPathMap(const PathMap* siblingPathMap, const std::string& oscPathBit /*= NEW_OSC_PATH_BIT*/, const std::string& iisuPath /*= NEW_IISU_PATH*/)
 {
-	// Actually perform the operation.
+	// Perform operation.
 	const PathMap* newPathMap = DataBase::insertPathMap(siblingPathMap, oscPathBit, iisuPath);
 	if (!newPathMap)
 		return 0;
 
-	// Controller.
+	// Propagate operation up-stream.
 	m_dataController->onInsertPathMap(newPathMap);
 
 	return newPathMap;
@@ -38,12 +38,12 @@ const PathMap* AppDataBase::insertPathMap(const PathMap* siblingPathMap, const s
 //////////////////////////////////////////////////////////////////////////
 const PathMap* AppDataBase::addChildMap(const PathMap* parentPathMap, const std::string& oscPathBit /*= NEW_OSC_PATH_BIT*/, const std::string& iisuPath /*= NEW_IISU_PATH*/)
 {
-	// Actually perform the operation.
+	// Perform operation.
 	const PathMap* newPathMap = DataBase::addChildMap(parentPathMap, oscPathBit, iisuPath);
 	if (!newPathMap)
 		return 0;
 
-	// Controller.
+	// Propagate operation up-stream.
 	m_dataController->onAddChildMap(newPathMap);
 
 	return newPathMap;
@@ -52,80 +52,80 @@ const PathMap* AppDataBase::addChildMap(const PathMap* parentPathMap, const std:
 //////////////////////////////////////////////////////////////////////////
 bool AppDataBase::deletePathMap(const PathMap* pathMap)
 {
-	// Controller.
+	// Propagate operation up-stream.
 	m_dataController->onDeletePathMap(pathMap);
 
-	// Actually perform the operation.
+	// Perform operation.
 	return DataBase::deletePathMap(pathMap);
 }
 
 //////////////////////////////////////////////////////////////////////////
 bool AppDataBase::clearPathMaps()
 {
-	// Controller.
+	// Propagate operation up-stream.
 	m_dataController->onClearPathMaps();
 
-	// Actually perform the operation.
+	// Perform operation.
 	return DataBase::clearPathMaps();
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataBase::setIpAddress(const std::string& ipAddress)
 {
-	// Actually perform the operation.
+	// Perform operation.
 	DataBase::setIpAddress(ipAddress);
 
-	// Controller.
+	// Propagate operation up-stream.
 	m_dataController->onIpAddressChanged(ipAddress);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataBase::setPort(int port)
 {
-	// Actually perform the operation.
+	// Perform operation.
 	DataBase::setPort(port);
 
-	// Controller.
+	// Propagate operation up-stream.
 	m_dataController->onPortChanged(port);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataBase::setIidFilePath(const std::string& iidFilePath)
 {
-	// Actually perform the operation.
+	// Perform operation.
 	DataBase::setIidFilePath(iidFilePath);
 
-	// Controller.
+	// Propagate operation up-stream.
 	m_dataController->onIidFilePathChanged(iidFilePath);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataBase::setIsObservationOn(bool isObservationOn)
 {
-	// Actually perform the operation.
+	// Perform operation.
 	DataBase::setIsObservationOn(isObservationOn);
 
-	// Controller.
+	// Propagate operation up-stream.
 	m_dataController->onIsObservationOnChanged(isObservationOn);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataBase::setIsFoldAndNameJoints(bool isFoldAndNameJoints)
 {
-	// Actually perform the operation.
+	// Perform operation.
 	DataBase::setIsFoldAndNameJoints(isFoldAndNameJoints);
 
-	// Controller.
+	// Propagate operation up-stream.
 	m_dataController->onIsFoldAndNameJointsChanged(isFoldAndNameJoints);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataBase::setOscPacketSize(uint oscPacketSize)
 {
-	// Actually perform the operation.
+	// Perform operation.
 	DataBase::setOscPacketSize(oscPacketSize);
 
-	// Controller.
+	// Propagate operation up-stream.
 	m_dataController->onOscPacketSizeChanged(m_oscPacketSize);
 }
 
