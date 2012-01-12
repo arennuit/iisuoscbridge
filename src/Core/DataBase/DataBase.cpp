@@ -38,7 +38,7 @@ void DataBase::setDefaultValues()
 	addChildMap(path_joints1, "positions", "USER1.SKELETON.KeyPoints");
 	addChildMap(path_joints1, "confidences", "USER1.SKELETON.KeyPointsConfidence");
 
-	m_isObservationOn = false;
+	m_mocapState = false;
 
 	m_isFoldAndNameJoints = true;
 
@@ -48,7 +48,11 @@ void DataBase::setDefaultValues()
 //////////////////////////////////////////////////////////////////////////
 void DataBase::reset()
 {
-	setIsObservationOn(false);
+	// The data cannot be edited while streaming.
+	if (m_mocapState)
+		return;
+
+	setMocapState(false);
 
 	setIpAddress("127.0.0.1");
 	setPort(8000);

@@ -30,7 +30,7 @@ public:
 	void onIpAddressChanged(const std::string& ipAddress) SK_OVERRIDE;
 	void onPortChanged(int port) SK_OVERRIDE;
 	void onIidFilePathChanged(const std::string& iidFilePath) SK_OVERRIDE;
-	void onIsObservationOnChanged(bool isObservationOn) SK_OVERRIDE;
+	bool onMocapStateChanged(bool desiredMocapState) SK_OVERRIDE;
 	void onIsFoldAndNameJointsChanged(bool isFoldAndNameJoints) SK_OVERRIDE;
 	void onOscPacketSizeChanged(uint oscPacketSize) SK_OVERRIDE;
 	//@}

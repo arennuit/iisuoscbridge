@@ -67,7 +67,7 @@ public:
 	void onIpAddressChanged(const std::string& ipAddress) {ui.m_ipAddressEdit->setText(ipAddress.c_str());}
 	void onPortChanged(int port) {ui.m_portEdit->setText(QString::number(port));}
 	void onIidFilePathChanged(const std::string& iidFilePath) {ui.m_iidFilePathEdit->setText(iidFilePath.c_str());}
-	void onIsObservationOnChanged(bool isObservationOn);
+	void onMocapStateChanged(bool mocapState);
 	void onIsFoldAndNameJointsChanged(bool isFoldAndNameJoints) {ui.m_foldAndNameJointsCheckBox->setChecked(isFoldAndNameJoints);}
 	void onOscPacketSizeChanged(uint oscPacketSize) {ui.m_oscPacketSizeLineEdit->setText(QString::number(oscPacketSize));}
 	//@}

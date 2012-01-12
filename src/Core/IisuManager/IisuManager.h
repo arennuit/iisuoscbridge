@@ -21,8 +21,8 @@ public:
 	/// \name API.
 	//@{
 	bool initIisu();
-	void resumeStream();
-	void pauseStream();
+	bool resumeStream();
+	bool pauseStream();
 	void termIisu();
 
 	bool loadIidGraph(const std::string& newIidFilePath);

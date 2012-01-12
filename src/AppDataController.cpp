@@ -68,61 +68,67 @@ void AppDataController::onClearPathMaps()
 //////////////////////////////////////////////////////////////////////////
 void AppDataController::onIpAddressChanged(const std::string& ipAddress)
 {
-	// Base callback.
-	DataController::onIpAddressChanged(ipAddress);
-
 	// Propagate operation up-stream.
 	m_mainForm->onIpAddressChanged(ipAddress);
+
+	// Base callback.
+	DataController::onIpAddressChanged(ipAddress);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataController::onPortChanged(int port)
 {
-	// Base callback.
-	DataController::onPortChanged(port);
-
 	// Propagate operation up-stream.
 	m_mainForm->onPortChanged(port);
+
+	// Base callback.
+	DataController::onPortChanged(port);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataController::onIidFilePathChanged(const std::string& iidFilePath)
 {
-	// Base callback.
-	DataController::onIidFilePathChanged(iidFilePath);
-
 	// Propagate operation up-stream.
 	m_mainForm->onIidFilePathChanged(iidFilePath);
+
+	// Base callback.
+	DataController::onIidFilePathChanged(iidFilePath);
 }
 
 //////////////////////////////////////////////////////////////////////////
-void AppDataController::onIsObservationOnChanged(bool isObservationOn)
+bool AppDataController::onMocapStateChanged(bool desiredMocapState)
 {
 	// Base callback.
-	DataController::onIsObservationOnChanged(isObservationOn);
+	bool mocapState = DataController::onMocapStateChanged(desiredMocapState);
+
+	// Actually call the database modification function (it is here that DataBase::m_mocapState is set
+	// depending on the result of DataController::onMocapStateChanged()).
+	m_dataBase->DataBase::setMocapState(mocapState);
 
 	// Propagate operation up-stream.
-	m_mainForm->onIsObservationOnChanged(isObservationOn);
+	m_mainForm->onMocapStateChanged(mocapState);
+
+	return mocapState;
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataController::onIsFoldAndNameJointsChanged(bool isFoldAndNameJoints)
 {
-	// Base callback.
-	DataController::onIsFoldAndNameJointsChanged(isFoldAndNameJoints);
-
 	// Propagate operation up-stream.
 	m_mainForm->onIsFoldAndNameJointsChanged(isFoldAndNameJoints);
+
+	// Base callback.
+	DataController::onIsFoldAndNameJointsChanged(isFoldAndNameJoints);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void AppDataController::onOscPacketSizeChanged(uint oscPacketSize)
 {
-	// Base callback.
-	DataController::onOscPacketSizeChanged(oscPacketSize);
-
 	// Propagate operation up-stream.
 	m_mainForm->onOscPacketSizeChanged(oscPacketSize);
+
+	// Base callback.
+	DataController::onOscPacketSizeChanged(oscPacketSize);
 }
 
 } // namespace SK.

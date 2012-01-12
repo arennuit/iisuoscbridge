@@ -64,7 +64,7 @@ public:
 	virtual void onIpAddressChanged(const std::string& ipAddress) {}
 	virtual void onPortChanged(int port) {}
 	virtual void onIidFilePathChanged(const std::string& iidFilePath) {}
-	virtual void onIsObservationOnChanged(bool isObservationOn) {}
+	virtual bool onMocapStateChanged(bool desiredMocapState); ///< Returns the obtained mocap state (which may differ from desiredMocapState).
 	virtual void onIsFoldAndNameJointsChanged(bool isFoldAndNameJoints) {}
 	virtual void onOscPacketSizeChanged(uint oscPacketSize) {}
 	//@}

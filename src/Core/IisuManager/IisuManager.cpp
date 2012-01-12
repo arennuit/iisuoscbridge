@@ -73,15 +73,13 @@ bool IisuManager::initIisu()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void IisuManager::resumeStream()
+bool IisuManager::resumeStream()
 {
 	// Check device.
 	if (!m_device)
 	{
-		m_dataBase->setIsObservationOn(false);
-
 		SK_LOGGER(LOG_ERROR) << "No iisu device available: cannot stream.";
-		return;
+		return false;
 	}
 
 	// Linearize PathMaps.
@@ -130,10 +128,11 @@ void IisuManager::resumeStream()
 
 	// Start device.
 	m_device->start();
-	m_dataBase->setIsObservationOn(true);
 
 	SK_LOGGER(LOG_INFO) << "The iisu engine is started";
 	SK_LOGGER(LOG_INFO) << "OscBridge is now streaming OSC...";
+
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -151,10 +150,9 @@ void IisuManager::newIisuDataFrameListener( const SK::DataFrameEvent& event )
 }
 
 //////////////////////////////////////////////////////////////////////////
-void IisuManager::pauseStream()
+bool IisuManager::pauseStream()
 {
 	// Stop device.
-	m_dataBase->setIsObservationOn(false);
 	if (m_device)
 	{
 		m_device->stop();
@@ -187,6 +185,8 @@ void IisuManager::pauseStream()
 
 	// clear the array of linearized path maps.
 	m_pathMapsLinearized.clear();
+
+	return false;
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -81,7 +81,7 @@ void MainForm::setup()
 	ui.m_portEdit->setText(QString::number(m_dataBase->getPort()));
 	ui.m_iidFilePathEdit->setText(QString(m_dataBase->getIidFilePath().c_str()));
 
-	if (m_dataBase->getIsObservationOn())
+	if (m_dataBase->getMocapState())
 		ui.m_startStopToggleButton->setChecked(true);
 	else
 		ui.m_startStopToggleButton->setChecked(false);
@@ -91,7 +91,7 @@ void MainForm::setup()
 	else
 		ui.m_foldAndNameJointsCheckBox->setChecked(false);
 
-	if (m_dataBase->getIsObservationOn() == true)
+	if (m_dataBase->getMocapState() == true)
 		ui.m_tabs->setCurrentWidget(ui.m_logTab);
 	else
 		ui.m_tabs->setCurrentWidget(ui.m_mapsTab);
@@ -323,15 +323,15 @@ void MainForm::addChildrenToArray_recursive(PathMap* pathMap, std::vector<PathMa
 }
 
 //////////////////////////////////////////////////////////////////////////
-void MainForm::onIsObservationOnChanged(bool isObservationOn)
+void MainForm::onMocapStateChanged( bool mocapState )
 {
-	ui.m_startStopToggleButton->setChecked(isObservationOn);
+	ui.m_startStopToggleButton->setChecked(mocapState);
 
-	ui.m_foldAndNameJointsCheckBox->setEnabled(!isObservationOn);
-	ui.m_pathMapsView->setEnabled(!isObservationOn);
+	ui.m_foldAndNameJointsCheckBox->setEnabled(!mocapState);
+	ui.m_pathMapsView->setEnabled(!mocapState);
 
 	// Show log tab when streaming.
-	if (isObservationOn == true)
+	if (mocapState == true)
 		ui.m_tabs->setCurrentWidget(ui.m_logTab);
 }
 

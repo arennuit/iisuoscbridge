@@ -100,13 +100,16 @@ void AppDataBase::setIidFilePath(const std::string& iidFilePath)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void AppDataBase::setIsObservationOn(bool isObservationOn)
+void AppDataBase::setMocapState(bool desiredMocapState)
 {
-	// Perform operation.
-	DataBase::setIsObservationOn(isObservationOn);
+	// When changing the mocapState one sets a desired mocapState but this mocapState may not be
+	// obtained, depending on the state of the iisu engine. Hence we do not call
+	// DataBase::setMocapState() (that sets DataBase::m_mocapState) here: this last function is
+	// called as a callback of the function which performs the mocapState change in iisu (namely
+	// AppDataController::onMocapStateChanged()).
 
 	// Propagate operation up-stream.
-	m_dataController->onIsObservationOnChanged(isObservationOn);
+	m_dataController->onMocapStateChanged(desiredMocapState);
 }
 
 //////////////////////////////////////////////////////////////////////////

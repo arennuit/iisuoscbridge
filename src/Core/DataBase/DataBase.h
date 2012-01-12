@@ -64,8 +64,8 @@ public:
 
 	virtual const PathMap* getPathMapsRoot() const {return m_pathMapsRoot;} ///< The 'const' makes sure the database knows when a data is modified.
 
-	virtual bool getIsObservationOn() const {return m_isObservationOn;}
-	virtual void setIsObservationOn(bool isObservationOn) {m_isObservationOn = isObservationOn;}
+	virtual bool getMocapState() const {return m_mocapState;}
+	virtual void setMocapState(bool mocapState) {m_mocapState = mocapState;}
 
 	virtual bool getIsFoldAndNameJoints() const {return m_isFoldAndNameJoints;}
 	virtual void setIsFoldAndNameJoints(bool isFoldAndNameJoints) {m_isFoldAndNameJoints = isFoldAndNameJoints;}
@@ -88,7 +88,7 @@ protected:
 
 	PathMap* m_pathMapsRoot;
 
-	bool m_isObservationOn;
+	bool m_mocapState;
 
 	bool m_isFoldAndNameJoints;
 

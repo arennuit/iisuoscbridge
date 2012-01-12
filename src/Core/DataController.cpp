@@ -45,10 +45,10 @@ bool DataController::editIidFilePath( const std::string& newIidFilePath )
 //////////////////////////////////////////////////////////////////////////
 void DataController::toggleResumePause()
 {
-	if (m_dataBase->getIsObservationOn() == false)
-		m_iisuManager.resumeStream();
+	if (m_dataBase->getMocapState() == false)
+		m_dataBase->setMocapState(true);
 	else
-		m_iisuManager.pauseStream();
+		m_dataBase->setMocapState(false);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -102,6 +102,16 @@ void DataController::onDeletePathMap(const PathMap* pathMapToBeDeleted)
 	const PathMap* parentPathMap = pathMapToBeDeleted->getParent();
 
 	editSelection(parentPathMap);
+}
+
+//////////////////////////////////////////////////////////////////////////
+bool DataController::onMocapStateChanged( bool desiredMocapState )
+{
+	// Returns the new mocap state (it may differ from desiredMocapState).
+	if (desiredMocapState == true)
+		return m_iisuManager.resumeStream();
+
+	return m_iisuManager.pauseStream();
 }
 
 } // namespace SK.
