@@ -86,7 +86,8 @@ void IisuReaderOscSender::visit(FloatArrayPathMap* typedPathMap)
 	const SK::Array<float>& iisuData = iisuDataHandle->get();
 
 	// Send via OSC.
-	if (m_dataBase->getDecorateStream())
+	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
+	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
 		// Size.
 		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
@@ -122,7 +123,8 @@ void IisuReaderOscSender::visit(Vector3ArrayPathMap* typedPathMap)
 	const SK::Array<SK::Vector3>& iisuData = iisuDataHandle->get();
 
 	// Send via OSC.
-	if (m_dataBase->getDecorateStream())
+	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
+	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
 		// Size.
 		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");

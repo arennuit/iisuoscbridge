@@ -15,6 +15,9 @@ class IIisuDataExtractor;
 
 //////////////////////////////////////////////////////////////////////////
 /// \brief This class reads the data from the iisu pulse and streams it via OSC.
+/// \note An array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT. Any other type
+///       of data only needto check m_dataBase->getDecorateStream() in order to know whether to stream
+///       decorated or not.
 class IisuReaderOscSender : public TypedPathMapVisitor
 {
 public:
