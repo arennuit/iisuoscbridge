@@ -102,7 +102,7 @@ public:
 	void setPort(int port) SK_OVERRIDE;
 	void setIidFilePath(const std::string& iidFilePath) SK_OVERRIDE;
 	void setMocapState(bool desiredMocapState) SK_OVERRIDE;
-	void setIsFoldAndNameJoints(bool isFoldAndNameJoints) SK_OVERRIDE;
+	void setDecorateStream(bool decorateStream) SK_OVERRIDE;
 	void setOscPacketSize(uint oscPacketSize) SK_OVERRIDE;
 	//@}
 

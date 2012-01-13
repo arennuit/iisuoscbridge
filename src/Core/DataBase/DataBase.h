@@ -67,8 +67,8 @@ public:
 	virtual bool getMocapState() const {return m_mocapState;}
 	virtual void setMocapState(bool mocapState) {m_mocapState = mocapState;}
 
-	virtual bool getIsFoldAndNameJoints() const {return m_isFoldAndNameJoints;}
-	virtual void setIsFoldAndNameJoints(bool isFoldAndNameJoints) {m_isFoldAndNameJoints = isFoldAndNameJoints;}
+	virtual bool getDecorateStream() const {return m_decorateStream;}
+	virtual void setDecorateStream(bool decorateStream) {m_decorateStream = decorateStream;}
 
 	virtual uint getOscPacketSize() const {return m_oscPacketSize;}
 	virtual void setOscPacketSize(uint oscPacketSize) {m_oscPacketSize = oscPacketSize;}
@@ -90,7 +90,7 @@ protected:
 
 	bool m_mocapState;
 
-	bool m_isFoldAndNameJoints;
+	bool m_decorateStream;
 
 	uint m_oscPacketSize;
 	//@}

@@ -68,7 +68,7 @@ public:
 	void onPortChanged(int port) {ui.m_portEdit->setText(QString::number(port));}
 	void onIidFilePathChanged(const std::string& iidFilePath) {ui.m_iidFilePathEdit->setText(iidFilePath.c_str());}
 	void onMocapStateChanged(bool mocapState);
-	void onIsFoldAndNameJointsChanged(bool isFoldAndNameJoints) {ui.m_foldAndNameJointsCheckBox->setChecked(isFoldAndNameJoints);}
+	void decorateStreamChanged(bool decorateStream) {ui.m_decorateStreamCheckBox->setChecked(decorateStream);}
 	void onOscPacketSizeChanged(uint oscPacketSize) {ui.m_oscPacketSizeLineEdit->setText(QString::number(oscPacketSize));}
 	//@}
 
@@ -94,7 +94,7 @@ protected slots:
 	void onIidFilePathButtonClicked();
 	void onStartStopToggleButtonClicked() {m_dataController->toggleResumePause();}
 
-	void onFoldAndNameJointsCheckBoxClicked() {m_dataController->editFoldAndNameJointsOption(ui.m_foldAndNameJointsCheckBox->isChecked());}
+	void onDecorateStreamCheckBoxClicked() {m_dataController->editDecorateStreamOption(ui.m_decorateStreamCheckBox->isChecked());}
 	
 	void onSelectionModelCurrentChanged( const QModelIndex& newModelIndex, const QModelIndex& oldModelIndex );
 

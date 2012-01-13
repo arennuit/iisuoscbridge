@@ -31,7 +31,7 @@ public:
 	void onPortChanged(int port) SK_OVERRIDE;
 	void onIidFilePathChanged(const std::string& iidFilePath) SK_OVERRIDE;
 	bool onMocapStateChanged(bool desiredMocapState) SK_OVERRIDE;
-	void onIsFoldAndNameJointsChanged(bool isFoldAndNameJoints) SK_OVERRIDE;
+	void onDecorateStreamChanged(bool decorateStream) SK_OVERRIDE;
 	void onOscPacketSizeChanged(uint oscPacketSize) SK_OVERRIDE;
 	//@}
 

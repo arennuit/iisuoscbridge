@@ -40,7 +40,7 @@ void DataBase::setDefaultValues()
 
 	m_mocapState = false;
 
-	m_isFoldAndNameJoints = true;
+	m_decorateStream = true;
 
 	m_oscPacketSize = 0;
 }
@@ -60,7 +60,7 @@ void DataBase::reset()
 
 	clearPathMaps();
 
-	setIsFoldAndNameJoints(true);
+	setDecorateStream(true);
 	setOscPacketSize(0);
 }
 

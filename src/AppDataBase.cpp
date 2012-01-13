@@ -113,13 +113,13 @@ void AppDataBase::setMocapState(bool desiredMocapState)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void AppDataBase::setIsFoldAndNameJoints(bool isFoldAndNameJoints)
+void AppDataBase::setDecorateStream(bool decorateStream)
 {
 	// Perform operation.
-	DataBase::setIsFoldAndNameJoints(isFoldAndNameJoints);
+	DataBase::setDecorateStream(decorateStream);
 
 	// Propagate operation up-stream.
-	m_dataController->onIsFoldAndNameJointsChanged(isFoldAndNameJoints);
+	m_dataController->onDecorateStreamChanged(decorateStream);
 }
 
 //////////////////////////////////////////////////////////////////////////

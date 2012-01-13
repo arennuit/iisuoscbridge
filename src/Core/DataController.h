@@ -33,7 +33,7 @@ public:
 
 	virtual void toggleResumePause();
 
-	virtual void editFoldAndNameJointsOption(bool isFoldAndNameJoints);
+	virtual void editDecorateStreamOption(bool decorateStream);
 
 	virtual void editSelection(const PathMap* newSelectedPathMap) {m_selectedPathMap = (PathMap*)newSelectedPathMap;}
 
@@ -65,7 +65,7 @@ public:
 	virtual void onPortChanged(int port) {}
 	virtual void onIidFilePathChanged(const std::string& iidFilePath) {}
 	virtual bool onMocapStateChanged(bool desiredMocapState); ///< Returns the obtained mocap state (which may differ from desiredMocapState).
-	virtual void onIsFoldAndNameJointsChanged(bool isFoldAndNameJoints) {}
+	virtual void onDecorateStreamChanged(bool decorateStream) {}
 	virtual void onOscPacketSizeChanged(uint oscPacketSize) {}
 	//@}
 

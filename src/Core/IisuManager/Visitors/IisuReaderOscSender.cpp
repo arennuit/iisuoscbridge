@@ -56,7 +56,7 @@ void IisuReaderOscSender::visit(Vector3PathMap* typedPathMap)
 	const SK::Vector3& iisuData = iisuDataHandle->get();
 
 	// Send via OSC.
-	if (m_dataBase->getIsFoldAndNameJoints())
+	if (m_dataBase->getDecorateStream())
 	{
 		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/x");
 		*m_outPacketStream << iisuData.x;
@@ -86,7 +86,7 @@ void IisuReaderOscSender::visit(FloatArrayPathMap* typedPathMap)
 	const SK::Array<float>& iisuData = iisuDataHandle->get();
 
 	// Send via OSC.
-	if (m_dataBase->getIsFoldAndNameJoints())
+	if (m_dataBase->getDecorateStream())
 	{
 		// Size.
 		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
@@ -122,7 +122,7 @@ void IisuReaderOscSender::visit(Vector3ArrayPathMap* typedPathMap)
 	const SK::Array<SK::Vector3>& iisuData = iisuDataHandle->get();
 
 	// Send via OSC.
-	if (m_dataBase->getIsFoldAndNameJoints())
+	if (m_dataBase->getDecorateStream())
 	{
 		// Size.
 		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");

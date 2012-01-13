@@ -86,10 +86,10 @@ void MainForm::setup()
 	else
 		ui.m_startStopToggleButton->setChecked(false);
 
-	if (m_dataBase->getIsFoldAndNameJoints())
-		ui.m_foldAndNameJointsCheckBox->setChecked(true);
+	if (m_dataBase->getDecorateStream())
+		ui.m_decorateStreamCheckBox->setChecked(true);
 	else
-		ui.m_foldAndNameJointsCheckBox->setChecked(false);
+		ui.m_decorateStreamCheckBox->setChecked(false);
 
 	if (m_dataBase->getMocapState() == true)
 		ui.m_tabs->setCurrentWidget(ui.m_logTab);
@@ -123,7 +123,7 @@ void MainForm::setup()
 	connect(ui.m_iidFilePathButton, SIGNAL(clicked()), this, SLOT(onIidFilePathButtonClicked()));
 	connect(ui.m_startStopToggleButton, SIGNAL(clicked()), this, SLOT(onStartStopToggleButtonClicked()));
 
-	connect(ui.m_foldAndNameJointsCheckBox, SIGNAL(clicked()), this, SLOT(onFoldAndNameJointsCheckBoxClicked()));
+	connect(ui.m_decorateStreamCheckBox, SIGNAL(clicked()), this, SLOT(onDecorateStreamCheckBoxClicked()));
 
 	connect(ui.m_addMapButton, SIGNAL(clicked()), this, SLOT(onAddMapButtonClicked()));
 	connect(ui.m_insertMapButton, SIGNAL(clicked()), this, SLOT(onInsertMapButtonClicked()));
@@ -327,7 +327,7 @@ void MainForm::onMocapStateChanged( bool mocapState )
 {
 	ui.m_startStopToggleButton->setChecked(mocapState);
 
-	ui.m_foldAndNameJointsCheckBox->setEnabled(!mocapState);
+	ui.m_decorateStreamCheckBox->setEnabled(!mocapState);
 	ui.m_pathMapsView->setEnabled(!mocapState);
 
 	// Show log tab when streaming.

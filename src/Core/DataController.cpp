@@ -52,9 +52,9 @@ void DataController::toggleResumePause()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::editFoldAndNameJointsOption( bool isFoldAndNameJoints )
+void DataController::editDecorateStreamOption( bool decorateStream )
 {
-	m_dataBase->setIsFoldAndNameJoints(isFoldAndNameJoints);
+	m_dataBase->setDecorateStream(decorateStream);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -68,7 +68,7 @@ void DataController::saveProjectToFile(std::string& filePath)
 	node_iisuOscBride.append_attribute("iidFilePath") = m_dataBase->getIidFilePath().c_str();
 	node_iisuOscBride.append_attribute("ipAddress") = m_dataBase->getIpAddress().c_str();
 	node_iisuOscBride.append_attribute("ipPort") = m_dataBase->getPort();
-	node_iisuOscBride.append_attribute("foldAndNameJoints") = m_dataBase->getIsFoldAndNameJoints();
+	node_iisuOscBride.append_attribute("decorateStream") = m_dataBase->getDecorateStream();
 
 	// Recursive dive into PathMaps.
 	saveProjectToFile_recursive(node_iisuOscBride, m_dataBase->getPathMapsRoot());

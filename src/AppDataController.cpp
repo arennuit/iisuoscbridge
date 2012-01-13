@@ -112,13 +112,13 @@ bool AppDataController::onMocapStateChanged(bool desiredMocapState)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void AppDataController::onIsFoldAndNameJointsChanged(bool isFoldAndNameJoints)
+void AppDataController::onDecorateStreamChanged(bool decorateStream)
 {
 	// Propagate operation up-stream.
-	m_mainForm->onIsFoldAndNameJointsChanged(isFoldAndNameJoints);
+	m_mainForm->decorateStreamChanged(decorateStream);
 
 	// Base callback.
-	DataController::onIsFoldAndNameJointsChanged(isFoldAndNameJoints);
+	DataController::onDecorateStreamChanged(decorateStream);
 }
 
 //////////////////////////////////////////////////////////////////////////
