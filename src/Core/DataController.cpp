@@ -73,13 +73,78 @@ void DataController::saveProjectToFile(std::string& filePath)
 	// Recursive dive into PathMaps.
 	saveProjectToFile_recursive(node_iisuOscBride, m_dataBase->getPathMapsRoot());
 
-	docXml.save_file(filePath.c_str());
+	// Actually save.
+	bool isSaveOk = docXml.save_file(filePath.c_str());
+
+	if (!isSaveOk)
+	{
+		SK_LOGGER(LOG_ERROR) << std::string("Could not create file ") + filePath + ".";
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
 void DataController::loadProjectFromFile(std::string& filePath)
 {
+	// Reset.
+	m_dataBase->reset();
 
+	// Load the file.
+	pugi::xml_document docXml;
+	pugi::xml_parse_result result = docXml.load_file(filePath.c_str());
+	if (!result)
+	{
+		SK_LOGGER(LOG_ERROR) << std::string("Could not open file ") + filePath + ".";
+		return;
+	}
+
+	// Node 'IisuOscBridge'.
+	pugi::xml_node iisuOscBridge_node = docXml.child("IisuOscBridge");
+	if (!iisuOscBridge_node)
+	{
+		SK_LOGGER(LOG_ERROR) << "Could not find node \'IisuOscBridge\' in file " + filePath + ".";
+		return;
+	}
+
+	// Attribute 'iidFilePath'.
+	pugi::xml_attribute iidFilePath_attrib = iisuOscBridge_node.attribute("iidFilePath");
+	if (!iidFilePath_attrib)
+	{
+		SK_LOGGER(LOG_ERROR) << "Could not attribute \'iidFilePath\' in node \'IisuOscBridge\'.";
+		return;
+	}
+	std::string iidFilePath = iidFilePath_attrib.value();
+	m_dataBase->setIidFilePath(iidFilePath);
+
+	// Attribute 'ipAddress'.
+	pugi::xml_attribute ipAddress_attrib = iisuOscBridge_node.attribute("ipAddress");
+	if (!ipAddress_attrib)
+	{
+		SK_LOGGER(LOG_ERROR) << "Could not attribute \'ipAddress\' in node \'IisuOscBridge\'.";
+		return;
+	}
+	std::string ipAddress = ipAddress_attrib.value();
+	m_dataBase->setIpAddress(ipAddress);
+
+	// Attribute 'ipPort'.
+	pugi::xml_attribute ipPort_attrib = iisuOscBridge_node.attribute("ipPort");
+	if (!ipPort_attrib)
+	{
+		SK_LOGGER(LOG_ERROR) << "Could not attribute \'ipPort\' in node \'IisuOscBridge\'.";
+		return;
+	}
+	int ipPort;
+	std::istringstream(ipPort_attrib.value()) >> ipPort;
+	m_dataBase->setPort(ipPort);
+
+	// Attribute 'decorateStream'.
+	pugi::xml_attribute decorateStream_attrib = iisuOscBridge_node.attribute("decorateStream");
+	if (!decorateStream_attrib)
+	{
+		SK_LOGGER(LOG_ERROR) << "Could not attribute \'decorateStream\' in node \'IisuOscBridge\'.";
+		return;
+	}
+	std::string decorateStream = decorateStream_attrib.value();
+	m_dataBase->setDecorateStream(decorateStream == "true" ? true : false);
 }
 
 //////////////////////////////////////////////////////////////////////////
