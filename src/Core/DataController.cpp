@@ -83,6 +83,20 @@ void DataController::saveProjectToFile(std::string& filePath)
 }
 
 //////////////////////////////////////////////////////////////////////////
+void DataController::saveProjectToFile_recursive( pugi::xml_node& parent, const PathMap* pathMap )
+{
+	// Create node and attributes.
+	pugi::xml_node node_pathMap = parent.append_child("PathMap");
+
+	node_pathMap.append_attribute("oscPathBit") = pathMap->getOscPathBit().c_str();
+	node_pathMap.append_attribute("iisuPath") = pathMap->getIisuPath().c_str();
+
+	// Recursion into children.
+	for (uint i = 0; i < pathMap->getChildren().size(); ++i)
+		saveProjectToFile_recursive(node_pathMap, pathMap->getChildren()[i]);
+}
+
+//////////////////////////////////////////////////////////////////////////
 void DataController::loadProjectFromFile(std::string& filePath)
 {
 	// Reset.
@@ -145,20 +159,6 @@ void DataController::loadProjectFromFile(std::string& filePath)
 	}
 	std::string decorateStream = decorateStream_attrib.value();
 	m_dataBase->setDecorateStream(decorateStream == "true" ? true : false);
-}
-
-//////////////////////////////////////////////////////////////////////////
-void DataController::saveProjectToFile_recursive( pugi::xml_node& parent, const PathMap* pathMap )
-{
-	// Create node and attributes.
-	pugi::xml_node node_pathMap = parent.append_child("PathMap");
-
-	node_pathMap.append_attribute("oscPathBit") = pathMap->getOscPathBit().c_str();
-	node_pathMap.append_attribute("iisuPath") = pathMap->getIisuPath().c_str();
-
-	// Recursion into children.
-	for (uint i = 0; i < pathMap->getChildren().size(); ++i)
-		saveProjectToFile_recursive(node_pathMap, pathMap->getChildren()[i]);
 }
 
 //////////////////////////////////////////////////////////////////////////
