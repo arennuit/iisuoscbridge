@@ -77,8 +77,8 @@ protected slots:
 
 	/// \name UI -> app logic.
 	//@{
-	void onNewActionTriggered();
 	void onOpenActionTriggered();
+	void onNewActionTriggered();
 	void onSaveActionTriggered();
 	void onSaveAsActionTriggered();
 	void onQuitActionTriggered() {QApplication::quit();}

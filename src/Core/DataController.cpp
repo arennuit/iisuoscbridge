@@ -58,45 +58,6 @@ void DataController::editDecorateStreamOption( bool decorateStream )
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::saveProjectToFile(std::string& filePath)
-{
-	// Create the xml document and root node. 
-	pugi::xml_document docXml;
-	pugi::xml_node node_iisuOscBride = docXml.append_child("IisuOscBridge");
-
-	// Iid file path, IP address and port are stored as attributes.
-	node_iisuOscBride.append_attribute("iidFilePath") = m_dataBase->getIidFilePath().c_str();
-	node_iisuOscBride.append_attribute("ipAddress") = m_dataBase->getIpAddress().c_str();
-	node_iisuOscBride.append_attribute("ipPort") = m_dataBase->getIpPort();
-	node_iisuOscBride.append_attribute("decorateStream") = m_dataBase->getDecorateStream();
-
-	// Recursive dive into PathMaps.
-	saveProjectToFile_recursive(node_iisuOscBride, m_dataBase->getPathMapsRoot());
-
-	// Actually save.
-	bool isSaveOk = docXml.save_file(filePath.c_str());
-
-	if (!isSaveOk)
-	{
-		SK_LOGGER(LOG_ERROR) << std::string("Could not create file ") + filePath + ".";
-	}
-}
-
-//////////////////////////////////////////////////////////////////////////
-void DataController::saveProjectToFile_recursive( pugi::xml_node& parent, const PathMap* pathMap )
-{
-	// Create node and attributes.
-	pugi::xml_node node_pathMap = parent.append_child("PathMap");
-
-	node_pathMap.append_attribute("oscPathBit") = pathMap->getOscPathBit().c_str();
-	node_pathMap.append_attribute("iisuPath") = pathMap->getIisuPath().c_str();
-
-	// Recursion into children.
-	for (uint i = 0; i < pathMap->getChildren().size(); ++i)
-		saveProjectToFile_recursive(node_pathMap, pathMap->getChildren()[i]);
-}
-
-//////////////////////////////////////////////////////////////////////////
 void DataController::loadProjectFromFile(std::string& filePath)
 {
 	// Reset.
@@ -197,6 +158,45 @@ void DataController::loadProjectFromFile_recursive( pugi::xml_node& pathMapNode,
 	{
 		loadProjectFromFile_recursive(childPathMapNode, pathMap);
 	}
+}
+
+//////////////////////////////////////////////////////////////////////////
+void DataController::saveProjectToFile(std::string& filePath)
+{
+	// Create the xml document and root node. 
+	pugi::xml_document docXml;
+	pugi::xml_node node_iisuOscBride = docXml.append_child("IisuOscBridge");
+
+	// Iid file path, IP address and port are stored as attributes.
+	node_iisuOscBride.append_attribute("iidFilePath") = m_dataBase->getIidFilePath().c_str();
+	node_iisuOscBride.append_attribute("ipAddress") = m_dataBase->getIpAddress().c_str();
+	node_iisuOscBride.append_attribute("ipPort") = m_dataBase->getIpPort();
+	node_iisuOscBride.append_attribute("decorateStream") = m_dataBase->getDecorateStream();
+
+	// Recursive dive into PathMaps.
+	saveProjectToFile_recursive(node_iisuOscBride, m_dataBase->getPathMapsRoot());
+
+	// Actually save.
+	bool isSaveOk = docXml.save_file(filePath.c_str());
+
+	if (!isSaveOk)
+	{
+		SK_LOGGER(LOG_ERROR) << std::string("Could not create file ") + filePath + ".";
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////
+void DataController::saveProjectToFile_recursive( pugi::xml_node& parent, const PathMap* pathMap )
+{
+	// Create node and attributes.
+	pugi::xml_node node_pathMap = parent.append_child("PathMap");
+
+	node_pathMap.append_attribute("oscPathBit") = pathMap->getOscPathBit().c_str();
+	node_pathMap.append_attribute("iisuPath") = pathMap->getIisuPath().c_str();
+
+	// Recursion into children.
+	for (uint i = 0; i < pathMap->getChildren().size(); ++i)
+		saveProjectToFile_recursive(node_pathMap, pathMap->getChildren()[i]);
 }
 
 //////////////////////////////////////////////////////////////////////////

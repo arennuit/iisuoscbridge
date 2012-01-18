@@ -43,9 +43,9 @@ public:
 	virtual bool deletePathMap() {return m_dataBase->deletePathMap(m_selectedPathMap);}
 	virtual bool clearPathMaps() {return m_dataBase->clearPathMaps();}
 
+	virtual void loadProjectFromFile(std::string& filePath);
 	virtual void newProject() {m_dataBase->reset();}
 	virtual void saveProjectToFile(std::string& filePath);
-	virtual void loadProjectFromFile(std::string& filePath);
 	//@}
 
 	/// \name Helpers.

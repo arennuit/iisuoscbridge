@@ -327,15 +327,6 @@ void MainForm::onMocapStateChanged( bool mocapState )
 }
 
 //////////////////////////////////////////////////////////////////////////
-void MainForm::onNewActionTriggered()
-{
-	m_dataController->newProject();
-
-	// Update the GUI.
-	setCurrentFilePath(std::string(""));
-}
-
-//////////////////////////////////////////////////////////////////////////
 void MainForm::onOpenActionTriggered()
 {
 	// Get the filepath.
@@ -353,6 +344,15 @@ void MainForm::onOpenActionTriggered()
 
 	// Update the GUI.
 	setCurrentFilePath(filePath);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onNewActionTriggered()
+{
+	m_dataController->newProject();
+
+	// Update the GUI.
+	setCurrentFilePath(std::string(""));
 }
 
 //////////////////////////////////////////////////////////////////////////
