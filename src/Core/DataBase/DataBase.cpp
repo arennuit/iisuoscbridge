@@ -6,11 +6,28 @@ namespace SK
 
 DEFINE_DATA_BASE(DataBase, AbstractDataBase)
 
+std::string DataBase::sm_ipAddressDefaultValue = std::string("127.0.0.1");
+int DataBase::sm_ipPortDefaultValue = 8000;
+std::string DataBase::sm_iidFilePathDefaultValue = std::string();
+PathMap* DataBase::sm_pathMapsRootDefaultValue = 0;
+bool DataBase::sm_mocapStateDefaultValue = false;
+bool DataBase::sm_decorateStreamDefaultValue = true;
+uint DataBase::sm_oscPacketSizeDefaultValue = 0;
+
 //////////////////////////////////////////////////////////////////////////
 DataBase::DataBase() : 
-	m_pathMapsRoot(0)
+
+	m_ipAddress(sm_ipAddressDefaultValue),
+	m_ipPort(sm_ipPortDefaultValue),
+	m_iidFilePath(sm_iidFilePathDefaultValue),
+
+	m_pathMapsRoot(sm_pathMapsRootDefaultValue),
+
+	m_mocapState(sm_mocapStateDefaultValue),
+
+	m_decorateStream(sm_decorateStreamDefaultValue),
+	m_oscPacketSize(sm_oscPacketSizeDefaultValue)
 {
-	setDefaultValues();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -21,47 +38,22 @@ DataBase::~DataBase()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataBase::setDefaultValues()
-{
-	m_ipAddress = "127.0.0.1";
-	m_port = 8000;
-	m_iidFilePath = "";
-
-	// Root.
-	addPathMap(0, "iisu", "");
-
-	// Users 1.
-	const PathMap* path_user1 = addChildMap(m_pathMapsRoot, "user1", "");
-	addChildMap(path_user1, "centroids", "USER1.SHAPE.CENTROIDS.Positions");
-	addChildMap(path_user1, "status", "USER1.SKELETON.Status");
-	const PathMap* path_joints1 = addChildMap(path_user1, "joints", "");
-	addChildMap(path_joints1, "positions", "USER1.SKELETON.KeyPoints");
-	addChildMap(path_joints1, "confidences", "USER1.SKELETON.KeyPointsConfidence");
-
-	m_mocapState = false;
-
-	m_decorateStream = true;
-
-	m_oscPacketSize = 0;
-}
-
-//////////////////////////////////////////////////////////////////////////
 void DataBase::reset()
 {
 	// The data cannot be edited while streaming.
 	if (m_mocapState)
 		return;
 
-	setMocapState(false);
-
-	setIpAddress("127.0.0.1");
-	setPort(8000);
-	setIidFilePath("");
+	setIpAddress(sm_ipAddressDefaultValue);
+	setIpPort(sm_ipPortDefaultValue);
+	setIidFilePath(sm_iidFilePathDefaultValue);
 
 	clearPathMaps();
 
-	setDecorateStream(true);
-	setOscPacketSize(0);
+	setMocapState(sm_mocapStateDefaultValue);
+
+	setDecorateStream(sm_decorateStreamDefaultValue);
+	setOscPacketSize(sm_oscPacketSizeDefaultValue);
 }
 
 //////////////////////////////////////////////////////////////////////////

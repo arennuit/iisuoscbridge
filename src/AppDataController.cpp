@@ -76,13 +76,13 @@ void AppDataController::onIpAddressChanged(const std::string& ipAddress)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void AppDataController::onPortChanged(int port)
+void AppDataController::onIpPortChanged(int ipPort)
 {
 	// Propagate operation up-stream.
-	m_mainForm->onPortChanged(port);
+	m_mainForm->onIpPortChanged(ipPort);
 
 	// Base callback.
-	DataController::onPortChanged(port);
+	DataController::onIpPortChanged(ipPort);
 }
 
 //////////////////////////////////////////////////////////////////////////

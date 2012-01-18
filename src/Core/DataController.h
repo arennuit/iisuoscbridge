@@ -28,7 +28,7 @@ public:
 	/// \name API.
 	//@{
 	virtual void editIpAddress(const std::string& newIpAddress) {m_dataBase->setIpAddress(newIpAddress);}
-	virtual void editPort(int newPort) {m_dataBase->setPort(newPort);}
+	virtual void editIpPort(int newIpPort) {m_dataBase->setIpPort(newIpPort);}
 	virtual bool editIidFilePath(const std::string& newIidFilePath);
 
 	virtual void toggleResumePause();
@@ -62,7 +62,7 @@ public:
 	virtual void onClearPathMaps() {editSelection(0);}
 
 	virtual void onIpAddressChanged(const std::string& ipAddress) {}
-	virtual void onPortChanged(int port) {}
+	virtual void onIpPortChanged(int ipPort) {}
 	virtual void onIidFilePathChanged(const std::string& iidFilePath) {}
 	virtual bool onMocapStateChanged(bool desiredMocapState); ///< Returns the obtained mocap state (which may differ from desiredMocapState).
 	virtual void onDecorateStreamChanged(bool decorateStream) {}

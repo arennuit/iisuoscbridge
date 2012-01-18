@@ -284,7 +284,7 @@ void IisuManager::oscSend()
 	m_device->lockFrame();
 
 	// Create socket and stream.
-	UdpTransmitSocket transmitSocket(IpEndpointName(m_dataBase->getIpAddress().c_str(), m_dataBase->getPort()));
+	UdpTransmitSocket transmitSocket(IpEndpointName(m_dataBase->getIpAddress().c_str(), m_dataBase->getIpPort()));
 	osc::OutboundPacketStream outPacketStream(m_oscBuffer, OUTPUT_BUFFER_SIZE);
 
 	// Build the OSC packet up.

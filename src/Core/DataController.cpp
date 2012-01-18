@@ -67,7 +67,7 @@ void DataController::saveProjectToFile(std::string& filePath)
 	// Iid file path, IP address and port are stored as attributes.
 	node_iisuOscBride.append_attribute("iidFilePath") = m_dataBase->getIidFilePath().c_str();
 	node_iisuOscBride.append_attribute("ipAddress") = m_dataBase->getIpAddress().c_str();
-	node_iisuOscBride.append_attribute("ipPort") = m_dataBase->getPort();
+	node_iisuOscBride.append_attribute("ipPort") = m_dataBase->getIpPort();
 	node_iisuOscBride.append_attribute("decorateStream") = m_dataBase->getDecorateStream();
 
 	// Recursive dive into PathMaps.
@@ -148,7 +148,7 @@ void DataController::loadProjectFromFile(std::string& filePath)
 	}
 	int ipPort;
 	std::istringstream(ipPort_attrib.value()) >> ipPort;
-	m_dataBase->setPort(ipPort);
+	m_dataBase->setIpPort(ipPort);
 
 	// Attribute 'decorateStream'.
 	pugi::xml_attribute decorateStream_attrib = iisuOscBridge_node.attribute("decorateStream");

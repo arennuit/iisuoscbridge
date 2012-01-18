@@ -19,10 +19,10 @@ int main(int argc, char *argv[])
 	SK::AppDataBase::CreateInstance();
 	SK::AppDataController::CreateInstance();
 
-	mainForm.setup();
-
 	SK::AppDataBase::GetInstance()->setDataController(SK::DataController::GetInstance());
 	SK::AppDataController::GetInstance()->setMainForm(&mainForm);
+
+	mainForm.setup();
 
 	mainForm.show();
 	app.exec();

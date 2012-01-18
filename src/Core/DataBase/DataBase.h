@@ -56,8 +56,8 @@ public:
 	virtual const std::string& getIpAddress() const {return m_ipAddress;}
 	virtual void setIpAddress(const std::string& ipAddress) {m_ipAddress = ipAddress;}
 	
-	virtual int getPort() const {return m_port;}
-	virtual void setPort(int port) {m_port = port;}
+	virtual int getIpPort() const {return m_ipPort;}
+	virtual void setIpPort(int ipPort) {m_ipPort = ipPort;}
 
 	virtual const std::string& getIidFilePath() const {return m_iidFilePath;}
 	virtual void setIidFilePath(const std::string& iidFilePath) {m_iidFilePath = iidFilePath;}
@@ -78,12 +78,10 @@ protected:
 	DataBase();
 	virtual ~DataBase();
 
-	void setDefaultValues();
-
 	/// \name Application data.
 	//@
 	std::string m_ipAddress;
-	int m_port;
+	int m_ipPort;
 	std::string m_iidFilePath;
 
 	PathMap* m_pathMapsRoot;
@@ -91,8 +89,22 @@ protected:
 	bool m_mocapState;
 
 	bool m_decorateStream;
-
 	uint m_oscPacketSize;
+	//@}
+
+	/// \name Default values.
+	//@
+	static std::string sm_ipAddressDefaultValue;
+	static int sm_ipPortDefaultValue;
+	static std::string sm_iidFilePathDefaultValue;
+
+	static PathMap* sm_pathMapsRootDefaultValue;
+
+	static bool sm_mocapStateDefaultValue;
+
+	static bool sm_decorateStreamDefaultValue;
+
+	static uint sm_oscPacketSizeDefaultValue;
 	//@}
 };
 

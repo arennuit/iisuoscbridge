@@ -28,7 +28,7 @@ public:
 	void onClearPathMaps() SK_OVERRIDE;
 
 	void onIpAddressChanged(const std::string& ipAddress) SK_OVERRIDE;
-	void onPortChanged(int port) SK_OVERRIDE;
+	void onIpPortChanged(int ipPort) SK_OVERRIDE;
 	void onIidFilePathChanged(const std::string& iidFilePath) SK_OVERRIDE;
 	bool onMocapStateChanged(bool desiredMocapState) SK_OVERRIDE;
 	void onDecorateStreamChanged(bool decorateStream) SK_OVERRIDE;

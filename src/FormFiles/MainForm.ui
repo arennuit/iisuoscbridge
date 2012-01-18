@@ -655,7 +655,7 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="m_portEdit">
+           <widget class="QLineEdit" name="m_ipPortEdit">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -825,7 +825,7 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
              </sizepolicy>
             </property>
             <property name="text">
-             <string>0</string>
+             <string/>
             </property>
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

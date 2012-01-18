@@ -80,13 +80,13 @@ void AppDataBase::setIpAddress(const std::string& ipAddress)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void AppDataBase::setPort(int port)
+void AppDataBase::setIpPort(int ipPort)
 {
 	// Perform operation.
-	DataBase::setPort(port);
+	DataBase::setIpPort(ipPort);
 
 	// Propagate operation up-stream.
-	m_dataController->onPortChanged(port);
+	m_dataController->onIpPortChanged(ipPort);
 }
 
 //////////////////////////////////////////////////////////////////////////

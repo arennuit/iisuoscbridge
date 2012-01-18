@@ -65,7 +65,7 @@ public:
 	void onClearPathMaps();
 
 	void onIpAddressChanged(const std::string& ipAddress) {ui.m_ipAddressEdit->setText(ipAddress.c_str());}
-	void onPortChanged(int port) {ui.m_portEdit->setText(QString::number(port));}
+	void onIpPortChanged(int ipPort) {ui.m_ipPortEdit->setText(QString::number(ipPort));}
 	void onIidFilePathChanged(const std::string& iidFilePath) {ui.m_iidFilePathEdit->setText(iidFilePath.c_str());}
 	void onMocapStateChanged(bool mocapState);
 	void decorateStreamChanged(bool decorateStream) {ui.m_decorateStreamCheckBox->setChecked(decorateStream);}
@@ -88,7 +88,7 @@ protected slots:
 	void onFullScreenAction();
 
 	void onIpAddressEditEditingFinished() {m_dataController->editIpAddress(ui.m_ipAddressEdit->text().toStdString());}
-	void onPortEditEditingFinished() {m_dataController->editPort(ui.m_portEdit->text().toInt());}
+	void onIpPortEditEditingFinished() {m_dataController->editIpPort(ui.m_ipPortEdit->text().toInt());}
 	void onIidFilePathEditEditingFinished();
 
 	void onIidFilePathButtonClicked();

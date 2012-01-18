@@ -77,31 +77,14 @@ void MainForm::setup()
 	m_dataBase = DataBase::GetInstance(); // We do not make this pointer a member of the class because the MainForm is not due to modify data, it only uses the data model to perform the initial ui setup.
 	assert(m_dataBase);
 
-	ui.m_ipAddressEdit->setText(QString(m_dataBase->getIpAddress().c_str()));
-	ui.m_portEdit->setText(QString::number(m_dataBase->getPort()));
-	ui.m_iidFilePathEdit->setText(QString(m_dataBase->getIidFilePath().c_str()));
-
-	if (m_dataBase->getMocapState())
-		ui.m_startStopToggleButton->setChecked(true);
-	else
-		ui.m_startStopToggleButton->setChecked(false);
-
-	if (m_dataBase->getDecorateStream())
-		ui.m_decorateStreamCheckBox->setChecked(true);
-	else
-		ui.m_decorateStreamCheckBox->setChecked(false);
-
-	if (m_dataBase->getMocapState() == true)
-		ui.m_tabs->setCurrentWidget(ui.m_logTab);
-	else
-		ui.m_tabs->setCurrentWidget(ui.m_mapsTab);
-
 	ui.m_pathMapsView->setAnimated(true);
 	ui.m_pathMapsView->expandAll();
 	ui.m_pathMapsView->resizeColumnToContents(0);
 	ui.m_pathMapsView->resizeColumnToContents(1);
 	ui.m_pathMapsView->setAlternatingRowColors(true);
 	ui.m_pathMapsView->setItemDelegate(&m_pathDelegate);
+
+	m_dataBase->reset();
 
 	updateRecentFileActions();
 
@@ -117,7 +100,7 @@ void MainForm::setup()
 	connect(ui.m_fullScreenAction, SIGNAL(triggered()), this, SLOT(onFullScreenAction()));
 
 	connect(ui.m_ipAddressEdit, SIGNAL(editingFinished()), this, SLOT(onIpAddressEditEditingFinished()));
-	connect(ui.m_portEdit, SIGNAL(editingFinished()), this, SLOT(onPortEditEditingFinished()));
+	connect(ui.m_ipPortEdit, SIGNAL(editingFinished()), this, SLOT(onIpPortEditEditingFinished()));
 	connect(ui.m_iidFilePathEdit, SIGNAL(editingFinished()), this, SLOT(onIidFilePathEditEditingFinished()));
 
 	connect(ui.m_iidFilePathButton, SIGNAL(clicked()), this, SLOT(onIidFilePathButtonClicked()));

@@ -99,7 +99,7 @@ public:
 	/// \name Accessors.
 	//@{
 	void setIpAddress(const std::string& ipAddress) SK_OVERRIDE;
-	void setPort(int port) SK_OVERRIDE;
+	void setIpPort(int ipPort) SK_OVERRIDE;
 	void setIidFilePath(const std::string& iidFilePath) SK_OVERRIDE;
 	void setMocapState(bool desiredMocapState) SK_OVERRIDE;
 	void setDecorateStream(bool decorateStream) SK_OVERRIDE;
