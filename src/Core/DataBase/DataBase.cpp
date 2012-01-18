@@ -32,7 +32,7 @@ void DataBase::setDefaultValues()
 
 	// Users 1.
 	const PathMap* path_user1 = addChildMap(m_pathMapsRoot, "user1", "");
-	//addChildMap(path_user1, "centroids", "USER1.SHAPE.CENTROIDS.Positions");
+	addChildMap(path_user1, "centroids", "USER1.SHAPE.CENTROIDS.Positions");
 	addChildMap(path_user1, "status", "USER1.SKELETON.Status");
 	const PathMap* path_joints1 = addChildMap(path_user1, "joints", "");
 	addChildMap(path_joints1, "positions", "USER1.SKELETON.KeyPoints");
