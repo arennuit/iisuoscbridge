@@ -166,7 +166,6 @@ void MainForm::onEditSelection(const PathMap* newSelectedPathMap)
 void MainForm::onAddPathMap(const PathMap* newPathMap)
 {
 	assert(newPathMap);
-	assert((bool)m_selectedItem == (bool)newPathMap->getParent()); // A new PathMap can be added to a clear model only if the selection is empty.
 
 	// Create the new model's items.
 	QStandardItem* oscItem = new QStandardItem(newPathMap->getOscPathBit().c_str());
@@ -182,7 +181,7 @@ void MainForm::onAddPathMap(const PathMap* newPathMap)
 	// Attach the new items.
 	if (newPathMap->getParent())
 	{
-		QStandardItem* parentItem = m_selectedItem->parent();
+		QStandardItem* parentItem = m_pathMapItemMap[newPathMap->getParent()];
 		assert(parentItem);
 	
 		int rowIdx = parentItem->rowCount();
@@ -203,7 +202,6 @@ void MainForm::onAddPathMap(const PathMap* newPathMap)
 void MainForm::onInsertPathMap(const PathMap* newPathMap)
 {
 	assert(newPathMap);
-	assert((bool)m_selectedItem == (bool)newPathMap->getParent()); // A new PathMap can be added to a clear model only if the selection is empty.
 
 	// Create the new model's items.
 	QStandardItem* oscItem = new QStandardItem(newPathMap->getOscPathBit().c_str());
@@ -219,10 +217,18 @@ void MainForm::onInsertPathMap(const PathMap* newPathMap)
 	// Attach the new items.
 	if (newPathMap->getParent())
 	{
-		QStandardItem* parentItem = m_selectedItem->parent();
+		PathMap* parentPathMap = newPathMap->getParent();
+
+		QStandardItem* parentItem = m_pathMapItemMap[parentPathMap];
 		assert(parentItem);
 
-		int rowIdx = m_selectedItem->row();
+		int rowIdx;
+		for (rowIdx = 0; rowIdx < parentPathMap->getChildren().size(); ++rowIdx)
+		{
+			if (parentPathMap->getChildren()[rowIdx] == newPathMap)
+				break;
+		}
+
 		parentItem->insertRow(rowIdx, QList<QStandardItem*>() << oscItem << iisuItem);
 	}
 	else
@@ -239,7 +245,6 @@ void MainForm::onInsertPathMap(const PathMap* newPathMap)
 void MainForm::onAddChildMap(const PathMap* newPathMap)
 {
 	assert(newPathMap);
-	assert((bool)m_selectedItem == (bool)newPathMap->getParent()); // A new PathMap can be added to a clear model only if the selection is empty.
 
 	// Create the new model's items.
 	QStandardItem* oscItem = new QStandardItem(newPathMap->getOscPathBit().c_str());
@@ -255,9 +260,12 @@ void MainForm::onAddChildMap(const PathMap* newPathMap)
 	// Attach the new items.
 	if (newPathMap->getParent())
 	{
-		int rowIdx = m_selectedItem->rowCount();
-		m_selectedItem->setChild(rowIdx, 0, oscItem);
-		m_selectedItem->setChild(rowIdx, 1, iisuItem);
+		QStandardItem* parentItem = m_pathMapItemMap[newPathMap->getParent()];
+		assert(parentItem);
+
+		int rowIdx = parentItem->rowCount();
+		parentItem->setChild(rowIdx, 0, oscItem);
+		parentItem->setChild(rowIdx, 1, iisuItem);
 	}
 	else
 	{
