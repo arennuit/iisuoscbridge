@@ -57,6 +57,7 @@ public:
 	/// \name Callbacks.
 	//@{
 	void onEditSelection(const PathMap* newSelectedPathMap);
+	void onLoadProjectFromFile() {ui.m_pathMapsView->expandAll();}
 
 	void onAddPathMap(const PathMap* newPathMap);
 	void onInsertPathMap(const PathMap* newPathMap);

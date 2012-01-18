@@ -17,6 +17,8 @@ public:
 	/// \name API.
 	//@{
 	void editSelection(const PathMap* newSelectedPathMap) SK_OVERRIDE;
+
+	void loadProjectFromFile(std::string& filePath) SK_OVERRIDE;
 	//@}
 
 	/// \name Callbacks.

@@ -16,6 +16,16 @@ void AppDataController::editSelection(const PathMap* newSelectedPathMap)
 }
 
 //////////////////////////////////////////////////////////////////////////
+void AppDataController::loadProjectFromFile(std::string& filePath)
+{
+	// Perform operation.
+	DataController::loadProjectFromFile(filePath);
+
+	// Propagate operation up-stream.
+	m_mainForm->onLoadProjectFromFile();
+}
+
+//////////////////////////////////////////////////////////////////////////
 void AppDataController::onAddPathMap(const PathMap* newPathMap)
 {
 	// Propagate operation up-stream.
