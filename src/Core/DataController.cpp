@@ -123,7 +123,7 @@ void DataController::loadProjectFromFile(std::string& filePath)
 	pugi::xml_attribute iidFilePath_attrib = iisuOscBridge_node.attribute("iidFilePath");
 	if (!iidFilePath_attrib)
 	{
-		SK_LOGGER(LOG_ERROR) << "Could not attribute \'iidFilePath\' in node \'IisuOscBridge\'.";
+		SK_LOGGER(LOG_ERROR) << "Could not find attribute \'iidFilePath\' in node \'IisuOscBridge\'.";
 		return;
 	}
 	std::string iidFilePath = iidFilePath_attrib.value();
@@ -133,7 +133,7 @@ void DataController::loadProjectFromFile(std::string& filePath)
 	pugi::xml_attribute ipAddress_attrib = iisuOscBridge_node.attribute("ipAddress");
 	if (!ipAddress_attrib)
 	{
-		SK_LOGGER(LOG_ERROR) << "Could not attribute \'ipAddress\' in node \'IisuOscBridge\'.";
+		SK_LOGGER(LOG_ERROR) << "Could not find attribute \'ipAddress\' in node \'IisuOscBridge\'.";
 		return;
 	}
 	std::string ipAddress = ipAddress_attrib.value();
@@ -143,7 +143,7 @@ void DataController::loadProjectFromFile(std::string& filePath)
 	pugi::xml_attribute ipPort_attrib = iisuOscBridge_node.attribute("ipPort");
 	if (!ipPort_attrib)
 	{
-		SK_LOGGER(LOG_ERROR) << "Could not attribute \'ipPort\' in node \'IisuOscBridge\'.";
+		SK_LOGGER(LOG_ERROR) << "Could not find attribute \'ipPort\' in node \'IisuOscBridge\'.";
 		return;
 	}
 	int ipPort;
@@ -154,11 +154,49 @@ void DataController::loadProjectFromFile(std::string& filePath)
 	pugi::xml_attribute decorateStream_attrib = iisuOscBridge_node.attribute("decorateStream");
 	if (!decorateStream_attrib)
 	{
-		SK_LOGGER(LOG_ERROR) << "Could not attribute \'decorateStream\' in node \'IisuOscBridge\'.";
+		SK_LOGGER(LOG_ERROR) << "Could not find attribute \'decorateStream\' in node \'IisuOscBridge\'.";
 		return;
 	}
 	std::string decorateStream = decorateStream_attrib.value();
 	m_dataBase->setDecorateStream(decorateStream == "true" ? true : false);
+
+	// Recursive dive into PathMaps.
+	loadProjectFromFile_recursive(iisuOscBridge_node, 0);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void DataController::loadProjectFromFile_recursive( pugi::xml_node& pathMapNode, PathMap* parentPathMap )
+{
+	PathMap* pathMap = 0;
+	if (std::string(pathMapNode.name()) == "PathMap")
+	{
+		// Attribute 'oscPathBit'.
+		pugi::xml_attribute oscPathBit_attrib = pathMapNode.attribute("oscPathBit");
+		if (!oscPathBit_attrib)
+		{
+			SK_LOGGER(LOG_ERROR) << "Could not find attribute \'oscPathBit\' in node \'PathMap\'.";
+			return;
+		}
+		std::string oscPathBit = oscPathBit_attrib.value();
+
+		// Attribute 'iisuPath'.
+		pugi::xml_attribute iisuPath_attrib = pathMapNode.attribute("iisuPath");
+		if (!iisuPath_attrib)
+		{
+			SK_LOGGER(LOG_ERROR) << "Could not find attribute \'iisuPath\' in node \'PathMap\'.";
+			return;
+		}
+		std::string iisuPath = iisuPath_attrib.value();
+
+		// Create new PathMap.
+		pathMap = (PathMap*)m_dataBase->addChildMap(parentPathMap, oscPathBit, iisuPath);
+	}
+
+	// Node 'PathMap'.
+	for (pugi::xml_node childPathMapNode = pathMapNode.child("PathMap"); childPathMapNode; childPathMapNode = childPathMapNode.next_sibling("PathMap"))
+	{
+		loadProjectFromFile_recursive(childPathMapNode, pathMap);
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

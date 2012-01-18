@@ -80,6 +80,7 @@ protected:
 	PathMap* m_selectedPathMap;
 
 	void saveProjectToFile_recursive(pugi::xml_node& parent, const PathMap* pathMap);
+	void loadProjectFromFile_recursive( pugi::xml_node& pathMapNode, PathMap* parentPathMap );
 };
 
 } // namespace SK.
