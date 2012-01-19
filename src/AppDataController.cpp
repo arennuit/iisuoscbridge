@@ -22,7 +22,27 @@ void AppDataController::loadProjectFromFile(std::string& filePath)
 	DataController::loadProjectFromFile(filePath);
 
 	// Propagate operation up-stream.
-	m_mainForm->onLoadProjectFromFile();
+	m_mainForm->onLoadProjectFromFile(filePath);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void AppDataController::newProject()
+{
+	// Perform operation.
+	DataController::newProject();
+
+	// Propagate operation up-stream.
+	m_mainForm->onNewProject();
+}
+
+//////////////////////////////////////////////////////////////////////////
+void AppDataController::saveProjectToFile(std::string& filePath)
+{
+	// Perform operation.
+	DataController::saveProjectToFile(filePath);
+
+	// Propagate operation up-stream.
+	m_mainForm->onSaveProjectToFile(filePath);
 }
 
 //////////////////////////////////////////////////////////////////////////

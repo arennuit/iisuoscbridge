@@ -146,6 +146,26 @@ void MainForm::onEditSelection(const PathMap* newSelectedPathMap)
 }
 
 //////////////////////////////////////////////////////////////////////////
+void MainForm::onLoadProjectFromFile(std::string& filePath)
+{
+	ui.m_pathMapsView->expandAll();
+
+	setCurrentFilePath(filePath);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onNewProject()
+{
+	setCurrentFilePath(std::string(""));
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onSaveProjectToFile(std::string& filePath)
+{
+	setCurrentFilePath(filePath);
+}
+
+//////////////////////////////////////////////////////////////////////////
 void MainForm::onAddPathMap(const PathMap* newPathMap)
 {
 	assert(newPathMap);
@@ -334,25 +354,13 @@ void MainForm::onOpenActionTriggered()
 		return;
 
 	std::string filePath = m_openFileSelectDlg.selectedFiles()[0].toStdString();
-	if (filePath == "")
-	{
-		SK_LOGGER(LOG_WARNING) << "Selected file for \'Open\' command is invalid.";
-		return;
-	}
-
 	m_dataController->loadProjectFromFile(filePath);
-
-	// Update the GUI.
-	setCurrentFilePath(filePath);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onNewActionTriggered()
 {
 	m_dataController->newProject();
-
-	// Update the GUI.
-	setCurrentFilePath(std::string(""));
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -366,9 +374,6 @@ void MainForm::onSaveActionTriggered()
 
 	// Save in the current file.
 	m_dataController->saveProjectToFile(filePath.toStdString());
-
-	// Update the GUI.
-	setCurrentFilePath(filePath.toStdString());
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -379,16 +384,7 @@ void MainForm::onSaveAsActionTriggered()
 		return;
 
 	std::string filePath = m_saveAsFileSelectDlg.selectedFiles()[0].toStdString();
-	if (filePath == "")
-	{
-		SK_LOGGER(LOG_WARNING) << "Selected file for \'Save As\' command is invalid.";
-		return;
-	}
-
 	m_dataController->saveProjectToFile(filePath);
-
-	// Update the GUI.
-	setCurrentFilePath(filePath);
 }
 
 //////////////////////////////////////////////////////////////////////////

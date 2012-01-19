@@ -60,15 +60,12 @@ void DataController::editDecorateStreamOption( bool decorateStream )
 //////////////////////////////////////////////////////////////////////////
 void DataController::loadProjectFromFile(std::string& filePath)
 {
-	// Reset.
-	m_dataBase->reset();
-
 	// Load the file.
 	pugi::xml_document docXml;
 	pugi::xml_parse_result result = docXml.load_file(filePath.c_str());
 	if (!result)
 	{
-		SK_LOGGER(LOG_ERROR) << std::string("Could not open file ") + filePath + ".";
+		SK_LOGGER(LOG_ERROR) << std::string("Could not open file \'") + filePath + "\'.";
 		return;
 	}
 
@@ -76,9 +73,12 @@ void DataController::loadProjectFromFile(std::string& filePath)
 	pugi::xml_node iisuOscBridge_node = docXml.child("IisuOscBridge");
 	if (!iisuOscBridge_node)
 	{
-		SK_LOGGER(LOG_ERROR) << "Could not find node \'IisuOscBridge\' in file " + filePath + ".";
+		SK_LOGGER(LOG_ERROR) << "Unexpected formating of file\'" + filePath + "\'.";
 		return;
 	}
+
+	// Reset current project to pave the way for the project about to be loaded.
+	m_dataBase->reset();
 
 	// Attribute 'iidFilePath'.
 	pugi::xml_attribute iidFilePath_attrib = iisuOscBridge_node.attribute("iidFilePath");
@@ -181,7 +181,7 @@ void DataController::saveProjectToFile(std::string& filePath)
 
 	if (!isSaveOk)
 	{
-		SK_LOGGER(LOG_ERROR) << std::string("Could not create file ") + filePath + ".";
+		SK_LOGGER(LOG_ERROR) << std::string("Could not create file \'") + filePath + "\'.";
 	}
 }
 
