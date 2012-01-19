@@ -43,35 +43,36 @@ public:
 	/// \name API.
 	//@{
 	virtual void reset();
+	//@}
+
+	/// \name Editors.
+	//@{
+	virtual void setIpAddress(const std::string& ipAddress) {m_ipAddress = ipAddress;}
+	virtual void setIpPort(int ipPort) {m_ipPort = ipPort;}
+	virtual void setIidFilePath(const std::string& iidFilePath) {m_iidFilePath = iidFilePath;}
+	virtual void setDecorateStream(bool decorateStream) {m_decorateStream = decorateStream;}
 
 	virtual const PathMap* addPathMap(const PathMap* siblingPathMap, const std::string& oscPathBit = NEW_OSC_PATH_BIT, const std::string& iisuPath = NEW_IISU_PATH);
 	virtual const PathMap* insertPathMap(const PathMap* siblingPathMap, const std::string& oscPathBit = NEW_OSC_PATH_BIT, const std::string& iisuPath = NEW_IISU_PATH);
 	virtual const PathMap* addChildMap(const PathMap* parentPathMap, const std::string& oscPathBit = NEW_OSC_PATH_BIT, const std::string& iisuPath = NEW_IISU_PATH);
 	virtual bool deletePathMap(const PathMap* pathMap);
 	virtual bool clearPathMaps();
+
+	virtual void setMocapState(bool mocapState) {m_mocapState = mocapState;}
+	virtual void setOscPacketSize(uint oscPacketSize) {m_oscPacketSize = oscPacketSize;}
 	//@}
 
-	/// \name Accessors.
+	/// \name Getters.
 	//@{
 	virtual const std::string& getIpAddress() const {return m_ipAddress;}
-	virtual void setIpAddress(const std::string& ipAddress) {m_ipAddress = ipAddress;}
-	
 	virtual int getIpPort() const {return m_ipPort;}
-	virtual void setIpPort(int ipPort) {m_ipPort = ipPort;}
-
 	virtual const std::string& getIidFilePath() const {return m_iidFilePath;}
-	virtual void setIidFilePath(const std::string& iidFilePath) {m_iidFilePath = iidFilePath;}
+	virtual bool getDecorateStream() const {return m_decorateStream;}
 
 	virtual const PathMap* getPathMapsRoot() const {return m_pathMapsRoot;} ///< The 'const' makes sure the database knows when a data is modified.
 
 	virtual bool getMocapState() const {return m_mocapState;}
-	virtual void setMocapState(bool mocapState) {m_mocapState = mocapState;}
-
-	virtual bool getDecorateStream() const {return m_decorateStream;}
-	virtual void setDecorateStream(bool decorateStream) {m_decorateStream = decorateStream;}
-
 	virtual uint getOscPacketSize() const {return m_oscPacketSize;}
-	virtual void setOscPacketSize(uint oscPacketSize) {m_oscPacketSize = oscPacketSize;}
 	//@}
 
 protected:
@@ -83,12 +84,11 @@ protected:
 	std::string m_ipAddress;
 	int m_ipPort;
 	std::string m_iidFilePath;
+	bool m_decorateStream;
 
 	PathMap* m_pathMapsRoot;
 
 	bool m_mocapState;
-
-	bool m_decorateStream;
 	uint m_oscPacketSize;
 	//@}
 
@@ -97,14 +97,12 @@ protected:
 	static std::string sm_ipAddressDefaultValue;
 	static int sm_ipPortDefaultValue;
 	static std::string sm_iidFilePathDefaultValue;
+	static bool sm_decorateStreamDefaultValue;
 
 	static PathMap* sm_pathMapsRootDefaultValue;
 
-	static bool sm_mocapStateDefaultValue;
-
-	static bool sm_decorateStreamDefaultValue;
-
 	static uint sm_oscPacketSizeDefaultValue;
+	static bool sm_mocapStateDefaultValue;
 	//@}
 };
 

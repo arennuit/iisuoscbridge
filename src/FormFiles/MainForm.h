@@ -61,17 +61,18 @@ public:
 	void onNewProject();
 	void onSaveProjectToFile(std::string& filePath);
 
+	void onIpAddressChanged(const std::string& ipAddress) {ui.m_ipAddressEdit->setText(ipAddress.c_str());}
+	void onIpPortChanged(int ipPort) {ui.m_ipPortEdit->setText(QString::number(ipPort));}
+	void onIidFilePathChanged(const std::string& iidFilePath) {ui.m_iidFilePathEdit->setText(iidFilePath.c_str());}
+	void decorateStreamChanged(bool decorateStream) {ui.m_decorateStreamCheckBox->setChecked(decorateStream);}
+
 	void onAddPathMap(const PathMap* newPathMap);
 	void onInsertPathMap(const PathMap* newPathMap);
 	void onAddChildMap(const PathMap* newPathMap);
 	void onDeletePathMap(const PathMap* pathMapToBeDeleted);
 	void onClearPathMaps();
 
-	void onIpAddressChanged(const std::string& ipAddress) {ui.m_ipAddressEdit->setText(ipAddress.c_str());}
-	void onIpPortChanged(int ipPort) {ui.m_ipPortEdit->setText(QString::number(ipPort));}
-	void onIidFilePathChanged(const std::string& iidFilePath) {ui.m_iidFilePathEdit->setText(iidFilePath.c_str());}
 	void onMocapStateChanged(bool mocapState);
-	void decorateStreamChanged(bool decorateStream) {ui.m_decorateStreamCheckBox->setChecked(decorateStream);}
 	void onOscPacketSizeChanged(uint oscPacketSize) {ui.m_oscPacketSizeLineEdit->setText(QString::number(oscPacketSize));}
 	//@}
 
@@ -79,6 +80,10 @@ protected slots:
 
 	/// \name UI -> app logic.
 	//@{
+	void onStartStopToggleButtonClicked() {m_dataController->toggleResumePause();}
+
+	void onSelectionModelCurrentChanged( const QModelIndex& newModelIndex, const QModelIndex& oldModelIndex );
+
 	void onOpenActionTriggered();
 	void onNewActionTriggered();
 	void onSaveActionTriggered();
@@ -86,26 +91,21 @@ protected slots:
 	void onQuitActionTriggered() {QApplication::quit();}
 	void openRecentFile();
 
-	void onMapsViewActionTriggered() {ui.m_tabs->setCurrentWidget(ui.m_mapsTab);}
-	void onLogViewActionTriggered() {ui.m_tabs->setCurrentWidget(ui.m_logTab);}
-	void onFullScreenAction();
-
 	void onIpAddressEditEditingFinished() {m_dataController->editIpAddress(ui.m_ipAddressEdit->text().toStdString());}
 	void onIpPortEditEditingFinished() {m_dataController->editIpPort(ui.m_ipPortEdit->text().toInt());}
 	void onIidFilePathEditEditingFinished();
-
 	void onIidFilePathButtonClicked();
-	void onStartStopToggleButtonClicked() {m_dataController->toggleResumePause();}
-
 	void onDecorateStreamCheckBoxClicked() {m_dataController->editDecorateStreamOption(ui.m_decorateStreamCheckBox->isChecked());}
-	
-	void onSelectionModelCurrentChanged( const QModelIndex& newModelIndex, const QModelIndex& oldModelIndex );
 
 	void onAddMapButtonClicked() {m_dataController->addPathMap();}
 	void onInsertMapButtonClicked() {m_dataController->insertPathMap();}
 	void onAddChildMapButtonClicked() {m_dataController->addChildMap();}
 	void onDeleteMapButtonClicked() {m_dataController->deletePathMap();}
 	void onClearMapsButtonClicked() {m_dataController->clearPathMaps();}
+
+	void onMapsViewActionTriggered() {ui.m_tabs->setCurrentWidget(ui.m_mapsTab);}
+	void onLogViewActionTriggered() {ui.m_tabs->setCurrentWidget(ui.m_logTab);}
+	void onFullScreenAction();
 	//@}
 
 protected:

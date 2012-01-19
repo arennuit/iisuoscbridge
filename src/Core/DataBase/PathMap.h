@@ -18,24 +18,25 @@ public:
 	PathMap(const std::string& oscPathBit, const std::string& iisuPath, PathMap* parent = 0);
 	virtual ~PathMap();
 
-	/// \name Accessors.
+	/// \name Editors.
 	//@{
-	const std::string& getOscPathBit() const {return m_oscPathBit;}
 	void setOscPathBit(const std::string& oscPathBit) {m_oscPathBit = oscPathBit;}
-
-	const std::string& getIisuPath() const {return m_iisuPath;}
 	void setIisuPath(const std::string& iisuPath) {m_iisuPath = iisuPath;}
 
-	PathMap* getParent() const {return m_parent;}
-
-	std::vector<PathMap*> getChildren() const {return m_children;}
-	//@}
-
-	/// \name API.
-	//@{
 	PathMap* addPathMap(const std::string& oscPathBit, const std::string& iisuPath);
 	PathMap* insertPathMap(const std::string& oscPathBit, const std::string& iisuPath);
 	PathMap* addChildMap(const std::string& oscPathBit, const std::string& iisuPath) {return new PathMap(oscPathBit, iisuPath, this);}
+
+	PathMap* getParent() const {return m_parent;}
+
+	//@}
+
+	/// \name Getters.
+	//@{
+	const std::string& getOscPathBit() const {return m_oscPathBit;}
+	const std::string& getIisuPath() const {return m_iisuPath;}
+
+	std::vector<PathMap*> getChildren() const {return m_children;}
 	//@}
 
 protected:
