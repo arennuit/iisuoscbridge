@@ -41,7 +41,7 @@ public:
 	virtual void editIpAddress(const std::string& newIpAddress) {m_dataBase->setIpAddress(newIpAddress);}
 	virtual void editIpPort(int newIpPort) {m_dataBase->setIpPort(newIpPort);}
 	virtual bool editIidFilePath(const std::string& newIidFilePath);
-	virtual void editDecorateStreamOption(bool decorateStream);
+	virtual void editDecorateStreamOption(bool decorateStream) {m_dataBase->setDecorateStream(decorateStream);}
 
 	virtual const PathMap* addPathMap() {return m_dataBase->addPathMap(m_selectedPathMap);}
 	virtual const PathMap* insertPathMap() {return m_dataBase->insertPathMap(m_selectedPathMap);}

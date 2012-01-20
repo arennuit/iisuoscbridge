@@ -52,12 +52,6 @@ void DataController::toggleResumePause()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::editDecorateStreamOption( bool decorateStream )
-{
-	m_dataBase->setDecorateStream(decorateStream);
-}
-
-//////////////////////////////////////////////////////////////////////////
 void DataController::loadProjectFromFile(std::string& filePath)
 {
 	// Load the file.
