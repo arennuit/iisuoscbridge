@@ -71,6 +71,7 @@ public:
 	void onAddChildMap(const PathMap* newPathMap);
 	void onDeletePathMap(const PathMap* pathMapToBeDeleted);
 	void onClearPathMaps();
+	void onEditPathMap(const PathMap* pathMap);
 
 	void onMocapStateChanged(bool mocapState);
 	void onOscPacketSizeChanged(uint oscPacketSize) {ui.m_oscPacketSizeLineEdit->setText(QString::number(oscPacketSize));}

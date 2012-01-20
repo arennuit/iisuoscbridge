@@ -96,6 +96,16 @@ void AppDataController::onClearPathMaps()
 }
 
 //////////////////////////////////////////////////////////////////////////
+void AppDataController::onEditPathMap(const PathMap* pathMap)
+{
+	// Propagate operation up-stream.
+	m_mainForm->onEditPathMap(pathMap);
+
+	// Base callback.
+	DataController::onEditPathMap(pathMap);
+}
+
+//////////////////////////////////////////////////////////////////////////
 void AppDataController::onIpAddressChanged(const std::string& ipAddress)
 {
 	// Propagate operation up-stream.

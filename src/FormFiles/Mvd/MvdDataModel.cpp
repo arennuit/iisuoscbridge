@@ -7,6 +7,7 @@
 #include <QString>
 #include "Core/DataBase/PathMap.h"
 #include "Core/DataBase/DataBase.h"
+#include "Core/DataController.h"
 
 namespace SK
 {
@@ -25,6 +26,9 @@ bool MvdDataModel::setData(const QModelIndex& index, const QVariant& value, int 
 	if (!index.isValid() || role != Qt::EditRole)
 		return false;
 
+	DataController* dataController = DataController::GetInstance();
+	assert(dataController);
+
 	// If the role is not PathMapRole then call the default behavior.
 	int customRole = index.data(RoleIndexRole).toInt();
 	if (customRole != PathMapRole)
@@ -41,13 +45,13 @@ bool MvdDataModel::setData(const QModelIndex& index, const QVariant& value, int 
 	{
 		// Change its m_oscPathBit value.
 		std::string newOscPathBit = value.toString().toStdString();
-		pathMap->setOscPathBit(newOscPathBit);
+		dataController->editPathMap(pathMap, newOscPathBit, pathMap->getIisuPath());
 	}
 	else if (index.column() == 1)
 	{
 		// Change its m_iisuPath value.
 		std::string newIisuPath = value.toString().toStdString();
-		pathMap->setIisuPath(newIisuPath);
+		dataController->editPathMap(pathMap, pathMap->getOscPathBit(), newIisuPath);
 	}
 
 	// Update the views.

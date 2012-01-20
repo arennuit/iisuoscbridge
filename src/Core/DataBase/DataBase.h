@@ -57,6 +57,7 @@ public:
 	virtual const PathMap* addChildMap(const PathMap* parentPathMap, const std::string& oscPathBit = NEW_OSC_PATH_BIT, const std::string& iisuPath = NEW_IISU_PATH);
 	virtual bool deletePathMap(const PathMap* pathMap);
 	virtual bool clearPathMaps();
+	virtual void editPathMap(PathMap* pathMap, const std::string& newOscPathBit, const std::string& newIisuPath);
 
 	virtual void setMocapState(bool mocapState) {m_mocapState = mocapState;}
 	virtual void setOscPacketSize(uint oscPacketSize) {m_oscPacketSize = oscPacketSize;}

@@ -104,6 +104,7 @@ public:
 	const PathMap* addChildMap(const PathMap* parentPathMap, const std::string& oscPathBit = NEW_OSC_PATH_BIT, const std::string& iisuPath = NEW_IISU_PATH) SK_OVERRIDE;
 	bool deletePathMap(const PathMap* pathMap) SK_OVERRIDE;
 	bool clearPathMaps() SK_OVERRIDE;
+	void editPathMap(PathMap* pathMap, const std::string& newOscPathBit, const std::string& newIisuPath) SK_OVERRIDE;
 
 	void setMocapState(bool desiredMocapState) SK_OVERRIDE;
 	void setOscPacketSize(uint oscPacketSize) SK_OVERRIDE;

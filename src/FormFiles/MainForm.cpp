@@ -322,6 +322,13 @@ void MainForm::onClearPathMaps()
 }
 
 //////////////////////////////////////////////////////////////////////////
+void MainForm::onEditPathMap(const PathMap* pathMap)
+{
+	// Update the views.
+	// TODO.
+}
+
+//////////////////////////////////////////////////////////////////////////
 void MainForm::addChildrenToArray_recursive(PathMap* pathMap, std::vector<PathMap*>& pathMapsToBeDeleted)
 {
 	// Add children to the list.

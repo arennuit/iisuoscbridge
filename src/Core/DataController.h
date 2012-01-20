@@ -48,6 +48,7 @@ public:
 	virtual const PathMap* addChildMap() {return m_dataBase->addChildMap(m_selectedPathMap);}
 	virtual bool deletePathMap() {return m_dataBase->deletePathMap(m_selectedPathMap);}
 	virtual bool clearPathMaps() {return m_dataBase->clearPathMaps();}
+	virtual void editPathMap(PathMap* pathMap, const std::string& oscPathBit, const std::string& iisuPath) {m_dataBase->editPathMap(pathMap, oscPathBit, iisuPath);}
 	//@}
 
 	/// \name Callbacks.
@@ -62,6 +63,7 @@ public:
 	virtual void onAddChildMap(const PathMap* newPathMap) {editSelection(newPathMap);}
 	virtual void onDeletePathMap(const PathMap* pathMapToBeDeleted);
 	virtual void onClearPathMaps() {editSelection(0);}
+	virtual void onEditPathMap(const PathMap* pathMap) {}
 
 	virtual void onOscPacketSizeChanged(uint oscPacketSize) {}
 	virtual bool onMocapStateChanged(bool desiredMocapState); ///< Returns the obtained mocap state (which may differ from desiredMocapState).

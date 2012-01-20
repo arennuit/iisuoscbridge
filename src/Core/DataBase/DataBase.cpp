@@ -161,4 +161,11 @@ bool DataBase::clearPathMaps()
 	return true;
 }
 
+//////////////////////////////////////////////////////////////////////////
+void DataBase::editPathMap(PathMap* pathMap, const std::string& newOscPathBit, const std::string& newIisuPath)
+{
+	pathMap->setOscPathBit(newOscPathBit);
+	pathMap->setIisuPath(newIisuPath);
+}
+
 } // namespace SK.

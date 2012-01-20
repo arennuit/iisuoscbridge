@@ -70,6 +70,16 @@ bool AppDataBase::clearPathMaps()
 }
 
 //////////////////////////////////////////////////////////////////////////
+void AppDataBase::editPathMap(PathMap* pathMap, const std::string& newOscPathBit, const std::string& newIisuPath)
+{
+	// Perform operation.
+	DataBase::editPathMap(pathMap, newOscPathBit, newIisuPath);
+
+	// Propagate operation up-stream.
+	m_dataController->onEditPathMap(pathMap);
+}
+
+//////////////////////////////////////////////////////////////////////////
 void AppDataBase::setIpAddress(const std::string& ipAddress)
 {
 	// Perform operation.

@@ -35,6 +35,7 @@ public:
 	void onAddChildMap(const PathMap* newPathMap) SK_OVERRIDE;
 	void onDeletePathMap(const PathMap* pathMapToBeDeleted) SK_OVERRIDE;
 	void onClearPathMaps() SK_OVERRIDE;
+	void onEditPathMap(const PathMap* pathMap) SK_OVERRIDE;
 
 	bool onMocapStateChanged(bool desiredMocapState) SK_OVERRIDE;
 	void onOscPacketSizeChanged(uint oscPacketSize) SK_OVERRIDE;
