@@ -26,16 +26,6 @@ void AppDataController::loadProjectFromFile(std::string& filePath)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void AppDataController::newProject()
-{
-	// Perform operation.
-	DataController::newProject();
-
-	// Propagate operation up-stream.
-	m_mainForm->onNewProject();
-}
-
-//////////////////////////////////////////////////////////////////////////
 void AppDataController::saveProjectToFile(std::string& filePath)
 {
 	// Perform operation.
@@ -103,6 +93,16 @@ void AppDataController::onEditPathMap(const PathMap* pathMap)
 
 	// Base callback.
 	DataController::onEditPathMap(pathMap);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void AppDataController::onReset()
+{
+	// Base callback.
+	DataController::onReset();
+
+	// Propagate operation up-stream.
+	m_mainForm->onReset();
 }
 
 //////////////////////////////////////////////////////////////////////////

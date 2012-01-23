@@ -90,6 +90,8 @@ public:
 	/// \name API.
 	//@{
 	void setDataController(DataController* dataController) {m_dataController = dataController;}
+
+	void reset() SK_OVERRIDE;
 	//@}
 
 	/// \name Editors.

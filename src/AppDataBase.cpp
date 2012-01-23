@@ -80,6 +80,16 @@ void AppDataBase::editPathMap(PathMap* pathMap, const std::string& newOscPathBit
 }
 
 //////////////////////////////////////////////////////////////////////////
+void AppDataBase::reset()
+{
+	// Perform operation.
+	DataBase::reset();
+
+	// Propagate operation up-stream.
+	m_dataController->onReset();
+}
+
+//////////////////////////////////////////////////////////////////////////
 void AppDataBase::setIpAddress(const std::string& ipAddress)
 {
 	// Perform operation.

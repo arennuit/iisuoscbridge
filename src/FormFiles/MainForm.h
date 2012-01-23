@@ -58,8 +58,9 @@ public:
 	//@{
 	void onEditSelection(const PathMap* newSelectedPathMap);
 	void onLoadProjectFromFile(std::string& filePath);
-	void onNewProject();
 	void onSaveProjectToFile(std::string& filePath);
+
+	void onReset();
 
 	void onIpAddressChanged(const std::string& ipAddress) {ui.m_ipAddressEdit->setText(ipAddress.c_str());}
 	void onIpPortChanged(int ipPort) {ui.m_ipPortEdit->setText(QString::number(ipPort));}

@@ -32,8 +32,9 @@ public:
 	virtual void editSelection(const PathMap* newSelectedPathMap) {m_selectedPathMap = (PathMap*)newSelectedPathMap;}
 
 	virtual void loadProjectFromFile(std::string& filePath);
-	virtual void newProject() {m_dataBase->reset();}
 	virtual void saveProjectToFile(std::string& filePath);
+
+	virtual void resetProject() {m_dataBase->reset();}
 	//@}
 
 	/// \name Editors.
@@ -53,6 +54,8 @@ public:
 
 	/// \name Callbacks.
 	//@{
+	virtual void onReset() {}
+
 	virtual void onIpAddressChanged(const std::string& ipAddress) {}
 	virtual void onIpPortChanged(int ipPort) {}
 	virtual void onIidFilePathChanged(const std::string& iidFilePath) {}
