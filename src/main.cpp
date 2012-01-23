@@ -7,7 +7,7 @@
 int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
-	app.setApplicationName("IisuOscBridge");
+	app.setApplicationName("iisuOscBridge");
 	app.setOrganizationName("SoftKinetic");
 	app.setOrganizationDomain("sofkinetic.com");
 
@@ -23,8 +23,8 @@ int main(int argc, char *argv[])
 	SK::AppDataController::GetInstance()->setMainForm(&mainForm);
 
 	mainForm.setup();
-
 	mainForm.show();
+
 	app.exec();
 
 	SK::DataController::DestroyInstance();
