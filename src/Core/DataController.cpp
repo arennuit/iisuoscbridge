@@ -182,6 +182,9 @@ void DataController::saveProjectToFile(std::string& filePath)
 //////////////////////////////////////////////////////////////////////////
 void DataController::saveProjectToFile_recursive( pugi::xml_node& parent, const PathMap* pathMap )
 {
+	if (!pathMap)
+		return;
+
 	// Create node and attributes.
 	pugi::xml_node node_pathMap = parent.append_child("PathMap");
 
