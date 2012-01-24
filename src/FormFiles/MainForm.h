@@ -51,14 +51,14 @@ public:
 
 	/// \name API.
 	//@{
-	void setup();
+	void setup(const std::string& filePath);
 	//@}
 
 	/// \name Callbacks.
 	//@{
 	void onEditSelection(const PathMap* newSelectedPathMap);
-	void onLoadProjectFromFile(std::string& filePath);
-	void onSaveProjectToFile(std::string& filePath);
+	void onLoadProjectFromFile(const std::string& filePath);
+	void onSaveProjectToFile(const std::string& filePath);
 
 	void onReset();
 
@@ -128,7 +128,7 @@ protected:
 	DataController* m_dataController;
 
 	void showEvent(QShowEvent *event) SK_OVERRIDE; ///< Workaround for a bug in Qt.
-	void setCurrentFilePath(std::string& filePath);
+	void setCurrentFilePath(const std::string& filePath);
 	void updateRecentFileActions();
 	QAction* m_recentFilesSeparatorAction;
 	QAction* m_recentFileActions[RECENT_FILES_MAX_NUM];

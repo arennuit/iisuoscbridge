@@ -31,8 +31,8 @@ public:
 
 	virtual void editSelection(const PathMap* newSelectedPathMap) {m_selectedPathMap = (PathMap*)newSelectedPathMap;}
 
-	virtual void loadProjectFromFile(std::string& filePath);
-	virtual void saveProjectToFile(std::string& filePath);
+	virtual void loadProjectFromFile(const std::string& filePath);
+	virtual void saveProjectToFile(const std::string& filePath);
 
 	virtual void resetProject() {m_dataBase->reset();}
 	//@}

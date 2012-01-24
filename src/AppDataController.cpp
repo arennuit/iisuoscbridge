@@ -16,7 +16,7 @@ void AppDataController::editSelection(const PathMap* newSelectedPathMap)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void AppDataController::loadProjectFromFile(std::string& filePath)
+void AppDataController::loadProjectFromFile( const std::string& filePath )
 {
 	// Perform operation.
 	DataController::loadProjectFromFile(filePath);
@@ -26,7 +26,7 @@ void AppDataController::loadProjectFromFile(std::string& filePath)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void AppDataController::saveProjectToFile(std::string& filePath)
+void AppDataController::saveProjectToFile( const std::string& filePath )
 {
 	// Perform operation.
 	DataController::saveProjectToFile(filePath);

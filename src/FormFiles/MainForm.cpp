@@ -144,7 +144,7 @@ void MainForm::onEditSelection(const PathMap* newSelectedPathMap)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void MainForm::onLoadProjectFromFile(std::string& filePath)
+void MainForm::onLoadProjectFromFile( const std::string& filePath )
 {
 	ui.m_pathMapsView->expandAll();
 
@@ -155,7 +155,7 @@ void MainForm::onLoadProjectFromFile(std::string& filePath)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void MainForm::onSaveProjectToFile(std::string& filePath)
+void MainForm::onSaveProjectToFile( const std::string& filePath )
 {
 	setCurrentFilePath(filePath);
 
@@ -540,7 +540,7 @@ void MainForm::showEvent(QShowEvent *event)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void MainForm::setCurrentFilePath(std::string& filePath)
+void MainForm::setCurrentFilePath( const std::string& filePath )
 {
 	// Update the current path.
 	QString filePath_asQString = QString().fromStdString(filePath);

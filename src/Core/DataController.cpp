@@ -52,7 +52,7 @@ void DataController::toggleResumePause()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::loadProjectFromFile(std::string& filePath)
+void DataController::loadProjectFromFile( const std::string& filePath )
 {
 	// Load the file.
 	pugi::xml_document docXml;
@@ -155,7 +155,7 @@ void DataController::loadProjectFromFile_recursive( pugi::xml_node& pathMapNode,
 }
 
 //////////////////////////////////////////////////////////////////////////
-void DataController::saveProjectToFile(std::string& filePath)
+void DataController::saveProjectToFile( const std::string& filePath )
 {
 	// Create the xml document and root node. 
 	pugi::xml_document docXml;
