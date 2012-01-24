@@ -22,9 +22,13 @@ int main(int argc, char *argv[])
 	SK::AppDataBase::GetInstance()->setDataController(SK::DataController::GetInstance());
 	SK::AppDataController::GetInstance()->setMainForm(&mainForm);
 
-	mainForm.setup();
-	mainForm.show();
+	// Setup the ui using the project last opened.
+	QSettings settings;
+	std::string filePath = settings.value("CurrentFilePath").toString().toStdString();
+	mainForm.setup(filePath);
 
+	// Start application.
+	mainForm.show();
 	app.exec();
 
 	SK::DataController::DestroyInstance();

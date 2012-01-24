@@ -42,7 +42,7 @@ MainForm::~MainForm()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void MainForm::setup()
+void MainForm::setup( const std::string& filePath )
 {
 	// Set input masks and validators.
 	QRegExpValidator *validator = new QRegExpValidator(this);
@@ -84,7 +84,10 @@ void MainForm::setup()
 	ui.m_pathMapsView->setAlternatingRowColors(true);
 	ui.m_pathMapsView->setItemDelegate(&m_pathDelegate);
 
-	m_dataBase->reset();
+	if (filePath == "")
+		m_dataController->resetProject();
+	else
+		m_dataController->loadProjectFromFile(filePath);
 
 	// Establish all connections.
 	connect(ui.m_newAction, SIGNAL(triggered()), this, SLOT(onNewActionTriggered()));
