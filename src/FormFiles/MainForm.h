@@ -62,10 +62,10 @@ public:
 
 	void onReset();
 
-	void onIpAddressChanged(const std::string& ipAddress) {ui.m_ipAddressEdit->setText(ipAddress.c_str());}
-	void onIpPortChanged(int ipPort) {ui.m_ipPortEdit->setText(QString::number(ipPort));}
-	void onIidFilePathChanged(const std::string& iidFilePath) {ui.m_iidFilePathEdit->setText(iidFilePath.c_str());}
-	void decorateStreamChanged(bool decorateStream) {ui.m_decorateStreamCheckBox->setChecked(decorateStream);}
+	void onIpAddressChanged(const std::string& ipAddress);
+	void onIpPortChanged(int ipPort);
+	void onIidFilePathChanged(const std::string& iidFilePath);
+	void decorateStreamChanged(bool decorateStream);
 
 	void onAddPathMap(const PathMap* newPathMap);
 	void onInsertPathMap(const PathMap* newPathMap);
@@ -75,7 +75,7 @@ public:
 	void onEditPathMap(const PathMap* pathMap);
 
 	void onMocapStateChanged(bool mocapState);
-	void onOscPacketSizeChanged(uint oscPacketSize) {ui.m_oscPacketSizeLineEdit->setText(QString::number(oscPacketSize));}
+	void onOscPacketSizeChanged(uint oscPacketSize);
 	//@}
 
 protected slots:
@@ -127,6 +127,7 @@ protected:
 	DataBase* m_dataBase;
 	DataController* m_dataController;
 
+	void showEvent(QShowEvent *event) SK_OVERRIDE; ///< Workaround for a bug in Qt.
 	void setCurrentFilePath(std::string& filePath);
 	void updateRecentFileActions();
 	QAction* m_recentFilesSeparatorAction;

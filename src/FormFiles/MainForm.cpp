@@ -86,8 +86,6 @@ void MainForm::setup()
 
 	m_dataBase->reset();
 
-	updateRecentFileActions();
-
 	// Establish all connections.
 	connect(ui.m_newAction, SIGNAL(triggered()), this, SLOT(onNewActionTriggered()));
 	connect(ui.m_openAction, SIGNAL(triggered()), this, SLOT(onOpenActionTriggered()));
@@ -151,18 +149,27 @@ void MainForm::onLoadProjectFromFile(std::string& filePath)
 	ui.m_pathMapsView->expandAll();
 
 	setCurrentFilePath(filePath);
+
+	// Tell Qt the project is saved.
+	setWindowModified(false);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onSaveProjectToFile(std::string& filePath)
 {
 	setCurrentFilePath(filePath);
+
+	// Tell Qt the project is saved.
+	setWindowModified(false);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onReset()
 {
-	setCurrentFilePath(std::string(""));
+	setCurrentFilePath(std::string());
+
+	// Tell Qt the project is saved.
+	setWindowModified(false);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -199,6 +206,9 @@ void MainForm::onAddPathMap(const PathMap* newPathMap)
 
 	// Update m_pathMapItemMap.
 	m_pathMapItemMap.insert(std::make_pair(newPathMap, oscItem));
+
+	// Tell Qt the project was modified.
+	setWindowModified(true);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -242,6 +252,9 @@ void MainForm::onInsertPathMap(const PathMap* newPathMap)
 
 	// Update m_pathMapItemMap.
 	m_pathMapItemMap.insert(std::make_pair(newPathMap, oscItem));
+
+	// Tell Qt the project was modified.
+	setWindowModified(true);
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -278,6 +291,9 @@ void MainForm::onAddChildMap(const PathMap* newPathMap)
 
 	// Update m_pathMapItemMap.
 	m_pathMapItemMap.insert(std::make_pair(newPathMap, oscItem));
+
+	// Tell Qt the project was modified.
+	setWindowModified(true);
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -307,6 +323,9 @@ void MainForm::onDeletePathMap(const PathMap* pathMapToBeDeleted)
 
 	for (uint i = 0; i < pathMapsToBeDeleted.size(); ++i)
 		m_pathMapItemMap.erase(pathMapsToBeDeleted[i]);
+
+	// Tell Qt the project was modified.
+	setWindowModified(true);
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -319,6 +338,9 @@ void MainForm::onClearPathMaps()
 
 	// Update m_pathMapItemMap.
 	m_pathMapItemMap.clear();
+
+	// Tell Qt the project was modified.
+	setWindowModified(true);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -326,6 +348,9 @@ void MainForm::onEditPathMap(const PathMap* pathMap)
 {
 	// Update the views.
 	// TODO.
+
+	// Tell Qt the project was modified.
+	setWindowModified(true);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -341,6 +366,33 @@ void MainForm::addChildrenToArray_recursive(PathMap* pathMap, std::vector<PathMa
 }
 
 //////////////////////////////////////////////////////////////////////////
+void MainForm::onIpAddressChanged(const std::string& ipAddress)
+{
+	ui.m_ipAddressEdit->setText(ipAddress.c_str());
+
+	// Tell Qt the project was modified.
+	setWindowModified(true);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onIpPortChanged(int ipPort)
+{
+	ui.m_ipPortEdit->setText(QString::number(ipPort));
+
+	// Tell Qt the project was modified.
+	setWindowModified(true);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onIidFilePathChanged(const std::string& iidFilePath)
+{
+	ui.m_iidFilePathEdit->setText(iidFilePath.c_str());
+
+	// Tell Qt the project was modified.
+	setWindowModified(true);
+}
+
+//////////////////////////////////////////////////////////////////////////
 void MainForm::onMocapStateChanged( bool mocapState )
 {
 	ui.m_startStopToggleButton->setChecked(mocapState);
@@ -351,6 +403,21 @@ void MainForm::onMocapStateChanged( bool mocapState )
 	// Show log tab when streaming.
 	if (mocapState == true)
 		ui.m_tabs->setCurrentWidget(ui.m_logTab);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::decorateStreamChanged(bool decorateStream)
+{
+	ui.m_decorateStreamCheckBox->setChecked(decorateStream);
+
+	// Tell Qt the project was modified.
+	setWindowModified(true);
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onOscPacketSizeChanged(uint oscPacketSize)
+{
+	ui.m_oscPacketSizeLineEdit->setText(QString::number(oscPacketSize));
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -373,14 +440,15 @@ void MainForm::onNewActionTriggered()
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onSaveActionTriggered()
 {
-	QString filePath = windowFilePath();
+	QSettings settings;
+	std::string filePath = settings.value("CurrentFilePath").toString().toStdString();
 
 	// If there is no current file then the behavior is the same as for 'Save As'.
-	if (filePath.isEmpty())
+	if (filePath == "")
 		return onSaveAsActionTriggered();
 
 	// Save in the current file.
-	m_dataController->saveProjectToFile(filePath.toStdString());
+	m_dataController->saveProjectToFile(filePath);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -460,24 +528,42 @@ void MainForm::onSelectionModelCurrentChanged( const QModelIndex& newModelIndex,
 }
 
 //////////////////////////////////////////////////////////////////////////
-void MainForm::setCurrentFilePath( std::string& filePath )
+void MainForm::showEvent(QShowEvent *event)
 {
-	// Update the window.
-	setWindowFilePath(filePath.c_str());
+	QMainWindow::showEvent(event);
 
-	// Update the settings' list of recent files.
-	if (filePath == "")
-		return;
+	// Make sure 'setWindowFilePath()' is called after QWidget::show() is called.
+	// NOTE: this is a workaround for a bug in Qt.
+	QString file_path = windowFilePath();
+	setWindowFilePath("Anything to have a file path change at next line.");
+	setWindowFilePath(file_path);
+}
 
+//////////////////////////////////////////////////////////////////////////
+void MainForm::setCurrentFilePath(std::string& filePath)
+{
+	// Update the current path.
 	QString filePath_asQString = QString().fromStdString(filePath);
 	QSettings settings;
-	QStringList recentFilesList = settings.value("recentFileList").toStringList();
-	recentFilesList.removeAll(filePath_asQString);
-	recentFilesList.prepend(filePath_asQString);
-	while (recentFilesList.size() > RECENT_FILES_MAX_NUM)
-		recentFilesList.removeLast();
+	settings.setValue("CurrentFilePath", filePath_asQString);
 
-	settings.setValue("recentFileList", recentFilesList);
+	// Update the window.
+	if (filePath == "")
+		setWindowFilePath("untitled.iob");
+	else
+		setWindowFilePath(filePath.c_str());
+
+	// Update the settings' list of recent files.
+	if (filePath != "")
+	{
+		QStringList recentFilesList = settings.value("RecentFilesList").toStringList();
+		recentFilesList.removeAll(filePath_asQString);
+		recentFilesList.prepend(filePath_asQString);
+		while (recentFilesList.size() > RECENT_FILES_MAX_NUM)
+			recentFilesList.removeLast();
+	
+		settings.setValue("RecentFilesList", recentFilesList);
+	}
 
 	// Update recent file actions.
 	updateRecentFileActions();
@@ -487,19 +573,22 @@ void MainForm::setCurrentFilePath( std::string& filePath )
 void MainForm::updateRecentFileActions()
 {
 	QSettings settings;
-	QStringList recentFilesList = settings.value("recentFileList").toStringList();
+	QStringList recentFilesList = settings.value("RecentFilesList").toStringList();
 
 	m_recentFilesSeparatorAction->setVisible(recentFilesList.size() > 0);
 
+	for (int i = 0; i < RECENT_FILES_MAX_NUM; ++i)
+		m_recentFileActions[i]->setVisible(false);
+
 	for (int i = 0; i < recentFilesList.size(); ++i)
 	{
-		m_recentFileActions[i]->setText(QFileInfo(recentFilesList[i]).fileName());
-		m_recentFileActions[i]->setData(recentFilesList[i]);
-		m_recentFileActions[i]->setVisible(true);
+		if (!recentFilesList[i].isEmpty())
+		{
+			m_recentFileActions[i]->setText(QFileInfo(recentFilesList[i]).fileName());
+			m_recentFileActions[i]->setData(recentFilesList[i]);
+			m_recentFileActions[i]->setVisible(true);
+		}
 	}
-
-	for (int i = recentFilesList.size(); i < RECENT_FILES_MAX_NUM; ++i)
-		m_recentFileActions[i]->setVisible(false);
 }
 
 } // namespace SK.
