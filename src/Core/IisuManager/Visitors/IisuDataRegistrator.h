@@ -24,8 +24,8 @@ protected:
 	//@{
 	void visit(TypedPathMap* typedPathMap) SK_OVERRIDE;
 	void visit(DataTypedPathMap* typedPathMap) SK_OVERRIDE {} // Cannot register a generic data.
-	void visit(BooleanPathMap* typedPathMap) SK_OVERRIDE;
-	void visit(IntegerPathMap* typedPathMap) SK_OVERRIDE;
+	void visit(BoolPathMap* typedPathMap) SK_OVERRIDE;
+	void visit(Int32PathMap* typedPathMap) SK_OVERRIDE;
 	void visit(Vector3PathMap* typedPathMap) SK_OVERRIDE;
 	void visit(ArrayPathMap* typedPathMap) SK_OVERRIDE {} // Cannot register a generic array.
 	void visit(FloatArrayPathMap* typedPathMap) SK_OVERRIDE;

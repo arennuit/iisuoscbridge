@@ -23,7 +23,7 @@ IisuReaderOscSender::IisuReaderOscSender(DataBase* dataBase, osc::OutboundPacket
 }
 
 //////////////////////////////////////////////////////////////////////////
-void IisuReaderOscSender::visit(BooleanPathMap* typedPathMap)
+void IisuReaderOscSender::visit(BoolPathMap* typedPathMap)
 {
 	// Get the data from iisu.
 	SK::DataHandle<bool>* iisuDataHandle = static_cast<SK::DataHandle<bool>*>(m_iisuDataHandle);
@@ -36,7 +36,7 @@ void IisuReaderOscSender::visit(BooleanPathMap* typedPathMap)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void IisuReaderOscSender::visit(IntegerPathMap* typedPathMap)
+void IisuReaderOscSender::visit(Int32PathMap* typedPathMap)
 {
 	// Get the data from iisu.
 	SK::DataHandle<int>* iisuDataHandle = static_cast<SK::DataHandle<int>*>(m_iisuDataHandle);

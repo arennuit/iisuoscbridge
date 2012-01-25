@@ -31,8 +31,8 @@ protected:
 	//@{
 	void visit(TypedPathMap* typedPathMap) SK_OVERRIDE {} // It makes no sense to read or stream an abstract TypedPathMap.
 	void visit(DataTypedPathMap* typedPathMap) SK_OVERRIDE {} // It makes no sense to read or stream a generic data.
-	void visit(BooleanPathMap* typedPathMap) SK_OVERRIDE;
-	void visit(IntegerPathMap* typedPathMap) SK_OVERRIDE;
+	void visit(BoolPathMap* typedPathMap) SK_OVERRIDE;
+	void visit(Int32PathMap* typedPathMap) SK_OVERRIDE;
 	void visit(Vector3PathMap* typedPathMap) SK_OVERRIDE;
 	void visit(ArrayPathMap* typedPathMap) SK_OVERRIDE {} // It makes no sense to read or stream a generic array.
 	void visit(FloatArrayPathMap* typedPathMap) SK_OVERRIDE;

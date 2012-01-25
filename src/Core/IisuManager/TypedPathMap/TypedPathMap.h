@@ -40,10 +40,10 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////////
-class BooleanPathMap : public DataTypedPathMap
+class BoolPathMap : public DataTypedPathMap
 {
 public:
-	BooleanPathMap(const std::string& fullOscPath, const std::string& iisuPath) :
+	BoolPathMap(const std::string& fullOscPath, const std::string& iisuPath) :
 		DataTypedPathMap(fullOscPath, iisuPath) {}
 
 	// Visitor.
@@ -51,10 +51,10 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////////
-class IntegerPathMap : public DataTypedPathMap
+class Int32PathMap : public DataTypedPathMap
 {
 public:
-	IntegerPathMap(const std::string& fullOscPath, const std::string& iisuPath) :
+	Int32PathMap(const std::string& fullOscPath, const std::string& iisuPath) :
 		DataTypedPathMap(fullOscPath, iisuPath) {}
 
 	// Visitor.

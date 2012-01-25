@@ -27,7 +27,7 @@ struct TypedPathMapFactory<bool> : public BaseTypedPathMapFactory
 {
 	virtual TypedPathMap* create(const std::string& fullOscPath, const std::string& iisuPath)
 	{ 
-		return new BooleanPathMap(fullOscPath, iisuPath) ;
+		return new BoolPathMap(fullOscPath, iisuPath) ;
 	};
 };
 
@@ -37,7 +37,7 @@ struct TypedPathMapFactory<int32_t> : public BaseTypedPathMapFactory
 {
 	virtual TypedPathMap* create(const std::string& fullOscPath, const std::string& iisuPath)
 	{ 
-		return new IntegerPathMap(fullOscPath, iisuPath) ;
+		return new Int32PathMap(fullOscPath, iisuPath) ;
 	};
 };
 

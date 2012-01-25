@@ -5,8 +5,8 @@ namespace SK
 
 class TypedPathMap;
 class DataTypedPathMap;
-class BooleanPathMap;
-class IntegerPathMap;
+class BoolPathMap;
+class Int32PathMap;
 class Vector3PathMap;
 class ArrayPathMap;
 class FloatArrayPathMap;
@@ -20,8 +20,8 @@ public:
 	//@{
 	virtual void visit(TypedPathMap* typedPathMap) = 0;
 	virtual void visit(DataTypedPathMap* typedPathMap) = 0;
-	virtual void visit(BooleanPathMap* typedPathMap) = 0;
-	virtual void visit(IntegerPathMap* typedPathMap) = 0;
+	virtual void visit(BoolPathMap* typedPathMap) = 0;
+	virtual void visit(Int32PathMap* typedPathMap) = 0;
 	virtual void visit(Vector3PathMap* typedPathMap) = 0;
 	virtual void visit(ArrayPathMap* typedPathMap) = 0;
 	virtual void visit(FloatArrayPathMap* typedPathMap) = 0;

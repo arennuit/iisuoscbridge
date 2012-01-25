@@ -25,7 +25,7 @@ void IisuDataRegistrator::visit(TypedPathMap* typedPathMap)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void IisuDataRegistrator::visit(BooleanPathMap* typedPathMap)
+void IisuDataRegistrator::visit(BoolPathMap* typedPathMap)
 {
 	assert(typedPathMap);
 	assert(m_device);
@@ -51,7 +51,7 @@ void IisuDataRegistrator::visit(BooleanPathMap* typedPathMap)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void IisuDataRegistrator::visit(IntegerPathMap* typedPathMap)
+void IisuDataRegistrator::visit(Int32PathMap* typedPathMap)
 {
 	assert(typedPathMap);
 	assert(m_device);
