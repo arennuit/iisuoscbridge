@@ -310,11 +310,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\resource.h"
-				>
-			</File>
-			<File
-				RelativePath=".\resource1.h"
+				RelativePath=".\GeneratedFiles\resource.h"
 				>
 			</File>
 			<File
@@ -424,6 +420,10 @@
 			UniqueIdentifier="{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}"
 			ParseFiles="false"
 			>
+			<File
+				RelativePath="..\Resource Files\iisuOscBridge.rc"
+				>
+			</File>
 			<File
 				RelativePath="..\Resource Files\MainFormResources.qrc"
 				>
