@@ -1,0 +1,9 @@
+- apprendre PD en vue de faire une vraie démo (réception x2 + vraie démo).
+- montrer validité des chemins, adresses et ports...
+- version mac/linux? -> CMake?
+- intégration GIT à tools (sous module GIT).
+- utiliser la même stylesheet & et resource file que toolbox
+- application icon
+- link NSIS instller build to the build in "Production"
+- undo
+- icône d'application
