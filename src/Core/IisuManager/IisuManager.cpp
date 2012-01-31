@@ -84,7 +84,7 @@ bool IisuManager::resumeStream()
 
 	// Linearize PathMaps.
 	linearizePathMap(m_dataBase->getPathMapsRoot());
-	SK_LOGGER(LOG_INFO) << "Path maps linearization OK";
+	SK_LOGGER(LOG_INFO) << "Path maps linearization OK.";
 
 	// Create the TypedPathMaps (depending of their type returned by iisu).
 	for (uint i = 0; i < m_pathMapsLinearized.size(); ++i)
@@ -129,7 +129,7 @@ bool IisuManager::resumeStream()
 	// Start device.
 	m_device->start();
 
-	SK_LOGGER(LOG_INFO) << "The iisu engine is started";
+	SK_LOGGER(LOG_INFO) << "The iisu engine is started.";
 	SK_LOGGER(LOG_INFO) << "OscBridge is now streaming OSC...";
 
 	return true;
@@ -157,7 +157,7 @@ bool IisuManager::pauseStream()
 	{
 		m_device->stop();
 
-		SK_LOGGER(LOG_INFO) << "The iisu engine is stopped";
+		SK_LOGGER(LOG_INFO) << "The iisu engine is stopped.";
 	}
 
 	// Unregister data handles.
@@ -198,7 +198,7 @@ void IisuManager::termIisu()
 		m_device = 0;
 	}
 
-	SK_LOGGER(LOG_INFO) << "The iisu engine was destroyed";
+	SK_LOGGER(LOG_INFO) << "The iisu engine was destroyed.";
 }
 
 //////////////////////////////////////////////////////////////////////////
