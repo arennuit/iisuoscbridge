@@ -614,11 +614,6 @@ void IisuReaderOscSender::visit(BoolArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -653,11 +648,6 @@ void IisuReaderOscSender::visit(CharArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -692,11 +682,6 @@ void IisuReaderOscSender::visit(FloatArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -731,11 +716,6 @@ void IisuReaderOscSender::visit(Int8ArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -770,11 +750,6 @@ void IisuReaderOscSender::visit(Int16ArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -807,11 +782,6 @@ void IisuReaderOscSender::visit(Int32ArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -844,11 +814,6 @@ void IisuReaderOscSender::visit(Int64ArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -881,11 +846,6 @@ void IisuReaderOscSender::visit(UInt8ArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -918,11 +878,6 @@ void IisuReaderOscSender::visit(UInt16ArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -955,11 +910,6 @@ void IisuReaderOscSender::visit(UInt32ArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -1000,11 +950,6 @@ void IisuReaderOscSender::visit(UInt64ArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -1045,11 +990,6 @@ void IisuReaderOscSender::visit(Color4cArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -1096,11 +1036,6 @@ void IisuReaderOscSender::visit(Color4fArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -1147,11 +1082,6 @@ void IisuReaderOscSender::visit(EnumArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -1192,11 +1122,6 @@ void IisuReaderOscSender::visit(FrameArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -1256,11 +1181,6 @@ void IisuReaderOscSender::visit(Matrix3ArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -1329,11 +1249,6 @@ void IisuReaderOscSender::visit(Matrix4ArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -1431,11 +1346,6 @@ void IisuReaderOscSender::visit(QuatArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -1482,11 +1392,6 @@ void IisuReaderOscSender::visit(StringArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -1521,11 +1426,6 @@ void IisuReaderOscSender::visit(Vector2ArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -1564,11 +1464,6 @@ void IisuReaderOscSender::visit(Vector2iArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -1607,11 +1502,6 @@ void IisuReaderOscSender::visit(Vector3ArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
@@ -1654,11 +1544,6 @@ void IisuReaderOscSender::visit(Vector4ArrayPathMap* typedPathMap)
 	// NOTE: an array can only stream decorated data if its size is SK::SkeletonEnum::_COUNT.
 	if (m_dataBase->getDecorateStream() && iisuData.size() == SK::SkeletonEnum::_COUNT)
 	{
-		// Size.
-		*m_outPacketStream << OscBeginMessage(m_fullOscPath + "/size");
-		*m_outPacketStream << (int)iisuData.size();
-		*m_outPacketStream << OscEndMessage();
-
 		// Proper data.
 		for (uint i = 0; i < iisuData.size(); ++i)
 		{
