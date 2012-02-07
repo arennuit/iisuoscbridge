@@ -130,7 +130,7 @@ Section "Core" Section_Core
 
     SetOutPath "$INSTDIR\Doc"
 
-    File "${DOC_FOLDER}\StartUp.txt"
+    File "${DOC_FOLDER}\QuickStartGuide.pdf"
 
     SetOutPath "$INSTDIR\Samples"
 
@@ -148,7 +148,7 @@ Section "Core" Section_Core
 
     CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\Doc"
 
-    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Doc\StartUp.lnk"					"$INSTDIR\Doc\StartUp.txt"
+    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Doc\QuickStartGuide.lnk"					"$INSTDIR\Doc\QuickStartGuide.pdf"
 
     CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\Samples"
 
