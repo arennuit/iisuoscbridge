@@ -132,10 +132,14 @@ Section "Core" Section_Core
 
     File "${DOC_FOLDER}\QuickStartGuide.pdf"
 
-    SetOutPath "$INSTDIR\Samples"
+    SetOutPath "$INSTDIR\Samples\PureData"
 
-    File "${SAMPLES_FOLDER}\PureData_readMe.txt"
-    File "${SAMPLES_FOLDER}\PureData_simple_rightHand.pd"
+    File "${SAMPLES_FOLDER}\PureData\PureData_readMe.txt"
+	
+    SetOutPath "$INSTDIR\Samples\PureData\SimpleRightHand"
+	
+    File "${SAMPLES_FOLDER}\PureData\SimpleRightHand\SimpleRightHand.iob"
+    File "${SAMPLES_FOLDER}\PureData\SimpleRightHand\SimpleRightHand.pd"
 
     ; Install the menu items.
     !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
@@ -151,9 +155,13 @@ Section "Core" Section_Core
     CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Doc\QuickStartGuide.lnk"					"$INSTDIR\Doc\QuickStartGuide.pdf"
 
     CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\Samples"
-
-    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData_readMe.lnk"					"$INSTDIR\Samples\PureData_readMe.pd"
-    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData_simple_rightHand.lnk"		"$INSTDIR\Samples\PureData_simple_rightHand.pd"
+	
+    CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData\"
+    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData\PureData_readMe.lnk"				"$INSTDIR\Samples\PureData\PureData_readMe.txt"
+	
+    CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData\SimpleRightHand\"
+    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData\SimpleRightHand\SimpleRightHand_bridge.lnk"		"$INSTDIR\Samples\PureData\SimpleRightHand\SimpleRightHand.iob"
+    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData\SimpleRightHand\SimpleRightHand_network.lnk"	"$INSTDIR\Samples\PureData\SimpleRightHand\SimpleRightHand.pd"
 
     SetOutPath "$INSTDIR"
 

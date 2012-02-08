@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<IisuOscBridge iidFilePath="" ipAddress="127.0.0.1" ipPort="8000" decorateStream="true">
+	<PathMap oscPathBit="iisu" iisuPath="">
+		<PathMap oscPathBit="user1" iisuPath="">
+			<PathMap oscPathBit="status" iisuPath="USER1.SKELETON.Status" />
+			<PathMap oscPathBit="joints" iisuPath="">
+				<PathMap oscPathBit="positions" iisuPath="USER1.SKELETON.KeyPoints" />
+				<PathMap oscPathBit="confidences" iisuPath="USER1.SKELETON.KeyPointsConfidence" />
+			</PathMap>
+		</PathMap>
+	</PathMap>
+</IisuOscBridge>

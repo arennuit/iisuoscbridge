@@ -1,0 +1,51 @@
+#N canvas 683 0 667 710 10;
+#X obj 19 -63 dumpOSC 8000;
+#X obj 19 -30 OSCroute /iisu;
+#X obj 19 89 OSCroute /positions /confidences;
+#X obj 150 209 OSCroute /x /y /z;
+#X obj 425 249 grid rightHandGrid 200 0 200 200 0 200 0 0.1 0.1 10
+10 425 315.667;
+#X text 254 -70 iisuOSCBridge demo;
+#X text 254 -28 www.softkinetic.com;
+#X text 254 -48 iisu to Pd via OSC;
+#X obj 80 484 pack float float;
+#X msg 425 208 goto \$1 \$2;
+#X obj 35 209 OSCroute /x /y /z;
+#X obj 173 274 -;
+#X obj 80 274 -;
+#X obj 80 346 / 1.1;
+#X obj 80 309 * -1;
+#X obj 80 381 * 200;
+#X obj 173 310 + 0.8;
+#X obj 173 345 / 1.2;
+#X obj 173 381 * -200;
+#X obj 173 421 + 200;
+#X obj 19 127 OSCroute /Pelvis /Waist /Collar /Neck /Head /RightShoulder
+/RightElbow /RightWrist /RightHand /RightHip /RightKnee /RightAnkle
+/RightFoot /LeftShoulder /LeftElbow /LeftWrist /LeftHand /LeftHip /LeftKnee
+/LeftAnkle /LeftFoot;
+#X obj 19 8 OSCroute /user1;
+#X obj 19 50 OSCroute /status /joints;
+#X connect 0 0 1 0;
+#X connect 1 0 21 0;
+#X connect 2 0 20 0;
+#X connect 3 0 12 0;
+#X connect 3 2 11 0;
+#X connect 8 0 9 0;
+#X connect 9 0 4 0;
+#X connect 10 0 12 1;
+#X connect 10 2 11 1;
+#X connect 11 0 16 0;
+#X connect 12 0 14 0;
+#X connect 13 0 15 0;
+#X connect 14 0 13 0;
+#X connect 15 0 8 0;
+#X connect 16 0 17 0;
+#X connect 17 0 18 0;
+#X connect 18 0 19 0;
+#X connect 19 0 8 1;
+#X connect 20 2 10 0;
+#X connect 20 8 3 0;
+#X connect 21 0 22 0;
+#X connect 22 1 2 0;
+#X coords 0 0 1 1 85 60 0;
