@@ -1,4 +1,4 @@
-#N canvas 849 185 467 300 10;
+#N canvas 695 99 574 386 10;
 #X obj 37 84 metro 500;
 #X floatatom 38 127 5 0 0 0 - - -;
 #X msg 96 129 127;
@@ -8,7 +8,11 @@
 #X msg 196 211 1;
 #X obj 135 29 bng 15 250 50 1 empty empty empty 17 7 0 10 -262144 -1
 -1;
-#X text 242 20 Media|MIDI Settings pour configurer;
+#X msg 74 16 stop;
+#X text 242 18 Open dialog box in menu 'Media|MIDI Settings' in order
+to configure the MIDI output. You need a MIDI link such as MIDI Ox
+(formerly MIDI Yoke) \, LoopBe1 (from http://nerds.de) or Osculator
+(under OSX) in order to link to your usual DAW.;
 #X connect 0 0 1 0;
 #X connect 1 0 4 0;
 #X connect 2 0 4 1;
@@ -20,3 +24,4 @@
 #X connect 7 0 2 0;
 #X connect 7 0 3 0;
 #X connect 7 0 6 0;
+#X connect 8 0 0 0;
