@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <IisuInteractionDesignerProject Version="3.0.17">
-  <Graph id="{918c6f43-180f-4792-a940-d3603f304729}">
+  <Graph id="{0d57c16e-87a8-4045-b9a2-00cbbac558ef}">
     <Node id="{5653e523-708e-4915-86ff-6e981ad631e4}" name="" type="iisu skeleton">
       <Output id="{207ce935-6dc8-4d13-b7fc-aa7b2b6c0a05}" name="USER1.SKELETON.PARTS.Pelvis" />
       <Output id="{30ed4956-67ba-4349-9942-7ef9b7841ade}" name="USER1.SKELETON.PARTS.RightWrist" />
@@ -11,7 +11,7 @@
       <Property name="NormalDirection" value="( x=0; y=1; z=0 )" />
       <Property name="Color" value="( r=1; g=0; b=0; a=0.3 )" />
       <Property name="Selected" value="False" />
-      <Property name="Position" value="( x=0.0684278; y=0.0836439; z=0.8889 )" input="{b89203a9-3135-47dd-a563-c4fd80818411}" />
+      <Property name="Position" value="( x=-0.0997792; y=-0.881893; z=1.21679 )" input="{b89203a9-3135-47dd-a563-c4fd80818411}" />
       <Property name="Scale" value="( x=1; y=1; z=1 )" />
       <Property name="ForceCull" value="False" />
     </Node>
@@ -21,7 +21,7 @@
       <Property name="NormalDirection" value="( x=0; y=1; z=0 )" />
       <Property name="Color" value="( r=0; g=1; b=0; a=0.3 )" />
       <Property name="Selected" value="False" />
-      <Property name="Position" value="( x=0.0684278; y=-0.0303561; z=0.8889 )" input="{6794d8b9-9190-423f-854f-869aff2b740a}" />
+      <Property name="Position" value="( x=-0.0997792; y=-0.907893; z=1.21679 )" input="{6794d8b9-9190-423f-854f-869aff2b740a}" />
       <Property name="Scale" value="( x=1; y=1; z=1 )" />
       <Property name="ForceCull" value="False" />
     </Node>
@@ -33,7 +33,7 @@
       <Property name="Radius" value="0.05" />
       <Property name="Color" value="( r=0; g=1; b=0.2; a=1 )" input="{23a3ccea-c559-4bba-8574-f11c155c1e5c}" />
       <Property name="Selected" value="False" />
-      <Property name="Position" value="( x=-0.110096; y=-0.223843; z=1.32383 )" input="{57102e6d-48c1-4464-a083-8078eb90cba6}" />
+      <Property name="Position" value="( x=-0.0583725; y=-1.69455; z=1.21123 )" input="{57102e6d-48c1-4464-a083-8078eb90cba6}" />
       <Property name="Scale" value="( x=0.05; y=0.05; z=0.05 )" />
       <Property name="ForceCull" value="False" />
     </Node>
@@ -45,7 +45,7 @@
       <Property name="Radius" value="0.05" />
       <Property name="Color" value="( r=0; g=1; b=0.2; a=1 )" input="{b9ca12e2-01cd-49d2-a0aa-4d13bdda9f07}" />
       <Property name="Selected" value="True" />
-      <Property name="Position" value="( x=0.284061; y=-0.243951; z=1.37235 )" input="{808aa09c-01c5-45ed-ab91-2d36b90bda95}" />
+      <Property name="Position" value="( x=0.0854761; y=-1.71776; z=0.903192 )" input="{808aa09c-01c5-45ed-ab91-2d36b90bda95}" />
       <Property name="Scale" value="( x=0.05; y=0.05; z=0.05 )" />
       <Property name="ForceCull" value="False" />
     </Node>
@@ -111,6 +111,7 @@ function main()
 	else
 		leftHand_bang = false
 	end
+	leftHand_frontKm1 = leftHand_front
 
 	-- same for the right hand
 	if(rightHand_front)	then
@@ -127,7 +128,8 @@ function main()
 		rightHand_bang = true
 	else
 		rightHand_bang = false
-	end	
+	end
+	rightHand_frontKm1 = rightHand_front
 	
 	-------------------------------------------------------------------
 	-- visualization codes (disable the next lines to gain a bit on performance when using this script without the interaction designer tool)
@@ -160,11 +162,11 @@ end
       <Input id="{530ed600-7dd4-44d8-8f06-7d161646508e}" name="left_hand_front" />
     </Node>
     <Node id="{a32b394b-a427-4b70-9075-2266b00ce818}" name="hand_front_hysteresis" type="input:slider">
-      <Value value="0.114000000059605" min="-1" max="1" />
+      <Value value="0.026" min="-1" max="1" />
       <Output id="{da3b6267-5702-43bb-96ef-eaae0240923e}" name="hand_front_hysteresis" />
     </Node>
     <Node id="{90c7d38f-68c7-45ff-8f19-d8467636acec}" name="hand_front_threshold" type="input:slider">
-      <Value value="0.206000000238419" min="-1" max="1" />
+      <Value value="0.318" min="-1" max="1" />
       <Output id="{b9011a1c-a031-4364-941a-c7e643a91f85}" name="hand_front_threshold" />
     </Node>
     <Node id="{0d0930f3-6934-4570-b108-a1e8e5586436}" name="iisu Data &amp; Parameters" type="iisu device" />
@@ -178,7 +180,7 @@ end
     <Movie id="A2-1C-4F-BE-3F-E1-93-F1-6B-0A-FC-61-13-07-39-8F" />
   </Movies>
   <WindowLayout>
-    <DockPanel FormatVersion="1.0" DockLeftPortion="0.25" DockRightPortion="0.25" DockTopPortion="0.25" DockBottomPortion="0.25" ActiveDocumentPane="0" ActivePane="-1">
+    <DockPanel FormatVersion="1.0" DockLeftPortion="0.25" DockRightPortion="0.25" DockTopPortion="0.25" DockBottomPortion="0.25" ActiveDocumentPane="4" ActivePane="-1">
       <Contents Count="5">
         <Content ID="0" PersistString="IID.FormDepth" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" />
         <Content ID="1" PersistString="{3789195d-b1f2-4291-9a85-8911ef69854e}" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" />
@@ -241,8 +243,8 @@ end
   </WindowLayout>
   <Visualization3D userCentroidsVisible="False" userCentroidVelocitiesVisible="False" skeletonVisible="False" uiControllerVisible="False" uiPointerVisible="False" umActivationZonesVisible="False" umActivationZoneLabelsVisible="False" userBoundingBoxVisible="False" userLabelVisible="False" userPointsVisible="False" userMassCenterVisible="False" userHeightVisible="False" userBodyDirVisible="False" userPrincipalDirVisible="False" cameraFrustumVisible="False" cameraFrustumProjVisible="False" cameraInfoVisible="False" sourceColorMapVisible="False" labelImageVisible="False" scenePointsVisible="False" userMaskVisible="False" depthClipPlanesVisible="False" xyzClipPlanesVisible="False" clipVolumeVisible="False" user1Color="66FF66FF" user2Color="66CCFFFF" user3Color="FF6600FF" user4Color="FFFF00FF" uiController1Color="66FF66FF" uiController2Color="66CCFFFF" uiController3Color="FF6600FF" uiController4Color="FFFF00FF" gridColor="999999FF" gridSize="4" gridSubdivisions="16">
     <Camera>
-      <Position x="4.830675" y="-0.8517914" z="1.714358" />
-      <Orientation yaw="79.99998" pitch="-14.00004" />
+      <Position x="4.772886" y="-0.5860939" z="1.968758" />
+      <Orientation yaw="83" pitch="-17.00006" />
     </Camera>
   </Visualization3D>
 </IisuInteractionDesignerProject>

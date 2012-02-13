@@ -1,27 +1,34 @@
-#N canvas 695 99 574 386 10;
-#X obj 37 84 metro 500;
-#X floatatom 38 127 5 0 0 0 - - -;
-#X msg 96 129 127;
-#X msg 141 130 320;
-#X obj 89 177 makenote;
-#X obj 92 244 noteout;
-#X msg 196 211 1;
-#X obj 135 29 bng 15 250 50 1 empty empty empty 17 7 0 10 -262144 -1
--1;
-#X msg 74 16 stop;
-#X text 242 18 Open dialog box in menu 'Media|MIDI Settings' in order
+#N canvas 683 0 667 360 10;
+#X obj 121 25 dumpOSC 8000;
+#X obj 121 57 OSCroute /iisu;
+#X obj 121 89 OSCroute /user1;
+#X obj 121 121 OSCroute /RightHandBang /LeftHandBang;
+#X msg 133 230 127;
+#X msg 165 253 320;
+#X obj 88 282 makenote;
+#X obj 88 337 noteout;
+#X msg 136 308 1;
+#X text 263 22 Open dialog box in menu 'Media|MIDI Settings' in order
 to configure the MIDI output. You need a MIDI link such as MIDI Ox
-(formerly MIDI Yoke) \, LoopBe1 (from http://nerds.de) or Osculator
-(under OSX) in order to link to your usual DAW.;
+(formerly known as MIDI Yoke) \, LoopBe1 (from http://nerds.de) or
+Osculator (under OSX) in order to link to your usual DAW.;
+#X obj 88 204 spigot;
+#X floatatom 172 181 5 0 0 0 - - -;
+#X floatatom 240 183 5 0 0 0 - - -;
+#X msg 63 173 70;
 #X connect 0 0 1 0;
-#X connect 1 0 4 0;
-#X connect 2 0 4 1;
-#X connect 3 0 4 2;
-#X connect 4 0 5 0;
-#X connect 4 1 5 1;
-#X connect 6 0 5 2;
-#X connect 7 0 0 0;
-#X connect 7 0 2 0;
-#X connect 7 0 3 0;
-#X connect 7 0 6 0;
-#X connect 8 0 0 0;
+#X connect 1 0 2 0;
+#X connect 2 0 3 0;
+#X connect 3 0 10 1;
+#X connect 3 0 11 0;
+#X connect 3 0 13 0;
+#X connect 3 0 4 0;
+#X connect 3 0 5 0;
+#X connect 3 1 12 0;
+#X connect 4 0 6 1;
+#X connect 5 0 6 2;
+#X connect 6 0 7 0;
+#X connect 6 1 7 1;
+#X connect 8 0 7 2;
+#X connect 10 0 6 0;
+#X connect 13 0 10 0;

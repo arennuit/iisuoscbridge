@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<IisuOscBridge iidFilePath="D:/DevRoot/iisuOscBridge/Samples/AbletonLive/OscBridge2Live/OscBridge2Live.iid" ipAddress="127.0.0.1" ipPort="8000" decorateStream="true">
+	<PathMap oscPathBit="iisu" iisuPath="">
+		<PathMap oscPathBit="user1" iisuPath="">
+			<PathMap oscPathBit="RightHandBang" iisuPath="IID.Hand_Front.rightHand_bang" />
+			<PathMap oscPathBit="LeftHandBang" iisuPath="IID.Hand_Front.leftHand_bang" />
+		</PathMap>
+	</PathMap>
+</IisuOscBridge>
