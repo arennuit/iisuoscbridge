@@ -78,9 +78,6 @@ void MainForm::setup( const std::string& filePath )
 	assert(m_dataBase);
 
 	ui.m_pathMapsView->setAnimated(true);
-	ui.m_pathMapsView->expandAll();
-	ui.m_pathMapsView->resizeColumnToContents(0);
-	ui.m_pathMapsView->resizeColumnToContents(1);
 	ui.m_pathMapsView->setAlternatingRowColors(true);
 	ui.m_pathMapsView->setItemDelegate(&m_pathDelegate);
 
@@ -152,6 +149,8 @@ void MainForm::onEditSelection(const PathMap* newSelectedPathMap)
 void MainForm::onLoadProjectFromFile( const std::string& filePath )
 {
 	ui.m_pathMapsView->expandAll();
+	ui.m_pathMapsView->resizeColumnToContents(0);
+	ui.m_pathMapsView->resizeColumnToContents(1);
 
 	setCurrentFilePath(filePath);
 
