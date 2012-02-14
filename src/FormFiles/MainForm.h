@@ -105,6 +105,8 @@ protected slots:
 	void onDeleteMapButtonClicked() {m_dataController->deletePathMap();}
 	void onClearMapsButtonClicked() {m_dataController->clearPathMaps();}
 
+	void onClearLogButtonClicked() {ui.m_logTextEdit->clear();}
+
 	void onMapsViewActionTriggered() {ui.m_tabs->setCurrentWidget(ui.m_mapsTab);}
 	void onLogViewActionTriggered() {ui.m_tabs->setCurrentWidget(ui.m_logTab);}
 	void onFullScreenAction();

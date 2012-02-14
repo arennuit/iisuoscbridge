@@ -115,6 +115,8 @@ void MainForm::setup( const std::string& filePath )
 	connect(ui.m_deleteMapButton, SIGNAL(clicked()), this, SLOT(onDeleteMapButtonClicked()));
 	connect(ui.m_clearMapsButton, SIGNAL(clicked()), this, SLOT(onClearMapsButtonClicked()));
 
+	connect(ui.m_clearLogButton, SIGNAL(clicked()), this, SLOT(onClearLogButtonClicked()));
+
 	for (uint i = 0; i < RECENT_FILES_MAX_NUM; ++i)
 		connect(m_recentFileActions[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
 
