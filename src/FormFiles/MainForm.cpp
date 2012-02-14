@@ -488,22 +488,21 @@ void MainForm::onFullScreenAction()
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onIidFilePathEditEditingFinished()
 {
-	bool isIidFileOk = m_dataController->editIidFilePath(ui.m_iidFilePathEdit->text().toStdString());
+	std::string filePath = ui.m_iidFilePathEdit->text().toStdString();
+
+	bool isIidFileOk = m_dataController->editIidFilePath(filePath);
 }
 
 //////////////////////////////////////////////////////////////////////////
 void MainForm::onIidFilePathButtonClicked()
 {
 	// Get the new iid filepath.
-	QStringList fileNames;
 	if (!m_iidFileSelectDlg.exec())
 		return;
 
-	fileNames = m_iidFileSelectDlg.selectedFiles();
+	std::string filePath = m_iidFileSelectDlg.selectedFiles()[0].toStdString();
 
-	ui.m_iidFilePathEdit->setText(fileNames[0]);
-
-	bool isIidFileOk = m_dataController->editIidFilePath(ui.m_iidFilePathEdit->text().toStdString());
+	bool isIidFileOk = m_dataController->editIidFilePath(filePath);
 }
 
 //////////////////////////////////////////////////////////////////////////
