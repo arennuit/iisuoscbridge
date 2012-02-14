@@ -22,10 +22,20 @@ int main(int argc, char *argv[])
 	SK::AppDataBase::GetInstance()->setDataController(SK::DataController::GetInstance());
 	SK::AppDataController::GetInstance()->setMainForm(&mainForm);
 
-	// Setup the ui using the project last opened.
-	QSettings settings;
-	std::string filePath = settings.value("CurrentFilePath").toString().toStdString();
-	mainForm.setup(filePath);
+	// Setup the ui.
+	if (argc == 1)
+	{
+		// Use the project last opened.
+		QSettings settings;
+		std::string filePath = settings.value("CurrentFilePath").toString().toStdString();
+		mainForm.setup(filePath);
+	}
+	else
+	{
+		// Use the project in argument.
+		std::string filePath = std::string(argv[1]);
+		mainForm.setup(filePath);
+	}
 
 	// Start application.
 	mainForm.show();
