@@ -31,7 +31,13 @@ protected:
 	{
 		assert(m_targetEdit);
 
+		// Write the text.
 		m_targetEdit->insertPlainText(QString(c));
+
+		// Scroll to the bottom (auto-scroll).
+		QTextCursor cursor = m_targetEdit->textCursor();
+		cursor.movePosition(QTextCursor::End);
+		m_targetEdit->setTextCursor(cursor);
 
 		return c;
 	}
