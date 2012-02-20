@@ -49,7 +49,7 @@ public:
 	//@{
 	virtual void setIpAddress(const std::string& ipAddress) {m_ipAddress = ipAddress;}
 	virtual void setIpPort(int ipPort) {m_ipPort = ipPort;}
-	virtual void setIidFilePath(const std::string& iidFilePath) {m_iidFilePath = iidFilePath;}
+	virtual bool setIidFilePath(const std::string& iidFilePath) {m_iidFilePath = iidFilePath; return true;}
 	virtual void setDecorateStream(bool decorateStream) {m_decorateStream = decorateStream;}
 
 	virtual const PathMap* addPathMap(const PathMap* siblingPathMap, const std::string& oscPathBit = NEW_OSC_PATH_BIT, const std::string& iisuPath = NEW_IISU_PATH);

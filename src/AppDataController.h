@@ -28,7 +28,7 @@ public:
 
 	void onIpAddressChanged(const std::string& ipAddress) SK_OVERRIDE;
 	void onIpPortChanged(int ipPort) SK_OVERRIDE;
-	void onIidFilePathChanged(const std::string& iidFilePath) SK_OVERRIDE;
+	bool onIidFilePathChanged(const std::string& iidFilePath) SK_OVERRIDE;
 	void onDecorateStreamChanged(bool decorateStream) SK_OVERRIDE;
 
 	void onAddPathMap(const PathMap* newPathMap) SK_OVERRIDE;

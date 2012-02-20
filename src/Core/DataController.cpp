@@ -33,16 +33,6 @@ DataController::~DataController()
 }
 
 //////////////////////////////////////////////////////////////////////////
-bool DataController::editIidFilePath( const std::string& newIidFilePath )
-{
-	// Update the database.
-	m_dataBase->setIidFilePath(newIidFilePath);
-
-	// Load the IID script.
-	return m_iisuManager.loadIidGraph(newIidFilePath);
-}
-
-//////////////////////////////////////////////////////////////////////////
 void DataController::toggleResumePause()
 {
 	if (m_dataBase->getMocapState() == false)

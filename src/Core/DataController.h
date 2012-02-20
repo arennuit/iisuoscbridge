@@ -41,7 +41,7 @@ public:
 	//@{
 	virtual void editIpAddress(const std::string& newIpAddress) {m_dataBase->setIpAddress(newIpAddress);}
 	virtual void editIpPort(int newIpPort) {m_dataBase->setIpPort(newIpPort);}
-	virtual bool editIidFilePath(const std::string& newIidFilePath);
+	virtual bool editIidFilePath(const std::string& newIidFilePath) {return m_dataBase->setIidFilePath(newIidFilePath);}
 	virtual void editDecorateStreamOption(bool decorateStream) {m_dataBase->setDecorateStream(decorateStream);}
 
 	virtual const PathMap* addPathMap() {return m_dataBase->addPathMap(m_selectedPathMap);}
@@ -58,7 +58,7 @@ public:
 
 	virtual void onIpAddressChanged(const std::string& ipAddress) {}
 	virtual void onIpPortChanged(int ipPort) {}
-	virtual void onIidFilePathChanged(const std::string& iidFilePath) {}
+	virtual bool onIidFilePathChanged(const std::string& iidFilePath) {return m_iisuManager.loadIidGraph(iidFilePath);}
 	virtual void onDecorateStreamChanged(bool decorateStream) {}
 
 	virtual void onAddPathMap(const PathMap* newPathMap) {editSelection(newPathMap);}

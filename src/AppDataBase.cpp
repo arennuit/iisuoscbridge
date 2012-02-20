@@ -110,13 +110,13 @@ void AppDataBase::setIpPort(int ipPort)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void AppDataBase::setIidFilePath(const std::string& iidFilePath)
+bool AppDataBase::setIidFilePath(const std::string& iidFilePath)
 {
 	// Perform operation.
 	DataBase::setIidFilePath(iidFilePath);
 
 	// Propagate operation up-stream.
-	m_dataController->onIidFilePathChanged(iidFilePath);
+	return m_dataController->onIidFilePathChanged(iidFilePath);
 }
 
 //////////////////////////////////////////////////////////////////////////

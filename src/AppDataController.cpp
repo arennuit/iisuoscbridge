@@ -126,13 +126,13 @@ void AppDataController::onIpPortChanged(int ipPort)
 }
 
 //////////////////////////////////////////////////////////////////////////
-void AppDataController::onIidFilePathChanged(const std::string& iidFilePath)
+bool AppDataController::onIidFilePathChanged(const std::string& iidFilePath)
 {
 	// Propagate operation up-stream.
 	m_mainForm->onIidFilePathChanged(iidFilePath);
 
 	// Base callback.
-	DataController::onIidFilePathChanged(iidFilePath);
+	return DataController::onIidFilePathChanged(iidFilePath);
 }
 
 //////////////////////////////////////////////////////////////////////////
