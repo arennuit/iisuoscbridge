@@ -42,17 +42,17 @@ MainForm::~MainForm()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void MainForm::setup( const std::string& filePath )
+void MainForm::setup()
 {
+	assert(SK::DataController::GetInstance());
+
+	m_dataController = SK::DataController::GetInstance();
+
 	// Set input masks and validators.
 	QRegExpValidator *validator = new QRegExpValidator(this);
 	QRegExp regExp("((1{0,1}[0-9]{0,2}|2[0-4]{1,1}[0-9]{1,1}|25[0-5]{1,1})\\.){3,3}(1{0,1}[0-9]{0,2}|2[0-4]{1,1}[0-9]{1,1}|25[0-5]{1,1})");
 	validator->setRegExp(regExp);
 	ui.m_ipAddressEdit->setValidator(validator);
-
-	// Get access to the DataController.
-	m_dataController = DataController::GetInstance();
-	assert(m_dataController);
 
 	// Setup model.
 	ui.m_pathMapsView->setModel(&m_mvdModel);
@@ -74,17 +74,9 @@ void MainForm::setup( const std::string& filePath )
 	m_saveAsFileSelectDlg.setDefaultSuffix("iob");
 
 	// Setup UI.
-	m_dataBase = DataBase::GetInstance(); // We do not make this pointer a member of the class because the MainForm is not due to modify data, it only uses the data model to perform the initial ui setup.
-	assert(m_dataBase);
-
 	ui.m_pathMapsView->setAnimated(true);
 	ui.m_pathMapsView->setAlternatingRowColors(true);
 	ui.m_pathMapsView->setItemDelegate(&m_pathDelegate);
-
-	if (filePath == "")
-		m_dataController->resetProject();
-	else
-		m_dataController->loadProjectFromFile(filePath);
 
 	// Establish all connections.
 	connect(ui.m_newAction, SIGNAL(triggered()), this, SLOT(onNewActionTriggered()));
@@ -491,7 +483,7 @@ void MainForm::onIidFilePathEditEditingFinished()
 {
 	std::string filePath = ui.m_iidFilePathEdit->text().toStdString();
 
-	bool isIidFileOk = m_dataController->editIidFilePath(filePath);
+	m_dataController->editIidFilePath(filePath);
 }
 
 //////////////////////////////////////////////////////////////////////////

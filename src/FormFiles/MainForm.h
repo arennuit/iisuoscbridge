@@ -57,7 +57,7 @@ public:
 
 	/// \name API.
 	//@{
-	void setup(const std::string& filePath);
+	void setup();
 	//@}
 
 	/// \name Callbacks.

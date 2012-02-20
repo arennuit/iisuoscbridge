@@ -15,27 +15,30 @@ int main(int argc, char *argv[])
 	// data base and controller need to be existing before the main form is setup. Hence we separated the form's
 	// instantiation and setup.
 	SK::MainForm mainForm;
+	SK::AppDataBase* dataBase = SK::AppDataBase::CreateInstance();
+	SK::AppDataController* dataController = SK::AppDataController::CreateInstance();
 
-	SK::AppDataBase::CreateInstance();
-	SK::AppDataController::CreateInstance();
+	dataBase->setDataController(dataController);
+	dataController->setMainForm(&mainForm);
+	mainForm.setup();
 
-	SK::AppDataBase::GetInstance()->setDataController(SK::DataController::GetInstance());
-	SK::AppDataController::GetInstance()->setMainForm(&mainForm);
-
-	// Setup the ui.
+	// Load project.
+	// NOTE: use the project in argument, or the last opened project or reset.
+	std::string filePath;
 	if (argc == 1)
 	{
-		// Use the project last opened.
 		QSettings settings;
-		std::string filePath = settings.value("CurrentFilePath").toString().toStdString();
-		mainForm.setup(filePath);
+		filePath = settings.value("CurrentFilePath").toString().toStdString();
 	}
 	else
 	{
-		// Use the project in argument.
-		std::string filePath = std::string(argv[1]);
-		mainForm.setup(filePath);
+		filePath = std::string(argv[1]);
 	}
+
+	if (filePath == "")
+		dataController->resetProject();
+	else
+		dataController->loadProjectFromFile(filePath);
 
 	// Start application.
 	mainForm.show();
