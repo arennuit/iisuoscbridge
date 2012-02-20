@@ -204,6 +204,13 @@ void IisuManager::termIisu()
 //////////////////////////////////////////////////////////////////////////
 bool IisuManager::loadIidGraph(const std::string& newIidFilePath)
 {
+	if (!m_device)
+	{
+		SK_LOGGER(LOG_ERROR) << "Load IID graph : device does not exist, cannot load iid graph.";
+
+		return false;
+	}
+
 	SK::CommandHandle<SK::Result (const SK::String&)> loadIidGraph = m_device->getCommandManager().registerCommandHandle<SK::Result(const SK::String&)>("IID.loadGraph");
 	SK::Result resLoadCmd = loadIidGraph(newIidFilePath.c_str());
 	if (resLoadCmd.failed())
@@ -217,8 +224,6 @@ bool IisuManager::loadIidGraph(const std::string& newIidFilePath)
 
 	return true;
 }
-
-
 
 //////////////////////////////////////////////////////////////////////////
 void IisuManager::retrieveIisuDataPaths(std::vector<std::string>& iisuDataPaths)
