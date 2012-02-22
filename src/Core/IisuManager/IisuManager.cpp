@@ -204,6 +204,13 @@ void IisuManager::termIisu()
 //////////////////////////////////////////////////////////////////////////
 bool IisuManager::loadIidGraph(const std::string& newIidFilePath)
 {
+	if (newIidFilePath == "")
+	{
+		SK_LOGGER(LOG_INFO) << "The new IID file path is empty.";
+
+		return true;
+	}
+
 	if (!m_device)
 	{
 		SK_LOGGER(LOG_ERROR) << "Load IID graph : device does not exist, cannot load iid graph.";
