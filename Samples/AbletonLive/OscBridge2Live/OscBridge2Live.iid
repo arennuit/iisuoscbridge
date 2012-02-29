@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <IisuInteractionDesignerProject Version="3.0.17">
-  <Graph id="{cd3cc74a-315a-4b41-a275-69429877a862}">
+  <Graph id="{38ab4532-4085-40f1-9270-c3085c15b0b4}">
     <Node id="{e4f08982-767f-4d8a-b6f0-45c317d72f17}" name="iisu Data &amp; Parameters" type="iisu device">
       <Output id="{a9645902-a97d-4d67-86a8-d93150472795}" name="USER1.SKELETON.Status" />
     </Node>
@@ -25,16 +25,22 @@
       <Input id="{63ba701c-4b08-493f-ad78-3aee3d327666}" name="USER1.SKELETON.PARTS.LeftWrist" />
       <Input id="{f30e2c94-e2fb-42f5-8e0c-7e733b7c5b33}" name="USER1.SKELETON.PARTS.Pelvis" />
       <Input id="{6db243ec-c561-421c-94a2-1fcf9439825a}" name="USER1.SKELETON.PARTS.Pelvis" />
+      <Input id="{895c3c87-15e4-43c1-8780-1fc02081ae40}" name="USER1.SKELETON.PARTS.RightAnkle" />
       <Output id="{b4a1cf6f-054d-44c9-882b-d0da30034588}" name="leftHand_pos" />
       <Output id="{35acb3be-7fd5-4045-aaa9-665e5d7dc140}" name="rightHand_pos" />
       <Output id="{8e17cc70-8912-4385-b37a-21b6bfcbfaba}" name="planeOn_pos" />
       <Output id="{13209a6b-6f6a-4a04-b374-3878bef45096}" name="planeOff_pos" />
-      <Output id="{637a7dcb-4c90-412f-a7fb-0d16988d0b4e}" name="leftHand_color" />
       <Output id="{75b98f90-241e-473e-a25f-763376519c47}" name="rightHand_color" />
-      <Output id="{0ce79bf7-5d61-43c7-824f-8c1cafc34090}" name="rightHand_bang" />
       <Output id="{65e4073c-b353-4ae3-b8c1-25bc9be2cf07}" name="leftHand_note" />
-      <CustomParameter id="{0ce79bf7-5d61-43c7-824f-8c1cafc34090}" />
+      <Output id="{94dfd006-a2e1-4f8d-a14b-4a56ba8f06c5}" name="rightHand_front_bang" />
+      <Output id="{cb06765c-2576-43a8-93e6-e651e8601dec}" name="rightFoot_front_bang" />
+      <Output id="{dba8c2fe-4ae2-4606-b645-0ba9d71489b3}" name="rightFoot_side_bang" />
+      <Output id="{254a9d1e-dd81-4bff-8459-21e035e718b4}" name="rightFoot_back_bang" />
       <CustomParameter id="{65e4073c-b353-4ae3-b8c1-25bc9be2cf07}" />
+      <CustomParameter id="{94dfd006-a2e1-4f8d-a14b-4a56ba8f06c5}" />
+      <CustomParameter id="{cb06765c-2576-43a8-93e6-e651e8601dec}" />
+      <CustomParameter id="{dba8c2fe-4ae2-4606-b645-0ba9d71489b3}" />
+      <CustomParameter id="{254a9d1e-dd81-4bff-8459-21e035e718b4}" />
       <Content><![CDATA[-----------------------------------------------------------------------------------------------------------------------------------
 -- This script is provided with no guarantee, use it at your own risk.
 -----------------------------------------------------------------------------------------------------------------------------------
@@ -43,13 +49,19 @@ function init()
 	-- Important note:
 	--   It's best to initialize ALL your variables here. Otherwise, you might get unexpected results.
 	--   See the iisu Interaction Designer manual for more info.
-	leftHand_front = false
 	rightHand_front = false
-	leftHand_frontKm1 = false
-	rightHand_frontKm1 = false
+	rightHand_front_km1 = false
+	rightHand_front_bang = false
 	
-	leftHand_bang = false
-	rightHand_bang = false
+	rightFoot_front = false
+	rightFoot_front_km1 = false
+	rightFoot_front_bang = false
+	rightFoot_side = false
+	rightFoot_side_km1 = false
+	rightFoot_side_bang = false
+	rightFoot_back = false
+	rightFoot_back_km1 = false
+	rightFoot_back_bang = false
 	
 	degree = 0
 	
@@ -71,9 +83,13 @@ function main()
   pelvis_pos = USER1_SKELETON_PARTS_Pelvis
 	leftHand_pos = USER1_SKELETON_PARTS_LeftWrist
 	rightHand_pos = USER1_SKELETON_PARTS_RightWrist
+	rightFoot_pos = USER1_SKELETON_PARTS_RightAnkle
 
+	-----------------------------------------------------------------------------------------------------------------------------------
 	-- Musical logic.
+	-----------------------------------------------------------------------------------------------------------------------------------
 
+	-----------------------------------------------------------------------------------------------------------------------------------
 	-- Left hand: note on a scale which degree depends on the hands's height.
 	local minHeight = 0.8
 	local maxHeight = 2.2
@@ -96,23 +112,68 @@ function main()
 	
 	leftHand_note = scale[degree + 1] -- +1 because LUA indices starts at 1
 	
-	-- Right hand: raise rightHand_bang on up front of rightHand_front.
-	if(rightHand_front)	then
-	  if(rightHand_pos:front() - pelvis_pos:front() < (hand_front_threshold - hand_front_hysteresis) ) then
-			rightHand_front = false
-		end
-	else
-	  if(rightHand_pos:front() - pelvis_pos:front() > hand_front_threshold) then
-			rightHand_front = true
-		end
+	-----------------------------------------------------------------------------------------------------------------------------------
+	-- Right hand: raise rightHand_front_bang on up front of rightHand_front.
+  if(rightHand_pos:front() - pelvis_pos:front() > hand_front_threshold) then
+		rightHand_front = true
+	elseif (rightHand_pos:front() - pelvis_pos:front() < (hand_front_threshold - hand_front_hysteresis) ) then
+		rightHand_front = false
 	end
 	
-	if (rightHand_front and not rightHand_frontKm1) then
-		rightHand_bang = true
+	if (rightHand_front and not rightHand_front_km1) then
+		rightHand_front_bang = true
 	else
-		rightHand_bang = false
+		rightHand_front_bang = false
 	end
-	rightHand_frontKm1 = rightHand_front
+	rightHand_front_km1 = rightHand_front
+	
+	-----------------------------------------------------------------------------------------------------------------------------------
+	-- Right foot: 3 zones, clip selection via MIDI notes.
+	local footThreshold = 0.3
+	local footHysteresis = 0.05
+	local rightFootPos_inPelvis = rightFoot_pos - pelvis_pos
+	
+	-- rightFoot front?
+	if (rightFootPos_inPelvis:front() > footThreshold) then
+		rightFoot_front = true
+	elseif (rightFootPos_inPelvis:front() < footThreshold - footHysteresis) then
+		rightFoot_front = false
+	end
+	
+	if (rightFoot_front and not rightFoot_front_km1) then
+		rightFoot_front_bang = true
+	else
+		rightFoot_front_bang = false
+	end
+	rightFoot_front_km1 = rightFoot_front
+	
+	-- rightFoot side?
+	if (rightFootPos_inPelvis:right() > footThreshold + 0.15) then
+		rightFoot_side = true
+	elseif (rightFootPos_inPelvis:right() < footThreshold + 0.15 - footHysteresis) then
+		rightFoot_side = false
+	end
+	
+	if (rightFoot_side and not rightFoot_side_km1) then
+		rightFoot_side_bang = true
+	else
+		rightFoot_side_bang = false
+	end
+	rightFoot_side_km1 = rightFoot_side
+	
+	-- rightFoot back?
+	if (rightFootPos_inPelvis:back() > footThreshold) then
+		rightFoot_back = true
+	elseif (rightFootPos_inPelvis:back() < footThreshold - footHysteresis) then
+		rightFoot_back = false
+	end
+	
+	if (rightFoot_back and not rightFoot_back_km1) then
+		rightFoot_back_bang = true
+	else
+		rightFoot_back_bang = false
+	end
+	rightFoot_back_km1 = rightFoot_back
 	
 	-------------------------------------------------------------------
 	-- visualization codes (disable the next lines to gain a bit on performance when using this script without the interaction designer tool)
@@ -122,11 +183,6 @@ function main()
 	
 	local red = SK.Color4f(1.0, 0.0, 0.0, 1.0)
 	local green = SK.Color4f(0.0, 1.0, 0.2, 1.0)
-	if (leftHand_front) then
-		leftHand_color = green
-	else
-		leftHand_color = red
-	end	
 
 	if(rightHand_front) then
 		rightHand_color = green
@@ -143,28 +199,27 @@ end
     <Link source="{5653e523-708e-4915-86ff-6e981ad631e4}" sourceoutput="{a1d1e5f8-ca87-4faa-8bd3-28f0c75b1309}" destination="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" destinationinput="{63ba701c-4b08-493f-ad78-3aee3d327666}" />
     <Link source="{5653e523-708e-4915-86ff-6e981ad631e4}" sourceoutput="{207ce935-6dc8-4d13-b7fc-aa7b2b6c0a05}" destination="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" destinationinput="{f30e2c94-e2fb-42f5-8e0c-7e733b7c5b33}" />
     <Link source="{5653e523-708e-4915-86ff-6e981ad631e4}" sourceoutput="{207ce935-6dc8-4d13-b7fc-aa7b2b6c0a05}" destination="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" destinationinput="{6db243ec-c561-421c-94a2-1fcf9439825a}" />
+    <Link source="{5653e523-708e-4915-86ff-6e981ad631e4}" sourceoutput="{5d367ebf-ca12-4bc0-a566-e8aa730305dc}" destination="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" destinationinput="{895c3c87-15e4-43c1-8780-1fc02081ae40}" />
     <Node id="{5aeb9e89-c123-4da4-9407-41bcac501fa4}" name="Right Hand Front" type="visualizer:label">
       <Input id="{1d1c359d-b631-4704-8c87-2221ebca5570}" name="right_hand_front" />
     </Node>
     <Node id="{4b16e98f-649f-4684-88a0-27d1ca833dac}" name="LeftHand" type="primitive3d:sphere">
       <Input id="{808aa09c-01c5-45ed-ab91-2d36b90bda95}" name="LeftHand" />
-      <Input id="{b9ca12e2-01cd-49d2-a0aa-4d13bdda9f07}" name="leftHand_color" />
       <Property name="Radius" value="0.05" />
-      <Property name="Color" value="( r=1; g=0; b=0; a=1 )" input="{b9ca12e2-01cd-49d2-a0aa-4d13bdda9f07}" />
+      <Property name="Color" value="( r=1; g=0; b=0; a=1 )" />
       <Property name="Selected" value="False" />
-      <Property name="Position" value="( x=-0.137834; y=-0.496056; z=0.92807 )" input="{808aa09c-01c5-45ed-ab91-2d36b90bda95}" />
+      <Property name="Position" value="( x=0.772228; y=0.213561; z=0.965445 )" input="{808aa09c-01c5-45ed-ab91-2d36b90bda95}" />
       <Property name="Scale" value="( x=0.05; y=0.05; z=0.05 )" />
       <Property name="ForceCull" value="False" />
     </Node>
     <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{b4a1cf6f-054d-44c9-882b-d0da30034588}" destination="{4b16e98f-649f-4684-88a0-27d1ca833dac}" destinationinput="{808aa09c-01c5-45ed-ab91-2d36b90bda95}" />
-    <Link source="{cc083a6f-1a1f-427b-8a6a-705dca011fdd}" sourceoutput="{637a7dcb-4c90-412f-a7fb-0d16988d0b4e}" destination="{4b16e98f-649f-4684-88a0-27d1ca833dac}" destinationinput="{b9ca12e2-01cd-49d2-a0aa-4d13bdda9f07}" />
     <Node id="{35c49292-e431-4abb-adb7-c0bcdc082287}" name="RightHand" type="primitive3d:sphere">
       <Input id="{23a3ccea-c559-4bba-8574-f11c155c1e5c}" name="rightHand_color" />
       <Input id="{57102e6d-48c1-4464-a083-8078eb90cba6}" name="rightHand_pos" />
       <Property name="Radius" value="0.05" />
-      <Property name="Color" value="( r=1; g=0; b=0; a=1 )" input="{23a3ccea-c559-4bba-8574-f11c155c1e5c}" />
+      <Property name="Color" value="( r=0; g=1; b=0.2; a=1 )" input="{23a3ccea-c559-4bba-8574-f11c155c1e5c}" />
       <Property name="Selected" value="False" />
-      <Property name="Position" value="( x=0.122117; y=-0.37727; z=0.717788 )" input="{57102e6d-48c1-4464-a083-8078eb90cba6}" />
+      <Property name="Position" value="( x=0.0958351; y=-0.232686; z=1.70897 )" input="{57102e6d-48c1-4464-a083-8078eb90cba6}" />
       <Property name="Scale" value="( x=0.05; y=0.05; z=0.05 )" />
       <Property name="ForceCull" value="False" />
     </Node>
@@ -176,7 +231,7 @@ end
       <Property name="NormalDirection" value="( x=0; y=1; z=0 )" />
       <Property name="Color" value="( r=0; g=1; b=0; a=0.3 )" />
       <Property name="Selected" value="False" />
-      <Property name="Position" value="( x=0.0343222; y=-0.95397; z=1.17182 )" input="{6794d8b9-9190-423f-854f-869aff2b740a}" />
+      <Property name="Position" value="( x=0.259779; y=-0.163882; z=1.01861 )" input="{6794d8b9-9190-423f-854f-869aff2b740a}" />
       <Property name="Scale" value="( x=1; y=1; z=1 )" />
       <Property name="ForceCull" value="False" />
     </Node>
@@ -186,7 +241,7 @@ end
       <Property name="NormalDirection" value="( x=0; y=1; z=0 )" />
       <Property name="Color" value="( r=1; g=0; b=0; a=0.3 )" />
       <Property name="Selected" value="True" />
-      <Property name="Position" value="( x=0.0343222; y=-0.92797; z=1.17182 )" input="{b89203a9-3135-47dd-a563-c4fd80818411}" />
+      <Property name="Position" value="( x=0.259779; y=-0.137882; z=1.01861 )" input="{b89203a9-3135-47dd-a563-c4fd80818411}" />
       <Property name="Scale" value="( x=1; y=1; z=1 )" />
       <Property name="ForceCull" value="False" />
     </Node>
@@ -196,11 +251,13 @@ end
       <Output id="{30ed4956-67ba-4349-9942-7ef9b7841ade}" name="USER1.SKELETON.PARTS.RightWrist" />
       <Output id="{a1d1e5f8-ca87-4faa-8bd3-28f0c75b1309}" name="USER1.SKELETON.PARTS.LeftWrist" />
       <Output id="{f278204e-90e6-43f6-8885-7db7e71b22cb}" name="USER1.SKELETON.PARTS.Head" />
+      <Output id="{5d367ebf-ca12-4bc0-a566-e8aa730305dc}" name="USER1.SKELETON.PARTS.RightAnkle" />
     </Node>
   </Graph>
   <Movies>
     <Movie id="F7-FA-66-05-E4-49-CB-DF-D8-00-5F-70-C1-F0-22-FE" />
     <Movie id="A2-1C-4F-BE-3F-E1-93-F1-6B-0A-FC-61-13-07-39-8F" />
+    <Movie id="1B-6F-6C-76-D2-C9-74-18-A9-59-21-F6-31-F8-08-F8" />
   </Movies>
   <WindowLayout>
     <DockPanel FormatVersion="1.0" DockLeftPortion="0.25" DockRightPortion="0.25" DockTopPortion="0.25" DockBottomPortion="0.25" ActiveDocumentPane="4" ActivePane="-1">
@@ -264,10 +321,10 @@ end
       <FloatWindows Count="0" />
     </DockPanel>
   </WindowLayout>
-  <Visualization3D userCentroidsVisible="False" userCentroidVelocitiesVisible="False" skeletonVisible="False" uiControllerVisible="False" uiPointerVisible="False" umActivationZonesVisible="False" umActivationZoneLabelsVisible="False" userBoundingBoxVisible="False" userLabelVisible="False" userPointsVisible="False" userMassCenterVisible="False" userHeightVisible="False" userBodyDirVisible="False" userPrincipalDirVisible="False" cameraFrustumVisible="False" cameraFrustumProjVisible="False" cameraInfoVisible="False" sourceColorMapVisible="False" labelImageVisible="False" scenePointsVisible="False" userMaskVisible="False" depthClipPlanesVisible="False" xyzClipPlanesVisible="False" clipVolumeVisible="False" user1Color="66FF66FF" user2Color="66CCFFFF" user3Color="FF6600FF" user4Color="FFFF00FF" uiController1Color="66FF66FF" uiController2Color="66CCFFFF" uiController3Color="FF6600FF" uiController4Color="FFFF00FF" gridColor="999999FF" gridSize="4" gridSubdivisions="16">
+  <Visualization3D userCentroidsVisible="False" userCentroidVelocitiesVisible="False" skeletonVisible="False" uiControllerVisible="False" uiPointerVisible="False" umActivationZonesVisible="False" umActivationZoneLabelsVisible="False" userBoundingBoxVisible="False" userLabelVisible="False" userPointsVisible="False" userMassCenterVisible="False" userHeightVisible="False" userBodyDirVisible="False" userPrincipalDirVisible="False" cameraFrustumVisible="False" cameraFrustumProjVisible="False" cameraInfoVisible="False" sourceColorMapVisible="False" labelImageVisible="False" scenePointsVisible="False" userMaskVisible="True" depthClipPlanesVisible="False" xyzClipPlanesVisible="False" clipVolumeVisible="False" user1Color="66FF66FF" user2Color="66CCFFFF" user3Color="FF6600FF" user4Color="FFFF00FF" uiController1Color="66FF66FF" uiController2Color="66CCFFFF" uiController3Color="FF6600FF" uiController4Color="FFFF00FF" gridColor="999999FF" gridSize="4" gridSubdivisions="16">
     <Camera>
-      <Position x="2.378171" y="-4.290118" z="1.714393" />
-      <Orientation yaw="28.99994" pitch="-14.00002" />
+      <Position x="-3.664298" y="2.031194" z="3.073661" />
+      <Orientation yaw="-119.0002" pitch="-31.00008" />
     </Camera>
   </Visualization3D>
 </IisuInteractionDesignerProject>
