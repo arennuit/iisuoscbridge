@@ -117,9 +117,9 @@ FunctionEnd
 
 Section "Core" Section_Core
 
-    ; SetShellVarContext all
+	SetShellVarContext all
 
-    ; SectionIn 1 RO
+	SectionIn 1 RO
 
 	; Deploy files.
 	SetOutPath "$INSTDIR"
@@ -171,20 +171,45 @@ Section "Core" Section_Core
 	; Registry: installation directory.
 	WriteRegStr HKLM "${INSTALL_DIR_REG_SUB_KEY}" "${INSTALL_DIR_REG_ENTRY}" $INSTDIR
 	
+	; Associate extension.
+	;${registerExtension} "$INSTDIR\iisuOscBridge.exe" ".iob" "IOB_File"
+	
+	; Registry: extension association.
+	;WriteRegStr HKCR ".iob" "" "iisuOscBridge.Project"
+	;WriteRegStr HKCR "iisuOscBridge.Project" "" "iisuOscBridge Project"
+	;WriteRegStr HKCR "iisuOscBridge.Project\DefaultIcon" "" "$INSTDIR\iisuOscBridge.exe, 0"	
+	;WriteRegStr HKCR "iisuOscBridge.Project\shell\open\command" "" '"$INSTDIR\iisuOscBridge.exe" "%1"'
+	
 	; Create uninstaller.
 	WriteUninstaller "$INSTDIR\Uninstall.exe"
 
 SectionEnd
 
+Section ".iob Files Associations" Section_FilesAssoc
+
+    SetShellVarContext all
+    SectionIn 1
+	
+	WriteRegStr HKLM "SOFTWARE\Classes\.iob" "" "IobProjectFile"
+    WriteRegStr HKLM "SOFTWARE\Classes\IobProjectFile" "" "isuOscBridge project file"
+    WriteRegStr HKLM "SOFTWARE\Classes\IobProjectFile\DefaultIcon" "" '"$INSTDIR\iisuOscBridge.exe, 1"'
+    WriteRegStr HKLM "SOFTWARE\Classes\IobProjectFile\shell\open" "" "&Open with iisuOscBridge"
+    WriteRegStr HKLM "SOFTWARE\Classes\IobProjectFile\shell\open\command" "" '"$INSTDIR\iisuOscBridge.exe" "%1"'
+
+	; --- Refresh the system ---
+	SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
+
+    ;WriteRegStr HKLM "SOFTWARE\Classes\.skscript" "" "Interaction Designer script file"
+	
+SectionEnd
+
 ;--------------------------------
 ; Descriptions.
-
-; Language strings.
-LangString DESC_iisuOscBridgeCore ${LANG_ENGLISH} "This is the core of iisuOscBridge™, the section actually bridging iisu™ output data with OSC networking."
 
 ; Assign language strings to sections.
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
 !insertmacro MUI_DESCRIPTION_TEXT ${Section_Core} "This is the core of iisuOscBridge™, the section actually bridging iisu™ output data with OSC networking."
+!insertmacro MUI_DESCRIPTION_TEXT ${Section_FilesAssoc} ".iob files association to iisuOscBridge."
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 ;--------------------------------
@@ -202,5 +227,8 @@ Section "Uninstall"
 
 	; Remove the register keys.
 	DeleteRegKey /ifempty HKLM "${INSTALL_DIR_REG_SUB_KEY}"
+	
+	; Desassociate the extension.
+	;${unregisterExtension} ".iob" "IOB File"
 
 SectionEnd
