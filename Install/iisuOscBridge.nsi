@@ -1,13 +1,13 @@
 ;================================
-; RELEASE NAME : iisu™ OSC Bridge (for Windows)
-; PURPOSE      : iisu™ to OSC networking bridge
-; PACKAGER     : are@softkinetic.com
+; RELEASE NAME	: iisu™ OSC Bridge (for Windows)
+; PURPOSE		: iisu™ to OSC networking bridge
+; PACKAGER		: are@softkinetic.com
 
 ;--------------------------------
 ; Includes.
 
 !include "MUI2.nsh"
-
+	
 ;--------------------------------
 ; Defines.
 
@@ -61,8 +61,9 @@ Var MUI_TEMP
 
 !define MUI_FINISHPAGE_TITLE "Completing the iisuOscBridge™ Setup Wizard"
 
-!define MUI_FINISHPAGE_LINK "Visit the Softkinetic site for the latest news and support."
-!define MUI_FINISHPAGE_LINK_LOCATION "http://www.softkinetic.com/"
+!define MUI_FINISHPAGE_LINK "Visit the iisuOscBridge™ blog for news and support."
+!define MUI_FINISHPAGE_LINK_LOCATION "http://iisuoscbridge.blogspot.com/"
+
 
 ;--------------------------------
 ; Pages.
@@ -88,26 +89,26 @@ Var MUI_TEMP
 
 Function .onInit
 
-    ; Check for existing installation.
-    ReadRegStr $0 HKLM "${INSTALL_DIR_REG_SUB_KEY}" "${INSTALL_DIR_REG_ENTRY}"
+	; Check for existing installation.
+	ReadRegStr $0 HKLM "${INSTALL_DIR_REG_SUB_KEY}" "${INSTALL_DIR_REG_ENTRY}"
 
-    ${If} ${FileExists} "$0"
-        MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION "iisuOscBridge™ is already installed at $0. $\n$\nClick `OK` to Uninstall and Continue or `Cancel` to Quit setup." /SD IDOK IDOK uninst
-        Abort
+	${If} ${FileExists} "$0"
+		MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION "iisuOscBridge™ is already installed at $0. $\n$\nClick `OK` to Uninstall and Continue or `Cancel` to Quit setup." /SD IDOK IDOK uninst
+		Abort
 
-        ; Run the un-installer if there was a previouly existing installation.
-        uninst:
-            IfSilent 0 +2
-                Goto silent
-            ExecWait '"$0\Uninstall.exe" _?=$0'
-            Goto next
-        silent:
-            ExecWait '"$0\Uninstall.exe" /S _?=$0'
-        next:
-    ${EndIf}
+		; Run the un-installer if there was a previouly existing installation.
+		uninst:
+			IfSilent 0 +2
+				Goto silent
+			ExecWait '"$0\Uninstall.exe" _?=$0'
+			Goto next
+		silent:
+			ExecWait '"$0\Uninstall.exe" /S _?=$0'
+		next:
+	${EndIf}
 
-    ; Make sure the install dir's default value is the default one (the default one is normally not used if reg key 'InstallDirRegKey' was defined).
-    StrCpy $INSTDIR "${DEFAUT_INSTALL_DIR}"
+	; Make sure the install dir's default value is the default one (the default one is normally not used if reg key 'InstallDirRegKey' was defined).
+	StrCpy $INSTDIR "${DEFAUT_INSTALL_DIR}"
 
 FunctionEnd
 
@@ -116,62 +117,62 @@ FunctionEnd
 
 Section "Core" Section_Core
 
-    ; SetShellVarContext all.
+    ; SetShellVarContext all
 
-    ; SectionIn 1 RO.
+    ; SectionIn 1 RO
 
-    ; Deploy files.
-    SetOutPath "$INSTDIR"
+	; Deploy files.
+	SetOutPath "$INSTDIR"
 
-    File "..\Release\iisuOscBridge.exe"
-    File "${QT_BIN_FOLDER}\QtCore4.dll"
-    File "${QT_BIN_FOLDER}\QtGui4.dll"
-    File "${LIC_FILE_PATH}"
+	File "..\Release\iisuOscBridge.exe"
+	File "${QT_BIN_FOLDER}\QtCore4.dll"
+	File "${QT_BIN_FOLDER}\QtGui4.dll"
+	File "${LIC_FILE_PATH}"
 
-    SetOutPath "$INSTDIR\Doc"
+	SetOutPath "$INSTDIR\Doc"
 
-    File "${DOC_FOLDER}\QuickStartGuide.pdf"
+	File "${DOC_FOLDER}\QuickStartGuide.pdf"
 
-    SetOutPath "$INSTDIR\Samples\PureData"
+	SetOutPath "$INSTDIR\Samples\PureData"
 
-    File "${SAMPLES_FOLDER}\PureData\PureData_readMe.txt"
+	File "${SAMPLES_FOLDER}\PureData\PureData_readMe.txt"
 	
-    SetOutPath "$INSTDIR\Samples\PureData\SimpleRightHand"
+	SetOutPath "$INSTDIR\Samples\PureData\SimpleRightHand"
 	
-    File "${SAMPLES_FOLDER}\PureData\SimpleRightHand\SimpleRightHand.iob"
-    File "${SAMPLES_FOLDER}\PureData\SimpleRightHand\SimpleRightHand.pd"
+	File "${SAMPLES_FOLDER}\PureData\SimpleRightHand\SimpleRightHand.iob"
+	File "${SAMPLES_FOLDER}\PureData\SimpleRightHand\SimpleRightHand.pd"
 
-    ; Install the menu items.
-    !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
+	; Install the menu items.
+	!insertmacro MUI_STARTMENU_WRITE_BEGIN Application
 
-    CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
+	CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
 
-    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\iisuOscBridge.lnk"		"$INSTDIR\iisuOscBridge.exe"
-    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\License.lnk"				"$INSTDIR\License.txt"
-    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk"			"$INSTDIR\Uninstall.exe"
+	CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\iisuOscBridge.lnk"		"$INSTDIR\iisuOscBridge.exe"
+	CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\License.lnk"				"$INSTDIR\License.txt"
+	CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk"			"$INSTDIR\Uninstall.exe"
 
-    CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\Doc"
+	CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\Doc"
 
-    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Doc\QuickStartGuide.lnk"					"$INSTDIR\Doc\QuickStartGuide.pdf"
+	CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Doc\QuickStartGuide.lnk"					"$INSTDIR\Doc\QuickStartGuide.pdf"
 
-    CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\Samples"
+	CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\Samples"
 	
-    CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData\"
-    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData\PureData_readMe.lnk"				"$INSTDIR\Samples\PureData\PureData_readMe.txt"
+	CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData\"
+	CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData\PureData_readMe.lnk"				"$INSTDIR\Samples\PureData\PureData_readMe.txt"
 	
-    CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData\SimpleRightHand\"
-    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData\SimpleRightHand\SimpleRightHand_bridge.lnk"		"$INSTDIR\Samples\PureData\SimpleRightHand\SimpleRightHand.iob"
-    CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData\SimpleRightHand\SimpleRightHand_network.lnk"	"$INSTDIR\Samples\PureData\SimpleRightHand\SimpleRightHand.pd"
+	CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData\SimpleRightHand\"
+	CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData\SimpleRightHand\SimpleRightHand_bridge.lnk"		"$INSTDIR\Samples\PureData\SimpleRightHand\SimpleRightHand.iob"
+	CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData\SimpleRightHand\SimpleRightHand_network.lnk"	"$INSTDIR\Samples\PureData\SimpleRightHand\SimpleRightHand.pd"
 
-    SetOutPath "$INSTDIR"
+	SetOutPath "$INSTDIR"
 
-    !insertmacro MUI_STARTMENU_WRITE_END
+	!insertmacro MUI_STARTMENU_WRITE_END
 
-    ; Update registry.
-    WriteRegStr HKLM "${INSTALL_DIR_REG_SUB_KEY}" "${INSTALL_DIR_REG_ENTRY}" $INSTDIR ; Installation directory.
-
-    ; Create uninstaller.
-    WriteUninstaller "$INSTDIR\Uninstall.exe"
+	; Registry: installation directory.
+	WriteRegStr HKLM "${INSTALL_DIR_REG_SUB_KEY}" "${INSTALL_DIR_REG_ENTRY}" $INSTDIR
+	
+	; Create uninstaller.
+	WriteUninstaller "$INSTDIR\Uninstall.exe"
 
 SectionEnd
 
@@ -183,7 +184,7 @@ LangString DESC_iisuOscBridgeCore ${LANG_ENGLISH} "This is the core of iisuOscBr
 
 ; Assign language strings to sections.
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-!insertmacro MUI_DESCRIPTION_TEXT ${Section_Core} $(DESC_iisuOscBridgeCore)
+!insertmacro MUI_DESCRIPTION_TEXT ${Section_Core} "This is the core of iisuOscBridge™, the section actually bridging iisu™ output data with OSC networking."
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 ;--------------------------------
@@ -191,14 +192,15 @@ LangString DESC_iisuOscBridgeCore ${LANG_ENGLISH} "This is the core of iisuOscBr
 
 Section "Uninstall"
 
-    ; Remove the deployed files.
-    ; Delete "$INSTDIR\Uninstall.exe"
-    RMDir /r "$INSTDIR"
+	; Remove the deployed files.
+	; Delete "$INSTDIR\Uninstall.exe"
+	RMDir /r "$INSTDIR"
 
-    ; Uninstall the menu items.
-    !insertmacro MUI_STARTMENU_GETFOLDER Application $MUI_TEMP
-    RMDIR /r "$SMPROGRAMS\$MUI_TEMP"
+	; Uninstall the menu items.
+	!insertmacro MUI_STARTMENU_GETFOLDER Application $MUI_TEMP
+	RMDIR /r "$SMPROGRAMS\$MUI_TEMP"
 
-    DeleteRegKey /ifempty HKLM "${INSTALL_DIR_REG_SUB_KEY}"
+	; Remove the register keys.
+	DeleteRegKey /ifempty HKLM "${INSTALL_DIR_REG_SUB_KEY}"
 
 SectionEnd
