@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <IisuInteractionDesignerProject Version="3.0.17">
-  <Graph id="{38ab4532-4085-40f1-9270-c3085c15b0b4}">
+  <Graph id="{c649c677-8064-4eb7-807f-84f4a182c7a8}">
     <Node id="{e4f08982-767f-4d8a-b6f0-45c317d72f17}" name="iisu Data &amp; Parameters" type="iisu device">
       <Output id="{a9645902-a97d-4d67-86a8-d93150472795}" name="USER1.SKELETON.Status" />
     </Node>
@@ -32,15 +32,15 @@
       <Output id="{13209a6b-6f6a-4a04-b374-3878bef45096}" name="planeOff_pos" />
       <Output id="{75b98f90-241e-473e-a25f-763376519c47}" name="rightHand_color" />
       <Output id="{65e4073c-b353-4ae3-b8c1-25bc9be2cf07}" name="leftHand_note" />
-      <Output id="{94dfd006-a2e1-4f8d-a14b-4a56ba8f06c5}" name="rightHand_front_bang" />
-      <Output id="{cb06765c-2576-43a8-93e6-e651e8601dec}" name="rightFoot_front_bang" />
-      <Output id="{dba8c2fe-4ae2-4606-b645-0ba9d71489b3}" name="rightFoot_side_bang" />
-      <Output id="{254a9d1e-dd81-4bff-8459-21e035e718b4}" name="rightFoot_back_bang" />
+      <Output id="{22b20015-bcfd-4d5d-a3d3-62d7b2b5dfc9}" name="rightHand_front_bang" />
+      <Output id="{4228276c-1deb-4e17-954b-2fc626f485bc}" name="rightFoot_front_bang" />
+      <Output id="{0995d7da-2c69-46b0-a7bf-ebbfc4d5c9d4}" name="rightFoot_side_bang" />
+      <Output id="{6b7b7d05-2708-4aaf-a13a-54163fcee882}" name="rightFoot_back_bang" />
       <CustomParameter id="{65e4073c-b353-4ae3-b8c1-25bc9be2cf07}" />
-      <CustomParameter id="{94dfd006-a2e1-4f8d-a14b-4a56ba8f06c5}" />
-      <CustomParameter id="{cb06765c-2576-43a8-93e6-e651e8601dec}" />
-      <CustomParameter id="{dba8c2fe-4ae2-4606-b645-0ba9d71489b3}" />
-      <CustomParameter id="{254a9d1e-dd81-4bff-8459-21e035e718b4}" />
+      <CustomParameter id="{22b20015-bcfd-4d5d-a3d3-62d7b2b5dfc9}" />
+      <CustomParameter id="{4228276c-1deb-4e17-954b-2fc626f485bc}" />
+      <CustomParameter id="{0995d7da-2c69-46b0-a7bf-ebbfc4d5c9d4}" />
+      <CustomParameter id="{6b7b7d05-2708-4aaf-a13a-54163fcee882}" />
       <Content><![CDATA[-----------------------------------------------------------------------------------------------------------------------------------
 -- This script is provided with no guarantee, use it at your own risk.
 -----------------------------------------------------------------------------------------------------------------------------------
@@ -51,17 +51,17 @@ function init()
 	--   See the iisu Interaction Designer manual for more info.
 	rightHand_front = false
 	rightHand_front_km1 = false
-	rightHand_front_bang = false
+	rightHand_front_bang = 0
 	
 	rightFoot_front = false
 	rightFoot_front_km1 = false
-	rightFoot_front_bang = false
+	rightFoot_front_bang = 0
 	rightFoot_side = false
 	rightFoot_side_km1 = false
-	rightFoot_side_bang = false
+	rightFoot_side_bang = 0
 	rightFoot_back = false
 	rightFoot_back_km1 = false
-	rightFoot_back_bang = false
+	rightFoot_back_bang = 0
 	
 	degree = 0
 	
@@ -121,9 +121,9 @@ function main()
 	end
 	
 	if (rightHand_front and not rightHand_front_km1) then
-		rightHand_front_bang = true
+		rightHand_front_bang = 1
 	else
-		rightHand_front_bang = false
+		rightHand_front_bang = 0
 	end
 	rightHand_front_km1 = rightHand_front
 	
@@ -141,9 +141,9 @@ function main()
 	end
 	
 	if (rightFoot_front and not rightFoot_front_km1) then
-		rightFoot_front_bang = true
+		rightFoot_front_bang = 1
 	else
-		rightFoot_front_bang = false
+		rightFoot_front_bang = 0
 	end
 	rightFoot_front_km1 = rightFoot_front
 	
@@ -155,9 +155,9 @@ function main()
 	end
 	
 	if (rightFoot_side and not rightFoot_side_km1) then
-		rightFoot_side_bang = true
+		rightFoot_side_bang = 1
 	else
-		rightFoot_side_bang = false
+		rightFoot_side_bang = 0
 	end
 	rightFoot_side_km1 = rightFoot_side
 	
@@ -169,9 +169,9 @@ function main()
 	end
 	
 	if (rightFoot_back and not rightFoot_back_km1) then
-		rightFoot_back_bang = true
+		rightFoot_back_bang = 1
 	else
-		rightFoot_back_bang = false
+		rightFoot_back_bang = 0
 	end
 	rightFoot_back_km1 = rightFoot_back
 	
@@ -324,7 +324,7 @@ end
   <Visualization3D userCentroidsVisible="False" userCentroidVelocitiesVisible="False" skeletonVisible="False" uiControllerVisible="False" uiPointerVisible="False" umActivationZonesVisible="False" umActivationZoneLabelsVisible="False" userBoundingBoxVisible="False" userLabelVisible="False" userPointsVisible="False" userMassCenterVisible="False" userHeightVisible="False" userBodyDirVisible="False" userPrincipalDirVisible="False" cameraFrustumVisible="False" cameraFrustumProjVisible="False" cameraInfoVisible="False" sourceColorMapVisible="False" labelImageVisible="False" scenePointsVisible="False" userMaskVisible="True" depthClipPlanesVisible="False" xyzClipPlanesVisible="False" clipVolumeVisible="False" user1Color="66FF66FF" user2Color="66CCFFFF" user3Color="FF6600FF" user4Color="FFFF00FF" uiController1Color="66FF66FF" uiController2Color="66CCFFFF" uiController3Color="FF6600FF" uiController4Color="FFFF00FF" gridColor="999999FF" gridSize="4" gridSubdivisions="16">
     <Camera>
       <Position x="-3.664298" y="2.031194" z="3.073661" />
-      <Orientation yaw="-119.0002" pitch="-31.00008" />
+      <Orientation yaw="-119.0002" pitch="-31.00009" />
     </Camera>
   </Visualization3D>
 </IisuInteractionDesignerProject>
