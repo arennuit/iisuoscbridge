@@ -5,6 +5,7 @@
 			<PathMap oscPathBit="Kick" iisuPath="IID.Hand_Front.rightHand_front_bang" />
 			<PathMap oscPathBit="HiHat" iisuPath="IID.Hand_Front.rightFoot_front_bang" />
 			<PathMap oscPathBit="NoteHeight" iisuPath="IID.Hand_Front.leftHand_note" />
+			<PathMap oscPathBit="Enable" iisuPath="IID.Hand_Front.rightFoot_back_bang" />
 		</PathMap>
 	</PathMap>
 </IisuOscBridge>

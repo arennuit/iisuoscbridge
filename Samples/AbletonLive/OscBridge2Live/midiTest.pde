@@ -9,6 +9,8 @@ MidiBus myBus;
 OscP5 oscP5;
 NetAddress myRemoteLocation;
 
+float isEnabled = 0.0f; // Used as a boolean (because IID streams its bools as booleans as well).
+
 int channel_Kick = 0;
 int channel_HiHat = 1;
 int channel_Lead = 2;
@@ -56,6 +58,7 @@ void setup()
   oscP5.plug(this, "HandleKick", "/iisu/user1/Kick");
   oscP5.plug(this, "HandleHiHat", "/iisu/user1/HiHat");
   oscP5.plug(this, "HandleNoteHeight", "/iisu/user1/NoteHeight");
+  oscP5.plug(this, "HandleEnable", "/iisu/user1/Enable");
 }
 
 //////////////////////////////////////////////////////////////////
@@ -67,7 +70,7 @@ void draw()
 //////////////////////////////////////////////////////////////////
 public void HandleKick(float kick)
 {	
-	if (kick == 0.0f)
+	if (kick == 0.0f || isEnabled == 0.0f)
 		return;
 
 	println("Kick!");
@@ -80,7 +83,7 @@ public void HandleKick(float kick)
 //////////////////////////////////////////////////////////////////
 public void HandleHiHat(float hiHat)
 {
-	if (hiHat == 0.0f)
+	if (hiHat == 0.0f || isEnabled == 0.0f)
 		return;
 
 	println("HiHat!");
@@ -93,13 +96,13 @@ public void HandleHiHat(float hiHat)
 //////////////////////////////////////////////////////////////////
 public void HandleNoteHeight(float noteHeight)
 {
+	if (isEnabled == 0.0f)
+		return;
+		
 	// Only send the Midi on height changed.
 	if (noteHeight_km1 != noteHeight)
 	{
 		println("NoteHeight: " + noteHeight);
-	
-		int channel_Lead = 2;
-		int velocity = 127;
 		
 		// Old note off, new note on.
 		myBus.sendNoteOff(channel_Lead, (int)noteHeight_km1, velocity);
@@ -110,12 +113,25 @@ public void HandleNoteHeight(float noteHeight)
 }
 
 //////////////////////////////////////////////////////////////////
-void noLoop()
+public void HandleEnable(float enable)
 {
-	int channel_Lead = 2;
-	int velocity = 127;
+	if (enable == 0.0f)
+		return;
 
-	myBus.sendNoteOff(channel_Lead, (int)noteHeight_km1, velocity);
+	if (isEnabled == 0.0f)
+	{
+		isEnabled = 1.0f;
+		
+		println("Enable!");
+	}
+	else
+	{
+		isEnabled = 0.0f;
+		
+		println("Disable!");
+		
+		myBus.sendNoteOff(channel_Lead, (int)noteHeight_km1, velocity);
+	}
 }
 
 //////////////////////////////////////////////////////////////////
