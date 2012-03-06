@@ -156,10 +156,10 @@ Section "Core" Section_Core
 	CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Doc\QuickStartGuide.lnk"					"$INSTDIR\Doc\QuickStartGuide.pdf"
 
 	CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\Samples"
-	
+
 	CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData\"
 	CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData\PureData_readMe.lnk"				"$INSTDIR\Samples\PureData\PureData_readMe.txt"
-	
+
 	CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData\SimpleRightHand\"
 	CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData\SimpleRightHand\SimpleRightHand_bridge.lnk"		"$INSTDIR\Samples\PureData\SimpleRightHand\SimpleRightHand.iob"
 	CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Samples\PureData\SimpleRightHand\SimpleRightHand_network.lnk"	"$INSTDIR\Samples\PureData\SimpleRightHand\SimpleRightHand.pd"
@@ -170,16 +170,7 @@ Section "Core" Section_Core
 
 	; Registry: installation directory.
 	WriteRegStr HKLM "${INSTALL_DIR_REG_SUB_KEY}" "${INSTALL_DIR_REG_ENTRY}" $INSTDIR
-	
-	; Associate extension.
-	;${registerExtension} "$INSTDIR\iisuOscBridge.exe" ".iob" "IOB_File"
-	
-	; Registry: extension association.
-	;WriteRegStr HKCR ".iob" "" "iisuOscBridge.Project"
-	;WriteRegStr HKCR "iisuOscBridge.Project" "" "iisuOscBridge Project"
-	;WriteRegStr HKCR "iisuOscBridge.Project\DefaultIcon" "" "$INSTDIR\iisuOscBridge.exe, 0"	
-	;WriteRegStr HKCR "iisuOscBridge.Project\shell\open\command" "" '"$INSTDIR\iisuOscBridge.exe" "%1"'
-	
+
 	; Create uninstaller.
 	WriteUninstaller "$INSTDIR\Uninstall.exe"
 
@@ -187,20 +178,20 @@ SectionEnd
 
 Section ".iob Files Associations" Section_FilesAssoc
 
-    SetShellVarContext all
-    SectionIn 1
+	SetShellVarContext all
+	SectionIn 1
 	
 	WriteRegStr HKLM "SOFTWARE\Classes\.iob" "" "IobProjectFile"
-    WriteRegStr HKLM "SOFTWARE\Classes\IobProjectFile" "" "isuOscBridge project file"
-    WriteRegStr HKLM "SOFTWARE\Classes\IobProjectFile\DefaultIcon" "" '"$INSTDIR\iisuOscBridge.exe, 1"'
-    WriteRegStr HKLM "SOFTWARE\Classes\IobProjectFile\shell\open" "" "&Open with iisuOscBridge"
-    WriteRegStr HKLM "SOFTWARE\Classes\IobProjectFile\shell\open\command" "" '"$INSTDIR\iisuOscBridge.exe" "%1"'
+	WriteRegStr HKLM "SOFTWARE\Classes\IobProjectFile" "" "iisuOscBridge project file"
+	WriteRegStr HKLM "SOFTWARE\Classes\IobProjectFile\DefaultIcon" "" '"$INSTDIR\iisuOscBridge.exe"'
+	WriteRegStr HKLM "SOFTWARE\Classes\IobProjectFile\shell\open" "" "&Open with iisuOscBridge"
+	WriteRegStr HKLM "SOFTWARE\Classes\IobProjectFile\shell\open\command" "" '"$INSTDIR\iisuOscBridge.exe" "%1"'
 
 	; --- Refresh the system ---
 	SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
 
-    ;WriteRegStr HKLM "SOFTWARE\Classes\.skscript" "" "Interaction Designer script file"
-	
+	;WriteRegStr HKLM "SOFTWARE\Classes\.skscript" "" "Interaction Designer script file"
+
 SectionEnd
 
 ;--------------------------------
@@ -228,7 +219,8 @@ Section "Uninstall"
 	; Remove the register keys.
 	DeleteRegKey /ifempty HKLM "${INSTALL_DIR_REG_SUB_KEY}"
 	
-	; Desassociate the extension.
-	;${unregisterExtension} ".iob" "IOB File"
+	; Remove the .iob file associations.
+	DeleteRegKey   HKLM "SOFTWARE\Classes\.iob"
+	DeleteRegKey   HKLM "SOFTWARE\Classes\IobProjectFile"
 
 SectionEnd
