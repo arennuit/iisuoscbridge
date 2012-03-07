@@ -395,10 +395,6 @@ void MainForm::onMocapStateChanged( bool mocapState )
 
 	ui.m_decorateStreamCheckBox->setEnabled(!mocapState);
 	ui.m_pathMapsView->setEnabled(!mocapState);
-
-	// Show log tab when streaming.
-	if (mocapState == true)
-		ui.m_tabs->setCurrentWidget(ui.m_logTab);
 }
 
 //////////////////////////////////////////////////////////////////////////

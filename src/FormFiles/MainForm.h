@@ -113,8 +113,7 @@ protected slots:
 
 	void onClearLogButtonClicked() {ui.m_logTextEdit->clear();}
 
-	void onMapsViewActionTriggered() {ui.m_tabs->setCurrentWidget(ui.m_mapsTab);}
-	void onLogViewActionTriggered() {ui.m_tabs->setCurrentWidget(ui.m_logTab);}
+	void onLogViewActionTriggered() {ui.m_logDock->show();}
 	void onFullScreenAction();
 	//@}
 
