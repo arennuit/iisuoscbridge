@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>662</width>
+    <width>621</width>
     <height>657</height>
    </rect>
   </property>
@@ -835,7 +835,7 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>662</width>
+     <width>621</width>
      <height>19</height>
     </rect>
    </property>
@@ -859,7 +859,19 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
     <addaction name="separator"/>
     <addaction name="m_fullScreenAction"/>
    </widget>
+   <widget class="QMenu" name="menuMaps">
+    <property name="title">
+     <string>Maps</string>
+    </property>
+    <addaction name="m_addMapAction"/>
+    <addaction name="m_insertMapAction"/>
+    <addaction name="m_addChildMapAction"/>
+    <addaction name="separator"/>
+    <addaction name="m_deleteMapAction"/>
+    <addaction name="m_clearMapsAction"/>
+   </widget>
    <addaction name="m_fileMenu"/>
+   <addaction name="menuMaps"/>
    <addaction name="menuView"/>
   </widget>
   <widget class="QDockWidget" name="m_logDock">
@@ -952,14 +964,12 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
     <string>Ctrl+Q</string>
    </property>
   </action>
-  <action name="m_mapsViewAction">
-   <property name="text">
-    <string>Maps</string>
-   </property>
-  </action>
   <action name="m_logViewAction">
    <property name="text">
     <string>Log</string>
+   </property>
+   <property name="shortcut">
+    <string>L</string>
    </property>
   </action>
   <action name="m_fullScreenAction">
@@ -968,6 +978,51 @@ font:20pt &quot;MS Shell Dlg 2&quot;;
    </property>
    <property name="shortcut">
     <string>F11</string>
+   </property>
+  </action>
+  <action name="m_copyOscPathAction">
+   <property name="text">
+    <string>Copy OSC Path</string>
+   </property>
+  </action>
+  <action name="m_addMapAction">
+   <property name="text">
+    <string>Add Map</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+  </action>
+  <action name="m_insertMapAction">
+   <property name="text">
+    <string>Insert Map</string>
+   </property>
+   <property name="shortcut">
+    <string>F2</string>
+   </property>
+  </action>
+  <action name="m_addChildMapAction">
+   <property name="text">
+    <string>Add Child Map</string>
+   </property>
+   <property name="shortcut">
+    <string>F3</string>
+   </property>
+  </action>
+  <action name="m_deleteMapAction">
+   <property name="text">
+    <string>Delete Map</string>
+   </property>
+   <property name="shortcut">
+    <string>F4</string>
+   </property>
+  </action>
+  <action name="m_clearMapsAction">
+   <property name="text">
+    <string>Clear Maps</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
    </property>
   </action>
  </widget>

@@ -78,6 +78,17 @@ void MainForm::setup()
 	ui.m_pathMapsView->setAlternatingRowColors(true);
 	ui.m_pathMapsView->setItemDelegate(&m_pathDelegate);
 
+	// Setup context menu.
+	ui.m_pathMapsView->setContextMenuPolicy(Qt::CustomContextMenu);
+	m_pathMapsViewContextMenu.addAction(ui.m_copyOscPathAction);
+	m_pathMapsViewContextMenu.addSeparator();
+	m_pathMapsViewContextMenu.addAction(ui.m_addMapAction);
+	m_pathMapsViewContextMenu.addAction(ui.m_insertMapAction);
+	m_pathMapsViewContextMenu.addAction(ui.m_addChildMapAction);
+	m_pathMapsViewContextMenu.addSeparator();
+	m_pathMapsViewContextMenu.addAction(ui.m_deleteMapAction);
+	m_pathMapsViewContextMenu.addAction(ui.m_clearMapsAction);
+
 	// Establish all connections.
 	connect(ui.m_newAction, SIGNAL(triggered()), this, SLOT(onNewActionTriggered()));
 	connect(ui.m_openAction, SIGNAL(triggered()), this, SLOT(onOpenActionTriggered()));
@@ -85,7 +96,6 @@ void MainForm::setup()
 	connect(ui.m_saveAsAction, SIGNAL(triggered()), this, SLOT(onSaveAsActionTriggered()));
 	connect(ui.m_quitAction, SIGNAL(triggered()), this, SLOT(onQuitActionTriggered()));
 
-	connect(ui.m_mapsViewAction, SIGNAL(triggered()), this, SLOT(onMapsViewActionTriggered()));
 	connect(ui.m_logViewAction, SIGNAL(triggered()), this, SLOT(onLogViewActionTriggered()));
 	connect(ui.m_fullScreenAction, SIGNAL(triggered()), this, SLOT(onFullScreenAction()));
 
@@ -110,6 +120,14 @@ void MainForm::setup()
 		connect(m_recentFileActions[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
 
 	connect(ui.m_pathMapsView->selectionModel(), SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)), this, SLOT(onSelectionModelCurrentChanged(const QModelIndex&, const QModelIndex&)));
+
+	connect(ui.m_pathMapsView, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(onPathMapsViewContextMenuRequested(const QPoint&)));
+	connect(ui.m_copyOscPathAction, SIGNAL(triggered()), this, SLOT(onCopyOscPathActionTriggered()));
+	connect(ui.m_addMapAction, SIGNAL(triggered()), this, SLOT(onAddMapActionTriggered()));
+	connect(ui.m_insertMapAction, SIGNAL(triggered()), this, SLOT(onInsertMapActionTriggered()));
+	connect(ui.m_addChildMapAction, SIGNAL(triggered()), this, SLOT(onAddChildMapActionTriggered()));
+	connect(ui.m_deleteMapAction, SIGNAL(triggered()), this, SLOT(onDeleteMapActionTriggered()));
+	connect(ui.m_clearMapsAction, SIGNAL(triggered()), this, SLOT(onClearMapsActionTriggered()));
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -462,6 +480,15 @@ void MainForm::openRecentFile()
 		return;
 
 	m_dataController->loadProjectFromFile(action->data().toString().toStdString());
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onLogViewActionTriggered()
+{
+	if (ui.m_logDock->isVisible())
+		ui.m_logDock->hide();
+	else
+		ui.m_logDock->show();
 }
 
 //////////////////////////////////////////////////////////////////////////

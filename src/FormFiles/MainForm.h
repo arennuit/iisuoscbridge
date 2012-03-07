@@ -91,6 +91,7 @@ protected slots:
 	void onStartStopToggleButtonClicked() {m_dataController->toggleResumePause();}
 
 	void onSelectionModelCurrentChanged( const QModelIndex& newModelIndex, const QModelIndex& oldModelIndex );
+	void onPathMapsViewContextMenuRequested(const QPoint& pos) {m_pathMapsViewContextMenu.exec(mapToGlobal(pos), 0);}
 
 	void onOpenActionTriggered();
 	void onNewActionTriggered();
@@ -113,8 +114,15 @@ protected slots:
 
 	void onClearLogButtonClicked() {ui.m_logTextEdit->clear();}
 
-	void onLogViewActionTriggered() {ui.m_logDock->show();}
+	void onLogViewActionTriggered();
 	void onFullScreenAction();
+
+	void onCopyOscPathActionTriggered() {}
+	void onAddMapActionTriggered() {m_dataController->addPathMap();}
+	void onInsertMapActionTriggered() {m_dataController->insertPathMap();}
+	void onAddChildMapActionTriggered() {m_dataController->addChildMap();}
+	void onDeleteMapActionTriggered() {m_dataController->deletePathMap();}
+	void onClearMapsActionTriggered() {m_dataController->clearPathMaps();}
 	//@}
 
 protected:
@@ -144,6 +152,8 @@ protected:
 
 	std::map<const PathMap*, QStandardItem*> m_pathMapItemMap;
 	void addChildrenToArray_recursive(PathMap* pathMap, std::vector<PathMap*>& pathMapsToBeDeleted);
+
+	QMenu m_pathMapsViewContextMenu;
 };
 
 } // namespace SK.
