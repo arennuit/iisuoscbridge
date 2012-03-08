@@ -502,6 +502,16 @@ void MainForm::onFullScreenAction()
 }
 
 //////////////////////////////////////////////////////////////////////////
+void MainForm::onCopyOscPathActionTriggered()
+{
+	QClipboard *clipboard = QApplication::clipboard();
+	assert(clipboard);
+
+	std::string fullOscPath = m_dataController->findFullOscPath();
+	clipboard->setText(QString::fromStdString(fullOscPath));
+}
+
+//////////////////////////////////////////////////////////////////////////
 void MainForm::onIidFilePathEditEditingFinished()
 {
 	std::string filePath = ui.m_iidFilePathEdit->text().toStdString();

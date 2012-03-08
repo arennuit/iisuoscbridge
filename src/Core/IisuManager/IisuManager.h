@@ -47,8 +47,6 @@ protected:
 	std::vector<const PathMap*> m_pathMapsLinearized;
 	void linearizePathMap(const PathMap* pathMap);
 
-	std::string findFullOscPath(const PathMap* pathMap) const;
-
 	std::vector<TypedPathMap*> m_typedPathMapsLinearized;
 
 	// TODO: check buffer is large enough when putting the message together.

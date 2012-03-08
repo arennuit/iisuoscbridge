@@ -117,7 +117,7 @@ protected slots:
 	void onLogViewActionTriggered();
 	void onFullScreenAction();
 
-	void onCopyOscPathActionTriggered() {}
+	void onCopyOscPathActionTriggered();
 	void onAddMapActionTriggered() {m_dataController->addPathMap();}
 	void onInsertMapActionTriggered() {m_dataController->insertPathMap();}
 	void onAddChildMapActionTriggered() {m_dataController->addChildMap();}

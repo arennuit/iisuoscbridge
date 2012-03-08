@@ -31,6 +31,26 @@ PathMap::~PathMap()
 }
 
 //////////////////////////////////////////////////////////////////////////
+std::string PathMap::findFullOscPath() const
+{
+	// Parse PathMaps up-tree.
+	std::string fullOscPath;
+	const PathMap* currentPath = this;
+	while (currentPath != 0)
+	{
+		// Concatenate fullOscPath only if the PathMap's oscPathBit contains something.
+		// NOTE: if the oscPathBit of a PathMap is empty, it does not modify the fullOscPath of its children,
+		//       this is so that this PathMap is an organizational placeholder.
+		if (currentPath->getOscPathBit()!= "")
+			fullOscPath = std::string("/") + currentPath->getOscPathBit() + fullOscPath;
+
+		currentPath = currentPath->getParent();
+	}
+
+	return fullOscPath;
+}
+
+//////////////////////////////////////////////////////////////////////////
 PathMap* PathMap::addPathMap(const std::string& oscPathBit, const std::string& iisuPath)
 {
 	// Find the parent path map.

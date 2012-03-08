@@ -170,6 +170,15 @@ void DataController::saveProjectToFile( const std::string& filePath )
 }
 
 //////////////////////////////////////////////////////////////////////////
+std::string DataController::findFullOscPath()
+{
+	if (!m_selectedPathMap)
+		return std::string();
+
+	return m_selectedPathMap->findFullOscPath();
+}
+
+//////////////////////////////////////////////////////////////////////////
 void DataController::saveProjectToFile_recursive( pugi::xml_node& parent, const PathMap* pathMap )
 {
 	if (!pathMap)

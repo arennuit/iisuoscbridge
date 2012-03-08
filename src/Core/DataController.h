@@ -35,6 +35,8 @@ public:
 	virtual void saveProjectToFile(const std::string& filePath);
 
 	virtual void resetProject() {m_dataBase->reset();}
+
+	std::string findFullOscPath();
 	//@}
 
 	/// \name Editors.

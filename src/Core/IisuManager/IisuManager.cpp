@@ -104,7 +104,7 @@ bool IisuManager::resumeStream()
 			continue;
 		}
 
-		std::string fullOscPaths = findFullOscPath(m_pathMapsLinearized[i]);
+		std::string fullOscPaths = pathMap->findFullOscPath();
 
 		SK::TypeInfo typeInfo = retType.get() ;
 		TypedPathMap* typedPathMap = SK::TypeInfo::injectIisuType<BaseTypedPathMapFactory, TypedPathMapFactory>(typeInfo)->create(fullOscPaths, pathMap->getIisuPath());
@@ -265,29 +265,6 @@ void IisuManager::linearizePathMap( const PathMap* pathMap )
 	m_pathMapsLinearized.push_back(pathMap);
 	for (uint i = 0; i < pathMap->getChildren().size(); ++i)
 		linearizePathMap(pathMap->getChildren()[i]);
-}
-
-//////////////////////////////////////////////////////////////////////////
-std::string IisuManager::findFullOscPath( const PathMap* pathMap ) const
-{
-	if (!pathMap)
-		return "";
-
-	// Parse PathMaps up-tree.
-	std::string fullOscPath;
-	const PathMap* currentPath = pathMap;
-	while (currentPath != 0)
-	{
-		// Concatenate fullOscPath only if the PathMap's oscPathBit contains something.
-		// NOTE: if the oscPathBit of a PathMap is empty, it does not modify the fullOscPath of its children,
-		//       this is so that this PathMap is an organizational placeholder.
-		if (currentPath->getOscPathBit()!= "")
-			fullOscPath = std::string("/") + currentPath->getOscPathBit() + fullOscPath;
-
-		currentPath = currentPath->getParent();
-	}
-
-	return fullOscPath;
 }
 
 //////////////////////////////////////////////////////////////////////////
