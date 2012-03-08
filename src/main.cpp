@@ -6,10 +6,15 @@
 //////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[])
 {
+	// Create application and splash screen.
 	QApplication app(argc, argv);
 	app.setApplicationName("iisuOscBridge");
 	app.setOrganizationName("SoftKinetic");
 	app.setOrganizationDomain("sofkinetic.com");
+
+	QSplashScreen splashScreen;
+	splashScreen.setPixmap(QPixmap("../Resource Files/SplashScreen.png"));
+	splashScreen.show();
 
 	// The main form needs to be existing before the database and the data controller are instantiated. And the
 	// data base and controller need to be existing before the main form is setup. Hence we separated the form's
@@ -41,6 +46,8 @@ int main(int argc, char *argv[])
 		dataController->loadProjectFromFile(filePath);
 
 	// Start application.
+	splashScreen.finish(&mainForm);
+
 	mainForm.show();
 	app.exec();
 
