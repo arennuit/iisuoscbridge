@@ -96,6 +96,7 @@ void MainForm::setup()
 	connect(ui.m_saveAsAction, SIGNAL(triggered()), this, SLOT(onSaveAsActionTriggered()));
 	connect(ui.m_quitAction, SIGNAL(triggered()), this, SLOT(onQuitActionTriggered()));
 
+	connect(ui.m_iisuToolboxAction, SIGNAL(triggered()), this, SLOT(onIisuToolboxActionTriggered()));
 	connect(ui.m_logViewAction, SIGNAL(triggered()), this, SLOT(onLogViewActionTriggered()));
 	connect(ui.m_fullScreenAction, SIGNAL(triggered()), this, SLOT(onFullScreenAction()));
 
@@ -480,6 +481,12 @@ void MainForm::openRecentFile()
 		return;
 
 	m_dataController->loadProjectFromFile(action->data().toString().toStdString());
+}
+
+//////////////////////////////////////////////////////////////////////////
+void MainForm::onIisuToolboxActionTriggered()
+{
+
 }
 
 //////////////////////////////////////////////////////////////////////////

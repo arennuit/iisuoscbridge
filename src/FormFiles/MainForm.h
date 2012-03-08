@@ -114,6 +114,8 @@ protected slots:
 
 	void onClearLogButtonClicked() {ui.m_logTextEdit->clear();}
 
+
+	void onIisuToolboxActionTriggered();
 	void onLogViewActionTriggered();
 	void onFullScreenAction();
 
