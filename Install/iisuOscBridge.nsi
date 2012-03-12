@@ -123,24 +123,23 @@ Section "Core" Section_Core
 
 	; Deploy files.
 	SetOutPath "$INSTDIR"
-
 	File "..\Release\iisuOscBridge.exe"
 	File "${QT_BIN_FOLDER}\QtCore4.dll"
 	File "${QT_BIN_FOLDER}\QtGui4.dll"
 	File "${LIC_FILE_PATH}"
+	File "..\Resource Files\SplashScreen.png"
 
 	SetOutPath "$INSTDIR\Doc"
-
 	File "${DOC_FOLDER}\QuickStartGuide.pdf"
-
+	
 	SetOutPath "$INSTDIR\Samples\PureData"
-
 	File "${SAMPLES_FOLDER}\PureData\PureData_readMe.txt"
 	
 	SetOutPath "$INSTDIR\Samples\PureData\SimpleRightHand"
-	
 	File "${SAMPLES_FOLDER}\PureData\SimpleRightHand\SimpleRightHand.iob"
 	File "${SAMPLES_FOLDER}\PureData\SimpleRightHand\SimpleRightHand.pd"
+	
+	SetOutPath "$INSTDIR" ; Makes sure the 'Start In' property in the start menu is set on 'INSTDIR'.
 
 	; Install the menu items.
 	!insertmacro MUI_STARTMENU_WRITE_BEGIN Application

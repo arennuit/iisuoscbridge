@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 	app.setOrganizationDomain("sofkinetic.com");
 
 	QSplashScreen splashScreen;
-	splashScreen.setPixmap(QPixmap("../Resource Files/SplashScreen.png"));
+	splashScreen.setPixmap(QPixmap("SplashScreen.png"));
 	splashScreen.show();
 
 	// The main form needs to be existing before the database and the data controller are instantiated. And the

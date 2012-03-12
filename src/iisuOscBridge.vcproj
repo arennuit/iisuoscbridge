@@ -82,6 +82,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy /Y &quot;$(SolutionDir)\Resource Files\SplashScreen.png&quot; &quot;$(SolutionDir)\src\SplashScreen.png&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -151,6 +152,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy /Y &quot;$(SolutionDir)\Resource Files\SplashScreen.png&quot; &quot;$(SolutionDir)\src\SplashScreen.png&quot;"
 			/>
 		</Configuration>
 	</Configurations>
